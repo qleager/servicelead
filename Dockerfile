@@ -4,7 +4,7 @@ FROM node:22-alpine
 WORKDIR /app
 
 # Включаем pnpm через corepack (рекомендуемый способ)
-RUN corepack enable
+RUN corepack enable && corepack prepare pnpm --activate
 
 # Копируем только манифесты сначала — кэшируем установку deps
 COPY package.json pnpm-lock.yaml* ./
