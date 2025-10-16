@@ -7,7 +7,7 @@ WORKDIR /app
 RUN corepack enable && corepack prepare pnpm@10.0.0 --activate
 
 # Копируем только манифесты сначала — кэшируем установку deps
-COPY package.json pnpm-lock.yaml* ./
+COPY package.json pnpm-lock.yaml* .npmrc ./
 
 # Ставим зависимости один раз на этапе сборки
 RUN pnpm install --frozen-lockfile
