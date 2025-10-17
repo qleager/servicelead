@@ -23,18 +23,18 @@
 
 ![Скрин предложения VS Code](https://i.postimg.cc/mrxV2Z1L/image.png)
 
-Если не предложило — установите расширение вручную:  
+Если не предложил — установите расширение вручную:  
 https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers
 
 ---
 
 ### 2. Откройте проект в контейнере
 
-После установки расширения VS Code обнаружит `.devcontainer` и предложит собрать контейнер:
+После установки расширения VS Code обнаружит конфиг `.devcontainer/devcontainer.json` и предложит собрать образ и открыть контейнер:
 
 ![Скрин предложения VS Code 2](https://i.postimg.cc/kgyF9NCH/image.png)
 
-Также можно открыть вручную (или пересобрать образ и открыть):
+Также можно открыть контейнер вручную (или пересобрать образ и открыть):
 
 > **Ctrl + Shift + P → Dev Containers: Reopen in Container**
 
