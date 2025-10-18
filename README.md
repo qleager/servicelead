@@ -42,12 +42,15 @@ https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-cont
 
 После сборки вы автоматически окажетесь в среде контейнера (`Dev Container`).
 
+Контейнер будет виден в Docker Desktop.
+  
 ---
 
-### 3. Проверяем запуск
+### 3. Запуск nuxt в dev режиме в терминале VS Code в конейнере
 
-Контейнер будет виден в Docker Desktop.  
-Теперь откройте: 👉 **http://localhost:3000/** — проект должен работать в режиме разработки.
+```bash
+pnpm dev:docker
+```
 
 ---
 
