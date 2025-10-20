@@ -18,7 +18,8 @@
     "vscode": {    
       "extensions": [
         "Vue.volar",
-        "dbaeumer.vscode-eslint"
+        "dbaeumer.vscode-eslint",
+        "stylelint.vscode-stylelint"
       ],
       "settings": {      
         "eslint.validate": ["vue","javascript","typescript"],
