@@ -22,7 +22,11 @@
       ],
       "settings": {      
         "eslint.validate": ["vue","javascript","typescript"],
-        "editor.codeActionsOnSave": { "source.fixAll.eslint": "always" },
+        "stylelint.validate": ["css", "scss", "vue"],
+        "editor.codeActionsOnSave": { 
+          "source.fixAll.eslint": "always",
+          "source.fixAll.stylelint": true
+         },
         "editor.formatOnSave": false
       }
     }
