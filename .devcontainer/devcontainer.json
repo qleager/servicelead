@@ -15,12 +15,13 @@
   "postCreateCommand": "mkdir -p ~/.ssh && chmod 700 ~/.ssh && (ssh-keyscan -H github.com >> ~/.ssh/known_hosts || true) && (chmod 600 ~/.ssh/* 2>/dev/null || true)",
 
   "customizations": {
-    "vscode": {    
+    "vscode": {
       "extensions": [
         "Vue.volar",
-        "dbaeumer.vscode-eslint"
+        "dbaeumer.vscode-eslint",
+        "openai.chatgpt"
       ],
-      "settings": {      
+      "settings": {
         "eslint.validate": ["vue","javascript","typescript"],
         "editor.codeActionsOnSave": { "source.fixAll.eslint": "always" },
         "editor.formatOnSave": false
