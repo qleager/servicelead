@@ -10,7 +10,7 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "eslint . && vue-tsc --noEmit",
-    "lint:styles": "stylelint '**/*.{css,scss,vue}' --fix"
+    "lint:styles": "prettier --write '**/*.{css,scss,vue}' && stylelint '**/*.{css,scss,vue}' --fix"
   },
   "dependencies": {
     "@nuxt/eslint": "1.9.0",
