@@ -1,5 +1,8 @@
+/*
+ * Guide: https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers
+ */
 {
-  "name": "Nuxt Dev",
+  "name": "Servicelead Dev",
   "dockerComposeFile": "../docker-compose.yaml",
   "service": "web",
   "workspaceFolder": "/app",
@@ -14,17 +17,24 @@
   // Права тоже починим (OpenSSH придирчив).
   "postCreateCommand": "mkdir -p ~/.ssh && chmod 700 ~/.ssh && (ssh-keyscan -H github.com >> ~/.ssh/known_hosts || true) && (chmod 600 ~/.ssh/* 2>/dev/null || true)",
 
+  // Configure proxy environment variables so tools inside the container (e.g., VS Code server) 
+  // can access the internet through the host proxy
+  "containerEnv": {
+    "HTTP_PROXY": "http://host.docker.internal:1082",
+    "HTTPS_PROXY": "http://host.docker.internal:1082",
+    "NO_PROXY": "localhost,127.0.0.1,::1"
+  },
+
   "customizations": {
     "vscode": {
       "extensions": [
         "Vue.volar",
         "dbaeumer.vscode-eslint",
+        "nuxtr.nuxtr-vscode",
         "openai.chatgpt"
       ],
       "settings": {
-        "eslint.validate": ["vue","javascript","typescript"],
-        "editor.codeActionsOnSave": { "source.fixAll.eslint": "always" },
-        "editor.formatOnSave": false
+        "eslint.useFlatConfig": true
       }
     }
   }
