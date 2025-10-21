@@ -1,0 +1,155 @@
+// primary
+$color-primary-50: #e6effd;
+$color-primary-100: #cedffc;
+$color-primary-200: #b4cffa;
+$color-primary-300: #83b0f6;
+$color-primary-400: #5290f3;
+$color-primary-500: #0861ee;
+$color-primary-500-5: rgba($color-primary-500, 0.05);
+$color-primary-500-10: rgba($color-primary-500, 0.1);
+$color-primary-500-20: rgba($color-primary-500, 0.2);
+$color-primary-500-40: rgba($color-primary-500, 0.4);
+$color-primary-500-60: rgba($color-primary-500, 0.6);
+$color-primary-500-80: rgba($color-primary-500, 0.8);
+$color-primary-600: #0644a7;
+$color-primary-700: #043177;
+$color-primary-800: #021d48;
+$color-primary-900: #021330;
+$color-primary-950: #010a18;
+
+// neutral light
+$color-neutral-light-0: #fff;
+$color-neutral-light-50: #f3f6fe;
+$color-neutral-light-100: #e9eefb;
+$color-neutral-light-150: #e2e9fc;
+$color-neutral-light-200: #cfd5ec;
+$color-neutral-light-300: #c0c7e0;
+$color-neutral-light-400: #9ea6c8;
+$color-neutral-light-500: #8289b1;
+$color-neutral-light-500-5: rgba($color-neutral-light-500, 0.05);
+$color-neutral-light-500-10: rgba($color-neutral-light-500, 0.1);
+$color-neutral-light-500-20: rgba($color-neutral-light-500, 0.2);
+$color-neutral-light-500-40: rgba($color-neutral-light-500, 0.4);
+$color-neutral-light-500-60: rgba($color-neutral-light-500, 0.6);
+$color-neutral-light-500-80: rgba($color-neutral-light-500, 0.8);
+$color-neutral-light-600: #5c6281;
+$color-neutral-light-700: #434862;
+$color-neutral-light-800: #2a2e42;
+$color-neutral-light-900: #1e2131;
+$color-neutral-light-950: #121522;
+
+// neutral dark
+$color-neutral-dark-50: #e5ebf9;
+$color-neutral-dark-100: #d2d8e8;
+$color-neutral-dark-200: #acb2c5;
+$color-neutral-dark-300: #7c8193;
+$color-neutral-dark-350: #565c6d;
+$color-neutral-dark-400: #494c5c;
+$color-neutral-dark-500: #33343f;
+$color-neutral-dark-500-5: rgba($color-neutral-dark-500, 0.05);
+$color-neutral-dark-500-10: rgba($color-neutral-dark-500, 0.1);
+$color-neutral-dark-500-20: rgba($color-neutral-dark-500, 0.2);
+$color-neutral-dark-500-40: rgba($color-neutral-dark-500, 0.4);
+$color-neutral-dark-500-60: rgba($color-neutral-dark-500, 0.6);
+$color-neutral-dark-500-80: rgba($color-neutral-dark-500, 0.8);
+$color-neutral-dark-600: #2a2b34;
+$color-neutral-dark-700: #212229;
+$color-neutral-dark-750: #1d1e24;
+$color-neutral-dark-800: #1a1a20;
+$color-neutral-dark-900: #141519;
+$color-neutral-dark-950: #0f1013;
+
+// red
+$color-red-50: #f9eaeb;
+$color-red-100: #f4d6d7;
+$color-red-200: #eec2c2;
+$color-red-300: #e3999a;
+$color-red-400: #d87172;
+$color-red-500: #c73436;
+$color-red-500-5: rgba($color-red-500, 0.05);
+$color-red-500-10: rgba($color-red-500, 0.1);
+$color-red-500-20: rgba($color-red-500, 0.2);
+$color-red-500-40: rgba($color-red-500, 0.4);
+$color-red-500-60: rgba($color-red-500, 0.6);
+$color-red-500-80: rgba($color-red-500, 0.8);
+$color-red-600: #8c2526;
+$color-red-700: #641a1b;
+$color-red-800: #3c1010;
+$color-red-900: #280a0b;
+$color-red-950: #140506;
+
+// yellow
+$color-yellow-50: #fdf8e5;
+$color-yellow-100: #fbf1cd;
+$color-yellow-200: #f8eab3;
+$color-yellow-300: #f4dd81;
+$color-yellow-400: #f0cf4f;
+$color-yellow-500: #e9bb04;
+$color-yellow-500-5: rgba($color-yellow-500, 0.05);
+$color-yellow-500-10: rgba($color-yellow-500, 0.1);
+$color-yellow-500-20: rgba($color-yellow-500, 0.2);
+$color-yellow-500-40: rgba($color-yellow-500, 0.4);
+$color-yellow-500-60: rgba($color-yellow-500, 0.6);
+$color-yellow-500-80: rgba($color-yellow-500, 0.8);
+$color-yellow-600: #a48303;
+$color-yellow-700: #755e02;
+$color-yellow-800: #463801;
+$color-yellow-900: #2f2501;
+$color-yellow-950: #181300;
+
+// green
+$color-green-50: #e9faee;
+$color-green-100: #d3f5dd;
+$color-green-200: #bdf0cb;
+$color-green-300: #92e6a9;
+$color-green-400: #66dc87;
+$color-green-500: #25cd54;
+$color-green-500-5: rgba($color-green-500, 0.05);
+$color-green-500-10: rgba($color-green-500, 0.1);
+$color-green-500-20: rgba($color-green-500, 0.2);
+$color-green-500-40: rgba($color-green-500, 0.4);
+$color-green-500-60: rgba($color-green-500, 0.6);
+$color-green-500-80: rgba($color-green-500, 0.8);
+$color-green-600: #1a903b;
+$color-green-700: #13672a;
+$color-green-800: #0b3e19;
+$color-green-900: #072911;
+$color-green-950: #041509;
+
+// blue
+$color-blue-50: #e5f6ff;
+$color-blue-100: #cef;
+$color-blue-200: #b2e5ff;
+$color-blue-300: #7fd4ff;
+$color-blue-400: #4cc3ff;
+$color-blue-500: #0af;
+$color-blue-500-5: rgba($color-blue-500, 0.05);
+$color-blue-500-10: rgba($color-blue-500, 0.1);
+$color-blue-500-20: rgba($color-blue-500, 0.2);
+$color-blue-500-40: rgba($color-blue-500, 0.4);
+$color-blue-500-60: rgba($color-blue-500, 0.6);
+$color-blue-500-80: rgba($color-blue-500, 0.8);
+$color-blue-600: #0077b3;
+$color-blue-700: #005580;
+$color-blue-800: #00334d;
+$color-blue-900: #023;
+$color-blue-950: #00111a;
+
+// purple
+$color-purple-50: #f3eefa;
+$color-purple-100: #ebe4f6;
+$color-purple-200: #ccbee5;
+$color-purple-300: #ad9ad4;
+$color-purple-400: #8e76c3;
+$color-purple-500: #6040a9;
+$color-purple-500-5: rgba($color-purple-500, 0.05);
+$color-purple-500-10: rgba($color-purple-500, 0.1);
+$color-purple-500-20: rgba($color-purple-500, 0.2);
+$color-purple-500-40: rgba($color-purple-500, 0.4);
+$color-purple-500-60: rgba($color-purple-500, 0.6);
+$color-purple-500-80: rgba($color-purple-500, 0.8);
+$color-purple-600: #432d77;
+$color-purple-700: #302055;
+$color-purple-800: #1d1333;
+$color-purple-900: #1d1333;
+$color-purple-950: #0a0711;
