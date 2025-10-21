@@ -1,7 +1,7 @@
 {
 	"@include $": {
     "scope": "scss",
-    "prefix": "zet",
+    "prefix": "inc",
     "body": [
       "@include $1 {",
       "  $2",
