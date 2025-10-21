@@ -19,7 +19,8 @@
       "extensions": [
         "Vue.volar",
         "dbaeumer.vscode-eslint",
-        "stylelint.vscode-stylelint"
+        "stylelint.vscode-stylelint",
+        "esbenp.prettier-vscode"
       ],
       "settings": {      
         "eslint.validate": ["vue","javascript","typescript"],
@@ -28,7 +29,8 @@
           "source.fixAll.eslint": "always",
           "source.fixAll.stylelint": true
          },
-        "editor.formatOnSave": false
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true
       }
     }
   }
