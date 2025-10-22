@@ -1,5 +1,7 @@
+/*
+ * Guide: https://nuxt.com/docs/guide/concepts/typescript
+ */
 {
-  // https://nuxt.com/docs/guide/concepts/typescript
   "files": [],
   "references": [
     {

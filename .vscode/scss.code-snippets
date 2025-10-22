@@ -1,0 +1,62 @@
+{
+	"@include $": {
+    "scope": "scss",
+    "prefix": "inc",
+    "body": [
+      "@include $1 {",
+      "  $2",
+      "}"
+    ],
+    "description": "Include"
+  },
+	"@include xl": {
+    "scope": "scss",
+    "prefix": "ixl",
+    "body": [
+      "@include xl {",
+      "  $0",
+      "}"
+    ],
+    "description": "Include media query XL <=1399px"
+  },
+  "@include lg": {
+    "scope": "scss",
+    "prefix": "ilg",
+    "body": [
+      "@include lg {",
+      "  $0",
+      "}"
+    ],
+    "description": "Include media query LG <=1199px"
+  },
+  "@include md": {
+    "scope": "scss",
+    "prefix": "imd",
+    "body": [
+      "@include md {",
+      "  $0",
+      "}"
+    ],
+    "description": "Include media query MD <=991px"
+  },
+  "@include sm": {
+    "scope": "scss",
+    "prefix": "ism",
+    "body": [
+      "@include sm {",
+      "  $0",
+      "}"
+    ],
+    "description": "Include media query SM <=767px"
+  },
+  "@include xs": {
+    "scope": "scss",
+    "prefix": "ixs",
+    "body": [
+      "@include xs {",
+      "  $0",
+      "}"
+    ],
+    "description": "Include media query XS <=575px"
+  },
+}
