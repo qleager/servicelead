@@ -1,4 +1,36 @@
 {
+  "@include text(...)": {
+    "scope": "scss",
+    "prefix": "text",
+    "body": [
+      "@include text(${1|light,regular,medium,semibold,bold,extrabold|}, ${2|2xs,xs,sm,base,lg,xl,2xl,3xl,4xl,5xl,6xl,7xl,8xl|});"
+    ],
+    "description": "Вставить @include text(weight, size)"
+  },
+  "@include label(...)": {
+    "scope": "scss",
+    "prefix": "label",
+    "body": [
+      "@include label(${1|sm,base|}, ${2|regular,medium|});"
+    ],
+    "description": "Вставить @include label(size, weight)"
+  },
+  "color variable": {
+    "scope": "scss",
+    "prefix": "color",
+    "body": [
+      "$$color-${1|primary,neutral-light,neutral-dark,red,yellow,green,blue,purple|}-${2|50,100,200,300,400,500,600,700,800,900,950|};"
+    ],
+    "description": "Выбор SCSS-переменной color с подсказками"
+  },
+  "space variable": {
+    "scope": "scss",
+    "prefix": "space",
+    "body": [
+      "$$space-${1|05,1,2,4,6,8,10,12,14,16,18,20,30|};"
+    ],
+    "description": "Выбор SCSS-переменной space"
+  },
 	"@include $": {
     "scope": "scss",
     "prefix": "inc",
