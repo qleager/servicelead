@@ -1,0 +1,74 @@
+$space-05:  2px;
+$space-1:   4px;
+$space-2:   8px;
+$space-4:   16px;
+$space-6:   24px;
+$space-8:   32px;
+$space-10:  40px;
+$space-12:  48px;
+$space-14:  56px;
+$space-16:  64px;
+$space-18:  72px;
+$space-20:  80px;
+$space-30:  120px;
+
+$space-map: (
+  0-5: $space-05,
+  1:   $space-1,
+  2:   $space-2,
+  4:   $space-4,
+  6:   $space-6,
+  8:   $space-8,
+  10:  $space-10,
+  12:  $space-12,
+  14:  $space-14,
+  16:  $space-16,
+  18:  $space-18,
+  20:  $space-20,
+  30:  $space-30
+);
+
+@each $key, $val in $space-map {
+  .m-#{$key}  { margin:        $val !important; }
+  .mt-#{$key} { margin-top:    $val !important; }
+  .mr-#{$key} { margin-right:  $val !important; }
+  .mb-#{$key} { margin-bottom: $val !important; }
+  .ml-#{$key} { margin-left:   $val !important; }
+  .mx-#{$key} { margin-left:   $val !important; margin-right: $val !important; }
+  .my-#{$key} { margin-top:    $val !important; margin-bottom: $val !important; }
+
+  .-m-#{$key}  { margin:        -$val !important; }
+  .-mt-#{$key} { margin-top:    -$val !important; }
+  .-mr-#{$key} { margin-right:  -$val !important; }
+  .-mb-#{$key} { margin-bottom: -$val !important; }
+  .-ml-#{$key} { margin-left:   -$val !important; }
+  .-mx-#{$key} { margin-left:   -$val !important; margin-right: -$val !important; }
+  .-my-#{$key} { margin-top:    -$val !important; margin-bottom: -$val !important; }
+
+  .p-#{$key}  { padding:        $val !important; }
+  .pt-#{$key} { padding-top:    $val !important; }
+  .pr-#{$key} { padding-right:  $val !important; }
+  .pb-#{$key} { padding-bottom: $val !important; }
+  .pl-#{$key} { padding-left:   $val !important; }
+  .px-#{$key} { padding-left:   $val !important; padding-right:  $val !important; }
+  .py-#{$key} { padding-top:    $val !important; padding-bottom: $val !important; }
+
+  .gap-#{$key}   { gap:         $val !important; }
+  .gap-x-#{$key} { column-gap:  $val !important; }
+  .gap-y-#{$key} { row-gap:     $val !important; }
+
+  .space-x-#{$key} > * + * { margin-left:  $val !important; }
+  .space-y-#{$key} > * + * { margin-top:   $val !important; }
+
+  .-space-x-#{$key} > * + * { margin-left:  -$val !important; }
+  .-space-y-#{$key} > * + * { margin-top:   -$val !important; }
+}
+
+.m-a  { margin:        auto !important; }
+.mx-a { margin-left:   auto !important; margin-right: auto !important; }
+.my-a { margin-top:    auto !important; margin-bottom: auto !important; }
+
+.mt-a { margin-top:    auto !important; }
+.mr-a { margin-right:  auto !important; }
+.mb-a { margin-bottom: auto !important; }
+.ml-a { margin-left:   auto !important; }
