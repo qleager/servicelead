@@ -3,7 +3,15 @@
 Проект использует **Docker + Dev Containers**.  
 После клонирования репозитория проекта, действия по установке и запуску выполняются **через VS Code**.
 
----
+## Stack
+`Docker` `Nuxt 4` `Typescript` `ESLint` `Stylelint` `SCSS` `pnpm`
+
+## Features
+- **Consistent development environment**
+- **Linting, Formatter, and Auto-fix scripts** `VS Code only`
+- **Linting, Formatter, and Auto-fix styles** `VS Code only`
+- **SCSS snippets** `VS Code only`
+- **Docker-based isolation**
 
 ## 📦 Требования
 
