@@ -32,18 +32,25 @@
         "dbaeumer.vscode-eslint",
         "nuxtr.nuxtr-vscode",
         "openai.chatgpt",
-        "stylelint.vscode-stylelint",
-        "esbenp.prettier-vscode"
+        "stylelint.vscode-stylelint"
       ],
       "settings": {
-        "eslint.useFlatConfig": true,
-        "stylelint.validate": ["css", "scss", "vue"],
-        "editor.codeActionsOnSave": { 
-          "source.fixAll.eslint": "explicit",
-          "source.fixAll.stylelint": true
-         },
-        "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "editor.formatOnSave": true
+        "editor": {
+          "codeActionsOnSave": {
+            "source.fixAll.eslint": "explicit",
+            "source.fixAll.stylelint": "explicit"
+          }
+        },
+        "stylelint": {
+          "configFile": "./stylelint.config.mjs",
+          "validate": [
+            "scss",
+            "vue"
+          ]
+        },
+        "eslint": {
+          "useFlatConfig": true
+        }
       }
     }
   }
