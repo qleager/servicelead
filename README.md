@@ -4,11 +4,12 @@
 После клонирования репозитория проекта, действия по установке и запуску выполняются **через VS Code**.
 
 ## Stack
-`Docker` `Nuxt 4` `Typescript` `ESLint` `SCSS` `pnpm`
+`Docker` `Nuxt 4` `Typescript` `ESLint` `Stylelint` `SCSS` `pnpm`
 
 ## Features
 - **Consistent development environment**
-- **Linting and auto-fix scripts** `VS Code only`
+- **Linting, Formatter, and Auto-fix scripts** `VS Code only`
+- **Linting, Formatter, and Auto-fix styles** `VS Code only`
 - **SCSS snippets** `VS Code only`
 - **Docker-based isolation**
 
