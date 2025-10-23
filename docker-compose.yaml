@@ -13,7 +13,7 @@ services:
       # Nuxt слушает все интерфейсы (иначе с хоста не достучаться)
       HOST: "0.0.0.0"
       # На Windows/Mac (Docker Desktop) бывает нужен polling для отслеживания файлов:
-      # CHOKIDAR_USEPOLLING: "true"
+      CHOKIDAR_USEPOLLING: "true"
     volumes:
       # Монтируем код из хоста -> горячая перезагрузка
       # .: означает текущую папку в которой запущена команда docker compose up
