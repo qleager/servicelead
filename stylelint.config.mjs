@@ -6,6 +6,12 @@ export default {
     'stylelint-config-clean-order',
   ],
   formatter: stylelintFormatter,
+  /* TODO: отлично рабоает в .scss файлах
+   *       не работает в .vue файлах
+   *
+   * Предположительно, проблема в плагине, так как clean-order
+   * во .vue файлах отрабатывает
+   */
   plugins: ['stylelint-prettier'],
   rules: {
     'order/order': null,
@@ -13,7 +19,7 @@ export default {
   },
   overrides: [
     {
-      files: ['./**/*.vue'],
+      files: ['**/*.vue'],
       customSyntax: 'postcss-html',
       rules: {
         'prettier/prettier': [true, { singleQuote: true, tabWidth: 2 }],
