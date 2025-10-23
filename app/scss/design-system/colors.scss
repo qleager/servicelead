@@ -1,21 +1,32 @@
-// primary
-$color-primary-50: #e6effd;
-$color-primary-100: #cedffc;
-$color-primary-200: #b4cffa;
-$color-primary-300: #83b0f6;
-$color-primary-400: #5290f3;
-$color-primary-500: #0861ee;
-$color-primary-500-5: rgba($color-primary-500, 0.05);
+@use 'sass:color';
+
+// TODO(Y): переписать цвета по примеру ниже
+// основные цвета
+$color-primary: #0861ee;
+$color-neutral-light: #8289b1;
+
+// палитра primary цвета до 500 $lightness, больше 500 $blackness
+$color-primary-50: color.adjust($color-primary, $lightness: 90%);
+$color-primary-100: color.adjust($color-primary, $lightness: 80%);
+$color-primary-150: color.adjust($color-primary, $lightness: 70%);
+$color-primary-200: color.adjust($color-primary, $lightness: 60%);
+$color-primary-250: color.adjust($color-primary, $lightness: 50%);
+$color-primary-300: color.adjust($color-primary, $lightness: 40%);
+$color-primary-350: color.adjust($color-primary, $lightness: 30%);
+$color-primary-400: color.adjust($color-primary, $lightness: 20%);
+$color-primary-450: color.adjust($color-primary, $lightness: 10%);
+$color-primary-500: $color-primary;
+$color-primary-550: color.adjust($color-primary, $blackness: 10%);
+$color-primary-600: color.adjust($color-primary, $blackness: 20%);
+$color-primary-950: color.adjust($color-primary, $blackness: 90%);
+
+// переменные с прозранчостью убираем
+$color-primary-5per: rgba($color-primary-500, 0.05);
 $color-primary-500-10: rgba($color-primary-500, 0.1);
 $color-primary-500-20: rgba($color-primary-500, 0.2);
 $color-primary-500-40: rgba($color-primary-500, 0.4);
 $color-primary-500-60: rgba($color-primary-500, 0.6);
 $color-primary-500-80: rgba($color-primary-500, 0.8);
-$color-primary-600: #0644a7;
-$color-primary-700: #043177;
-$color-primary-800: #021d48;
-$color-primary-900: #021330;
-$color-primary-950: #010a18;
 
 // neutral light
 $color-neutral-light-0: #fff;

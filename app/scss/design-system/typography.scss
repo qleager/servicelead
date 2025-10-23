@@ -1,6 +1,6 @@
-@use "sass:map";
+@use 'sass:map';
 
-$font-family: "Manrope", sans-serif;
+$font-family: 'Manrope', sans-serif;
 $font-weights: (
   light: 200,
   regular: 400,
@@ -75,7 +75,7 @@ $label-weights: (
   $weight,
   $line-height: auto,
   $letter-spacing: normal,
-  $text-transform: "uppercase"
+  $text-transform: 'uppercase'
 ) {
   font-family: $font-family;
   font-size: $size;

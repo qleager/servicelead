@@ -15,7 +15,7 @@
     ],
     "description": "Вставить @include label(size, weight)"
   },
-  "color variable": {
+  "Color Variable": {
     "scope": "scss",
     "prefix": "color",
     "body": [
@@ -23,7 +23,7 @@
     ],
     "description": "Выбор SCSS-переменной color с подсказками"
   },
-  "space variable": {
+  "Space Variable": {
     "scope": "scss",
     "prefix": "space",
     "body": [
@@ -31,7 +31,7 @@
     ],
     "description": "Выбор SCSS-переменной space"
   },
-	"@include $": {
+  "@include $": {
     "scope": "scss",
     "prefix": "inc",
     "body": [
@@ -41,7 +41,7 @@
     ],
     "description": "Include"
   },
-	"@include xl": {
+  "@include xl": {
     "scope": "scss",
     "prefix": "ixl",
     "body": [
