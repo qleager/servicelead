@@ -13,6 +13,10 @@
 - **SCSS snippets** `VS Code only`
 - **Docker-based isolation**
 
+## Use Snippets
+
+Рассказать обо всех и показать gif использования
+
 ## 📦 Требования
 
 Перед началом убедитесь, что установлено:
