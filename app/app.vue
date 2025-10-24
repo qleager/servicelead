@@ -10,7 +10,6 @@
 
 <style lang="scss">
 .bg {
-  // TODO(Y): Ахуенно, то что я и имел ввиду
   @include text(bold, base);
 
   padding: $space-10;
