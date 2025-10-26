@@ -15,6 +15,11 @@ import app from '~/app.vue'
 interface Props {
   status: AsyncDataRequestStatus
   type: Type
+  // Используем этот пропс когда компyент значительно видоизменяется
+  // Например: кнопка solid    – залитая цветом
+  //                  bordered - кнопка с бордером
+  // Такой же методики придерживается Nuxt UI, можно посмотреть, чтобы понять
+  variant: ''
 }
 
 // Затем — типы событий (emits)
@@ -109,6 +114,10 @@ const deleteWorld = () => {
     >
       Удалить
     </button>
+    <!-- Слот всегда оборачиваем -->
+    <div class="world__slot">
+      <slot />
+    </div>
   </div>
 </template>
 
