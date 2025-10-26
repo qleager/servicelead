@@ -1,6 +1,6 @@
 @use 'sass:color';
 
-// основные цвета
+// Main Colors
 $color-primary: #0861ee;
 $color-neutral-light: #8289b1;
 $color-neutral-dark: #33343f;
@@ -9,6 +9,12 @@ $color-yellow: #e9bb04;
 $color-green: #25cd54;
 $color-blue: #0af;
 $color-purple: #6040a9;
+
+// State Color
+$color-error: $color-red;
+$color-warning: $color-yellow;
+$color-success: $color-green;
+$color-info: $color-blue;
 
 // палитра primary цвета до 500 $lightness, больше 500 $blackness
 $color-primary-50: color.adjust($color-primary, $lightness: 90%);
