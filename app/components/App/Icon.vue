@@ -6,7 +6,7 @@
 
 interface Props {
   name: string
-  size: number
+  size?: number
 }
 </script>
 
