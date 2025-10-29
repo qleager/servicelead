@@ -19,6 +19,10 @@ const helpItems: NavigationMenuItem[] = [{}]
       title="Помощь"
       :items
       :minimal
+    />
+    <NavigationMenu
+      :items
+      :minimal
     >
       <!-- Добавить пункт меню -->
     </NavigationMenu>
