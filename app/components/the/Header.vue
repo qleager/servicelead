@@ -6,9 +6,10 @@
   <header class="header">
     <FinanceBalance class="header__balance" />
     <SearchDropdown class="header__search" />
-    <NotificationsToggle class="header__notification" />
-    <TicketsToggle class="header__notification" />
-    <ManagerToggle class="header__manager" />
+    <NotificationsButton class="header__notification" />
+    <TicketsButton class="header__notification" />
+    <ManagerButton class="header__manager" />
+    <NavigationActions />
   </header>
 </template>
 
