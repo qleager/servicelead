@@ -15,8 +15,6 @@ const classname = computed(() => ([
   'checkbox',
   { 'checkbox-checked': model.value }, // связываем через класс корневой элемент с состоянием инпута и модели
 ]))
-
-console.log('typeof (props.disabled)', typeof (props.disabled))
 </script>
 
 <template>
