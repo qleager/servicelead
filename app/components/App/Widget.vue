@@ -8,6 +8,9 @@ interface Props {
    * TODO: Добавить типизацию роутов (не на первом этапе)
    */
   action?: [string | (() => void), string | undefined] //
+  // Card = Новости на дасшборде
+  // section = Топ офферы на дасшборде
+  variant?: 'card' | 'section' // def card
 }
 </script>
 
