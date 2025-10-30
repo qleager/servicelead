@@ -1,14 +1,33 @@
 <script lang="ts" setup>
-// Закладываем вероятное появление страницы уведомлений, для анологичной реализации как в app/components/tickets/Button.vue
+interface Props {
+  mode?: 'page' | 'dropdown' | 'sheet' // при клике вызов дропдауна/шита или переход не страницу // def page
+}
+
+const rootElement = computed(() => {
+  switch (props.mode) {
+    case 'dropdown':
+      return 'AppDropdown'
+      break
+
+    case 'sheet':
+      return 'AppSheet'
+      break
+
+    default:
+      return 'div'
+      break
+  }
+})
 </script>
 
 <template>
-  <AppDropdown
+  <Component
+    :is="rootElement"
     class="notifications-button"
   >
     AppButton
-    <template #dropdown>
+    <template #content>
       тут что-то будет
     </template>
-  </AppDropdown>
+  </Component>
 </template>
