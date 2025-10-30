@@ -1,10 +1,24 @@
 <script lang="ts" setup>
 interface Props {
-  mode?: 'dropdown' | 'page' // при клике вызов дропдауна или переход не страницу // def dropdown
+  mode?: 'page' | 'dropdown' | 'sheet' // при клике вызов дропдауна или переход не страницу // def page
   color?: ButtonProps['color'] // def такой как в самой кнопке
 }
 
-const rootElement = computed(() => props.mode === 'dropdown' ? 'AppDropdown' : 'div')
+const rootElement = computed(() => {
+  switch (props.mode) {
+    case 'dropdown':
+      return 'AppDropdown'
+      break
+
+    case 'sheet':
+      return 'AppSheet'
+      break
+
+    default:
+      return 'div'
+      break
+  }
+})
 </script>
 
 <template>
@@ -13,7 +27,7 @@ const rootElement = computed(() => props.mode === 'dropdown' ? 'AppDropdown' : '
     class="tickets-button"
   >
     AppButton
-    <template #dropdown>
+    <template #content>
       тут что-то будет
     </template>
   </Component>
