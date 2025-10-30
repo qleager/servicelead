@@ -55,8 +55,6 @@ const classname = computed(() => ([
   height: 40px;
   border-radius: 4px;
 
-  background-color: $color-neutral-dark;
-
   $this: &;
   $hover: & + ':hover';  // hover
   $active: & + ':active'; // hoverpress
