@@ -18,8 +18,7 @@ const classname = computed(() => ([
 </script>
 
 <template>
-  <label :class="classname">  <!-- обычный div с @click="model = !model" ломает disable и он не срабатывает. label же связвывается с input через id или как тут через вложенность ловит для него ckick от всех вложенных елементов -->
-
+  <label :class="classname">  <!-- обычный div с @click="model = !model" ломает disable и он не срабатывает. -->
     <input
       v-model="model"
       class="checkbox__field"
@@ -45,6 +44,9 @@ const classname = computed(() => ([
 
 <style lang="scss">
 .checkbox {
+  /* состояния указанные в диз макете */
+
+  /* default */
   cursor: pointer;
 
   display: inline-flex;
@@ -55,21 +57,7 @@ const classname = computed(() => ([
   height: 40px;
   border-radius: 4px;
 
-  $this: &;
-  $hover: & + ':hover';  // hover
-  $active: & + ':active'; // hoverpress
-  $focus: & + ':focus'; // focus
-  $checked: & + '-checked'; // enter     // состояние true определяем через класс корневого элемента, а не инпута, так как у нас оно меняется по клику на весь корневой элемент включая текст. Считаю что более правильно.
-  $field-disabled: & + '__field:disabled'; // disabled
-  $field-focus: & + '__field:focus'; // focus
-
-  &:has(#{$field-focus})  { // обводка при фокусе
-    box-shadow:
-      0 0 0 2px rgb(255 255 255 / 100%),
-      0 0 0 4px rgb(8 97 238 / 100%);
-  }
-
-  &__field {  // лучший способ сохранить полную функциональность элемента и сделать его .sr-only( только для чтения с экрана) в большинстве браузеров, согластно статье https://www.tpgi.com/the-anatomy-of-visually-hidden/?utm_source=chatgpt.com
+  &__field {  // Обычный input hidden убирает focus. Потому лучший способ сохранить полную функциональность элемента и сделать его .sr-only( только для чтения с экрана) в большинстве браузеров, согластно статье https://www.tpgi.com/the-anatomy-of-visually-hidden/?utm_source=chatgpt.com
     position: absolute;
 
     overflow: hidden;
@@ -80,7 +68,7 @@ const classname = computed(() => ([
     white-space: nowrap;
 
     clip-path: inset(50%);
-   }
+  }
 
   &__bullet {
     display: inline-flex;
@@ -91,29 +79,7 @@ const classname = computed(() => ([
     height: 24px;
     border-radius: 4px;
 
-    #{$hover} & {
-      background-color: $color-neutral-light-400;
-    }
-
-    // скомпилируется в .checkbox:active .checkbox__bullet
-    #{$active} & {
-      background-color: $color-primary-500;
-    }
-
-    // но можно и через $field-checked ~ &;, если состояние будет меняеться только по клику на инпут
-    // тогда заведем переменную  $field-checked: & + '__field:checked';
-    #{$checked} > & {
-      background-color: $color-green; // временно зеленый вместо галочки
-    }
-
-    #{$field-disabled} ~ & {
-      border: 1px solid $color-neutral-light-400;
-      background-color: transparent;
-    }
-
-    #{$field-focus} ~ & {
-      background-color: $color-neutral-light-100;
-    }
+    background-color: $color-neutral-light-100;
   }
 
   &__label {
@@ -122,10 +88,50 @@ const classname = computed(() => ([
     }
 
     @include text(regular, sm);
+  }
 
-    #{$field-disabled} ~ & {
-      color: $color-neutral-light-400;
-    }
+  $this: &;              // default
+  $hover: & + ':hover';  // hover
+  $active: & + ':active'; // hoverpress
+  $checked: & + '-checked'; // enter
+  $field-disabled: & + '__field:disabled'; // disabled
+  $field-focus: & + '__field:focus'; // focus
+
+  /* hover */
+  #{$hover} &__bullet {
+    background-color: $color-neutral-light-400;
+  }
+
+  /* hoverpress */
+  #{$active} &__bullet {
+    background-color: $color-primary-500;
+  }
+
+  /* enter */
+  #{$checked} &__bullet {
+    background-color: $color-green; // временно зеленый вместо галочки, а вообще $color-primary-500;
+  }
+
+  /* disabled */
+  &:has(#{$field-disabled}) {
+    cursor: default;
+  }
+  #{$field-disabled} ~ &__bullet {
+    border: 1px solid $color-neutral-light-400;
+    background-color: transparent;
+  }
+  #{$field-disabled} ~ &__label {
+    color: $color-neutral-light-400;
+  }
+
+  /* focus */
+  &:focus-within {
+    box-shadow:
+      0 0 0 2px rgb(255 255 255 / 100%),
+      0 0 0 4px rgb(8 97 238 / 100%);
+  }
+  #{$field-focus} ~ &__bullet {
+    background-color: $color-neutral-light-100;
   }
 }
 </style>
