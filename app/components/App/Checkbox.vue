@@ -2,36 +2,37 @@
 interface Props {
   label?: string
   value?: null | string | number | bigint | Record<string, any>
-  name?: string // и все остальные своейтсвенные input checkbox
+  name?: string
   required?: boolean
   disabled?: boolean
 }
 const props = defineProps<Props>()
 
-// Основное значение/состояние компоеннта – в нашем случае, выбран он или нет
 const model = defineModel<boolean>({ default: false })
 
 const classname = computed(() => ([
   'checkbox',
-  { 'checkbox-checked': model.value }, // связываем через класс корневой элемент с состоянием инпута и модели
+  { 'checkbox-checked': model.value },
+  { 'checkbox-disabled': props.disabled },
 ]))
 </script>
 
 <template>
-  <label :class="classname">  <!-- обычный div с @click="model = !model" ломает disable и он не срабатывает. -->
+  <div
+    :class="classname"
+    @click="model = !props.disabled && (model = !model)"
+  >
     <input
       v-model="model"
       class="checkbox__field"
       type="checkbox"
       :name="props.name"
       :value="props.value"
-      :required="props.required"
-      :disabled="props.disabled"
+      :required
+      :disabled
     >
-    <!-- Это квадратик из диза -->
     <span class="checkbox__bullet">
-      <!-- Если выбран показываем иконку галочки внутри квдратика -->
-      <!-- Тут v-if нужен чтобы не грузить инстанс AppIcon при ините, ведь зачастую чекбокс не выбран -->
+
       <!-- <AppIcon
         v-if="model"
       /> -->
@@ -39,14 +40,17 @@ const classname = computed(() => ([
     <span class="checkbox__label">
       {{ label }}
     </span>
-  </label>
+  </div>
 </template>
 
 <style lang="scss">
 .checkbox {
-  /* состояния указанные в диз макете */
+  $this: &;                                // default
+  $hover: & + ':hover';                    // hover
+  $active: & + ':active';                  // hoverpress
+  $checked: & + '-checked';                // enter
+  $disabled: & + '-disabled';              // disabled
 
-  /* default */
   cursor: pointer;
 
   display: inline-flex;
@@ -57,7 +61,7 @@ const classname = computed(() => ([
   height: 40px;
   border-radius: 4px;
 
-  &__field {  // Обычный input hidden убирает focus. Потому лучший способ сохранить полную функциональность элемента и сделать его .sr-only( только для чтения с экрана) в большинстве браузеров, согластно статье https://www.tpgi.com/the-anatomy-of-visually-hidden/?utm_source=chatgpt.com
+  &__field {
     position: absolute;
 
     overflow: hidden;
@@ -83,55 +87,30 @@ const classname = computed(() => ([
   }
 
   &__label {
+    @include text(regular, sm);
+
     &:empty {
       display: none;
     }
-
-    @include text(regular, sm);
   }
 
-  $this: &;              // default
-  $hover: & + ':hover';  // hover
-  $active: & + ':active'; // hoverpress
-  $checked: & + '-checked'; // enter
-  $field-disabled: & + '__field:disabled'; // disabled
-  $field-focus: & + '__field:focus'; // focus
-
-  /* hover */
   #{$hover} &__bullet {
     background-color: $color-neutral-light-400;
   }
 
-  /* hoverpress */
   #{$active} &__bullet {
-    background-color: $color-primary-500;
+    background-color: $color-primary
   }
 
-  /* enter */
-  #{$checked} &__bullet {
-    background-color: $color-green; // временно зеленый вместо галочки, а вообще $color-primary-500;
+  &#{$disabled} {
+    pointer-events: none;
   }
-
-  /* disabled */
-  &:has(#{$field-disabled}) {
-    cursor: default;
-  }
-  #{$field-disabled} ~ &__bullet {
+  #{$disabled} &__bullet {
     border: 1px solid $color-neutral-light-400;
     background-color: transparent;
   }
-  #{$field-disabled} ~ &__label {
+  #{$disabled} &__label {
     color: $color-neutral-light-400;
-  }
-
-  /* focus */
-  &:focus-within {
-    box-shadow:
-      0 0 0 2px rgb(255 255 255 / 100%),
-      0 0 0 4px rgb(8 97 238 / 100%);
-  }
-  #{$field-focus} ~ &__bullet {
-    background-color: $color-neutral-light-100;
   }
 }
 </style>
