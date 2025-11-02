@@ -5,6 +5,7 @@ interface Props {
   name?: string
   required?: boolean
   disabled?: boolean
+  id?: string
 }
 const props = defineProps<Props>()
 
@@ -23,6 +24,7 @@ const classname = computed(() => ([
     @click="model = !props.disabled && (model = !model)"
   >
     <input
+      :id="props.id"
       v-model="model"
       class="checkbox__field"
       type="checkbox"
