@@ -24,12 +24,12 @@ const classname = computed(() => ([
     @click="model = !props.disabled && (model = !model)"
   >
     <input
-      :id="props.id"
+      :id
       v-model="model"
       class="checkbox__field"
       type="checkbox"
-      :name="props.name"
-      :value="props.value"
+      :name
+      :value
       :required
       :disabled
     >
