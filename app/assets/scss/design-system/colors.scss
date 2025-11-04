@@ -38,6 +38,7 @@ $color-primary-900: color.adjust($color-primary, $blackness: 80%);
 $color-primary-950: color.adjust($color-primary, $blackness: 90%);
 
 // палитра neutral light цвета до 500 $lightness, больше 500 $blackness
+$color-neutral-light-0: color.adjust($color-neutral-light, $lightness: 100%);
 $color-neutral-light-50: color.adjust($color-neutral-light, $lightness: 90%);
 $color-neutral-light-100: color.adjust($color-neutral-light, $lightness: 80%);
 $color-neutral-light-150: color.adjust($color-neutral-light, $lightness: 70%);
