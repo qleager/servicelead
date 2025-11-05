@@ -1,18 +1,18 @@
 <script lang="ts" setup>
 interface Props {
-  variant?: 'filled' | 'lined' | 'nofiled'
-  // После создания AppIcon
-  icon?: IconProps['name']
-  size?: '3xs' | 'xxs' | 'xs' | 'sm' | 'md'
-  color?: 'primary' | 'neutral' | 'neutral-1'
+  variant?: 'filled' | 'lined' | 'nofilled'
+  // После создания AppIcon;
+  icon?: IconProps['name'];
+  size?: '3xs' | 'xxs' | 'xs' | 'sm' | 'md';
+  color?: 'primary' | 'neutral-0' | 'neutral-1' | 'neutral-1-20';
   type?: 'button' | 'submit' | 'reset'
   // TODO типы из router, чтобы тут затипизированы были только реальные роуты
-  // а если ссылка на внешний ресурс? Может тогда ещё проп target добавить?
-  to?: string
-  value?: string | number
-  trailingIcon?: boolean
-  disabled?: boolean
-  active?: boolean
+  // а если ссылка на внешний ресурс? Может тогда ещё проп target добавить?;
+  to?: string;
+  value?: string | number;
+  trailingIcon?: boolean;
+  disabled?: boolean;
+  active?: boolean;
   loading?: boolean
 }
 
@@ -83,6 +83,10 @@ export type { Props as ButtonProps }
   $variant-filled: $this + '-variant-filled';
   $variant-lined: $this + '-variant-lined';
   $variant-nofilled: $this + '-variant-nofilled';
+  $color-primary: $this + '-color-primary';
+  $color-neutral-0: $this + '-color-neutral-0';
+  $color-neutral-1: $this + '-color-neutral-1';
+  $color-neutral-1-20: $this + '-color-neutral-1-20';
   $trailing-icon: $this + '-trailing-icon';
   $disabled: & + '-disabled';
   $loading: & + '-loading';
@@ -101,60 +105,6 @@ export type { Props as ButtonProps }
 
   width: fit-content;
   border-radius: 39px;
-
-  &#{$variant-filled} {
-    color: $color-neutral-light-0;
-    background-color: $color-primary;
-
-    &#{$hover} {
-      background-color: $color-primary-600;
-    }
-
-    &#{$active}, &#{$active-from-props} {
-      color: $color-neutral-light-400;
-      background-color: $color-primary-700;
-    }
-
-    &#{$disabled} {
-      color: $color-neutral-light-50;
-      background-color: $color-neutral-light-100;
-    }
-  }
-
-  &#{$variant-lined} {
-    border: 1px solid $color-neutral-light-300;
-    color: $color-neutral-light-950;
-    background-color: unset;
-
-    &#{$hover} {
-      background-color: $color-neutral-light-0;
-    }
-    &#{$active}, &#{$active-from-props} {
-      color: $color-neutral-light-950;
-      background-color: $color-neutral-light-50;
-    }
-
-    &#{$disabled} {
-      color: $color-neutral-light-300;
-    }
-  }
-
-  &#{$variant-nofilled} {
-    color: $color-neutral-light;
-    background-color: unset;
-
-    &#{$hover} {
-      color: $color-neutral-light-900;
-    }
-
-    &#{$active}, &#{$active-from-props} {
-      color: $color-neutral-light-600;
-    }
-
-    &#{$disabled} {
-      color: $color-neutral-light-300;
-    }
-  }
 
   &#{$size-3xs} {
     height: 20px;
@@ -179,18 +129,99 @@ export type { Props as ButtonProps }
     font-size: 16px;
   }
 
+  &#{$variant-filled} {
+    &#{$color-primary} {
+      color: $color-neutral-light-0;
+      background-color: $color-primary;
+
+      &:not(#{$disabled}):not(#{$loading})#{$hover} {
+        background-color: $color-primary-600;
+      }
+
+      &:not(#{$disabled}):not(#{$loading})#{$active},
+      &:not(#{$disabled}):not(#{$loading})#{$active-from-props} {
+        color: $color-neutral-light-400;
+        background-color: $color-primary-700;
+      }
+
+      &#{$disabled} {
+        color: $color-neutral-light-400;
+        background-color: $color-neutral-light-100;
+      }
+    }
+
+    &#{$color-neutral-0} {
+      color: $color-neutral-light-950;
+      background-color: $color-neutral-light-0;
+
+      &:not(#{$disabled}):not(#{$loading})#{$hover} {
+        background-color: $color-neutral-light-200;
+      }
+
+      &:not(#{$disabled}):not(#{$loading})#{$active},
+      &:not(#{$disabled}):not(#{$loading})#{$active-from-props} {
+        background-color: $color-neutral-light-400;
+      }
+    }
+
+    &#{$color-neutral-1} {
+      color: $color-neutral-light-950;
+      background-color: $color-neutral-light-100;
+    }
+
+    &#{$color-neutral-1-20} {
+      background-color: rgba($color-neutral-light, 0.2);
+    }
+  }
+
+  &#{$variant-lined} {
+    border: 1px solid $color-neutral-light-300;
+    color: $color-neutral-light-950;
+    background-color: unset;
+
+    &:not(#{$disabled}):not(#{$loading})#{$hover} {
+      background-color: $color-neutral-light-0;
+    }
+    &:not(#{$disabled}):not(#{$loading})#{$active},
+    &:not(#{$disabled}):not(#{$loading})#{$active-from-props} {
+      color: $color-neutral-light-950;
+      background-color: $color-neutral-light-50;
+    }
+
+    &#{$disabled} {
+      color: $color-neutral-light-300;
+    }
+  }
+
+  &#{$variant-nofilled} {
+    color: $color-neutral-light;
+    background-color: unset;
+    padding: $space-1;
+
+    &:not(#{$disabled}):not(#{$loading})#{$hover} {
+      color: $color-neutral-light-900;
+    }
+
+    &:not(#{$disabled}):not(#{$loading})#{$active},
+    &:not(#{$disabled}):not(#{$loading})#{$active-from-props} {
+      color: $color-neutral-light-600;
+    }
+
+    &#{$disabled} {
+      color: $color-neutral-light-300;
+    }
+  }
+
   &#{$trailing-icon} {
     flex-direction: row-reverse;
   }
 
   &#{$disabled} {
-    pointer-events: none;
     cursor: not-allowed;
     color: $color-neutral-light-300;
   }
 
   &#{$loading} {
-    pointer-events: none;
     cursor: progress;
   }
 
