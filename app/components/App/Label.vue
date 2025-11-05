@@ -57,10 +57,10 @@ const captionClassname = computed(() => [
   width: fit-content;
 
   &__title {
-    @include label(base, regular);
+    @include label(base, medium);
 
-    color: $color-neutral-light-950;
     margin-bottom: $space-2;
+    color: $color-neutral-light-950;
   }
 
   &__slot {
@@ -72,6 +72,7 @@ const captionClassname = computed(() => [
 
   &__caption {
     @include text(regular, xs);
+
     margin-top: $space-2;
     color: $color-neutral-light-400;
 
