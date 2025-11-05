@@ -131,6 +131,11 @@ const isShowButtons = ref<boolean>(false)
   color: $color-yellow-800;
   color: $color-primary;
   background-color: #242424;
+}
 
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
 }
 </style>
