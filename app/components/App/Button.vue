@@ -190,6 +190,10 @@ export type { Props as ButtonProps }
       &:not(#{$disabled}):not(#{$loading})#{$active-from-props} {
         background-color: rgba($color-neutral-light, 0.8);
       }
+
+      &#{$disabled} {
+        color: $color-neutral-light-400;
+      }
     }
   }
 
