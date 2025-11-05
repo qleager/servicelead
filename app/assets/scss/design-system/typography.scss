@@ -73,9 +73,9 @@ $label-weights: (
 @mixin label(
   $size,
   $weight,
-  $line-height: auto,
+  $line-height: normal,
   $letter-spacing: normal,
-  $text-transform: 'uppercase'
+  $text-transform: uppercase
 ) {
   font-family: $font-family;
   font-size: $size;
@@ -83,4 +83,16 @@ $label-weights: (
   line-height: $line-height;
   text-transform: $text-transform;
   letter-spacing: $letter-spacing;
+}
+
+@mixin label($size-name, $weight-name) {
+  $size: map.get($label-sizes, $size-name);
+  $weight: map.get($label-weights, $weight-name);
+  
+  font-family: $font-family;
+  font-size: $size;
+  font-weight: $weight;
+  line-height: normal;
+  text-transform: uppercase;
+  letter-spacing: normal;
 }
