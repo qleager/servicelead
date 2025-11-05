@@ -1,12 +1,49 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import type { TabsItem } from './components/App/Tabs.vue'
 
 const isShowButtons = ref<boolean>(false)
+const error = ref<string>('')
+
+const activeTab = ref('a')
+
+const tabs = ref<TabsItem[]>([
+  { label: 'Tab A', value: 'a' },
+  { label: 'Tab B', value: 'b', disabled: true },
+  { label: 'Tab C', value: 'c', icon: '→' },
+  { label: 'Tab D', value: 'd', icon: '🕭', trailingIcon: true },
+])
 </script>
 
 <template>
   <div class="bg">
     HELLO WORLD!
+    <AppTabs
+      v-model="activeTab"
+      :items="tabs"
+      size="sm"
+      color="neutral-1-20"
+      variant="lined"
+    />
+    <AppButton
+      variant="nofilled"
+      @click="error = error ? '' : 'Ошибка'"
+    >
+      {{ error ? 'Скрыть ошибку' : 'Показать ошибку' }}
+    </AppButton>
+    <div class="label-wrapper">
+      <AppLabel
+        title="Лейбл"
+        :error="error"
+        caption="caption"
+        required
+      >
+        <AppInput
+          type="search"
+        />
+      </AppLabel>
+    </div>
+
     <AppButton @click="isShowButtons = !isShowButtons">
       {{ isShowButtons ? 'Скрыть кнопки' : 'Показать кнопки' }}
     </AppButton>
@@ -128,8 +165,10 @@ const isShowButtons = ref<boolean>(false)
   gap: $space-4;
 
   padding: $space-10;
+
   color: $color-yellow-800;
   color: $color-primary;
+
   background-color: #242424;
 }
 
@@ -137,5 +176,10 @@ const isShowButtons = ref<boolean>(false)
   display: flex;
   flex-direction: column;
   gap: $space-4;
+}
+
+.label-wrapper {
+  padding: $space-8;
+  background-color: $color-neutral-light-50;
 }
 </style>
