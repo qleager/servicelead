@@ -2,17 +2,17 @@
 interface Props {
   variant?: 'filled' | 'lined' | 'nofilled'
   // После создания AppIcon;
-  icon?: IconProps['name'];
-  size?: '3xs' | 'xxs' | 'xs' | 'sm' | 'md';
-  color?: 'primary' | 'neutral-0' | 'neutral-1' | 'neutral-1-20';
+  icon?: IconProps['name']
+  size?: '3xs' | 'xxs' | 'xs' | 'sm' | 'md'
+  color?: 'primary' | 'neutral-0' | 'neutral-1' | 'neutral-1-20'
   type?: 'button' | 'submit' | 'reset'
   // TODO типы из router, чтобы тут затипизированы были только реальные роуты
-  // а если ссылка на внешний ресурс? Может тогда ещё проп target добавить?;
-  to?: string;
-  value?: string | number;
-  trailingIcon?: boolean;
-  disabled?: boolean;
-  active?: boolean;
+  // А если ссылка на внешний ресурс? Может тогда ещё проп target добавить?
+  to?: string
+  value?: string | number
+  trailingIcon?: boolean
+  disabled?: boolean
+  active?: boolean
   loading?: boolean
 }
 
@@ -83,7 +83,7 @@ export type { Props as ButtonProps }
   $variant-filled: $this + '-variant-filled';
   $variant-lined: $this + '-variant-lined';
   $variant-nofilled: $this + '-variant-nofilled';
-  $color-primary: $this + '-color-primary';
+  $color-primary-1: $this + '-color-primary';
   $color-neutral-0: $this + '-color-neutral-0';
   $color-neutral-1: $this + '-color-neutral-1';
   $color-neutral-1-20: $this + '-color-neutral-1-20';
@@ -130,7 +130,7 @@ export type { Props as ButtonProps }
   }
 
   &#{$variant-filled} {
-    &#{$color-primary} {
+    &#{$color-primary-1} {
       color: $color-neutral-light-0;
       background-color: $color-primary;
 
@@ -167,10 +167,29 @@ export type { Props as ButtonProps }
     &#{$color-neutral-1} {
       color: $color-neutral-light-950;
       background-color: $color-neutral-light-100;
+
+      &:not(#{$disabled}):not(#{$loading})#{$hover} {
+        background-color: $color-neutral-light-300;
+      }
+
+      &:not(#{$disabled}):not(#{$loading})#{$active},
+      &:not(#{$disabled}):not(#{$loading})#{$active-from-props} {
+        background-color: $color-neutral-light-400;
+      }
     }
 
     &#{$color-neutral-1-20} {
+      color: $color-neutral-light-0;
       background-color: rgba($color-neutral-light, 0.2);
+
+      &:not(#{$disabled}):not(#{$loading})#{$hover} {
+        background-color: rgba($color-neutral-light, 0.4);
+      }
+
+      &:not(#{$disabled}):not(#{$loading})#{$active},
+      &:not(#{$disabled}):not(#{$loading})#{$active-from-props} {
+        background-color: rgba($color-neutral-light, 0.8);
+      }
     }
   }
 
