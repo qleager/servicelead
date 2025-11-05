@@ -16,6 +16,8 @@ interface Props {
   loading?: boolean
 }
 
+const slots = useSlots()
+
 const props = withDefaults(defineProps<Props>(), {
   variant: 'filled',
   size: 'md',
@@ -26,8 +28,6 @@ const props = withDefaults(defineProps<Props>(), {
   active: false,
   loading: false,
 })
-
-const slots = useSlots()
 
 const componentTag = computed(() =>
   props.to ? 'a' : 'button',
