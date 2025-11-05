@@ -125,7 +125,7 @@ export type { Props as ButtonProps }
   &#{$size-md} {
     gap: $space-4;
     height: 48px;
-    padding: $space-4 $space-6;
+    padding: $space-3 $space-6;
     font-size: 16px;
   }
 
@@ -213,21 +213,21 @@ export type { Props as ButtonProps }
   }
 
   &#{$variant-nofilled} {
-    color: $color-neutral-light;
+    color: $color-neutral-light-200;
     background-color: unset;
     padding: $space-1;
 
     &:not(#{$disabled}):not(#{$loading})#{$hover} {
-      color: $color-neutral-light-900;
+      color: $color-neutral-light-50;
     }
 
     &:not(#{$disabled}):not(#{$loading})#{$active},
     &:not(#{$disabled}):not(#{$loading})#{$active-from-props} {
-      color: $color-neutral-light-600;
+      color: $color-neutral-light-300;
     }
 
     &#{$disabled} {
-      color: $color-neutral-light-300;
+      color: $color-neutral-light-400;
     }
   }
 
