@@ -16,7 +16,7 @@ $color-warning: $color-yellow;
 $color-success: $color-green;
 $color-info: $color-blue;
 
-// палитра primary цвета до 500 $lightness, больше 500 $blackness
+// Palette of Primary
 $color-primary-50: color.adjust($color-primary, $lightness: 90%);
 $color-primary-100: color.adjust($color-primary, $lightness: 80%);
 $color-primary-150: color.adjust($color-primary, $lightness: 70%);
@@ -37,16 +37,15 @@ $color-primary-850: color.adjust($color-primary, $blackness: 70%);
 $color-primary-900: color.adjust($color-primary, $blackness: 80%);
 $color-primary-950: color.adjust($color-primary, $blackness: 90%);
 
-// палитра neutral light цвета до 500 $lightness, больше 500 $blackness
-$color-neutral-light-0: color.adjust($color-neutral-light, $lightness: 100%);
-$color-neutral-light-50: color.adjust($color-neutral-light, $lightness: 90%);
-$color-neutral-light-100: color.adjust($color-neutral-light, $lightness: 80%);
-$color-neutral-light-150: color.adjust($color-neutral-light, $lightness: 70%);
-$color-neutral-light-200: color.adjust($color-neutral-light, $lightness: 60%);
+// Palette of Neutral Light
+$color-neutral-light-50: #f3f6fe;
+$color-neutral-light-100: #e9eefb;
+$color-neutral-light-150: #e2e9fc;
+$color-neutral-light-200: #cfd5ec;
 $color-neutral-light-250: color.adjust($color-neutral-light, $lightness: 50%);
-$color-neutral-light-300: color.adjust($color-neutral-light, $lightness: 40%);
+$color-neutral-light-300: #c0c7e0;
 $color-neutral-light-350: color.adjust($color-neutral-light, $lightness: 30%);
-$color-neutral-light-400: color.adjust($color-neutral-light, $lightness: 20%);
+$color-neutral-light-400: #9ea6c8;
 $color-neutral-light-450: color.adjust($color-neutral-light, $lightness: 10%);
 $color-neutral-light-500: $color-neutral-light;
 $color-neutral-light-550: color.adjust($color-neutral-light, $blackness: 10%);
@@ -59,15 +58,15 @@ $color-neutral-light-850: color.adjust($color-neutral-light, $blackness: 70%);
 $color-neutral-light-900: color.adjust($color-neutral-light, $blackness: 80%);
 $color-neutral-light-950: color.adjust($color-neutral-light, $blackness: 90%);
 
-// палитра neutral dark цвета до 500 $lightness, больше 500 $blackness
-$color-neutral-dark-50: color.adjust($color-neutral-dark, $lightness: 90%);
-$color-neutral-dark-100: color.adjust($color-neutral-dark, $lightness: 80%);
+// Palette of Neutral Dark
+$color-neutral-dark-50: #e5ebf9;
+$color-neutral-dark-100: #d2d8e8;
 $color-neutral-dark-150: color.adjust($color-neutral-dark, $lightness: 70%);
-$color-neutral-dark-200: color.adjust($color-neutral-dark, $lightness: 60%);
+$color-neutral-dark-200: #acb2c5;
 $color-neutral-dark-250: color.adjust($color-neutral-dark, $lightness: 50%);
-$color-neutral-dark-300: color.adjust($color-neutral-dark, $lightness: 40%);
-$color-neutral-dark-350: color.adjust($color-neutral-dark, $lightness: 30%);
-$color-neutral-dark-400: color.adjust($color-neutral-dark, $lightness: 20%);
+$color-neutral-dark-300: #7c8193;
+$color-neutral-dark-350: #565c6d;
+$color-neutral-dark-400: #494c5c;
 $color-neutral-dark-450: color.adjust($color-neutral-dark, $lightness: 10%);
 $color-neutral-dark-500: $color-neutral-dark;
 $color-neutral-dark-550: color.adjust($color-neutral-dark, $blackness: 10%);
@@ -80,7 +79,7 @@ $color-neutral-dark-850: color.adjust($color-neutral-dark, $blackness: 70%);
 $color-neutral-dark-900: color.adjust($color-neutral-dark, $blackness: 80%);
 $color-neutral-dark-950: color.adjust($color-neutral-dark, $blackness: 90%);
 
-// палитра red цвета до 500 $lightness, больше 500 $blackness
+// Palette of Red
 $color-red-50: color.adjust($color-red, $lightness: 90%);
 $color-red-100: color.adjust($color-red, $lightness: 80%);
 $color-red-150: color.adjust($color-red, $lightness: 70%);
@@ -101,7 +100,7 @@ $color-red-850: color.adjust($color-red, $blackness: 70%);
 $color-red-900: color.adjust($color-red, $blackness: 80%);
 $color-red-950: color.adjust($color-red, $blackness: 90%);
 
-// палитра yellow цвета до 500 $lightness, больше 500 $blackness
+// Palette of Yellow
 $color-yellow-50: color.adjust($color-yellow, $lightness: 90%);
 $color-yellow-100: color.adjust($color-yellow, $lightness: 80%);
 $color-yellow-150: color.adjust($color-yellow, $lightness: 70%);
@@ -122,7 +121,7 @@ $color-yellow-850: color.adjust($color-yellow, $blackness: 70%);
 $color-yellow-900: color.adjust($color-yellow, $blackness: 80%);
 $color-yellow-950: color.adjust($color-yellow, $blackness: 90%);
 
-// палитра green цвета до 500 $lightness, больше 500 $blackness
+// Palette of Green
 $color-green-50: color.adjust($color-green, $lightness: 90%);
 $color-green-100: color.adjust($color-green, $lightness: 80%);
 $color-green-150: color.adjust($color-green, $lightness: 70%);
@@ -143,7 +142,7 @@ $color-green-850: color.adjust($color-green, $blackness: 70%);
 $color-green-900: color.adjust($color-green, $blackness: 80%);
 $color-green-950: color.adjust($color-green, $blackness: 90%);
 
-// палитра blue цвета до 500 $lightness, больше 500 $blackness
+// Palette of Blue
 $color-blue-50: color.adjust($color-blue, $lightness: 90%);
 $color-blue-100: color.adjust($color-blue, $lightness: 80%);
 $color-blue-150: color.adjust($color-blue, $lightness: 70%);
@@ -164,7 +163,7 @@ $color-blue-850: color.adjust($color-blue, $blackness: 70%);
 $color-blue-900: color.adjust($color-blue, $blackness: 80%);
 $color-blue-950: color.adjust($color-blue, $blackness: 90%);
 
-// палитра purple цвета до 500 $lightness, больше 500 $blackness
+// Palette of Purple
 $color-purple-50: color.adjust($color-purple, $lightness: 90%);
 $color-purple-100: color.adjust($color-purple, $lightness: 80%);
 $color-purple-150: color.adjust($color-purple, $lightness: 70%);
