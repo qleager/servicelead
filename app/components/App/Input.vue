@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { IconProps } from '~/components/app/Icon.vue'
 import type { InputHTMLAttributes } from 'vue'
 
 interface Props {
@@ -7,271 +8,244 @@ interface Props {
   trailingIcon?: boolean
   rounded?: boolean
   size?: 'md' | 'sm'
-  color?: 'transparent' | 'error'
+  color?: 'darker' | 'lighter'
   autocomplete?: InputHTMLAttributes['autocomplete']
-  type: InputHTMLAttributes['type']
-  disabled?: boolean
+  type?: InputHTMLAttributes['type']
+  name?: InputHTMLAttributes['name']
+  disabled?: InputHTMLAttributes['disabled']
+  placeholder?: InputHTMLAttributes['placeholder']
+  reset?: boolean
+  error?: boolean
 }
-interface Emits {
-  iconClick: []
-  input: [string | number]
-}
-type Model = number | string
 
-defineOptions({ inheritAttrs: false })
+interface Emits {
+  reset: []
+  input: []
+}
+
+type Model = null | string | number
 
 const props = withDefaults(defineProps<Props>(), {
   variant: 'lined',
-  trailingIcon: false,
-  rounded: false,
   size: 'md',
-  color: 'transparent',
+  placeholder: 'Введите...',
+  color: 'darker',
 })
 
-const emit = defineEmits<Emits>()
-const model = defineModel<Model>({ default: '' })
+defineOptions({ inheritAttrs: false })
+
+const emits = defineEmits<Emits>()
+
+const model = defineModel<Model>()
 
 const classname = computed(() => ([
   'input',
-  `input-variant-${props.variant}`,
   `input-size-${props.size}`,
+  `input-variant-${props.variant}`,
   `input-color-${props.color}`,
-  { 'input-rounded': props.rounded },
-  { 'input-hasIcon': !!props.icon },
-  { 'input-trailingIcon': props.trailingIcon },
-  { 'input-focused': isFocused.value },
-  { 'input-filled': hasValue.value },
-  { 'input-empty': !hasValue.value },
-  { 'input-disabled': props.disabled },
+  {
+    'input-icon': props.icon,
+    'input-icon-trailing': props.trailingIcon,
+    'input-rounded': props.rounded,
+    'input-error': props.error,
+  },
 ]))
 
-const isFocused = ref(false)
+const isResetVisible = computed(() => model.value && String(model.value) && props.reset)
+// Hide the icon when reset button is visible and icon is trailing
+const isIconVisible = computed(() => !(props.trailingIcon && isResetVisible.value))
 
-const normalizeNumber = (targetEl: HTMLInputElement) => {
-  if (targetEl.type === 'number' && targetEl.value === '') return ''
-  return targetEl.type === 'number' ? Number(targetEl.value) : targetEl.value
+const onReset = () => {
+  model.value = null
+  emits('reset')
 }
 
-const hasValue = computed(() => {
-  const value = model.value
-  if (typeof value === 'number' || typeof value === 'bigint') return true
-  return String(value ?? '').length > 0
-})
-
-const onInput = (e: Event) => {
-  const targetEl = e.target as HTMLInputElement
-  const value = normalizeNumber(targetEl)
-  model.value = value as Model
-  emit('input', value as string | number)
-}
-
-const onIconClick = (e: MouseEvent) => {
-  e.preventDefault()
-  e.stopPropagation()
-  if (!props.disabled) emit('iconClick')
-}
+export type { Props as InputProps, Emits as InputEmits }
 </script>
 
 <template>
   <div
     :class="classname"
   >
-    <button
-      v-if="icon && !trailingIcon"
-      type="button"
-      class="input__icon input__icon--left"
-      :disabled="disabled"
-      aria-label="icon"
-      @click="onIconClick"
-    >
-      <AppIcon
-        class="input__icon"
-        @click="emit('iconClick')"
-      />
-    </button>
+    <AppIcon
+      v-if="isIconVisible && icon"
+      :name="icon"
+      class="input__icon"
+    />
     <input
+      v-model="model"
       class="input__field"
       v-bind="$attrs"
-      :value="model"
-      :type
-      :disabled
-      :autocomplete
-      @focus="isFocused = true"
-      @blur="isFocused = false"
-      @input="onInput"
+      :placeholder
     >
-    <!-- Правая иконка -->
     <button
-      v-if="icon && trailingIcon"
-      type="button"
-      class="input__icon input__icon--right"
-      :disabled="disabled"
-      aria-label="icon"
-      @click="onIconClick"
+      v-if="isResetVisible"
+      class="input__reset"
     >
       <AppIcon
-        class="input__icon"
-        @click="emit('iconClick')"
+        name="close"
+        class="input__reset-icon"
+        @click="onReset"
       />
     </button>
   </div>
 </template>
 
 <style lang="scss">
+@use 'sass:color';
+
 .input {
+  // Состояния комопонента
   $this: &;
-  $lined: $this + '-variant-lined';
-  $filled: $this + '-variant-filled';
+  $variant-lined: $this + '-variant-lined';
+  $variant-filled: $this + '-variant-filled';
+  $color-lighter: $this + '-color-lighter';
+  $color-darker: $this + '-color-darker';
+  $error: $this + '-error';
+  $rounded: $this + '-rounded';
   $size-md: $this + '-size-md';
   $size-sm: $this + '-size-sm';
-  $rounded: $this + '-rounded';
-  $has-icon: $this + '-hasIcon:not(.input-trailingIcon)';
-  $trailing-icon: $this + '-trailingIcon';
-  $hover: $this + ':hover';
-  $focus: $this + '-focused';
-  $enter: $this + '-empty' + $focus;
-  $writing: $focus;
-  $state-filled: $this + '-filled' + ':not(' + $focus + ')';
-  $disabled: $this + '-disabled';
-  $error: $this + '-color-error';
+  $icon: $this + '-icon';
+  $trailing-icon: $this + '-icon-trailing';
 
+  // Стили блока
   position: relative;
-  display: inline-block;
+  z-index: 0;
 
-  &#{$disabled} {
-    pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: fit-content;
+  min-width: 250px;
+  height: 48px;
+
+  /*
+   * Состояние компонент – его пропсы и model
+   * Блок – главный элемент в верстке (.input)
+   * Элемент - элементы верстки внутри блока (.input__field)
+   *
+   * Все, что состояния компонета хуярим как интерполяцию (#{$icon})
+   * Так мы понимаем, где состояние, а где БЭМ (верстка)
+   *
+   * ⚠️ Модификатор !== состояние компонента
+   */
+
+  // Стили блока при состоянии компонента trailing-icon
+  &#{$trailing-icon} {
+    justify-content: flex-end;
   }
 
+  // Стили блока при состоянии компонента
+  &#{$size-sm} {
+    height: 40px;
+  }
+
+  // Стили блока при состоянии компонента
+  &#{$size-md} {
+    height: 48px;
+  }
+
+  // Стили элемента блока
+  &__icon {
+    pointer-events: none;
+    margin-inline: $space-4 0;
+
+    // Стиль элемента блока при состоянии компонента $trailing-icon
+    #{$trailing-icon} & {
+      order: 1;
+      margin-inline: 0 $space-3;
+    }
+  }
+
+  // Стиль элемента блока
   &__field {
-    border-radius: $space-2;
-    outline: none;
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
 
-    @include text(regular, xs);
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0 $space-4;
+    border: 1px solid transparent;
+    border-radius: $radius-2;
 
-    &::placeholder {
-      color: $color-neutral-light-500;
+    background-color: transparent;
+
+    @include text(regular, sm);
+
+    // Стиль элемента блока при состоянии компонента $variant-lined
+    #{$variant-lined} & {
+      border: 1px solid $color-neutral-light-300;
+      background: none !important;
+
+      &:focus {
+        border-color: $color-neutral-light-900;
+      }
+    }
+
+    #{$variant-filled} & {
+      border: none;
+      background: transparent;
+
+      &:hover::placeholder {
+        color: $color-neutral-light-900;
+      }
     }
 
     #{$rounded} & {
-      border-radius: $space-20;
+      border-radius: 50px;
     }
 
-    #{$size-md} & {
-      width: 250px;
-      height: 48px;
-      padding: 12px $space-4;
-    }
-    #{$size-sm} & {
-      width: 250px;
-      height: 40px;
-      padding:  $space-2 12px $space-2 $space-4;
-    }
-
-    #{$has-icon} & {
-      padding-left: 56px;
-    }
-    #{$trailing-icon} & {
-      padding-right: 56px;
-    }
-
-    #{$lined} {
-      border: 1px solid $color-neutral-light-300;
-      background: transparent;
-    }
-    #{$filled} & {
-      border: none;
-      background: $color-neutral-light-50;
-    }
-
-    #{$hover}#{$lined} & {
-      border-color: $color-neutral-light-900;
-
-      &::placeholder {
-        color: $color-neutral-light-900;
-      }
-    }
-    #{$enter}#{$lined} & {
+    #{$color-darker} & {
       border-color: $color-neutral-light-300;
-
-      &::placeholder {
-        color: $color-neutral-light-400;
-      }
-    }
-    #{$writing}#{$lined} &,
-    #{$state-filled}#{$lined} & {
-      border-color: $color-neutral-light-300;
-
-      &::placeholder {
-        color: $color-neutral-light-950;
-      }
-    }
-    #{$disabled}#{$lined} & {
-      border-color: $color-neutral-light-400;
-
-      &::placeholder {
-        color: $color-neutral-light-400;
-      }
+      background-color: $color-neutral-light-300;
     }
 
-    #{$hover}#{$filled} & {
-      &::placeholder {
-        color: $color-neutral-light-900;
-      }
-    }
-    #{$enter}#{$filled} &,
-    #{$disabled}#{$filled} & {
-      &::placeholder {
-        color: $color-neutral-light-400;
-      }
-    }
-    #{$writing}#{$filled} &,
-    #{$state-filled}#{$filled} {
-      &::placeholder {
-        color: $color-neutral-light-950;
-      }
+    #{$color-lighter} & {
+      border-color: $color-neutral-light-50;
+      background-color: $color-neutral-light-50;
     }
 
     #{$error} & {
-      border-color: $color-red-500;
+      border: 1px solid $color-error;
+      color: $color-error;
+      background-color: color.adjust($color-error, $lightness: 48%);
 
-      &::placeholder {
-        color: $color-red-500;
+      &:focus {
+        border-color: inherit;
       }
     }
-  }
 
-  &__icon {
-    cursor: pointer;
-
-    position: absolute;
-    top: 0;
-    bottom: 0;
-
-    display: grid;
-    place-items: center;
-
-    width: 56px;
-    padding: 0;
-    border: 0;
-
-    background: transparent;
-
-    #{$has-icon} & {
-      left: 0;
+    #{$icon} & {
+      padding-inline: $space-12 $space-4;
     }
+
     #{$trailing-icon} & {
-      right: 0;
+      padding-inline: $space-4 $space-12;
+    }
+
+    &::placeholder {
+      @include text(regular, sm);
+
+      color: $color-neutral-light-400;
+
+      #{$error} & {
+        color: color.adjust($color-error, $lightness: 25%);
+      }
     }
 
     &:disabled {
-      cursor: default;
-      opacity: 0.5;
+      pointer-events: none;
+      filter: brightness(1.2);
     }
   }
 
-  &__svg {
-    width: 24px;
-    height: 24px;
+  &__reset {
+    margin-right: $space-3;
+    margin-left: auto;
   }
 }
 </style>
