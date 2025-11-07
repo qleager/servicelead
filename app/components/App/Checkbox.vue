@@ -7,6 +7,7 @@ interface Props {
   disabled?: boolean
   id?: string
 }
+
 const props = defineProps<Props>()
 
 const model = defineModel<boolean>({ default: false })
