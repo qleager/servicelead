@@ -60,7 +60,7 @@ const onReset = () => {
   emits('reset')
 }
 
-export type { Props as InputProps, Emits as InputEmits }
+export type { Props as InputProps, Emits as InputEmits, Model as InputModel }
 </script>
 
 <template>
