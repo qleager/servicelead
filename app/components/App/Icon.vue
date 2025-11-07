@@ -9,7 +9,11 @@ interface Props {
   size?: number
 }
 
-defineProps<Props>()
+withDefaults(defineProps<Props>(), {
+  size: 24,
+})
+
+export type { Props as IconProps }
 </script>
 
 <template>
