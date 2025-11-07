@@ -32,7 +32,8 @@
         "dbaeumer.vscode-eslint",
         "nuxtr.nuxtr-vscode",
         "openai.chatgpt",
-        "stylelint.vscode-stylelint"
+        "stylelint.vscode-stylelint",
+        "mrmlnc.vscode-scss",
       ],
       "settings": {
         "editor": {
