@@ -8,18 +8,23 @@ interface Props {
   name: string
   size?: number
 }
+
+defineProps<Props>()
 </script>
 
 <template>
   <svg
     class="icon"
-    :width=""
-    :height=""
+    :width="size"
+    :height="size"
   >
     <use :xlink:href="`/icons/sprite.svg#${name || 'favorite'}`" />
   </svg>
 </template>
 
-<style>
-
+<style lang="scss">
+.icon {
+  outline: 1px dashed rgb($color-warning, 80%);
+  outline-offset: -2px;
+}
 </style>
