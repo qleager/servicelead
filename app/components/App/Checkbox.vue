@@ -1,50 +1,46 @@
 <script lang="ts" setup>
 interface Props {
   label?: string
-  value?: null | string | number | bigint | Record<string, any>
-  name?: string // и все остальные своейтсвенные input checkbox
-  // required
-  // disabled
-  // и больше нам ПОКА никакие не нужны
+  value?: null | string | number | bigint
+  name?: string
+  required?: boolean
+  disabled?: boolean
+  id?: string
 }
+const props = defineProps<Props>()
 
-// Основное значение/состояние компоеннта – в нашем случае, выбран он или нет
 const model = defineModel<boolean>({ default: false })
 
 const classname = computed(() => ([
   'checkbox',
-  // тут можно делать { 'checkbox-checked': model.value } так будет вешаться .checkbox-checked, когда model = true
+  { 'checkbox-checked': model.value },
+  { 'checkbox-disabled': props.disabled },
 ]))
 </script>
 
 <template>
-  <!--
-   @click чтобы менять выбран/невыбран при клике по всему компоненту
-  -->
   <div
     :class="classname"
     @click="model = !model"
   >
-    <!-- Hidden - вешаем чтобы скрыть нативный инпут и заверстать свой нормальный
-      так как мы будем использовать form.submit() то все атрибуты свойственные input мы вешаем на этот скрытый input
-    -->
     <input
+      :id
       v-model="model"
       class="checkbox__field"
       type="checkbox"
-      hidden
+      :name
+      :value
+      :required
+      :disabled
     >
-    <!-- Это будет квадратик из диза -->
     <span class="checkbox__bullet">
-      <!-- Если выбран показываем иконку галочки внутри квдратика -->
-      <!-- Тут v-if нужен чтобы не грузить инстанс AppIcon при ините, ведь зачастую чекбокс не выбран -->
       <AppIcon
         v-if="model"
+        name="check"
+        :size="24"
+        class="checkbox__bullet-icon"
       />
     </span>
-    <!-- Тут пропс label выводим, это текст редяом
-      Если его нет, будем делать display: none через псевдо :empty
-    -->
     <span class="checkbox__label">
       {{ label }}
     </span>
@@ -56,31 +52,78 @@ const classname = computed(() => ([
   $this: &;
   $hover: & + ':hover';
   $active: & + ':active';
-  $field-checked: & + '__field:checked';
+  $checked: & + '-checked';
+  $disabled: & + '-disabled';
+
+  cursor: pointer;
+
+  display: inline-flex;
+  gap: $space-4;
+  align-items: center;
+
+  width: auto;
+  height: 40px;
+  border-radius: 4px;
+
+  &-disabled {
+    pointer-events: none;
+  }
+
+  &__field {
+    position: absolute;
+
+    overflow: hidden;
+
+    width: 1px;
+    height: 1px;
+
+    white-space: nowrap;
+
+    clip-path: inset(50%);
+  }
 
   &__bullet {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+
+    background-color: $color-neutral-light;
+
     #{$hover} & {
-      background-color: $color-neutral-400;
+      background-color: $color-neutral-light-400;
     }
 
-    // скомпилируется в .checkbox:active .checkbox__bullet
     #{$active} & {
-      background-color: $color-primary;
+      background-color: $color-primary
     }
 
-    // обратить внимание на ~
-    // но можно и через classname вешать .checkbox-checked
-    // тогда заведем переменную $checked: & + '-checked';
-    #{$field-checked} ~ & {
-      background-color: $color-primary;
+    #{$checked} & {
+      background-color: $color-primary
+    }
+
+    #{$disabled} & {
+      border: 1px solid $color-neutral-light-400;
+      background-color: transparent;
+    }
+
+    #{$checked}#{$disabled} & {
+      background-color: $color-neutral-light-400;
     }
   }
 
   &__label {
+    @include text(regular, sm);
+
     &:empty {
-      // так чуть экономим на произволительности, не используя v-if
-      // и темплейт выглядит чище
       display: none;
+    }
+
+    #{$disabled} & {
+      color: $color-neutral-light-400;
     }
   }
 }
