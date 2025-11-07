@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 interface Props {
   label?: string
-  value?: null | string | number | bigint | Record<string, any>
+  value?: null | string | number | bigint
   name?: string
   required?: boolean
   disabled?: boolean
@@ -21,7 +21,7 @@ const classname = computed(() => ([
 <template>
   <div
     :class="classname"
-    @click="model = !props.disabled && (model = !model)"
+    @click="model = !model"
   >
     <input
       :id
@@ -34,10 +34,12 @@ const classname = computed(() => ([
       :disabled
     >
     <span class="checkbox__bullet">
-
-      <!-- <AppIcon
+      <AppIcon
         v-if="model"
-      /> -->
+        name="check"
+        :size="24"
+        class="checkbox__bullet-icon"
+      />
     </span>
     <span class="checkbox__label">
       {{ label }}
@@ -47,11 +49,11 @@ const classname = computed(() => ([
 
 <style lang="scss">
 .checkbox {
-  $this: &;                                // default
-  $hover: & + ':hover';                    // hover
-  $active: & + ':active';                  // hoverpress
-  $checked: & + '-checked';                // enter
-  $disabled: & + '-disabled';              // disabled
+  $this: &;
+  $hover: & + ':hover';
+  $active: & + ':active';
+  $checked: & + '-checked';
+  $disabled: & + '-disabled';
 
   cursor: pointer;
 
@@ -62,6 +64,10 @@ const classname = computed(() => ([
   width: auto;
   height: 40px;
   border-radius: 4px;
+
+  &-disabled {
+    pointer-events: none;
+  }
 
   &__field {
     position: absolute;
@@ -85,7 +91,28 @@ const classname = computed(() => ([
     height: 24px;
     border-radius: 4px;
 
-    background-color: $color-neutral-light-100;
+    background-color: $color-neutral-light;
+
+    #{$hover} & {
+      background-color: $color-neutral-light-400;
+    }
+
+    #{$active} & {
+      background-color: $color-primary
+    }
+
+    #{$checked} & {
+      background-color: $color-primary
+    }
+
+    #{$disabled} & {
+      border: 1px solid $color-neutral-light-400;
+      background-color: transparent;
+    }
+
+    #{$checked}#{$disabled} & {
+      background-color: $color-neutral-light-400;
+    }
   }
 
   &__label {
@@ -94,25 +121,10 @@ const classname = computed(() => ([
     &:empty {
       display: none;
     }
-  }
 
-  #{$hover} &__bullet {
-    background-color: $color-neutral-light-400;
-  }
-
-  #{$active} &__bullet {
-    background-color: $color-primary
-  }
-
-  &#{$disabled} {
-    pointer-events: none;
-  }
-  #{$disabled} &__bullet {
-    border: 1px solid $color-neutral-light-400;
-    background-color: transparent;
-  }
-  #{$disabled} &__label {
-    color: $color-neutral-light-400;
+    #{$disabled} & {
+      color: $color-neutral-light-400;
+    }
   }
 }
 </style>
