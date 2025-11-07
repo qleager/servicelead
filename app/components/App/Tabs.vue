@@ -1,13 +1,11 @@
 <script lang="ts" setup>
-/* TODO:
- * Завязан на комопненте-кнопки
- * Нет контента, только кнопки и model – то есть при клике по табам получаем активный таб и в родителе профодим какую то манипулмяцию
- * На этом компоненте можно увидеть как раз дизайн-систему и как все между собой может(должно) дружить
- */
+import type { ButtonProps } from './Button.vue'
 
 interface Props {
   items: Item[]
-  size: ButtonProps['size']
+  size?: ButtonProps['size']
+  color?: ButtonProps['color']
+  variant?: ButtonProps['variant']
 }
 
 interface Item {
@@ -21,7 +19,21 @@ interface Item {
 
 type Model = Item['value']
 
+withDefaults(defineProps<Props>(), {
+  size: 'md',
+  color: 'primary',
+  variant: 'filled',
+})
+
 const model = defineModel<Model>({ required: false })
+
+const classname = computed(() => [
+  'tabs',
+])
+
+const onClick = (val: Model) => {
+  model.value = val
+}
 
 export type { Props as TabsProps, Item as TabsItem }
 </script>
@@ -30,14 +42,19 @@ export type { Props as TabsProps, Item as TabsItem }
   <div :class="classname">
     <div class="tabs__nav">
       <AppButton
-        v-for
+        v-for="tab in items"
+        :key="tab.value"
         class="tabs__nav-item"
-        :size
+        :size="size"
+        :color="color"
+        :variant="variant"
         :icon="tab.icon"
+        :trailing-icon="tab.trailingIcon"
         :disabled="tab.disabled"
         :active="model === tab.value"
+        @click="onClick(tab.value)"
       >
-        {{ label }}
+        {{ tab.label }}
       </AppButton>
     </div>
   </div>
@@ -46,5 +63,10 @@ export type { Props as TabsProps, Item as TabsItem }
 <style lang="scss">
 .tabs {
   $this: &;
+
+  &__nav {
+    display: inline-flex;
+    gap: $space-2;
+  }
 }
 </style>
