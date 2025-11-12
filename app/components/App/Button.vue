@@ -59,10 +59,11 @@ export type { Props as ButtonProps }
     :disabled
   >
     <!-- <AppIcon
+      v-if="icon || loading"
       class="button__icon"
       :icon='loading ? 'loading' : icon'
     /> -->
-    <div v-if="icon">
+    <div v-if="icon || loading">
       {{ loading ? '...' : icon }}
     </div>
     <span
