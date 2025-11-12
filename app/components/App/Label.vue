@@ -63,13 +63,6 @@ const captionClassname = computed(() => [
     color: $color-neutral-light-950;
   }
 
-  &__slot {
-    &#{$slot-class}-error {
-      width: fit-content;
-      outline: 1px solid $color-error;
-    }
-  }
-
   &__caption {
     @include text(regular, xs);
 
