@@ -134,12 +134,12 @@ export type { Props as ButtonProps }
       color: white;
       background-color: $color-primary;
 
-      &:not(#{$disabled}):not(#{$loading})#{$hover} {
+      #{$hover} {
         background-color: $color-primary-600;
       }
 
-      &:not(#{$disabled}):not(#{$loading})#{$active},
-      &:not(#{$disabled}):not(#{$loading})#{$active-from-props} {
+      #{$active},
+      #{$active-from-props} {
         color: $color-neutral-light-400;
         background-color: $color-primary-700;
       }
@@ -154,12 +154,12 @@ export type { Props as ButtonProps }
       color: $color-neutral-light-950;
       background-color: white;
 
-      &:not(#{$disabled}):not(#{$loading})#{$hover} {
+      #{$hover} {
         background-color: $color-neutral-light-200;
       }
 
-      &:not(#{$disabled}):not(#{$loading})#{$active},
-      &:not(#{$disabled}):not(#{$loading})#{$active-from-props} {
+      #{$active},
+      #{$active-from-props} {
         background-color: $color-neutral-light-400;
       }
     }
@@ -168,12 +168,12 @@ export type { Props as ButtonProps }
       color: $color-neutral-light-950;
       background-color: $color-neutral-light-100;
 
-      &:not(#{$disabled}):not(#{$loading})#{$hover} {
+      #{$hover} {
         background-color: $color-neutral-light-300;
       }
 
-      &:not(#{$disabled}):not(#{$loading})#{$active},
-      &:not(#{$disabled}):not(#{$loading})#{$active-from-props} {
+      #{$active},
+      #{$active-from-props} {
         background-color: $color-neutral-light-400;
       }
     }
@@ -182,12 +182,12 @@ export type { Props as ButtonProps }
       color: white;
       background-color: rgba($color-neutral-light, 0.2);
 
-      &:not(#{$disabled}):not(#{$loading})#{$hover} {
+      #{$hover} {
         background-color: rgba($color-neutral-light, 0.4);
       }
 
-      &:not(#{$disabled}):not(#{$loading})#{$active},
-      &:not(#{$disabled}):not(#{$loading})#{$active-from-props} {
+      #{$active},
+      #{$active-from-props} {
         background-color: rgba($color-neutral-light, 0.8);
       }
 
@@ -202,11 +202,11 @@ export type { Props as ButtonProps }
     color: $color-neutral-light-950;
     background-color: unset;
 
-    &:not(#{$disabled}):not(#{$loading})#{$hover} {
+    #{$hover} {
       background-color: white;
     }
-    &:not(#{$disabled}):not(#{$loading})#{$active},
-    &:not(#{$disabled}):not(#{$loading})#{$active-from-props} {
+    #{$active},
+    #{$active-from-props} {
       color: $color-neutral-light-950;
       background-color: $color-neutral-light-50;
     }
@@ -221,12 +221,12 @@ export type { Props as ButtonProps }
     color: $color-neutral-light-200;
     background-color: unset;
 
-    &:not(#{$disabled}):not(#{$loading})#{$hover} {
+    #{$hover} {
       color: $color-neutral-light-50;
     }
 
-    &:not(#{$disabled}):not(#{$loading})#{$active},
-    &:not(#{$disabled}):not(#{$loading})#{$active-from-props} {
+    #{$active},
+    #{$active-from-props} {
       color: $color-neutral-light-300;
     }
 
@@ -240,11 +240,13 @@ export type { Props as ButtonProps }
   }
 
   &#{$disabled} {
+    pointer-events: none;
     cursor: not-allowed;
     color: $color-neutral-light-300;
   }
 
   &#{$loading} {
+    pointer-events: none;
     cursor: progress;
   }
 
