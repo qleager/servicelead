@@ -1,68 +1,93 @@
 <script lang="ts" setup>
-/* TODO:
- * Это такой компонент, с помощью которого мы задаем абсолютное положение какого-либо элемента на старнице
- * Будем его использовать, например, для дропдауна селекта, всплываюей подсказки
- * За основу берем: Floating UI
- * Делаем прям по туториалу(https://floating-ui.com/docs/tutorial) но использем vue composition api(https://floating-ui.com/docs/vue)
- * Используем: offset, flip, shift, size,
- */
+import type { Placement } from '@floating-ui/vue'
+import { onClickOutside } from '@vueuse/core'
+import {
+  useFloating,
+  offset,
+  autoPlacement,
+  shift,
+  size,
+} from '@floating-ui/vue'
 
 interface Props {
-  mode?: 'click' | 'hover' // def click
-  // если click, закрытие при клике по reference и в не области флоатера
-  // если hover, закрытие при клике по reference, и потери ховера у reference и floating (так же см пукнкт B)
-  placement?: Placement // из плагина; def auto
-  dismissible?: boolean // true = запретить закрытие по клику вне floating и потери ховера, при клике на reference по прежнему закрытие // def true
+  mode?: modeType
+  placement?: Placement
+  dismissible?: boolean
   width?: string // 56px/100%; def auto
   portal?: string | HTMLElement // телепорт floating по строке типа ".body" или html элемента
 }
+// placement токлько 'top' | 'right' | 'bottom' | 'left'
+// есть autoPlacement, но его нельзя использовать с flip. Можно только одно. Разница:
+// https://floating-ui.com/docs/autoPlacement#conflict-with-flip
 
-// Floating: показан/скрыт
+// закрытие по
+type modeType = 'click' | 'hover'
+
+const props = withDefaults(defineProps<Props>(), {
+  mode: 'click',
+  placement: 'bottom',
+  dismissible: true,
+  width: 'auto',
+  portal: 'body',
+})
+
 const model = defineModel<boolean>({ default: false })
+
+const reference = ref<HTMLElement | null>(null)
+const floating = ref<HTMLElement | null>(null)
 
 const classname = computed(() => ([
   'floater',
 ]))
 
-// Этот кусок с leadsale исключительно как пример, он не сильно релеванетен в нашем случае
 const { floatingStyles } = useFloating(reference, floating, {
   placement: props.placement,
   middleware: [
     offset(8),
-    flip(),
-    shift({
-      padding: 8,
-    }),
+    autoPlacement(),
+    shift({ padding: 8 }),
     size({
       padding: 8,
-      apply({ availableWidth, availableHeight, elements, placement, ...state }) {
+      apply({ elements }) {
         Object.assign(elements.floating.style, {
-          maxWidth: `${props.correlateFloater ? state.rects.reference.width : availableWidth}px`,
-          // TODO: 144 это хедер, потом надо сделать как то его подсчет
-          maxHeight: `${placement.includes('top') ? availableHeight - 144 : availableHeight}px`,
-          width: props.correlateFloater ? '100%' : 'auto',
+          width: props.width,
         })
       },
     }),
   ],
-  whileElementsMounted: autoUpdate,
 })
 
-// B: Будет кейс когда из-за расстояния между reference и floating будет сниматься hover из-за которого floating будет закрытваться –
-// это поможет предотвратить это
+let closeTimeout: ReturnType<typeof setTimeout> | null = null
+
 const onMouseLeave = () => {
+  console.log(props.mode)
+
+  if (props.mode !== 'hover') return
   // закроем через 100ms
   closeTimeout = setTimeout(() => {
     model.value = false
   }, 100)
 }
 const onMouseEnter = () => {
-  model.value = true
   // отменим закрытие через 100ms
   clearTimeout(closeTimeout)
+  model.value = true
 }
 
+// Click логика
+const onClickReference = () => {
+  if (props.mode !== 'click') return
+  model.value = !model.value
+}
+
+// Закрытие по клику вне
+onClickOutside(floating, () => {
+  console.log('onClickOutside')
+  if (props.mode === 'click' && props.dismissible) model.value = false
+})
+
 export type { Props as FloaterProps }
+export type { modeType as FloaterModeType }
 </script>
 
 <template>
@@ -72,23 +97,35 @@ export type { Props as FloaterProps }
       class="floater__slot floater__slot-default floater__slot-trigger"
       @mouseenter="onMouseEnter"
       @mouseleave="onMouseLeave"
+      @click="onClickReference"
     >
       <slot />
     </div>
-    <div
-      ref="floating"
-      class="floater__slot floater__slot-content"
-      :style="floatingStyles"
-      @mouseenter="onMouseEnter"
-      @mouseleave="onMouseLeave"
+    <teleport
+      v-if="model"
+      :to="portal"
     >
-      <slot name="content" />
-    </div>
+      <div
+        ref="floating"
+        class="floater__slot floater__slot-content"
+        :style="floatingStyles"
+        @mouseenter="onMouseEnter"
+        @mouseleave="onMouseLeave"
+      >
+        <slot name="content" />
+      </div>
+    </teleport>
   </div>
 </template>
 
 <style lang="scss">
 .floater {
   $this: &;
+
+  z-index: 10;
+
+  &__slot-trigger {
+    display: inline-block;
+  }
 }
 </style>
