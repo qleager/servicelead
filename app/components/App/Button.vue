@@ -135,11 +135,11 @@ export type { Props as ButtonProps }
       color: white;
       background-color: $color-primary;
 
-      #{$hover} {
+      &#{$hover} {
         background-color: $color-primary-600;
       }
 
-      #{$active},
+      &#{$active},
       #{$active-from-props} {
         color: $color-neutral-light-400;
         background-color: $color-primary-700;
@@ -155,11 +155,11 @@ export type { Props as ButtonProps }
       color: $color-neutral-light-950;
       background-color: white;
 
-      #{$hover} {
+      &#{$hover} {
         background-color: $color-neutral-light-200;
       }
 
-      #{$active},
+      &#{$active},
       #{$active-from-props} {
         background-color: $color-neutral-light-400;
       }
@@ -169,11 +169,11 @@ export type { Props as ButtonProps }
       color: $color-neutral-light-950;
       background-color: $color-neutral-light-100;
 
-      #{$hover} {
+      &#{$hover} {
         background-color: $color-neutral-light-300;
       }
 
-      #{$active},
+      &#{$active},
       #{$active-from-props} {
         background-color: $color-neutral-light-400;
       }
@@ -183,11 +183,11 @@ export type { Props as ButtonProps }
       color: white;
       background-color: rgba($color-neutral-light, 0.2);
 
-      #{$hover} {
+      &#{$hover} {
         background-color: rgba($color-neutral-light, 0.4);
       }
 
-      #{$active},
+      &#{$active},
       #{$active-from-props} {
         background-color: rgba($color-neutral-light, 0.8);
       }
@@ -203,10 +203,10 @@ export type { Props as ButtonProps }
     color: $color-neutral-light-950;
     background-color: unset;
 
-    #{$hover} {
+    &#{$hover} {
       background-color: white;
     }
-    #{$active},
+    &#{$active},
     #{$active-from-props} {
       color: $color-neutral-light-950;
       background-color: $color-neutral-light-50;
@@ -222,11 +222,11 @@ export type { Props as ButtonProps }
     color: $color-neutral-light-200;
     background-color: unset;
 
-    #{$hover} {
+    &#{$hover} {
       color: $color-neutral-light-50;
     }
 
-    #{$active},
+    &#{$active},
     #{$active-from-props} {
       color: $color-neutral-light-300;
     }
