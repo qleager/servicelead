@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url'
 export default defineNuxtConfig({
   modules: ['@nuxt/eslint'],
   devtools: { enabled: true },
+  css: ['./app/assets/scss/globals.scss'],
 
   alias: {
     '@scss': fileURLToPath(new URL('./app/assets/scss', import.meta.url)),
@@ -17,7 +18,7 @@ export default defineNuxtConfig({
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: '@use "@scss/design-system/index" as *; @use "@scss/globals" as *;',
+          additionalData: '@use "@scss/design-system/index" as *;',
         },
       },
     },
