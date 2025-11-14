@@ -12,6 +12,7 @@ import {
 interface Props {
   mode?: modeType
   placement?: Placement
+  // запрещает закрытие по клику вне floating и потери ховера, при клике на reference по прежнему закрытие
   dismissible?: boolean
   width?: string // 56px/100%; def auto
   portal?: string | HTMLElement // телепорт floating по строке типа ".body" или html элемента
@@ -76,7 +77,7 @@ const onClickReference = () => {
 }
 
 onClickOutside(floating, () => {
-  if (props.mode === 'click' && props.dismissible) model.value = false
+  if (props.mode === 'click' && !props.dismissible) model.value = false
 })
 
 export type { Props as FloaterProps }
