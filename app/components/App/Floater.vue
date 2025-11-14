@@ -4,7 +4,8 @@ import { onClickOutside } from '@vueuse/core'
 import {
   useFloating,
   offset,
-  autoPlacement,
+  // autoPlacement,
+  flip,
   shift,
   size,
 } from '@floating-ui/vue'
@@ -45,7 +46,8 @@ const { floatingStyles } = useFloating(reference, floating, {
   placement: props.placement,
   middleware: [
     offset(8),
-    autoPlacement(),
+    // autoPlacement(),
+    flip(),
     shift({ padding: 8 }),
     size({
       padding: 8,
