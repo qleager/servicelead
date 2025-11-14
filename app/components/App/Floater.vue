@@ -68,7 +68,7 @@ const onMouseLeave = () => {
 }
 const onMouseEnter = () => {
   clearTimeout(closeTimeout)
-  model.value = true
+  if (props.mode === 'hover') model.value = true
 }
 
 const onClickReference = () => {
