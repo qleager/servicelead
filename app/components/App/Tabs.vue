@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import type { ButtonProps } from './Button.vue'
+import type { IconProps } from './Icon.vue'
 
 interface Props {
   items: Item[]
   size?: ButtonProps['size']
-  color?: ButtonProps['color']
   variant?: ButtonProps['variant']
 }
 
@@ -19,9 +19,8 @@ interface Item {
 
 type Model = Item['value']
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   size: 'md',
-  color: 'primary',
   variant: 'filled',
 })
 
@@ -30,6 +29,18 @@ const model = defineModel<Model>({ required: false })
 const classname = computed(() => [
   'tabs',
 ])
+
+const tabColor = computed(() => {
+  if (props.variant === 'lined') {
+    return 'tab-lined'
+  }
+  else if (props.variant === 'filled') {
+    return 'tab-filled'
+  }
+  else {
+    return 'tab-nofilled'
+  }
+})
 
 const onClick = (val: Model) => {
   model.value = val
@@ -46,7 +57,7 @@ export type { Props as TabsProps, Item as TabsItem }
         :key="tab.value"
         class="tabs__nav-item"
         :size="size"
-        :color="color"
+        :color="tabColor"
         :variant="variant"
         :icon="tab.icon"
         :trailing-icon="tab.trailingIcon"
