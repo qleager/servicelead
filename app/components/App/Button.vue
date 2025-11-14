@@ -4,7 +4,7 @@ interface Props {
   // После создания AppIcon;
   icon?: IconProps['name']
   size?: '3xs' | 'xxs' | 'xs' | 'sm' | 'md'
-  color?: 'primary' | 'neutral-0' | 'neutral-1' | 'neutral-1-20'
+  color?: 'primary' | 'neutral-0' | 'neutral-1' | 'neutral-1-20' | 'tab-filled' | 'tab-lined' | 'tab-nofilled'
   type?: 'button' | 'submit' | 'reset'
   // TODO типы из router, чтобы тут затипизированы были только реальные роуты
   // А если ссылка на внешний ресурс? Может тогда ещё проп target добавить?
@@ -88,6 +88,9 @@ export type { Props as ButtonProps }
   $color-neutral-0: $this + '-color-neutral-0';
   $color-neutral-1: $this + '-color-neutral-1';
   $color-neutral-1-20: $this + '-color-neutral-1-20';
+  $color-tab-filled: $this + '-color-tab-filled';
+  $color-tab-nofilled: $this + '-color-tab-nofilled';
+  $color-tab-lined: $this + '-color-tab-lined';
   $trailing-icon: $this + '-trailing-icon';
   $disabled: & + '-disabled';
   $loading: & + '-loading';
@@ -196,6 +199,28 @@ export type { Props as ButtonProps }
         color: $color-neutral-light-400;
       }
     }
+
+    &#{$color-tab-filled} {
+      border-radius: $radius-3;
+      color: $color-neutral-light-950;
+      background-color: $color-neutral-light-50;
+
+      &#{$hover} {
+        background-color: $color-neutral-light-200;
+      }
+
+      &#{$active} {
+        background-color: $color-neutral-light-50;
+      }
+
+      &#{$active-from-props} {
+        background-color: $color-neutral-light-200;
+      }
+
+      &#{$disabled} {
+        color: $color-neutral-light-400;
+      }
+    }
   }
 
   &#{$variant-lined} {
@@ -215,6 +240,27 @@ export type { Props as ButtonProps }
     &#{$disabled} {
       color: $color-neutral-light-300;
     }
+
+    &#{$color-tab-lined} {
+      border: 1px solid $color-neutral-light-300;
+      color: $color-neutral-light-950;
+
+      &#{$hover} {
+        background-color: white;
+      }
+
+      &#{$active} {
+        background-color: $color-neutral-light-200;
+      }
+
+      &#{$active-from-props} {
+        background-color: white;
+      }
+
+      &#{$disabled} {
+        color: $color-neutral-light-400;
+      }
+    }
   }
 
   &#{$variant-nofilled} {
@@ -233,6 +279,31 @@ export type { Props as ButtonProps }
 
     &#{$disabled} {
       color: $color-neutral-light-400;
+    }
+
+    &#{$color-tab-nofilled} {
+      border: none;
+      color: $color-neutral-light-500;
+
+      &#{$hover} {
+        color: $color-neutral-light-950;
+        text-decoration: underline;
+      }
+
+      &#{$active} {
+        color: $color-neutral-light-900;
+        text-decoration: underline;
+      }
+
+      &#{$active-from-props} {
+        color: $color-neutral-light-950;
+        text-decoration: underline;
+      }
+
+      &#{$disabled} {
+        color: $color-neutral-light-300;
+        text-decoration: underline;
+      }
     }
   }
 
