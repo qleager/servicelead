@@ -60,29 +60,22 @@ const { floatingStyles } = useFloating(reference, floating, {
 let closeTimeout: ReturnType<typeof setTimeout> | null = null
 
 const onMouseLeave = () => {
-  console.log(props.mode)
-
   if (props.mode !== 'hover') return
-  // закроем через 100ms
   closeTimeout = setTimeout(() => {
     model.value = false
   }, 100)
 }
 const onMouseEnter = () => {
-  // отменим закрытие через 100ms
   clearTimeout(closeTimeout)
   model.value = true
 }
 
-// Click логика
 const onClickReference = () => {
   if (props.mode !== 'click') return
   model.value = !model.value
 }
 
-// Закрытие по клику вне
 onClickOutside(floating, () => {
-  console.log('onClickOutside')
   if (props.mode === 'click' && props.dismissible) model.value = false
 })
 
