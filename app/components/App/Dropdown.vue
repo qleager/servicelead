@@ -1,16 +1,49 @@
 <script lang="ts" setup>
+/**
+ * @slot content - **обязательный слот** с содержимым всплывашки
+ */
 // TODO: слоты - обязательные
 // Посомтреть, есть ли проверка на это
 // должна быть в defineSlots вроде
+
+// Импорт composables
+import { computed, onMounted, useSlots } from 'vue'
+
+// Пропсы
 interface Props {
-  mode: 'click' | 'hover' // def click
+  mode?: 'click' | 'hover' // def click
 }
+const props = withDefaults(defineProps<Props>(), {
+  mode: 'click',
+})
+
+// Slots
+const slots = useSlots()
+defineSlots<{
+  content: () => any
+}>()
+
+// Проверка наличия обязательного слота content в рантайме
+onMounted(() => {
+  if (!slots.content) {
+    console.warn('[Dropdown] Slot "content" is required')
+  }
+})
+
+// Классы для корневого элемента
+const classname = computed(() => [
+  'dropdown',
+  `dropdown-mode-${props.mode}`,
+])
 </script>
 
 <template>
   <!-- Подумать как тут правильно все обернуть, какие могут возникнуть ошибки -->
   <div :class="classname">
-    <AppFloater :mode>
+    <AppFloater
+      :mode="mode"
+      placement="bottom"
+    >
       <!-- тут слот в слоте будет вот – помешает это или нет, надо понять -->
       <div class="dropdown__slot dropdown__slot-default">
         <slot />
@@ -27,5 +60,16 @@ interface Props {
 <style lang="scss">
 .dropdown {
   $this: &;
+
+  &__slot {
+    padding: $space-4 $space-2;
+  }
+
+  &__content {
+    padding: 1rem;
+    border-radius: $radius-2;
+    background: #fff;
+    box-shadow: 0 0 35px 0 #1C265A1A;
+  }
 }
 </style>
