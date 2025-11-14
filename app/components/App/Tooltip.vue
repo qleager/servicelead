@@ -31,7 +31,7 @@ export type { Props as TooltipProps }
         <slot>
           <span class="tooltip__icon">ℹ️</span>
         </slot>
-        <!-- TODO: добавить иконку -->
+        <!-- TODO: добавить иконку AppIcon -->
         <!-- здесь показываем иконку info, если слот не задан -->
       </div>
       <template #content>
