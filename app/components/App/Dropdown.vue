@@ -6,9 +6,6 @@
 // Посомтреть, есть ли проверка на это
 // должна быть в defineSlots вроде
 
-// Импорт composables
-import { computed, onMounted, useSlots } from 'vue'
-
 // Пропсы
 interface Props {
   mode?: 'click' | 'hover' // def click
@@ -43,6 +40,7 @@ const classname = computed(() => [
     <AppFloater
       :mode="mode"
       placement="bottom"
+      :dismissible="false"
     >
       <!-- тут слот в слоте будет вот – помешает это или нет, надо понять -->
       <div class="dropdown__slot dropdown__slot-default">
@@ -61,14 +59,10 @@ const classname = computed(() => [
 .dropdown {
   $this: &;
 
-  &__slot {
-    padding: $space-4 $space-2;
-  }
-
   &__content {
-    padding: 1rem;
+    padding: $space-4 $space-2;
     border-radius: $radius-2;
-    background: #fff;
+    background: white;
     box-shadow: 0 0 35px 0 #1C265A1A;
   }
 }
