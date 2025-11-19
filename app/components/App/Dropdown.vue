@@ -59,6 +59,8 @@ const classname = computed(() => [
 .dropdown {
   $this: &;
 
+  width: fit-content;
+
   &__content {
     padding: $space-4 $space-2;
     border-radius: $radius-2;
