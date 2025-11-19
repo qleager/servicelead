@@ -63,7 +63,7 @@ const classname = computed(() => ([
   align-items: center;
 
   width: auto;
-  height: 40px;
+  min-height: 40px;
   border-radius: 4px;
 
   &-disabled {
