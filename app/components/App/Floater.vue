@@ -119,6 +119,7 @@ export type { modeType as FloaterModeType }
   $this: &;
 
   z-index: 10;
+  width: fit-content;
 
   &__slot-trigger {
     display: inline-block;
