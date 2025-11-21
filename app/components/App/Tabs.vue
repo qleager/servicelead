@@ -42,8 +42,8 @@ const tabColor = computed(() => {
   }
 })
 
-const onClick = (val: Model) => {
-  model.value = val
+const onClick = (newValue: Model) => {
+  model.value = newValue
 }
 
 export type { Props as TabsProps, Item as TabsItem }

@@ -4,10 +4,12 @@ interface Props {
   // После создания AppIcon;
   icon?: IconProps['name']
   size?: '3xs' | 'xxs' | 'xs' | 'sm' | 'md'
+  // какой-то кринж с цветами получился
   color?: 'primary' | 'neutral-0' | 'neutral-1' | 'neutral-1-20' | 'tab-filled' | 'tab-lined' | 'tab-nofilled'
   type?: 'button' | 'submit' | 'reset'
   // TODO типы из router, чтобы тут затипизированы были только реальные роуты
   // А если ссылка на внешний ресурс? Может тогда ещё проп target добавить?
+  // NuxtLink не будем использовать?
   to?: string
   value?: string | number
   trailingIcon?: boolean

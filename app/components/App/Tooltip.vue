@@ -13,13 +13,11 @@ withDefaults(defineProps<Props>(), {
   portal: 'body',
 })
 
-const classname = 'tooltip'
-
 export type { Props as TooltipProps }
 </script>
 
 <template>
-  <div :class="classname">
+  <div class="tooltip">
     <AppFloater
       :mode
       :placement

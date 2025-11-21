@@ -35,7 +35,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const model = defineModel<V | V[]>()
 
-const searchQuery = ref('')
+const searchQuery = ref<string>('')
 
 const normalizedItems = computed(() =>
   props.items.map((i) => {
