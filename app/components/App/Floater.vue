@@ -25,6 +25,20 @@ interface Props {
 // закрытие по
 type modeType = 'click' | 'hover'
 
+const props = withDefaults(defineProps<Props>(), {
+  mode: 'click',
+  placement: 'bottom',
+  dismissible: true,
+  width: 'auto',
+  portal: 'body',
+})
+
+const model = defineModel<boolean>({ default: false })
+
+const reference = ref<HTMLElement | null>(null)
+const floating = ref<HTMLElement | null>(null)
+let closeTimeout: ReturnType<typeof setTimeout> | null = null
+
 const { floatingStyles } = useFloating(reference, floating, {
   placement: props.placement,
   middleware: [
@@ -42,20 +56,6 @@ const { floatingStyles } = useFloating(reference, floating, {
     }),
   ],
 })
-
-const props = withDefaults(defineProps<Props>(), {
-  mode: 'click',
-  placement: 'bottom',
-  dismissible: true,
-  width: 'auto',
-  portal: 'body',
-})
-
-const model = defineModel<boolean>({ default: false })
-
-const reference = ref<HTMLElement | null>(null)
-const floating = ref<HTMLElement | null>(null)
-let closeTimeout: ReturnType<typeof setTimeout> | null = null
 
 const classname = computed(() => ([
   'floater',
