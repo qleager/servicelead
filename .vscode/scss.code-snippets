@@ -3,7 +3,7 @@
     "scope": "scss",
     "prefix": "text",
     "body": [
-      "@include text(${1|light,regular,medium,semibold,bold,extrabold|}, ${2|2xs,xs,sm,base,lg,xl,2xl,3xl,4xl,5xl,6xl,7xl,8xl|});"
+      "@include text(${1|light,regular,medium,semibold,bold,extrabold|}, ${2|2xs,xs,sm,md,lg,xl,2xl,3xl,4xl,5xl,6xl,7xl,8xl|});"
     ],
     "description": "Вставить @include text(weight, size)"
   },
@@ -11,7 +11,7 @@
     "scope": "scss",
     "prefix": "label",
     "body": [
-      "@include label(${1|sm,base|}, ${2|regular,medium|});"
+      "@include label(${1|sm,md|}, ${2|regular,medium|});"
     ],
     "description": "Вставить @include label(size, weight)"
   },
