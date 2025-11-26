@@ -1,5 +1,7 @@
 <script lang="ts" setup>
 import type { Placement } from '@floating-ui/vue'
+import type { TeleportProps } from 'vue'
+import { Teleport } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 import {
   useFloating,
@@ -11,38 +13,37 @@ import {
 } from '@floating-ui/vue'
 
 interface Props {
-  mode?: modeType
+  mode?: 'click' | 'hover'
+  // TODO(YURA): давай если placement не задан - юзать autoPlacement
   placement?: Placement
-  // запрещает закрытие по клику вне floating и потери ховера, при клике на reference по прежнему закрытие
   dismissible?: boolean
-  width?: string // 56px/100%; def auto
-  portal?: string | HTMLElement // телепорт floating по строке типа ".body" или html элемента
+  width?: string
+  portal?: TeleportProps['to']
 }
+// TODO(YURA): давай тогда откажемся от flip
+//
 // placement токлько 'top' | 'right' | 'bottom' | 'left'
 // есть autoPlacement, но его нельзя использовать с flip. Можно только одно. Разница:
 // https://floating-ui.com/docs/autoPlacement#conflict-with-flip
 
-// закрытие по
-type modeType = 'click' | 'hover'
-
 const props = withDefaults(defineProps<Props>(), {
   mode: 'click',
-  placement: 'bottom',
   dismissible: true,
   width: 'auto',
-  portal: 'body',
 })
 
-const model = defineModel<boolean>({ default: false })
+const model = defineModel<boolean>({ default: true })
 
 const reference = ref<HTMLElement | null>(null)
 const floating = ref<HTMLElement | null>(null)
-let closeTimeout: ReturnType<typeof setTimeout> | null = null
+
+let closeTimeout: ReturnType<typeof setTimeout> | undefined = undefined
 
 const { floatingStyles } = useFloating(reference, floating, {
   placement: props.placement,
   middleware: [
     offset(8),
+    // TODO(YURA): если нет props.placement испоьзуем autoPlacement()
     // autoPlacement(),
     flip(),
     shift({ padding: 8 }),
@@ -61,28 +62,37 @@ const classname = computed(() => ([
   'floater',
 ]))
 
+const componentTag = computed(() => props.portal ? 'div' : Teleport)
+
 const onMouseLeave = () => {
   if (props.mode !== 'hover') return
   closeTimeout = setTimeout(() => {
     model.value = false
   }, 100)
-}
+}// TODO(YURA): перенос строки
 const onMouseEnter = () => {
   clearTimeout(closeTimeout)
   if (props.mode === 'hover') model.value = true
 }
 
 const onClickReference = () => {
-  if (props.mode !== 'click') return
+  if (props.mode === 'hover') return
   model.value = !model.value
 }
 
-onClickOutside(floating, () => {
-  if (props.mode === 'click' && !props.dismissible) model.value = false
-})
+onClickOutside(
+  floating,
+  () => {
+    // TODO(YURA): так почише выглядит
+    model.value = props.mode === 'click' && props.dismissible ? false : true
+    // if (props.mode === 'click' && !props.dismissible) model.value = false
+  }, {
+    // TODO(YURA): так при клике по reference, и при mode=click сработает закрытие
+    // как то колхозно немного, мб есть лучше реализации, например ref="root" сделать, хз, подумай
+    ignore: [floating, reference],
+  })
 
 export type { Props as FloaterProps }
-export type { modeType as FloaterModeType }
 </script>
 
 <template>
@@ -96,11 +106,15 @@ export type { modeType as FloaterModeType }
     >
       <slot />
     </div>
-    <teleport
-      v-if="model"
+    <!-- TODO(YURA):
+          Важно сделать использолвание телепорта условным, в дальнейшем избавляем себя от мучений, например, при использоании флоатера в таблице
+        -->
+    <Component
+      :is="componentTag"
       :to="portal"
     >
       <div
+        v-if="model"
         ref="floating"
         class="floater__slot floater__slot-content"
         :style="floatingStyles"
@@ -109,7 +123,7 @@ export type { modeType as FloaterModeType }
       >
         <slot name="content" />
       </div>
-    </teleport>
+    </Component>
   </div>
 </template>
 
@@ -120,8 +134,10 @@ export type { modeType as FloaterModeType }
   z-index: 10;
   width: fit-content;
 
-  &__slot-trigger {
-    display: inline-block;
+  &__slot {
+    &-trigger {
+      display: inline-block;
+    }
   }
 }
 </style>

@@ -1,23 +1,29 @@
 <script lang="ts" setup>
 import type { FloaterProps } from './Floater.vue'
 
+// TODO(YURA): давай пока уберем обвес, оставим только текст
 interface Props extends FloaterProps {
   text: string
 }
 
-withDefaults(defineProps<Props>(), {
-  mode: 'click',
-  placement: 'bottom',
-  dismissible: true,
-  width: 'auto',
-  portal: 'body',
-})
+defineProps<Props>()
+
+// withDefaults(defineProps<Props>(), {
+//   mode: 'click',
+//   placement: 'bottom',
+//   dismissible: true,
+//   width: 'auto',
+//   portal: 'body',
+// })
 
 export type { Props as TooltipProps }
 </script>
 
 <template>
   <div class="tooltip">
+    <!-- TODO(YURA): а тут ток mode="hover" оставим
+      по макету вижу, что нам вряд ли понадобиться пока остальное
+    -->
     <AppFloater
       :mode
       :placement
@@ -26,6 +32,7 @@ export type { Props as TooltipProps }
       :portal
     >
       <div class="tooltip__slot tooltip__slot-default">
+        <!-- TODO(YURA): и AppIcon уже используем, там пока просто красный квадрат - это ок -->
         <slot>
           <span class="tooltip__icon">ℹ️</span>
         </slot>
@@ -58,6 +65,7 @@ export type { Props as TooltipProps }
     padding: $space-1 $space-2;
     border-radius: $radius-1;
 
+    // TODO(YURA): neutral-950
     color: white;
     text-align: center;
     white-space: nowrap;

@@ -1,16 +1,26 @@
 <script lang="ts" setup>
+import type { AnchorHTMLAttributes } from 'vue'
+import type { IconProps } from './Icon.vue'
+
 interface Props {
   variant?: 'filled' | 'lined' | 'nofilled'
-  // После создания AppIcon;
   icon?: IconProps['name']
   size?: '3xs' | 'xxs' | 'xs' | 'sm' | 'md'
-  // какой-то кринж с цветами получился
-  color?: 'primary' | 'neutral-0' | 'neutral-1' | 'neutral-1-20' | 'tab-filled' | 'tab-lined' | 'tab-nofilled'
+  // TODO(YURA): да, согл с тобой по цветам, давай использовать схему 'primary' | 'white' | 'lighter' | 'darker'
+  //             визуально в макете синий есть, белый, и серый, с темно серым соотвественно
+  //
+  //             Например, если variant=lined/color=primary, то бордер заливаем цветом
+  //             если variant=nofilled/color=primary, то содержимое – текст и/или иконку
+  //             Это отходит от того, что сделали дизайнеры, но с точки дизайн-системы, которую мы хотим построить, это корректно
+  //             После подрубим сторибук, и там будет показательно, что макетная реализация некорректна
+  //
+  //             ⚠️ Убедись, что смотришь в последней версии макета, а не в своей копии, а то есть такое ощущение чет
+  //
+  color?: 'primary' | 'white' | 'lighter' | 'darker'
   type?: 'button' | 'submit' | 'reset'
-  // TODO типы из router, чтобы тут затипизированы были только реальные роуты
-  // А если ссылка на внешний ресурс? Может тогда ещё проп target добавить?
-  // NuxtLink не будем использовать?
+  // TODO: типы из router, чтобы тут затипизированы только реальные роуты
   to?: string
+  target?: AnchorHTMLAttributes['target']
   value?: string | number
   trailingIcon?: boolean
   disabled?: boolean
@@ -34,6 +44,10 @@ const props = withDefaults(defineProps<Props>(), {
 const componentTag = computed(() =>
   props.to ? 'a' : 'button',
 )
+
+// когда передан loading меняем/добавдяем иконке name = иконке загрузке
+// isIconVisible = computed(
+// iconName = computed(
 
 const classname = computed(() => [
   'button',
@@ -60,14 +74,15 @@ export type { Props as ButtonProps }
     :value
     :disabled
   >
-    <!-- <AppIcon
+    <!--
+      isIconVisible
+      iconName
+    -->
+    <AppIcon
       v-if="icon || loading"
       class="button__icon"
-      :icon='loading ? 'loading' : icon'
-    /> -->
-    <div v-if="icon || loading">
-      {{ loading ? '...' : icon }}
-    </div>
+      :icon="loading ? 'loading' : icon"
+    />
     <span
       v-if="$slots.default"
       class="button__slot"
@@ -81,11 +96,16 @@ export type { Props as ButtonProps }
 .button {
   $this: &;
   $hover: & + ':hover';
-  $active: & + ':active';
-  $active-from-props: & + '-active';
+  $active: & + ':active' + ', ' + & + '-active';
+
+  // TODO(YURA): ⬆️ как то так давай
+  // $active-from-props: & + '-active';
   $variant-filled: $this + '-variant-filled';
   $variant-lined: $this + '-variant-lined';
   $variant-nofilled: $this + '-variant-nofilled';
+  $active-from-props: '';
+
+  // TODO(YURA): Замена на нашу новую схему
   $color-primary-1: $this + '-color-primary';
   $color-neutral-0: $this + '-color-neutral-0';
   $color-neutral-1: $this + '-color-neutral-1';
@@ -93,15 +113,17 @@ export type { Props as ButtonProps }
   $color-tab-filled: $this + '-color-tab-filled';
   $color-tab-nofilled: $this + '-color-tab-nofilled';
   $color-tab-lined: $this + '-color-tab-lined';
-  $trailing-icon: $this + '-trailing-icon';
-  $disabled: & + '-disabled';
-  $loading: & + '-loading';
-  $no-text: & + '-no-text';
+
+  ///
   $size-3xs: $this + '-size-3xs';
   $size-xxs: $this + '-size-xxs';
   $size-xs: $this + '-size-xs';
   $size-sm: $this + '-size-sm';
   $size-md: $this + '-size-md';
+  $trailing-icon: $this + '-trailing-icon';
+  $disabled: & + '-disabled';
+  $loading: & + '-loading';
+  $no-text: & + '-no-text';
 
   cursor: pointer;
 
@@ -115,6 +137,8 @@ export type { Props as ButtonProps }
   &#{$size-3xs} {
     height: 20px;
   }
+
+  // TODO(YURA): пустые строки между правилами
   &#{$size-xxs} {
     height: 24px;
   }
@@ -135,6 +159,22 @@ export type { Props as ButtonProps }
     font-size: 16px;
   }
 
+  // TODO(YURA): цвет не вкладываем, а задаем вне варианта
+  //  есть пример в AppInput. Ховеры меняющие цвет тоже в $color-...
+  //
+  // &#{$color-primary} {
+  //  background-color: $color-primary;
+  //  border-color: $color-primary;
+  //  color: $color-primary;
+  //
+  //  &:hover {
+  //    background-color: $color-primary-100;
+  //    border-color: $color-primary-100;
+  //    color: $color-primary-100;
+  //  }
+  // }
+  // Ну и в самих вариантах, запрещаем/разрешаем/назначаем border/background-color/color через !important
+  // Так же есть пример в AppInput
   &#{$variant-filled} {
     &#{$color-primary-1} {
       color: white;
@@ -230,6 +270,7 @@ export type { Props as ButtonProps }
     color: $color-neutral-light-950;
     background-color: unset;
 
+    // TODO(YURA): пустые строки между правилами
     &#{$hover} {
       background-color: white;
     }
@@ -328,6 +369,13 @@ export type { Props as ButtonProps }
     justify-content: center;
     aspect-ratio: 1;
     padding: 0;
+  }
+
+  // TODO(YURA)
+  &__icon {
+    // если loading state => rotate animation из https://animate.style
+    // в app/assets/scss/design-system/animation.scss добавми
+    // как в leadsale
   }
 }
 </style>

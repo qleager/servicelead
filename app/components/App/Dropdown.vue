@@ -1,32 +1,11 @@
 <script lang="ts" setup>
-// TODO: слоты - обязательные
-// Посомтреть, есть ли проверка на это
-// должна быть в defineSlots вроде
-
-// Пропсы
+// TODO(YURA): FloaterProps['mode']
 interface Props {
-  mode?: 'click' | 'hover' // def click
+  mode?: 'click' | 'hover'
 }
-const props = withDefaults(defineProps<Props>(), {
-  mode: 'click',
-})
 
-// Slots
-const slots = useSlots()
-defineSlots<{
-  content: () => any
-}>()
+const props = defineProps<Props>()
 
-// Не совсем понял что имеешь ввиду по обязательностью слота
-// как я понял заставить ide ругаться на непереданный слот нет возможности
-// Проверка наличия обязательного слота content в рантайме
-onMounted(() => {
-  if (!slots.content) {
-    console.warn('[Dropdown] Slot "content" is required')
-  }
-})
-
-// Классы для корневого элемента
 const classname = computed(() => [
   'dropdown',
   `dropdown-mode-${props.mode}`,
@@ -34,18 +13,17 @@ const classname = computed(() => [
 </script>
 
 <template>
-  <!-- Подумать как тут правильно все обернуть, какие могут возникнуть ошибки -->
   <div :class="classname">
+    <!-- TODO(YURA): достаточно просто :mode, и плейсмент уберем, пусть будет авто пока  -->
     <AppFloater
       :mode="mode"
       placement="bottom"
-      :dismissible="false"
     >
-      <!-- тут слот в слоте будет вот – помешает это или нет, надо понять -->
       <div class="dropdown__slot dropdown__slot-default">
         <slot />
       </div>
       <template #content>
+        <!-- TODO(YURA): .dropdown__slot -->
         <div class="dropdown__content">
           <slot name="content" />
         </div>
@@ -64,6 +42,9 @@ const classname = computed(() => [
     padding: $space-4 $space-2;
     border-radius: $radius-2;
     background: white;
+
+    // TODO(YURA): вижу по макету, что вынесены в стили тени
+    // давай в ds под них сделаем файл
     box-shadow: 0 0 35px 0 #1C265A1A;
   }
 }
