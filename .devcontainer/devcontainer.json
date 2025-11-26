@@ -33,7 +33,7 @@
         "nuxtr.nuxtr-vscode",
         "openai.chatgpt",
         "stylelint.vscode-stylelint",
-        "mrmlnc.vscode-scss",
+        "mrmlnc.vscode-scss"
       ],
       "settings": {
         "editor": {
