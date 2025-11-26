@@ -5,12 +5,12 @@
 
 <template>
   <div class="bar">
-    <SearchButton color="white" />
+    <!-- <SearchButton color="white" />
     <NavigationActions />
-    <TicketsButton />
+    <TicketsButton /> -->
   </div>
 </template>
 
-<style lang="bar">
+<style lang="scss">
 .bar {}
 </style>

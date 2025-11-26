@@ -7,6 +7,13 @@
 
 html {
   color: $color-neutral-dark-950;
+
+  @include text(regular, md);
+}
+
+body {
+  margin: 0;
+  padding: 0;
 }
 
 button {

@@ -10,11 +10,11 @@ const menuItems: MenuItem[] = []
 <template>
   <footer class="footer">
     <div class="footer__menu">
-      <a
+      <!-- <a
         v-for
         href=""
         class="footer__menu-item"
-      />
+      /> -->
     </div>
   </footer>
 </template>
@@ -22,5 +22,13 @@ const menuItems: MenuItem[] = []
 <style lang="scss">
 .footer {
   $this: &;
+
+  height: 112px;
+  border: 2px solid rgb(0 128 0 / 20%);
+
+  &::before {
+    content: 'TheFooter';
+    color: rgb(0 128 0 / 50%);
+  }
 }
 </style>
