@@ -27,7 +27,7 @@ export default defineNuxtConfig({
       },
     },
     plugins: [
-      VitePluginSvgSpritemap('./assets/icon/*.svg', {
+      VitePluginSvgSpritemap('./assets/icons/*.svg', {
         prefix: false,
         route: 'sprite',
         output: 'sprite.[hash][extname]',
