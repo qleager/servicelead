@@ -1,6 +1,8 @@
 <script lang="ts" setup>
+import type { IconName } from '~/types/IconName'
+
 interface Props {
-  name: string
+  name: IconName
   size?: number
 }
 
@@ -22,8 +24,10 @@ export type { Props as IconProps }
 </template>
 
 <style lang="scss">
-// .icon {
-//   outline: 1px dashed rgb($color-warning, 80%);
-//   outline-offset: -2px;
-// }
+.icon {
+  fill: currentcolor;
+
+  // outline: 1px dashed rgb($color-warning, 80%);
+  // outline-offset: -2px;
+}
 </style>

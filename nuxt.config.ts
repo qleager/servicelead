@@ -45,6 +45,12 @@ export default defineNuxtConfig({
                 prefix: false,
               },
             },
+            {
+              name: 'removeAttrs',
+              params: {
+                attrs: '(fill|stroke)',
+              },
+            },
           ],
         },
       }),
