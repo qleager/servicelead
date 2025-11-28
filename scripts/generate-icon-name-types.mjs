@@ -1,9 +1,8 @@
-// scripts/generate-icons.mjs
 import { readdirSync, writeFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 
-const iconsDir = resolve('app/assets/icon')
-const outFile = resolve('app/types/IconName.ts')
+const iconsDir = resolve('app/assets/icons')
+const outFile = resolve('app/types/components/app/icon.ts')
 
 // 1. Читаем все файлы из папки иконок
 const files = readdirSync(iconsDir)
@@ -25,5 +24,3 @@ export type IconName = (typeof iconNames)[number]
 
 // 4. Пишем файл
 writeFileSync(outFile, content, 'utf8')
-
-console.log(`[generate-icons] wrote ${names.length} icons to app/types/IconName.ts`)

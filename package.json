@@ -3,17 +3,17 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "generate:icons": "node ./scripts/generate-icons.mjs",
     "build": "nuxt build",
-    "dev": "nuxt dev",
-    "dev:container": "pnpm generate:icons && nuxt dev --host 0.0.0.0 --port 3000",
+    "dev": "pnpm types:generate:icons && nuxt dev",
+    "dev:container": "pnpm types:generate:icons && nuxt dev --host 0.0.0.0 --port 3000",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint:scripts": "eslint .",
     "lint:styles": "stylelint **/*.{vue,scss}",
     "lint:scripts:fix": "eslint . --fix",
-    "lint:styles:fix": "stylelint **/*.{scss,vue} --fix"
+    "lint:styles:fix": "stylelint **/*.{scss,vue} --fix",
+    "types:generate:icons": "node ./scripts/generate-icon-name-types.mjs"
   },
   "dependencies": {
     "@floating-ui/vue": "^1.1.9",

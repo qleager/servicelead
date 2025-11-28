@@ -1,6 +1,5 @@
 /*
  * Guide: https://nuxt.com/docs/api/configuration/nuxt-config
- * Spritemap plugin: https://spiriitlabs.github.io/vite-plugin-svg-spritemap/options/
  */
 import { fileURLToPath } from 'node:url'
 import VitePluginSvgSpritemap from '@spiriit/vite-plugin-svg-spritemap'
@@ -12,6 +11,9 @@ export default defineNuxtConfig({
 
   alias: {
     '@scss': fileURLToPath(new URL('./app/assets/scss', import.meta.url)),
+    '@app': fileURLToPath(new URL('./app', import.meta.url)),
+    '@server': fileURLToPath(new URL('./server', import.meta.url)),
+    '@shared': fileURLToPath(new URL('./shared', import.meta.url)),
   },
 
   compatibilityDate: '2025-07-15',
