@@ -1,23 +1,22 @@
 <script lang="ts" setup>
-// TODO: Пока нет апи исключительно просто верстку
 </script>
 
 <template>
   <div class="balance">
     <div class="balance__item">
-      <div class="balance__value">
+      <div class="balance__item-value">
         325 000 ₽
       </div>
-      <div class="balance__label">
+      <div class="balance__item-label">
         Баланс
       </div>
     </div>
 
     <div class="balance__item">
-      <div class="balance__value">
+      <div class="balance__item-value">
         170 432 ₽
       </div>
-      <div class="balance__label">
+      <div class="balance__item-label">
         Холд
       </div>
     </div>
@@ -31,7 +30,6 @@
   display: flex;
   gap: $space-4;
   align-items: center;
-  width: 236px;
 
   &__item {
     display: flex;
@@ -39,17 +37,20 @@
     flex-direction: column;
     justify-content: space-around;
 
+    min-width: 110px;
     height: 43px;
-  }
 
-  &__value {
-    @include text(regular, lg);
-  }
+    white-space: nowrap;
 
-  &__label {
-    @include text(light, xs);
+    &-value {
+      @include text(regular, lg);
+    }
 
-    color: $color-neutral-light-450;
+    &-label {
+      @include text(light, xs);
+
+      color: $color-neutral-light-450;
+    }
   }
 }
 </style>
