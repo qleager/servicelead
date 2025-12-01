@@ -43,7 +43,11 @@
 fix(offer): error when save offer to favorite  
 feat(AppIcon): setup component  
 style: add padding to body  
-docs(readme): add Use Conventional Commits block  
+docs(readme): add Use Conventional Commits block
+
+> [!Tip]
+> Папки, в которых лежат компоненты, по факту уже и есть `scope`.  
+> Кроме App, раз они глобальные, то считаем их `scope` – за их самих
 
 ## 📦 Требования
 
