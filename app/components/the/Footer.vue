@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { IconProps } from '../App/Icon.vue'
+import type { IconProps } from '@/components/App/Icon.vue'
 
 interface MenuItem {
   label?: string
@@ -26,7 +26,6 @@ const menuItems: MenuItem[] = [
         rel="noreferrer"
       >
         <span
-          v-if="item.label"
           class="footer__menu-label"
         >
           {{ item.label }}
@@ -56,7 +55,7 @@ const menuItems: MenuItem[] = [
     justify-content: flex-end;
 
     height: 88px;
-    padding-right: 24px;
+    padding-right: $space-6;
 
     &-item {
       display: inline-flex;
@@ -65,10 +64,18 @@ const menuItems: MenuItem[] = [
 
       color: $color-neutral-light-500;
       text-decoration: none;
+
+      &:hover {
+        color: $color-neutral-light-600;
+      }
     }
 
     &-label {
       @include text(regular, sm);
+
+      &:empty {
+        display: none;
+      }
     }
   }
 }
