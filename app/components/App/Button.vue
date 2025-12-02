@@ -35,7 +35,6 @@ const componentTag = computed(() =>
   props.to ? 'a' : 'button',
 )
 
-// когда передан loading меняем/добавдяем иконке name = иконке загрузке
 const isIconVisible = computed(() =>
   props.icon || props.loading
 )
@@ -69,10 +68,6 @@ export type { Props as ButtonProps }
     :value
     :disabled
   >
-    <!--
-      isIconVisible
-      iconName
-    -->
     <AppIcon
       v-if="isIconVisible"
       class="button__icon"
