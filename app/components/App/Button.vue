@@ -6,16 +6,6 @@ interface Props {
   variant?: 'filled' | 'lined' | 'nofilled'
   icon?: IconProps['name']
   size?: '3xs' | 'xxs' | 'xs' | 'sm' | 'md'
-  // TODO(YURA): да, согл с тобой по цветам, давай использовать схему 'primary' | 'white' | 'lighter' | 'darker'
-  //             визуально в макете синий есть, белый, и серый, с темно серым соотвественно
-  //
-  //             Например, если variant=lined/color=primary, то бордер заливаем цветом
-  //             если variant=nofilled/color=primary, то содержимое – текст и/или иконку
-  //             Это отходит от того, что сделали дизайнеры, но с точки дизайн-системы, которую мы хотим построить, это корректно
-  //             После подрубим сторибук, и там будет показательно, что макетная реализация некорректна
-  //
-  //             ⚠️ Убедись, что смотришь в последней версии макета, а не в своей копии, а то есть такое ощущение чет
-  //
   color?: 'primary' | 'white' | 'lighter' | 'darker'
   type?: 'button' | 'submit' | 'reset'
   // TODO: типы из router, чтобы тут затипизированы только реальные роуты
@@ -46,8 +36,13 @@ const componentTag = computed(() =>
 )
 
 // когда передан loading меняем/добавдяем иконке name = иконке загрузке
-// isIconVisible = computed(
-// iconName = computed(
+const isIconVisible = computed(() =>
+  props.icon || props.loading
+)
+
+const iconName = computed(() => 
+  props.loading ? 'loading' : props.icon
+)
 
 const classname = computed(() => [
   'button',
@@ -79,9 +74,9 @@ export type { Props as ButtonProps }
       iconName
     -->
     <AppIcon
-      v-if="icon || loading"
+      v-if="isIconVisible"
       class="button__icon"
-      :icon="loading ? 'loading' : icon"
+      :name="iconName!"
     />
     <span
       v-if="$slots.default"
@@ -96,23 +91,18 @@ export type { Props as ButtonProps }
 .button {
   $this: &;
   $hover: & + ':hover';
-  $active: & + ':active' + ', ' + & + '-active';
+  $active: '&.button:active, &.button-active';
 
-  // TODO(YURA): ⬆️ как то так давай
-  // $active-from-props: & + '-active';
+  ///
   $variant-filled: $this + '-variant-filled';
   $variant-lined: $this + '-variant-lined';
   $variant-nofilled: $this + '-variant-nofilled';
-  $active-from-props: '';
 
-  // TODO(YURA): Замена на нашу новую схему
-  $color-primary-1: $this + '-color-primary';
-  $color-neutral-0: $this + '-color-neutral-0';
-  $color-neutral-1: $this + '-color-neutral-1';
-  $color-neutral-1-20: $this + '-color-neutral-1-20';
-  $color-tab-filled: $this + '-color-tab-filled';
-  $color-tab-nofilled: $this + '-color-tab-nofilled';
-  $color-tab-lined: $this + '-color-tab-lined';
+  ///
+  $btn-color-primary: $this + '-color-primary';
+  $btn-color-white: $this + '-color-white';
+  $btn-color-lighter: $this + '-color-lighter';
+  $btn-color-darker: $this + '-color-darker';
 
   ///
   $size-3xs: $this + '-size-3xs';
@@ -138,7 +128,6 @@ export type { Props as ButtonProps }
     height: 20px;
   }
 
-  // TODO(YURA): пустые строки между правилами
   &#{$size-xxs} {
     height: 24px;
   }
@@ -159,195 +148,90 @@ export type { Props as ButtonProps }
     font-size: 16px;
   }
 
-  // TODO(YURA): цвет не вкладываем, а задаем вне варианта
-  //  есть пример в AppInput. Ховеры меняющие цвет тоже в $color-...
-  //
-  // &#{$color-primary} {
-  //  background-color: $color-primary;
-  //  border-color: $color-primary;
-  //  color: $color-primary;
-  //
-  //  &:hover {
-  //    background-color: $color-primary-100;
-  //    border-color: $color-primary-100;
-  //    color: $color-primary-100;
-  //  }
-  // }
-  // Ну и в самих вариантах, запрещаем/разрешаем/назначаем border/background-color/color через !important
-  // Так же есть пример в AppInput
   &#{$variant-filled} {
-    &#{$color-primary-1} {
-      color: white;
-      background-color: $color-primary;
+    border: transparent;
+    color: var(--btn-text-base);
+    background-color: var(--btn-base);
 
-      &#{$hover} {
-        background-color: $color-primary-600;
-      }
-
-      &#{$active},
-      #{$active-from-props} {
-        color: $color-neutral-light-400;
-        background-color: $color-primary-700;
-      }
-
-      &#{$disabled} {
-        color: $color-neutral-light-400;
-        background-color: $color-neutral-light-100;
-      }
+    &:hover {
+      background-color: var(--btn-hover);
+    }
+    
+    #{$active} {
+      background-color: var(--btn-active);
     }
 
-    &#{$color-neutral-0} {
-      color: $color-neutral-light-950;
-      background-color: white;
-
-      &#{$hover} {
-        background-color: $color-neutral-light-200;
-      }
-
-      &#{$active},
-      #{$active-from-props} {
-        background-color: $color-neutral-light-400;
-      }
-    }
-
-    &#{$color-neutral-1} {
-      color: $color-neutral-light-950;
-      background-color: $color-neutral-light-100;
-
-      &#{$hover} {
-        background-color: $color-neutral-light-300;
-      }
-
-      &#{$active},
-      #{$active-from-props} {
-        background-color: $color-neutral-light-400;
-      }
-    }
-
-    &#{$color-neutral-1-20} {
-      color: white;
-      background-color: rgba($color-neutral-light, 0.2);
-
-      &#{$hover} {
-        background-color: rgba($color-neutral-light, 0.4);
-      }
-
-      &#{$active},
-      #{$active-from-props} {
-        background-color: rgba($color-neutral-light, 0.8);
-      }
-
-      &#{$disabled} {
-        color: $color-neutral-light-400;
-      }
-    }
-
-    &#{$color-tab-filled} {
-      border-radius: $radius-3;
-      color: $color-neutral-light-950;
-      background-color: $color-neutral-light-50;
-
-      &#{$hover} {
-        background-color: $color-neutral-light-200;
-      }
-
-      &#{$active} {
-        background-color: $color-neutral-light-50;
-      }
-
-      &#{$active-from-props} {
-        background-color: $color-neutral-light-200;
-      }
-
-      &#{$disabled} {
-        color: $color-neutral-light-400;
-      }
+    &:disabled {
+      background-color: var(--btn-text-disabled);
     }
   }
 
   &#{$variant-lined} {
-    border: 1px solid $color-neutral-light-300;
-    color: $color-neutral-light-950;
-    background-color: unset;
+    border: 1px solid var(--btn-base);
+    color: var(--btn-text-base);
+    background-color:  transparent;
 
-    // TODO(YURA): пустые строки между правилами
-    &#{$hover} {
-      background-color: white;
+    &:hover {
+      background-color: var(--btn-hover);
     }
-    &#{$active},
-    #{$active-from-props} {
-      color: $color-neutral-light-950;
-      background-color: $color-neutral-light-50;
+    
+    #{$active} {
+      background-color: var(--btn-active);
     }
 
-    &#{$disabled} {
-      color: $color-neutral-light-300;
-    }
-
-    &#{$color-tab-lined} {
-      border: 1px solid $color-neutral-light-300;
-      color: $color-neutral-light-950;
-
-      &#{$hover} {
-        background-color: white;
-      }
-
-      &#{$active} {
-        background-color: $color-neutral-light-200;
-      }
-
-      &#{$active-from-props} {
-        background-color: white;
-      }
-
-      &#{$disabled} {
-        color: $color-neutral-light-400;
-      }
+    &:disabled {
+      color: var(--btn-text-disabled);
     }
   }
 
   &#{$variant-nofilled} {
-    padding: $space-1;
-    color: $color-neutral-light-200;
-    background-color: unset;
-
-    &#{$hover} {
-      color: $color-neutral-light-50;
+    border: transparent;
+    color: var(--btn-base);
+    background-color:  transparent;
+    
+    &:hover {
+      color: var(--btn-hover);
+    }
+    
+    #{$active} {
+      color: var(--btn-active);
     }
 
-    &#{$active},
-    #{$active-from-props} {
-      color: $color-neutral-light-300;
+    &:disabled {
+      color: var(--btn-text-disabled);
     }
+  }
 
-    &#{$disabled} {
-      color: $color-neutral-light-400;
-    }
+  &#{$btn-color-primary} {
+    --btn-base: #{$color-primary};
+    --btn-hover: #{$color-primary-600};
+    --btn-active: #{$color-primary-700};
+    --btn-text-base: #{$color-neutral-light-100};
+    --btn-text-disabled: #{$color-neutral-light-400};
+  }
 
-    &#{$color-tab-nofilled} {
-      border: none;
-      color: $color-neutral-light-500;
+  &#{$btn-color-white} {
+    --btn-base: white;
+    --btn-hover: #{$color-neutral-light-200};
+    --btn-active: #{$color-neutral-light-400};
+    --btn-text-base: #{$color-neutral-light-950};
+    --btn-text-disabled: #{$color-neutral-light-400};
+  }
 
-      &#{$hover} {
-        color: $color-neutral-light-950;
-        text-decoration: underline;
-      }
+  &#{$btn-color-lighter} {
+    --btn-base: #{$color-neutral-light-100};
+    --btn-hover: #{$color-neutral-light-300};
+    --btn-active: #{$color-neutral-light-400};
+    --btn-text-base: #{$color-neutral-light-950};
+    --btn-text-disabled: #{$color-neutral-light-400};
+  }
 
-      &#{$active} {
-        color: $color-neutral-light-900;
-        text-decoration: underline;
-      }
-
-      &#{$active-from-props} {
-        color: $color-neutral-light-950;
-        text-decoration: underline;
-      }
-
-      &#{$disabled} {
-        color: $color-neutral-light-300;
-        text-decoration: underline;
-      }
-    }
+  &#{$btn-color-darker} {
+    --btn-base: #{$color-neutral-dark-500};
+    --btn-hover: #{$color-neutral-dark-400};
+    --btn-active: #{$color-neutral-dark-300};
+    --btn-text-base: white;
+    --btn-text-disabled: #{$color-neutral-light-400};
   }
 
   &#{$trailing-icon} {
