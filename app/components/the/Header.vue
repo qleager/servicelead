@@ -8,8 +8,8 @@
     <SearchDropdown class="header__search" />
     <NotificationsButton class="header__notification" />
     <TicketsButton class="header__notification" />
-    <ManagerButton class="header__manager" />
-    <NavigationActions /> -->
+    <ManagerButton class="header__manager" /> -->
+    <NavigationActions />
   </header>
 </template>
 

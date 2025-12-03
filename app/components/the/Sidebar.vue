@@ -4,9 +4,13 @@
 
 <template>
   <aside class="sidebar">
-    <!-- logo -->
+    <!-- <AppIcon class="sidebar__logo" name=""/> -->
+    <div class="sidebar__logo">LOGO</div>
     <NavigationMain minimal="isCollapsed" />
     <!-- collapse button -->
+     <AppButton variant="nofilled" color="darker" icon="collapse">
+        Свернуть меню
+     </AppButton>
   </aside>
 </template>
 
@@ -14,12 +18,15 @@
 .sidebar {
   $this: &;
 
-  min-width: 200px;
-  border: 2px solid rgb(128 0 128 / 20%);
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
 
-  &::before {
-    content: 'TheSidebar';
-    color: rgb(128 0 128 / 50%)
+  min-width: 200px;
+  padding-top: 24px;
+
+  &__logo {
+    margin: 0 auto;
   }
 }
 </style>

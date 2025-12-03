@@ -6,7 +6,13 @@ const items = [{}]
 </script>
 
 <template>
-  AppFloater.navigation-actions
+  <AppDropdown class="navigation-actions">
+    <AppButton icon="plus"/>
+    <template #content>
+      <div>Создать то</div>
+      <div>Создать сё</div>
+    </template>
+  </AppDropdown>
 </template>
 
 <style lang="scss">

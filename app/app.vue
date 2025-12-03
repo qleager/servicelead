@@ -32,6 +32,8 @@
 
   min-height: 100dvh;
 
+  background-color: $color-neutral-light-50;
+
   &__header {
     position: sticky;
     top: 0;
