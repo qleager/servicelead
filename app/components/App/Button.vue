@@ -36,11 +36,11 @@ const componentTag = computed(() =>
 )
 
 const isIconVisible = computed(() =>
-  props.icon || props.loading
+  props.icon || props.loading,
 )
 
-const iconName = computed(() => 
-  props.loading ? 'loading' : props.icon
+const iconName = computed(() =>
+  props.loading ? 'loading' : props.icon,
 )
 
 const classname = computed(() => [
@@ -126,9 +126,11 @@ export type { Props as ButtonProps }
   &#{$size-xxs} {
     height: 24px;
   }
+
   &#{$size-xs} {
     height: 32px;
   }
+
   &#{$size-sm} {
     gap: $space-4;
     height: 40px;
@@ -144,89 +146,83 @@ export type { Props as ButtonProps }
   }
 
   &#{$variant-filled} {
-    border: transparent;
-    color: var(--btn-text-base);
-    background-color: var(--btn-base);
+    --variant-filled-text-color: inherit;
 
-    &:hover {
-      background-color: var(--btn-hover);
-    }
-    
-    #{$active} {
-      background-color: var(--btn-active);
-    }
-
-    &:disabled {
-      background-color: var(--btn-text-disabled);
-    }
+    border: none !important;
+    color: var(--variant-filled-text-color) !important;
+    background-color: transparent;
   }
 
   &#{$variant-lined} {
-    border: 1px solid var(--btn-base);
-    color: var(--btn-text-base);
-    background-color:  transparent;
-
-    &:hover {
-      background-color: var(--btn-hover);
-    }
-    
-    #{$active} {
-      background-color: var(--btn-active);
-    }
-
-    &:disabled {
-      color: var(--btn-text-disabled);
-    }
+    border: 1px solid transparent;
+    background-color: transparent !important;
   }
 
   &#{$variant-nofilled} {
-    border: transparent;
-    color: var(--btn-base);
-    background-color:  transparent;
-    
-    &:hover {
-      color: var(--btn-hover);
-    }
-    
-    #{$active} {
-      color: var(--btn-active);
-    }
-
-    &:disabled {
-      color: var(--btn-text-disabled);
-    }
+    border: none !important;
+    background-color: transparent !important;
   }
 
   &#{$btn-color-primary} {
-    --btn-base: #{$color-primary};
-    --btn-hover: #{$color-primary-600};
-    --btn-active: #{$color-primary-700};
-    --btn-text-base: #{$color-neutral-light-100};
-    --btn-text-disabled: #{$color-neutral-light-400};
+    --variant-filled-text-color: white;
+
+    border-color: #{$color-primary};
+    color: $color-primary;
+    background-color: #{$color-primary};
+
+    &:hover {
+      border-color: #{$color-primary-600};
+      color: #{$color-primary-600};
+      background-color: #{$color-primary-600};
+    }
+
+    &:active {
+      border-color: #{$color-primary-700};
+      color: #{$color-primary-700};
+      background-color: #{$color-primary-700};
+    }
   }
 
   &#{$btn-color-white} {
-    --btn-base: white;
-    --btn-hover: #{$color-neutral-light-200};
-    --btn-active: #{$color-neutral-light-400};
-    --btn-text-base: #{$color-neutral-light-950};
-    --btn-text-disabled: #{$color-neutral-light-400};
+    --variant-filled-text-color: $color-neutral-light-950;
+
+    border-color: white;
+    color: white;
+    background-color: white;
+
+    // --btn-base: white;
+    // --btn-hover: #{$color-neutral-light-200};
+    // --btn-active: #{$color-neutral-light-400};
+    // --btn-text-base: #{$color-neutral-light-950};
+    // --btn-text-disabled: #{$color-neutral-light-400};
   }
 
   &#{$btn-color-lighter} {
-    --btn-base: #{$color-neutral-light-100};
-    --btn-hover: #{$color-neutral-light-300};
-    --btn-active: #{$color-neutral-light-400};
-    --btn-text-base: #{$color-neutral-light-950};
-    --btn-text-disabled: #{$color-neutral-light-400};
+    --variant-filled-text-color: $color-neutral-light-950;
+
+    border-color: $color-neutral-light-100;
+    color: $color-neutral-light-100;
+    background-color: $color-neutral-light-100;
+
+    // --btn-base: #{$color-neutral-light-100};
+    // --btn-hover: #{$color-neutral-light-300};
+    // --btn-active: #{$color-neutral-light-400};
+    // --btn-text-base: #{$color-neutral-light-950};
+    // --btn-text-disabled: #{$color-neutral-light-400};
   }
 
   &#{$btn-color-darker} {
-    --btn-base: #{$color-neutral-dark-500};
-    --btn-hover: #{$color-neutral-dark-400};
-    --btn-active: #{$color-neutral-dark-300};
-    --btn-text-base: white;
-    --btn-text-disabled: #{$color-neutral-light-400};
+    --variant-filled-text-color: white;
+
+    border-color: $color-neutral-dark-500;
+    color: $color-neutral-dark-500;
+    background-color: $color-neutral-dark-500;
+
+    // --btn-base: #{$color-neutral-dark-500};
+    // --btn-hover: #{$color-neutral-dark-400};
+    // --btn-active: #{$color-neutral-dark-300};
+    // --btn-text-base: white;
+    // --btn-text-disabled: #{$color-neutral-light-400};
   }
 
   &#{$trailing-icon} {
