@@ -34,7 +34,7 @@ const classname = computed(() => [
 
   width: fit-content;
 
-  &__content {
+  &__slot {
     padding: $space-4 $space-2;
     border-radius: $radius-2;
     background: white;
