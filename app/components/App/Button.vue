@@ -114,10 +114,6 @@ export type { Props as ButtonProps }
   width: fit-content;
   border-radius: 39px;
 
-  &__slot:empty {
-    display: none;
-  }
-
   &#{$size-3xs} {
     height: 20px;
   }
@@ -171,14 +167,19 @@ export type { Props as ButtonProps }
 
     &:hover {
       border-color: #{$color-primary-600};
-      color: #{$color-primary-600};
       background-color: #{$color-primary-600};
     }
 
     &:active {
       border-color: #{$color-primary-700};
-      color: #{$color-primary-700};
       background-color: #{$color-primary-700};
+    }
+
+    &:disabled {
+      --variant-filled-text-color: #{$color-neutral-light-400};
+
+      border-color: #{$color-neutral-light-100};
+      background-color: #{$color-neutral-light-100};
     }
   }
 
@@ -188,6 +189,25 @@ export type { Props as ButtonProps }
     border-color: white;
     color: white;
     background-color: white;
+
+    &:hover {
+      border-color: #{$color-neutral-light-200};
+      color: #{$color-neutral-light-200};
+      background-color: #{$color-neutral-light-200};
+    }
+
+    &:active {
+      border-color: #{$color-neutral-light-400};
+      color: #{$color-neutral-light-400};
+      background-color: #{$color-neutral-light-400};
+    }
+
+    &:disabled {
+      --variant-filled-text-color: #{$color-neutral-light-400};
+
+      border-color: #{$color-neutral-light-100};
+      background-color: #{$color-neutral-light-100};
+    }
 
     // --btn-base: white;
     // --btn-hover: #{$color-neutral-light-200};
@@ -203,6 +223,25 @@ export type { Props as ButtonProps }
     color: $color-neutral-light-100;
     background-color: $color-neutral-light-100;
 
+    &:hover {
+      border-color: #{$color-neutral-light-300};
+      color: #{$color-neutral-light-300};
+      background-color: #{$color-neutral-light-300};
+    }
+
+    &:active {
+      border-color: #{$color-neutral-light-400};
+      color: #{$color-neutral-light-400};
+      background-color: #{$color-neutral-light-400};
+    }
+
+    &:disabled {
+      --variant-filled-text-color: #{$color-neutral-light-400};
+
+      border-color: #{$color-neutral-light-100};
+      background-color: #{$color-neutral-light-100};
+    }
+
     // --btn-base: #{$color-neutral-light-100};
     // --btn-hover: #{$color-neutral-light-300};
     // --btn-active: #{$color-neutral-light-400};
@@ -216,6 +255,25 @@ export type { Props as ButtonProps }
     border-color: $color-neutral-dark-500;
     color: $color-neutral-dark-500;
     background-color: $color-neutral-dark-500;
+
+    &:hover {
+      border-color: #{$color-neutral-light-400};
+      color: #{$color-neutral-light-400};
+      background-color: #{$color-neutral-light-400};
+    }
+
+    &:active {
+      border-color: #{$color-neutral-light-300};
+      color: #{$color-neutral-light-300};
+      background-color: #{$color-neutral-light-300};
+    }
+
+    &:disabled {
+      --variant-filled-text-color: #{$color-neutral-light-400};
+
+      border-color: #{$color-neutral-light-100};
+      background-color: #{$color-neutral-light-100};
+    }
 
     // --btn-base: #{$color-neutral-dark-500};
     // --btn-hover: #{$color-neutral-dark-400};
@@ -237,6 +295,10 @@ export type { Props as ButtonProps }
   &#{$loading} {
     pointer-events: none;
     cursor: progress;
+
+    // &#{$this}__icon {
+    //   animation: rotate 1s linear infinite;
+    // }
   }
 
   &#{$without-slot} {
@@ -250,6 +312,10 @@ export type { Props as ButtonProps }
     // если loading state => rotate animation из https://animate.style
     // в app/assets/scss/design-system/animation.scss добавми
     // как в leadsale
+  }
+
+  &__slot:empty {
+    display: none;
   }
 }
 </style>
