@@ -25,13 +25,9 @@ const props = withDefaults(defineProps<Props>(), {
   size: 'md',
   color: 'primary',
   type: 'button',
-  trailingIcon: false,
-  disabled: false,
-  active: false,
-  loading: false,
 })
 
-const componentTag = computed(() =>
+const tag = computed(() =>
   props.to ? 'a' : 'button',
 )
 
@@ -40,7 +36,7 @@ const isIconVisible = computed(() =>
 )
 
 const iconName = computed(() =>
-  props.loading ? 'loading' : props.icon,
+  props.loading ? 'change' : props.icon,
 )
 
 const classname = computed(() => [
@@ -52,7 +48,7 @@ const classname = computed(() => [
   { 'button-disabled': props.disabled },
   { 'button-active': props.active },
   { 'button-loading': props.loading },
-  { 'button-no-text': !slots.default },
+  { 'button-without-slot': !slots.default },
 ])
 
 export type { Props as ButtonProps }
@@ -60,7 +56,7 @@ export type { Props as ButtonProps }
 
 <template>
   <component
-    :is="componentTag"
+    :is="tag"
     :href="to"
     :class="classname"
     :type
@@ -74,7 +70,6 @@ export type { Props as ButtonProps }
       :name="iconName!"
     />
     <span
-      v-if="$slots.default"
       class="button__slot"
     >
       <slot />
@@ -108,7 +103,7 @@ export type { Props as ButtonProps }
   $trailing-icon: $this + '-trailing-icon';
   $disabled: & + '-disabled';
   $loading: & + '-loading';
-  $no-text: & + '-no-text';
+  $without-slot: & + '-without-slot';
 
   cursor: pointer;
 
@@ -118,6 +113,10 @@ export type { Props as ButtonProps }
 
   width: fit-content;
   border-radius: 39px;
+
+  &__slot:empty {
+    display: none;
+  }
 
   &#{$size-3xs} {
     height: 20px;
@@ -240,7 +239,7 @@ export type { Props as ButtonProps }
     cursor: progress;
   }
 
-  &#{$no-text} {
+  &#{$without-slot} {
     justify-content: center;
     aspect-ratio: 1;
     padding: 0;
