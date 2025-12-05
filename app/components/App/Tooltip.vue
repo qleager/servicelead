@@ -1,7 +1,5 @@
 <script lang="ts" setup>
-import type { FloaterProps } from './Floater.vue'
-
-interface Props extends FloaterProps {
+interface Props {
   text: string
 }
 
@@ -14,14 +12,10 @@ export type { Props as TooltipProps }
   <div class="tooltip">
     <AppFloater
       mode="hover"
-      :placement
-      :dismissible
-      :width
-      :portal
     >
       <div class="tooltip__slot tooltip__slot-default">
         <slot>
-          <AppIcon name="question"/>
+          <AppIcon name="question" />
         </slot>
       </div>
       <template #content>
@@ -45,14 +39,14 @@ export type { Props as TooltipProps }
   }
 
   &__content {
-    @include text(medium, xs);
+    @include text(regular, xs);
 
-    padding: $space-1 $space-2;
-    border-radius: $radius-1;
+    max-width: 420px;
+    padding: $space-4;
+    border-radius: $radius-3;
 
     color: $color-neutral-light-950;
     text-align: center;
-    white-space: nowrap;
 
     background: white;
   }

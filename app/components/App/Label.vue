@@ -14,7 +14,7 @@ const classname = computed(() => [
 ])
 
 const captionText = computed(() =>
-   props.error || props.caption
+  props.error || props.caption,
 )
 </script>
 
@@ -23,7 +23,11 @@ const captionText = computed(() =>
     <div
       class="label__title"
     >
-      {{ title }}<span v-if="required">*</span>
+      {{ title }}
+      <sup
+        v-if="required"
+        class="label__title-required"
+      >*</sup>
     </div>
     <div class="label__slot">
       <slot :required />
@@ -44,48 +48,42 @@ const captionText = computed(() =>
   width: fit-content;
 
   &__title {
+    margin-bottom: $space-2;
+
     @include label(md, medium);
 
-    &:empty {
-      display: none;
-    }
-
-    margin-bottom: $space-2;
     color: $color-neutral-light-950;
-  }
-
-  &__caption {
-    @include text(regular, xs);
 
     &:empty {
       display: none;
     }
-
-    margin-top: $space-2;
-    color: $color-neutral-light-400;
 
     #{$error} & {
       color: $color-error;
     }
+
+    &-required {
+      position: relative;
+      top: .40em;
+
+      @include text(medium, sm);
+    }
   }
 
-  &-error {
-    #{$this} {
-      &__caption {
-        color: $color-error;
-      }
+  &__caption {
+    margin-top: $space-2;
 
-      &__slot {
-        // если нужно, можно стилизовать slot при ошибке
-        border-color: $color-error;
-      }
+    @include text(regular, xs);
 
-      &__title {
-        color: $color-error;
-      }
-    } 
-    
+    color: $color-neutral-light-400;
 
+    &:empty {
+      display: none;
+    }
+
+    #{$error} & {
+      color: $color-error;
+    }
   }
 }
 </style>

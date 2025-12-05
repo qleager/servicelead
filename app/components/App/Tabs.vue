@@ -31,11 +31,17 @@ const classname = computed(() => [
   'tabs',
 ])
 
-const onClick = (newValue: Model) => {
-  model.value = newValue
+onBeforeMount(() => {
+  if (!model.value) {
+    model.value = props.items[0]?.value
+  }
+})
+
+const onItemClick = (value: Item['value']) => {
+  model.value = value
 }
 
-export type { Props as TabsProps, Item as TabsItem }
+export type { Props as TabsProps, Item as TabsItem, Model as TabsModel }
 </script>
 
 <template>
@@ -52,7 +58,7 @@ export type { Props as TabsProps, Item as TabsItem }
         :trailing-icon="tab.trailingIcon"
         :disabled="tab.disabled"
         :active="model === tab.value"
-        @click="onClick(tab.value)"
+        @click="onItemClick(tab.value)"
       >
         {{ tab.label }}
       </AppButton>
@@ -66,6 +72,7 @@ export type { Props as TabsProps, Item as TabsItem }
 
   &__nav {
     display: inline-flex;
+    flex-wrap: wrap;
     gap: $space-2;
   }
 }

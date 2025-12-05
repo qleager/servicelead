@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import type { FloaterProps } from './Floater.vue'
+
 interface Props {
   mode?: FloaterProps['mode']
 }
@@ -20,7 +22,7 @@ const classname = computed(() => [
         <slot />
       </div>
       <template #content>
-        <div class="dropdown__slot">
+        <div class="dropdown__slot dropdown__slot-content">
           <slot name="content" />
         </div>
       </template>
@@ -35,10 +37,12 @@ const classname = computed(() => [
   width: fit-content;
 
   &__slot {
-    padding: $space-4 $space-2;
-    border-radius: $radius-2;
-    background: white;
-    box-shadow: $shadow-light-mode;
+    &-content {
+      padding: $space-4 $space-2;
+      border-radius: $radius-2;
+      background: white;
+      box-shadow: $shadow-light-mode;
+    }
   }
 }
 </style>
