@@ -25,13 +25,9 @@ const props = withDefaults(defineProps<Props>(), {
   size: 'md',
   color: 'primary',
   type: 'button',
-  trailingIcon: false,
-  disabled: false,
-  active: false,
-  loading: false,
 })
 
-const componentTag = computed(() =>
+const tag = computed(() =>
   props.to ? 'a' : 'button',
 )
 
@@ -40,7 +36,7 @@ const isIconVisible = computed(() =>
 )
 
 const iconName = computed(() =>
-  props.loading ? 'loading' : props.icon,
+  props.loading ? 'change' : props.icon,
 )
 
 const classname = computed(() => [
@@ -52,7 +48,7 @@ const classname = computed(() => [
   { 'button-disabled': props.disabled },
   { 'button-active': props.active },
   { 'button-loading': props.loading },
-  { 'button-no-text': !slots.default },
+  { 'button-without-slot': !slots.default },
 ])
 
 export type { Props as ButtonProps }
@@ -60,7 +56,7 @@ export type { Props as ButtonProps }
 
 <template>
   <component
-    :is="componentTag"
+    :is="tag"
     :href="to"
     :class="classname"
     :type
@@ -74,7 +70,6 @@ export type { Props as ButtonProps }
       :name="iconName!"
     />
     <span
-      v-if="$slots.default"
       class="button__slot"
     >
       <slot />
@@ -108,7 +103,7 @@ export type { Props as ButtonProps }
   $trailing-icon: $this + '-trailing-icon';
   $disabled: & + '-disabled';
   $loading: & + '-loading';
-  $no-text: & + '-no-text';
+  $without-slot: & + '-without-slot';
 
   cursor: pointer;
 
@@ -172,14 +167,19 @@ export type { Props as ButtonProps }
 
     &:hover {
       border-color: #{$color-primary-600};
-      color: #{$color-primary-600};
       background-color: #{$color-primary-600};
     }
 
     &:active {
       border-color: #{$color-primary-700};
-      color: #{$color-primary-700};
       background-color: #{$color-primary-700};
+    }
+
+    &:disabled {
+      --variant-filled-text-color: #{$color-neutral-light-400};
+
+      border-color: #{$color-neutral-light-100};
+      background-color: #{$color-neutral-light-100};
     }
   }
 
@@ -189,6 +189,25 @@ export type { Props as ButtonProps }
     border-color: white;
     color: white;
     background-color: white;
+
+    &:hover {
+      border-color: #{$color-neutral-light-200};
+      color: #{$color-neutral-light-200};
+      background-color: #{$color-neutral-light-200};
+    }
+
+    &:active {
+      border-color: #{$color-neutral-light-400};
+      color: #{$color-neutral-light-400};
+      background-color: #{$color-neutral-light-400};
+    }
+
+    &:disabled {
+      --variant-filled-text-color: #{$color-neutral-light-400};
+
+      border-color: #{$color-neutral-light-100};
+      background-color: #{$color-neutral-light-100};
+    }
 
     // --btn-base: white;
     // --btn-hover: #{$color-neutral-light-200};
@@ -204,6 +223,25 @@ export type { Props as ButtonProps }
     color: $color-neutral-light-100;
     background-color: $color-neutral-light-100;
 
+    &:hover {
+      border-color: #{$color-neutral-light-300};
+      color: #{$color-neutral-light-300};
+      background-color: #{$color-neutral-light-300};
+    }
+
+    &:active {
+      border-color: #{$color-neutral-light-400};
+      color: #{$color-neutral-light-400};
+      background-color: #{$color-neutral-light-400};
+    }
+
+    &:disabled {
+      --variant-filled-text-color: #{$color-neutral-light-400};
+
+      border-color: #{$color-neutral-light-100};
+      background-color: #{$color-neutral-light-100};
+    }
+
     // --btn-base: #{$color-neutral-light-100};
     // --btn-hover: #{$color-neutral-light-300};
     // --btn-active: #{$color-neutral-light-400};
@@ -217,6 +255,25 @@ export type { Props as ButtonProps }
     border-color: $color-neutral-dark-500;
     color: $color-neutral-dark-500;
     background-color: $color-neutral-dark-500;
+
+    &:hover {
+      border-color: #{$color-neutral-light-400};
+      color: #{$color-neutral-light-400};
+      background-color: #{$color-neutral-light-400};
+    }
+
+    &:active {
+      border-color: #{$color-neutral-light-300};
+      color: #{$color-neutral-light-300};
+      background-color: #{$color-neutral-light-300};
+    }
+
+    &:disabled {
+      --variant-filled-text-color: #{$color-neutral-light-400};
+
+      border-color: #{$color-neutral-light-100};
+      background-color: #{$color-neutral-light-100};
+    }
 
     // --btn-base: #{$color-neutral-dark-500};
     // --btn-hover: #{$color-neutral-dark-400};
@@ -238,9 +295,13 @@ export type { Props as ButtonProps }
   &#{$loading} {
     pointer-events: none;
     cursor: progress;
+
+    // &#{$this}__icon {
+    //   animation: rotate 1s linear infinite;
+    // }
   }
 
-  &#{$no-text} {
+  &#{$without-slot} {
     justify-content: center;
     aspect-ratio: 1;
     padding: 0;
@@ -251,6 +312,10 @@ export type { Props as ButtonProps }
     // если loading state => rotate animation из https://animate.style
     // в app/assets/scss/design-system/animation.scss добавми
     // как в leadsale
+  }
+
+  &__slot:empty {
+    display: none;
   }
 }
 </style>
