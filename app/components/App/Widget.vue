@@ -4,12 +4,7 @@ import type { IconProps } from '@/components/App/Icon.vue'
 interface Props {
   icon?: IconProps['name']
   title?: string
-  /*
-   * Кнопка в header'e справа
-   * [роут или действие, Текст перед кнопкой]
-   * TODO: Добавить типизацию роутов (не на первом этапе)
-   */
-  action?: [string | (() => void), string | undefined]
+  action?: [(() => void), string | undefined]
   variant?: 'card' | 'section'
 }
 
@@ -23,20 +18,7 @@ const classname = computed(() => ([
   `widget-variant-${props.variant}`,
 ]))
 
-const actionLabel = computed(() => props.action?.[1] ?? '')
 const isHeadVisible = computed (() => Boolean(props.icon || props.title || props.action))
-
-const handleActionClick = () => {
-  const action = props.action?.[0]
-  if (!action) return
-
-  if (typeof action === 'function') {
-    action()
-  }
-  else {
-    navigateTo(action)
-  }
-}
 </script>
 
 <template>
@@ -57,9 +39,9 @@ const handleActionClick = () => {
         v-if="action"
         class="widget__action"
         type="button"
-        @click="handleActionClick"
+        @click="action[0]"
       >
-        <span class="widget__action-text">{{ actionLabel }}</span>
+        <span class="widget__action-text">{{ props.action?.[1] }}</span>
         <AppButton
           class="widget__action-button"
           size="xs"
