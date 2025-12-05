@@ -6,7 +6,7 @@ const imgSrc = ''
   <button class="manager-button">
     <span class="manager-button__avatar">
       <img
-        :src="imgSrc || `/sprite#main_menu_account-view`"
+        :src="imgSrc ||'/image/defaultAvatar.png'"
         class="manager-button__avatar-image"
       >
     </span>
@@ -34,22 +34,15 @@ const imgSrc = ''
 
   &__avatar {
     overflow: hidden;
-
     width: 48px;
     height: 48px;
     border-radius: $space-18;
 
-    background-color: gray;
-
-    #{$this}:disabled & {
-      opacity: 0.3;
+    &-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
-  }
-
-  &__avatar-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
   }
 
   &__info {
@@ -62,14 +55,6 @@ const imgSrc = ''
     height: 42px;
 
     color: $color-neutral-light-950;
-
-    #{$this}:active & {
-      color: $color-neutral-light-900;
-    }
-
-    #{$this}:disabled & {
-      color: $color-neutral-light-400;
-    }
   }
 
   &__name {
