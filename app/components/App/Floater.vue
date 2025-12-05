@@ -1,30 +1,22 @@
 <script lang="ts" setup>
 import type { Placement } from '@floating-ui/vue'
 import type { TeleportProps } from 'vue'
-import { Teleport } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 import {
   useFloating,
   offset,
-  // autoPlacement,
-  flip,
+  autoPlacement,
   shift,
   size,
 } from '@floating-ui/vue'
 
 interface Props {
   mode?: 'click' | 'hover'
-  // TODO(YURA): давай если placement не задан - юзать autoPlacement
   placement?: Placement
   dismissible?: boolean
   width?: string
   portal?: TeleportProps['to']
 }
-// TODO(YURA): давай тогда откажемся от flip
-//
-// placement токлько 'top' | 'right' | 'bottom' | 'left'
-// есть autoPlacement, но его нельзя использовать с flip. Можно только одно. Разница:
-// https://floating-ui.com/docs/autoPlacement#conflict-with-flip
 
 const props = withDefaults(defineProps<Props>(), {
   mode: 'click',
@@ -32,7 +24,7 @@ const props = withDefaults(defineProps<Props>(), {
   width: 'auto',
 })
 
-const model = defineModel<boolean>({ default: true })
+const model = defineModel<boolean>({ default: false })
 
 const reference = ref<HTMLElement | null>(null)
 const floating = ref<HTMLElement | null>(null)
@@ -41,11 +33,10 @@ let closeTimeout: ReturnType<typeof setTimeout> | undefined = undefined
 
 const { floatingStyles } = useFloating(reference, floating, {
   placement: props.placement,
+  strategy: 'fixed',
   middleware: [
     offset(8),
-    // TODO(YURA): если нет props.placement испоьзуем autoPlacement()
-    // autoPlacement(),
-    flip(),
+    ...(props.placement ? [] : [autoPlacement()]),
     shift({ padding: 8 }),
     size({
       padding: 8,
@@ -62,14 +53,13 @@ const classname = computed(() => ([
   'floater',
 ]))
 
-const componentTag = computed(() => props.portal ? 'div' : Teleport)
-
 const onMouseLeave = () => {
   if (props.mode !== 'hover') return
   closeTimeout = setTimeout(() => {
     model.value = false
   }, 100)
-}// TODO(YURA): перенос строки
+}
+
 const onMouseEnter = () => {
   clearTimeout(closeTimeout)
   if (props.mode === 'hover') model.value = true
@@ -83,12 +73,8 @@ const onClickReference = () => {
 onClickOutside(
   floating,
   () => {
-    // TODO(YURA): так почише выглядит
     model.value = props.mode === 'click' && props.dismissible ? false : true
-    // if (props.mode === 'click' && !props.dismissible) model.value = false
   }, {
-    // TODO(YURA): так при клике по reference, и при mode=click сработает закрытие
-    // как то колхозно немного, мб есть лучше реализации, например ref="root" сделать, хз, подумай
     ignore: [floating, reference],
   })
 
@@ -106,11 +92,8 @@ export type { Props as FloaterProps }
     >
       <slot />
     </div>
-    <!-- TODO(YURA):
-          Важно сделать использолвание телепорта условным, в дальнейшем избавляем себя от мучений, например, при использоании флоатера в таблице
-        -->
-    <Component
-      :is="componentTag"
+    <Teleport
+      :disabled="!portal"
       :to="portal"
     >
       <div
@@ -123,7 +106,7 @@ export type { Props as FloaterProps }
       >
         <slot name="content" />
       </div>
-    </Component>
+    </Teleport>
   </div>
 </template>
 

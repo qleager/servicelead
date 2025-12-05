@@ -1,7 +1,8 @@
 <script lang="ts" setup>
-// TODO(YURA): FloaterProps['mode']
+import type { FloaterProps } from './Floater.vue'
+
 interface Props {
-  mode?: 'click' | 'hover'
+  mode?: FloaterProps['mode']
 }
 
 const props = defineProps<Props>()
@@ -14,17 +15,14 @@ const classname = computed(() => [
 
 <template>
   <div :class="classname">
-    <!-- TODO(YURA): достаточно просто :mode, и плейсмент уберем, пусть будет авто пока  -->
     <AppFloater
-      :mode="mode"
-      placement="bottom"
+      :mode
     >
       <div class="dropdown__slot dropdown__slot-default">
         <slot />
       </div>
       <template #content>
-        <!-- TODO(YURA): .dropdown__slot -->
-        <div class="dropdown__content">
+        <div class="dropdown__slot dropdown__slot-content">
           <slot name="content" />
         </div>
       </template>
@@ -38,14 +36,13 @@ const classname = computed(() => [
 
   width: fit-content;
 
-  &__content {
-    padding: $space-4 $space-2;
-    border-radius: $radius-2;
-    background: white;
-
-    // TODO(YURA): вижу по макету, что вынесены в стили тени
-    // давай в ds под них сделаем файл
-    box-shadow: 0 0 35px 0 #1C265A1A;
+  &__slot {
+    &-content {
+      padding: $space-4 $space-2;
+      border-radius: $radius-2;
+      background: white;
+      box-shadow: $shadow-light-mode;
+    }
   }
 }
 </style>

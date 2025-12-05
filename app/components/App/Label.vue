@@ -6,55 +6,36 @@ interface Props {
   error?: string
 }
 
-// TODO(YURA): не требуются тут withDefaults вообще
-const props = withDefaults(defineProps<Props>(), {
-  title: '',
-  required: false,
-  caption: '',
-  error: '',
-})
+const props = defineProps<Props>()
 
 const classname = computed(() => [
   'label',
   { 'label-error': props.error },
 ])
 
-// TODO(YURA): состояния только на .label - убираем генераторы классов
-const slotClassname = computed(() => [
-  'label__slot',
-  { 'label__slot-error': !!props.error },
-])
-
-const captionClassname = computed(() => [
-  'label__caption',
-  { 'label__caption-error': !!props.error },
-])
+const captionText = computed(() =>
+  props.error || props.caption,
+)
 </script>
 
 <template>
   <label :class="classname">
-    <!-- TODO(YURA): v-if убираем, в стилях label__title:empty { display: none } 
-                    так чуть чище макет, и условились так прятать пустые элменты
-    -->
     <div
-      v-if="title"
       class="label__title"
     >
-      {{ title }}<span v-if="required">*</span>
+      {{ title }}
+      <sup
+        v-if="required"
+        class="label__title-required"
+      >*</sup>
     </div>
-    <!-- TODO(YURA): .label__slot -->
-    <div :class="slotClassname">
+    <div class="label__slot">
       <slot :required />
     </div>
-    <!-- TODO(YURA): v-if убираем, в стилях .label__caption:empty { display: none }
-     class="label__caption"
-     captionText как сomputed свойство, никаой условной логики в template быть не должно
-    -->
     <div
-      v-if="caption || error"
-      :class="captionClassname"
+      class="label__caption"
     >
-      {{ error || caption }}
+      {{ captionText }}
     </div>
   </label>
 </template>
@@ -67,20 +48,38 @@ const captionClassname = computed(() => [
   width: fit-content;
 
   &__title {
-    @include label(md, medium);
-    // :empty
-
     margin-bottom: $space-2;
+
+    @include label(md, medium);
+
     color: $color-neutral-light-950;
+
+    &:empty {
+      display: none;
+    }
+
+    #{$error} & {
+      color: $color-error;
+    }
+
+    &-required {
+      position: relative;
+      top: .40em;
+
+      @include text(medium, sm);
+    }
   }
 
   &__caption {
+    margin-top: $space-2;
+
     @include text(regular, xs);
 
-    // :empty
-
-    margin-top: $space-2;
     color: $color-neutral-light-400;
+
+    &:empty {
+      display: none;
+    }
 
     #{$error} & {
       color: $color-error;
@@ -88,4 +87,3 @@ const captionClassname = computed(() => [
   }
 }
 </style>
-<!-- TODO(YURA): итого - чистый и изящный код получится -->
