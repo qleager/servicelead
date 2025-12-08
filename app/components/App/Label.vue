@@ -85,5 +85,24 @@ const captionText = computed(() =>
       color: $color-error;
     }
   }
+
+  &-error {
+    #{$this} {
+      &__caption {
+        color: $color-error;
+      }
+
+      &__slot {
+        // если нужно, можно стилизовать slot при ошибке
+        border-color: $color-error;
+      }
+
+      &__title {
+        color: $color-error;
+      }
+    } 
+    
+
+  }
 }
 </style>
