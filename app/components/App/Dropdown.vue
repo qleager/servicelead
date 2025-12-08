@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import type { FloaterProps } from './Floater.vue'
+
 interface Props {
   mode?: FloaterProps['mode']
 }

@@ -14,7 +14,7 @@ const classname = computed(() => [
 ])
 
 const captionText = computed(() =>
-   props.error || props.caption
+  props.error || props.caption,
 )
 </script>
 
@@ -23,7 +23,11 @@ const captionText = computed(() =>
     <div
       class="label__title"
     >
-      {{ title }}<span v-if="required">*</span>
+      {{ title }}
+      <sup
+        v-if="required"
+        class="label__title-required"
+      >*</sup>
     </div>
     <div class="label__slot">
       <slot :required />
@@ -44,25 +48,38 @@ const captionText = computed(() =>
   width: fit-content;
 
   &__title {
+    margin-bottom: $space-2;
+
     @include label(md, medium);
+
+    color: $color-neutral-light-950;
 
     &:empty {
       display: none;
     }
 
-    margin-bottom: $space-2;
-    color: $color-neutral-light-950;
+    #{$error} & {
+      color: $color-error;
+    }
+
+    &-required {
+      position: relative;
+      top: .40em;
+
+      @include text(medium, sm);
+    }
   }
 
   &__caption {
+    margin-top: $space-2;
+
     @include text(regular, xs);
+
+    color: $color-neutral-light-400;
 
     &:empty {
       display: none;
     }
-
-    margin-top: $space-2;
-    color: $color-neutral-light-400;
 
     #{$error} & {
       color: $color-error;

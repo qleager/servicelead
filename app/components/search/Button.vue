@@ -1,11 +1,16 @@
 <script lang="ts" setup>
-// пока просто кнопка
 </script>
 
 <template>
-  AppButton
+  <AppButton
+    color="white"
+    icon="search"
+    class="search-button"
+  />
 </template>
 
 <style lang="scss">
-.search-button {}
+.search-button {
+  background-color: white;
+}
 </style>

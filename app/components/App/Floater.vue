@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import type { Placement } from '@floating-ui/vue'
 import type { TeleportProps } from 'vue'
-import { Teleport } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 import {
   useFloating,
@@ -12,10 +11,10 @@ import {
 } from '@floating-ui/vue'
 
 interface Props {
-  mode?: 'click' | 'hover';
-  placement?: Placement;
-  dismissible?: boolean;
-  width?: string;
+  mode?: 'click' | 'hover'
+  placement?: Placement
+  dismissible?: boolean
+  width?: string
   portal?: TeleportProps['to']
 }
 
@@ -53,8 +52,6 @@ const { floatingStyles } = useFloating(reference, floating, {
 const classname = computed(() => ([
   'floater',
 ]))
-
-const componentTag = computed(() => props.portal ? Teleport : 'div')
 
 const onMouseLeave = () => {
   if (props.mode !== 'hover') return
@@ -95,8 +92,8 @@ export type { Props as FloaterProps }
     >
       <slot />
     </div>
-    <Component
-      :is="componentTag"
+    <Teleport
+      :disabled="!portal"
       :to="portal"
     >
       <div
@@ -109,7 +106,7 @@ export type { Props as FloaterProps }
       >
         <slot name="content" />
       </div>
-    </Component>
+    </Teleport>
   </div>
 </template>
 
