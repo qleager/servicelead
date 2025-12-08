@@ -93,7 +93,7 @@ https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-cont
 ### 3. Запуск nuxt в dev режиме в терминале VS Code в конейнере
 
 ```bash
-pnpm dev:docker
+pnpm dev:container
 ```
 
 ---
