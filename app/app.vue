@@ -30,8 +30,11 @@
     'sidebar footer' / 100%;
   grid-template-columns: auto 1fr;
   grid-template-rows: auto 1fr auto;
+  column-gap: $space-10;
 
   min-height: 100dvh;
+
+  background-color: $color-neutral-light-50;
 
   &__header {
     position: sticky;

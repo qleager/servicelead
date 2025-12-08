@@ -56,7 +56,7 @@ $color-neutral-light-750: color.adjust($color-neutral-light, $blackness: 50%);
 $color-neutral-light-800: color.adjust($color-neutral-light, $blackness: 60%);
 $color-neutral-light-850: color.adjust($color-neutral-light, $blackness: 70%);
 $color-neutral-light-900: color.adjust($color-neutral-light, $blackness: 80%);
-$color-neutral-light-950: color.adjust($color-neutral-light, $blackness: 90%);
+$color-neutral-light-950: #121522;
 
 // Palette of Neutral Dark
 $color-neutral-dark-50: #e5ebf9;
