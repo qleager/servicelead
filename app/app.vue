@@ -18,6 +18,7 @@
     />
     <TheFooter class="layout-default__footer" />
   </div>
+  <AppOverlayProvider />
 </template>
 
 <style lang="scss">

@@ -2,7 +2,13 @@
 </script>
 
 <template>
-  Dashboard Page
+  <section class="dashboard">
+    Dashboard Page
+  </section>
 </template>
 
-<style lang="scss"></style>
+<style lang="scss">
+.dashboard {
+  $this: &;
+}
+</style>
