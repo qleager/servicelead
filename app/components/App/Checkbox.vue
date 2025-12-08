@@ -107,7 +107,7 @@ const classname = computed(() => ([
     }
 
     #{$checked} & {
-      background-color: $color-primary
+      background-color: $color-primary !important
     }
 
     #{$disabled} & {
