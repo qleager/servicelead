@@ -4,6 +4,7 @@ import type { IconProps } from './Icon.vue'
 interface Props {
   title?: string
   icon?: IconProps['name']
+  defaultOpen?: boolean
 }
 
 interface Emits {
@@ -50,10 +51,12 @@ export type { Props as SheetProps, Emits as SheetEmits, Model as SheetModel }
           </div>
         </header>
         <div class="sheet__main">
-          <slot name="content" />
+          .sheet__slot.sheet__slot-default
+          <slot :close />
         </div>
         <footer class="sheet__footer">
-          <slot name="footer" />
+          .sheet__slot.sheet__slot-footer
+          <slot name="footer" :close />
         </footer>
       </div>
     </Transition>
@@ -63,9 +66,5 @@ export type { Props as SheetProps, Emits as SheetEmits, Model as SheetModel }
 <style lang="scss">
 .sheet {
   $this: &;
-
-  width: 100%;
-  height: 500px;
-  background-color: white;
 }
 </style>
