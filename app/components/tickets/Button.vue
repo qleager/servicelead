@@ -24,23 +24,25 @@ const rootElement = computed(() => {
   }
 })
 
-const onActionClick = async () => {
+const rootProps = computed(() => props.mode === 'dropdown' ? { mode: 'click' as const } : {})
+
+const onButtonClick = async () => {
   if (props.mode !== 'page') return
-  await navigateTo(props.mode)
+  await navigateTo('tickets')
 }
 </script>
 
 <template>
   <Component
     :is="rootElement"
-    mode="click"
+    v-bind="rootProps"
     class="tickets-button"
-    @click="onActionClick"
   >
     <AppButton
       :variant
       :color
       icon="message"
+      @click="onButtonClick"
     />
     <template #content>
       <p> Тут будет что-то </p>
