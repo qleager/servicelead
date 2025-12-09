@@ -34,8 +34,9 @@
   align-items: center;
   justify-content: space-between;
 
-  height: $space-14;
-  margin-top: $space-4;
+  padding-block: $space-4;
+
+  background-color: $color-neutral-light-50;
 
   &__search {
     width: 412px;

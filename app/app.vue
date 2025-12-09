@@ -35,6 +35,8 @@
   min-height: 100dvh;
   padding-right: $space-6;
 
+  background-color: $color-neutral-light-50;
+
   &__header {
     position: sticky;
     top: 0;
@@ -44,8 +46,15 @@
   &__sidebar {
     position: sticky;
     top: 0;
+
+    overflow: auto;
     grid-area: sidebar;
+
     height: 100dvh;
+
+    &:not(:hover)::-webkit-scrollbar {
+      visibility: hidden;;
+    }
   }
 
   &__footer {
