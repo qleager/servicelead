@@ -4,7 +4,7 @@ import AppSheet from '~/components/App/Sheet.vue'
 import type { ButtonProps } from '~/components/App/Button.vue'
 
 interface Props {
-  mode?: 'page' | 'dropdown' | 'sheet' // при клике вызов дропдауна или переход не страницу // def page
+  mode?: 'page' | 'dropdown' | 'sheet'
   color?: ButtonProps['color']
   variant?: ButtonProps['variant']
 }
@@ -24,8 +24,6 @@ const rootElement = computed(() => {
   }
 })
 
-const rootProps = computed(() => props.mode === 'dropdown' ? { mode: 'click' as const } : {})
-
 const onButtonClick = async () => {
   if (props.mode !== 'page') return
   await navigateTo('tickets')
@@ -35,7 +33,6 @@ const onButtonClick = async () => {
 <template>
   <Component
     :is="rootElement"
-    v-bind="rootProps"
     class="tickets-button"
   >
     <AppButton
