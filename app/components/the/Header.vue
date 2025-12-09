@@ -6,20 +6,20 @@
   <header class="header">
     <FinanceBalance class="header__balance" />
     <SearchDropdown class="header__search" />
-    <div class="header__actions">
+    <div class="header__group">
       <NotificationsButton
-        class="header__actions-notification"
+        class="header__notifications"
         variant="lined"
         color="lighter"
       />
       <TicketsButton
-        class="header__actions-notification"
+        class="header__tickets"
         variant="lined"
         color="lighter"
       />
-      <ManagerButton class="header__actions-manager" />
+      <ManagerButton class="header__manager" />
       <NavigationActions
-        class="header__actions-navigation"
+        class="header__actions"
         mode="dropdown"
       />
     </div>
@@ -41,14 +41,10 @@
     width: 412px;
   }
 
-  &__actions {
+  &__group {
     display: flex;
     gap: $space-2;
     align-items: center;
-
-    &-navigation {
-      margin-left: 28px;
-    }
   }
 }
 </style>
