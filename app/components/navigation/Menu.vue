@@ -1,12 +1,10 @@
 <script lang="ts" setup>
 import type { IconProps } from '../App/Icon.vue'
-import type { ButtonProps } from '../App/Button.vue'
 
 interface Props {
   items: Item[]
   title?: string
   minimal?: boolean
-  size?: ButtonProps['size']
 }
 
 interface Item {
@@ -17,30 +15,20 @@ interface Item {
   onClick: () => void
 }
 
-const router = useRouter()
-const route = useRoute()
+// INFO: убрали композиции роутинга (как отслеживать текущую страницу будет ниже)
 
 const props = defineProps<Props>()
 
 const classname = computed(() => [
   'navigation-menu',
-  { 'navigation-menu--collapsed': props.minimal },
+  // INFO: замена на minimal
+  { 'navigation-menu-minimal': props.minimal },
 ])
 
-const titleText = computed(() => {
-  if (!props.title) return ''
-  return props.minimal ? '---------' : props.title
-})
+// INFO: упростили computed
+const titleText = computed(() => props.minimal && props.title ? '--------' : props.title)
 
-const isActive = (item: Item) => {
-  if (!item.to) return false
-  return route.path.startsWith(item.to)
-}
-
-const handleClick = (item: Item) => {
-  if (item.to) router.push(item.to)
-  item.onClick?.()
-}
+// INFO: убрали обработчик клика (как отслеживать текущую страницу будет ниже)
 
 export type { Item as NavigationMenuItem }
 </script>
@@ -51,31 +39,21 @@ export type { Item as NavigationMenuItem }
       {{ titleText }}
     </div>
     <div class="navigation-menu__list">
-      <div
+      <!-- INFO: заменили на NuxtLink (чтобы как раз отслеживать текущую страницу)
+                 код стал сильно чище: избавились от композиций, обработчиков клика, добавки классов
+      -->
+      <NuxtLink
         v-for="item in items"
         :key="item.label"
-        :class="[
-          'navigation-menu__item',
-          { 'navigation-menu__item--active': isActive(item) },
-          { 'navigation-menu__item--add-item': item.label === 'Добавить пункт меню' },
-        ]"
-        @click="handleClick(item)"
+        :to="item.to"
+        class="navigation-menu__list-item"
       >
-        <div
-          class="navigation-menu__item-button"
-          @click="handleClick(item)"
-        >
-          <AppIcon
-            class="navigation-menu__item-icon"
-            :name="item.icon"
-          />
-          <template v-if="!minimal">
-            <div>
-              {{ item.label }}
-            </div>
-          </template>
-        </div>
-      </div>
+        <AppIcon
+          :name="item.icon"
+          class="navigation-menu__list-item-icon"
+        />
+        <span class="navigation-menu__list-item-text">{{ item.label }}</span>
+      </NuxtLink>
     </div>
   </div>
 </template>
@@ -83,126 +61,81 @@ export type { Item as NavigationMenuItem }
 <style lang="scss">
 .navigation-menu {
   $this: &;
-  $button: '.button';
+  $minimal: $this + '-minimal';
 
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 
   &__title {
-    @include text(semibold, xs);
-
     padding: $space-3 0 $space-3 $space-10;
     font-weight: 600;
-    color: #9AA0A6;
+    color: $color-neutral-light-500;
+
+    @include text(semibold, xs);
+
     text-transform: uppercase;
 
     &:empty {
       display: none;
+    }
+
+    #{$minimal} & {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding-left: $space-8;
+
+      text-align: center;
     }
   }
 
   &__list {
     display: flex;
     flex-direction: column;
-    gap: $space-1;
+    gap: 2px;
     width: 100%;
-  }
 
-  &__item {
-    max-width: 100%;
-    padding: 0 0 0 $space-10;
-    color: $color-neutral-light-500;
+    #{$minimal} & {
+      align-items: flex-start;
+    }
 
-    &-button {
-      cursor: pointer;
+    &-item {
+      $active: & + '.router-link-active';
 
       display: flex;
-      gap: $space-4;
-      align-items: center;
-      justify-content: flex-start;
+      gap: $space-6;
 
-      height: 48px;
-    }
+      max-width: 100%;
+      padding-block: $space-3;
+      padding-inline: $space-10 $space-4;
 
-    &--add-item {
-      @include text(semibold, sm);
+      color: $color-neutral-light-500;
+      text-decoration: none;
 
-      width: 226px;
-      height: 56px;
-      margin: $space-2 0 $space-2 $space-6;
-      padding: $space-1;
-      border: 1px dashed $color-neutral-light-300;
-      border-radius: $space-20;
-
-      #{$this} {
-        &__item {
-          &-button {
-            gap: $space-2;
-          }
-
-          &-icon {
-            width: 48px;
-            height: 48px;
-            padding: $space-3;
-            border-radius: 50%;
-
-            background-color: $color-neutral-light-100;
-          }
-        }
-      }
-    }
-
-    &--active {
-      border-left: 4px solid $color-primary-500;
-      border-radius: 0 $space-20 $space-20 0;
-      color: $color-neutral-light-950;
-      background-color: $color-neutral-light-200;
-    }
-  }
-
-  &--collapsed {
-    #{$this} {
-      &__title {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        height: 40px;
-        padding: 0 0 0 $space-6;
-
-        text-align: center;
-
-        &:empty {
-          display: none;
-        }
+      &:hover {
+        color: inherit;
       }
 
-      &__list {
-        align-items: flex-start;
+      &#{$active} {
+        pointer-events: none;
+
+        border-left: 4px solid $color-primary-500;
+        border-radius: 0 $space-20 $space-20 0;
+
+        color: $color-neutral-light-950;
+
+        background-color: rgba($color-primary-300, 40%);
       }
 
-      &__item {
+      #{$minimal} & {
         width: fit-content;
-        padding: 0 $space-3 0 $space-6;
+      }
 
-        &-button {
-          justify-content: center;
-          width: 48px;
-        }
-
-        &--add-item {
-          margin: $space-2 0;
-          padding-left: $space-6;
-          border: none;
-
-          #{$this} {
-            &__item {
-              &-icon {
-                background-color: white;
-              }
-            }
-          }
+      &-text {
+        #{$minimal} & {
+          display: none;
         }
       }
     }

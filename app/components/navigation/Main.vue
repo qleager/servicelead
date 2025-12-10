@@ -21,9 +21,6 @@ const helpItems: NavigationMenuItem[] = [
   { icon: 'main_menu_doc_API', label: 'Документация API', to: '/docapi', onClick: () => {} },
   { icon: 'main_menu_account', label: 'Личный кабинет', to: '/account', onClick: () => {} },
 ]
-const extraItems: NavigationMenuItem[] = [
-  { icon: 'plus', label: 'Добавить пункт меню', to: '', onClick: () => {} },
-]
 </script>
 
 <template>
@@ -37,16 +34,53 @@ const extraItems: NavigationMenuItem[] = [
       :items="helpItems"
       :minimal
     />
-    <NavigationMenu
-      :items="extraItems"
-      :minimal
-      size="xl"
-    />
+    <div
+      class="navigation__add-button"
+    >
+      <AppIcon
+        class="navigation__add-button-icon"
+        name="plus"
+      />
+      <div
+        v-if="!minimal"
+        class="navigation__add-button-text"
+      >
+        Добавить пункт меню
+      </div>
+    </div>
   </nav>
 </template>
 
 <style lang="scss">
 .navigation {
   $this: &;
+
+  &__add-button {
+      cursor: pointer;
+
+      display: flex;
+      gap: $space-3;
+      align-items: center;
+      justify-content: flex-start;
+
+      height: 56px;
+      margin: $space-2;
+      margin-left: $space-6;
+      padding-inline: $space-1 $space-4;
+      border: 1px dashed $color-neutral-light-300;
+      border-radius: $space-20;
+
+      color: $color-neutral-light-500;
+      white-space: nowrap;
+
+      &-icon {
+        width: 48px;
+        height: 48px;
+        padding: $space-3;
+        border-radius: 50%;
+
+        background-color: $color-neutral-light-100;
+      }
+    }
 }
 </style>
