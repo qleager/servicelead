@@ -62,6 +62,11 @@ type Option = [Props['status'], Model]
 type Model = number
 type Type = 'root' | 'instance'
 
+// Type Guards
+const isOptionObject = (option: Option): option is Exclude<Option, Type> => {
+  return typeof option === 'object' && option !== null && 'value' in option
+}
+
 // Далее — все composables (включая проектные); исключение — хуки, запускающие побочные эффекты (например, useAsyncData)
 const { versions } = useNuxtApp()
 
