@@ -74,6 +74,7 @@ const logoIcon = computed(() =>
     justify-content: flex-start;
 
     max-width: 256px;
+    margin-top: auto;
     padding: $space-3 0 $space-3 $space-10;
 
     color: $color-neutral-light-500;
