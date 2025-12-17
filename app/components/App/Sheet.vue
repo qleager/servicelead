@@ -5,6 +5,7 @@ interface Props {
   title?: string
   icon?: IconProps['name']
   defaultOpen?: boolean
+  overlay?: boolean // def: true
 }
 
 interface Emits {
@@ -30,8 +31,14 @@ export type { Props as SheetProps, Emits as SheetEmits, Model as SheetModel }
 </script>
 
 <template>
+  <!-- Trigger -->
+  <div @click="model = !model">
+    <slot />
+  </div>
+
   <AppOverlay
     v-model="model"
+    :transparent="!overlay"
     @click:backdrop="close()"
   >
     <!-- TODO: добавить анимацию (после систематизации анимаций) -->
@@ -51,12 +58,19 @@ export type { Props as SheetProps, Emits as SheetEmits, Model as SheetModel }
           </div>
         </header>
         <div class="sheet__main">
-          .sheet__slot.sheet__slot-default
-          <slot :close />
+          <div class="sheet__slot sheet__slot-content">
+            <slot
+              :close
+              name="content"
+            />
+          </div>
         </div>
         <footer class="sheet__footer">
           .sheet__slot.sheet__slot-footer
-          <slot name="footer" :close />
+          <slot
+            name="footer"
+            :close
+          />
         </footer>
       </div>
     </Transition>

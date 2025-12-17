@@ -6,7 +6,7 @@ const imgSrc = ''
   <button class="manager-button">
     <span class="manager-button__avatar">
       <img
-        :src="imgSrc ||'/images/defaultAvatar.png'"
+        :src="imgSrc || '/images/default-avatar.png'"
         class="manager-button__avatar-image"
       >
     </span>
