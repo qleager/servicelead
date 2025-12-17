@@ -15,20 +15,14 @@ interface Item {
   onClick: () => void
 }
 
-// INFO: убрали композиции роутинга (как отслеживать текущую страницу будет ниже)
-
 const props = defineProps<Props>()
 
 const classname = computed(() => [
   'navigation-menu',
-  // INFO: замена на minimal
   { 'navigation-menu-minimal': props.minimal },
 ])
 
-// INFO: упростили computed
 const titleText = computed(() => props.minimal && props.title ? '--------' : props.title)
-
-// INFO: убрали обработчик клика (как отслеживать текущую страницу будет ниже)
 
 export type { Item as NavigationMenuItem }
 </script>
@@ -39,9 +33,6 @@ export type { Item as NavigationMenuItem }
       {{ titleText }}
     </div>
     <div class="navigation-menu__list">
-      <!-- INFO: заменили на NuxtLink (чтобы как раз отслеживать текущую страницу)
-                 код стал сильно чище: избавились от композиций, обработчиков клика, добавки классов
-      -->
       <NuxtLink
         v-for="item in items"
         :key="item.label"
@@ -68,7 +59,11 @@ export type { Item as NavigationMenuItem }
   align-items: flex-start;
 
   &__title {
+    pointer-events: none;
+    user-select: none;
+
     padding: $space-3 0 $space-3 $space-10;
+
     font-weight: 600;
     color: $color-neutral-light-500;
 
@@ -88,6 +83,10 @@ export type { Item as NavigationMenuItem }
       padding-left: $space-8;
 
       text-align: center;
+
+      &:empty {
+        display: none;
+      }
     }
   }
 

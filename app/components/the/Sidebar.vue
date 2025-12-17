@@ -3,26 +3,29 @@ const isCollapsed = ref<boolean>(false)
 
 const classname = computed(() => [
   'sidebar',
-  { 'sidebar--collapsed': isCollapsed.value },
+  { 'sidebar-collapsed': isCollapsed.value },
 ])
+
+const logoIcon = computed(() =>
+  isCollapsed.value ? '/images/logo-small-dark.svg' : '/images/logo-big-dark.svg',
+)
 </script>
 
 <template>
   <aside :class="classname">
-    <svg
-      class="sidebar__logo"
-      :width="isCollapsed ? 48 : 214"
-      :height="48"
-    >
-      <use :xlink:href="isCollapsed ? '/image/logo_small_dark.svg' : '/image/logo_big_dark.svg'" />
-    </svg>
+    <div class="sidebar__logo">
+      <NuxtImg
+        class="sidebar__logo-image"
+        :src="logoIcon"
+      />
+    </div>
     <NavigationMain :minimal="isCollapsed" />
     <div
       class="sidebar__button"
       @click="isCollapsed = !isCollapsed"
     >
       <AppIcon name="collapse" />
-      <div v-if="!isCollapsed">
+      <div class="sidebar__button-text">
         Свернуть меню
       </div>
     </div>
@@ -32,6 +35,7 @@ const classname = computed(() => [
 <style lang="scss">
 .sidebar {
   $this: &;
+  $collapsed: & + '-collapsed';
 
   @include text(semibold, md);
 
@@ -40,11 +44,25 @@ const classname = computed(() => [
   gap: $space-8;
 
   min-width: 200px;
-  padding-top: $space-6;
+  padding-block: $space-6;
 
   &__logo {
+    display: flex;
+    justify-content: flex-start;
+
     width: 100%;
-    padding: 0 $space-3 0 $space-6;
+    height: 48px;
+    padding-inline: $space-6;
+
+    &-image {
+      width: 100%;
+      height: 100%;
+    }
+    #{$collapsed} & {
+      width: 48px;
+      margin-left: $space-6;
+      padding: 0;
+    }
   }
 
   &__button {
@@ -59,24 +77,24 @@ const classname = computed(() => [
     padding: $space-3 0 $space-3 $space-10;
 
     color: $color-neutral-light-500;
+
+    #{$collapsed} & {
+      transform: rotate(180deg);
+      padding-right: $space-8;
+      padding-left: $space-4;
+    }
+
+    &-text {
+      #{$collapsed} & {
+        display: none;
+      }
+    }
   }
 
-  &--collapsed {
+  &#{$collapsed} {
     align-items: flex-start;
     min-width: unset;
     max-width: 100px;
-
-    #{$this} {
-      &__logo {
-        padding-right: $space-6;
-      }
-
-      &__button {
-        transform: rotate(180deg);
-        padding-right: $space-8;
-        padding-left: $space-4;
-      }
-    }
   }
 }
 </style>

@@ -5,7 +5,7 @@ interface Props {
   minimal?: boolean
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
 
 const mainItems: NavigationMenuItem[] = [
   { icon: 'main_menu_main', label: 'Главная', to: '/dashboard', onClick: () => {} },
@@ -15,16 +15,22 @@ const mainItems: NavigationMenuItem[] = [
   { icon: 'main_menu_statistic', label: 'Статистика', to: '/statistic', onClick: () => {} },
   { icon: 'main_menu_tools', label: 'Инструменты', to: '/tools', onClick: () => {} },
 ]
+
 const helpItems: NavigationMenuItem[] = [
   { icon: 'main_menu_help', label: 'Справка', to: '/help', onClick: () => {} },
   { icon: 'main_menu_tickets', label: 'Тикеты', to: '/tickets', onClick: () => {} },
   { icon: 'main_menu_doc_API', label: 'Документация API', to: '/docapi', onClick: () => {} },
   { icon: 'main_menu_account', label: 'Личный кабинет', to: '/account', onClick: () => {} },
 ]
+
+const classname = computed(() => [
+  'navigation',
+  { 'navigation-minimal': props.minimal },
+])
 </script>
 
 <template>
-  <nav class="navigation">
+  <nav :class="classname">
     <NavigationMenu
       :items="mainItems"
       :minimal
@@ -54,6 +60,7 @@ const helpItems: NavigationMenuItem[] = [
 <style lang="scss">
 .navigation {
   $this: &;
+  $minimal: $this + '-minimal';
 
   &__add-button {
       cursor: pointer;
@@ -80,6 +87,13 @@ const helpItems: NavigationMenuItem[] = [
         border-radius: 50%;
 
         background-color: $color-neutral-light-100;
+      }
+
+      #{$minimal} & {
+        width: fit-content;
+        height: auto;
+        padding-inline: $space-1;
+        border: none;
       }
     }
 }
