@@ -83,7 +83,7 @@ export type { Props as SheetProps, Emits as SheetEmits, Model as SheetModel }
             />
           </div>
         </div>
-        <!-- А зачем футер? Это из navigation actions как будто  -->
+        <!-- А зачем футер? Это из navigation actions или slideover как будто. Вырезать?  -->
         <footer class="sheet__footer">
           <slot
             name="footer"
@@ -114,6 +114,7 @@ export type { Props as SheetProps, Emits as SheetEmits, Model as SheetModel }
   border-radius: $space-6 $space-6 0 0;
 
   background: white;
+  box-shadow: $shadow-light-mode;
 
   &__header {
     display: flex;
