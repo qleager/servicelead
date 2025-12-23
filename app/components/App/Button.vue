@@ -114,6 +114,16 @@ export type { Props as ButtonProps }
   width: fit-content;
   border-radius: 39px;
 
+  transition: $blur-duration-sm;
+
+  &:hover {
+    transition: $hover-duration-sm;
+  }
+
+  &:active {
+    transition: $active-duration-sm;
+  }
+
   &#{$size-3xs} {
     height: 20px;
   }

@@ -1,0 +1,25 @@
+/*
+ * How to use
+ *
+ * sm — for elements with width or height under 200px
+ * md — for elements with width or height between 200px and 400px
+ * lg — for elements with width or height over 500px
+ *
+ * Example: OfferCard is 290px width and 401px height => use md
+ *          AppButton is 250px/48px                   => use sm
+ *
+ */
+// On blur transition durations
+$blur-duration-sm: 0.1s;
+$blur-duration-md: 0.25s;
+$blur-duration-lg: 0.4s;
+
+// On hover transition durations
+$hover-duration-sm: 0.2s;
+$hover-duration-md: 0.5s;
+$hover-duration-lg: 0.8s;
+
+// On active transition durations
+$active-duration-sm: 0.05s;
+$active-duration-md: 0.12s;
+$active-duration-lg: 0.2s;
