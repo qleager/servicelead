@@ -18,10 +18,7 @@
         color="lighter"
       />
       <ManagerButton class="header__manager" />
-      <NavigationActions
-        class="header__actions"
-        mode="dropdown"
-      />
+      <NavigationActions />
     </div>
   </header>
 </template>
