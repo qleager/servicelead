@@ -44,8 +44,15 @@
   &__sidebar {
     position: sticky;
     top: 0;
+
+    overflow: auto;
     grid-area: sidebar;
+
     height: 100dvh;
+
+    &:not(:hover)::-webkit-scrollbar {
+      visibility: hidden;;
+    }
   }
 
   &__footer {
