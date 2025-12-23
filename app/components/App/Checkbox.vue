@@ -92,7 +92,7 @@ const classname = computed(() => ([
     height: 24px;
     border-radius: 4px;
 
-    background-color: $color-neutral-light;
+    background-color: $color-neutral-light-100;
 
     &-icon {
       color: white
