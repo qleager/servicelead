@@ -1,6 +1,8 @@
 <script lang="ts" setup>
+import type { IconName } from '@app/types/components/app/icon'
+
 interface Props {
-  name: string
+  name: IconName
   size?: number
 }
 
@@ -17,13 +19,12 @@ export type { Props as IconProps }
     :width="size"
     :height="size"
   >
-    <use :xlink:href="`/sprite#${name || 'favorite'}`" />
+    <use :xlink:href="`/sprite#${name}`" />
   </svg>
 </template>
 
 <style lang="scss">
-// .icon {
-//   outline: 1px dashed rgb($color-warning, 80%);
-//   outline-offset: -2px;
-// }
+.icon {
+  fill: currentcolor;
+}
 </style>

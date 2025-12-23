@@ -91,4 +91,12 @@
     ],
     "description": "Include media query XS <=575px"
   },
+  "Duration Variable": {
+    "scope": "scss",
+    "prefix": "duration",
+    "body": [
+      "$${1|blur,hover,active|}-duration-${2|sm,md,lg|}"
+    ],
+    "description": "Choose of ds-duration variable"
+  },
 }

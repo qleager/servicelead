@@ -18,6 +18,7 @@
     />
     <TheFooter class="layout-default__footer" />
   </div>
+  <AppOverlayProvider />
 </template>
 
 <style lang="scss">
@@ -29,8 +30,10 @@
     'sidebar footer' / 100%;
   grid-template-columns: auto 1fr;
   grid-template-rows: auto 1fr auto;
+  gap: $space-8 $space-10;
 
   min-height: 100dvh;
+  padding-right: $space-6;
 
   &__header {
     position: sticky;

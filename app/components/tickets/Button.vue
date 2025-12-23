@@ -1,24 +1,33 @@
 <script lang="ts" setup>
+import AppDropdown from '~/components/App/Dropdown.vue'
+import AppSheet from '~/components/App/Sheet.vue'
+import type { ButtonProps } from '~/components/App/Button.vue'
+
 interface Props {
-  mode?: 'page' | 'dropdown' | 'sheet' // при клике вызов дропдауна или переход не страницу // def page
-  color?: ButtonProps['color'] // def такой как в самой кнопке
+  mode?: 'page' | 'dropdown' | 'sheet'
+  color?: ButtonProps['color']
+  variant?: ButtonProps['variant']
 }
+
+const props = withDefaults(defineProps<Props>(), {
+  mode: 'page',
+})
 
 const rootElement = computed(() => {
   switch (props.mode) {
     case 'dropdown':
-      return 'AppDropdown'
-      break
-
+      return AppDropdown
     case 'sheet':
-      return 'AppSheet'
-      break
-
+      return AppSheet
     default:
       return 'div'
-      break
   }
 })
+
+const onButtonClick = async () => {
+  if (props.mode !== 'page') return
+  await navigateTo('tickets')
+}
 </script>
 
 <template>
@@ -26,9 +35,14 @@ const rootElement = computed(() => {
     :is="rootElement"
     class="tickets-button"
   >
-    AppButton
+    <AppButton
+      :variant
+      :color
+      icon="message"
+      @click="onButtonClick"
+    />
     <template #content>
-      тут что-то будет
+      <p> Тут будет что-то </p>
     </template>
   </Component>
 </template>

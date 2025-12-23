@@ -37,7 +37,7 @@ const classname = computed(() => ([
     <span class="checkbox__bullet">
       <AppIcon
         v-if="model"
-        name="check"
+        name="check_24"
         :size="24"
         class="checkbox__bullet-icon"
       />
@@ -92,7 +92,11 @@ const classname = computed(() => ([
     height: 24px;
     border-radius: 4px;
 
-    background-color: $color-neutral-light;
+    background-color: $color-neutral-light-100;
+
+    &-icon {
+      color: white
+    }
 
     #{$hover} & {
       background-color: $color-neutral-light-400;
@@ -103,7 +107,7 @@ const classname = computed(() => ([
     }
 
     #{$checked} & {
-      background-color: $color-primary
+      background-color: $color-primary !important
     }
 
     #{$disabled} & {

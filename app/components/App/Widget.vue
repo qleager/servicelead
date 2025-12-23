@@ -1,30 +1,57 @@
 <script lang="ts" setup>
+import type { IconProps } from '@/components/App/Icon.vue'
+
 interface Props {
   icon?: IconProps['name']
   title?: string
-  /*
-   * Кнопка в header'e справа
-   * [роут или действие, Текст перед кнопкой]
-   * TODO: Добавить типизацию роутов (не на первом этапе)
-   */
-  action?: [string | (() => void), string | undefined] //
-  // Card = Новости на дасшборде
-  // section = Топ офферы на дасшборде
-  variant?: 'card' | 'section' // def card
+  action?: [(() => void), string | undefined]
+  variant?: 'card' | 'section'
 }
+
+const props = withDefaults(defineProps<Props>(), {
+  title: '',
+  variant: 'card',
+})
+
+const classname = computed(() => ([
+  'widget',
+  `widget-variant-${props.variant}`,
+]))
+
+const isHeadVisible = computed (() => Boolean(props.icon || props.title || props.action))
 </script>
 
 <template>
-  <div class="widget">
-    <div class="widget__header">
-      <div class="widget__header-row">
-        <button class="widget__action">
-          <span>{{ action[1] }}</span>
-          <AppButton class="widget__action-button" />
-        </button>
+  <div :class="classname">
+    <div
+      v-if="isHeadVisible"
+      class="widget__head"
+    >
+      <div class="widget__title">
+        <AppIcon
+          v-if="icon"
+          :name="icon"
+          class="widget__title-icon"
+        />
+        <span class="widget__title-text">{{ title }}</span>
+      </div>
+      <div
+        v-if="action"
+        class="widget__action"
+        type="button"
+        @click="action[0]"
+      >
+        <span class="widget__action-text">{{ props.action?.[1] }}</span>
+        <AppButton
+          class="widget__action-button"
+          size="xs"
+          variant="lined"
+          color="lighter"
+          icon="arrow_right"
+        />
       </div>
     </div>
-    <div class="widget__slot widget__slot-header widget__header-slot widget__header-row">
+    <div class="widget__header">
       <slot name="header" />
     </div>
     <div class="widget__main">
@@ -36,8 +63,76 @@ interface Props {
 <style lang="scss">
 .widget {
   $this: &;
+  $variant-card: $this + '-variant-card';
+  $variant-section: $this + '-variant-section';
 
-  // Игнор, что в дизе они все разные
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
   padding: $space-4;
+
+  &#{$variant-card} {
+    border-radius: $space-8;
+    background-color: #fff;
+  }
+
+  &#{$variant-section} {
+    background-color: transparent;
+  }
+
+  &__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: $space-8;
+  }
+
+  &__title {
+    display: flex;
+    gap: $space-3;
+    align-items: center;
+
+    &-icon {
+      color: $color-neutral-light-500;
+    }
+
+    &-text {
+      @include text(semiBold, xl);
+
+      color: $color-neutral-light-950;
+
+      &:empty {
+        display: none;
+      }
+    }
+  }
+
+  &__action {
+    display: flex;
+    gap: $space-4;
+    align-items: center;
+
+    &-text {
+      @include text(regular, sm);
+
+      color: $color-neutral-light-400;
+
+      &:empty {
+        display: none;
+      }
+    }
+  }
+
+  &__header {
+    &:empty {
+      display: none;
+    }
+  }
+
+  &__main {
+    &:empty {
+      display: none;
+    }
+  }
 }
 </style>

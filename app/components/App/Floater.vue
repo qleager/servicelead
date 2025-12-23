@@ -1,30 +1,34 @@
 <script lang="ts" setup>
 import type { Placement } from '@floating-ui/vue'
 import type { TeleportProps } from 'vue'
-import { Teleport } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 import {
   useFloating,
   offset,
-  // autoPlacement,
-  flip,
+  autoPlacement,
   shift,
   size,
 } from '@floating-ui/vue'
 
 interface Props {
   mode?: 'click' | 'hover'
-  // TODO(YURA): давай если placement не задан - юзать autoPlacement
   placement?: Placement
   dismissible?: boolean
-  width?: string
+  /**
+   * Width of Floater
+   *
+   * - `'auto'`         – width: auto
+   * - `'reference'`    – width: reference.width
+   * - `'minReference'` – min-width: reference.width
+   * - `number`         – width: `number`px
+   *
+   * @defaultvalue `'auto'`
+   */
+  width?: 'auto' | 'reference' | 'min-reference' | number
   portal?: TeleportProps['to']
 }
-// TODO(YURA): давай тогда откажемся от flip
-//
-// placement токлько 'top' | 'right' | 'bottom' | 'left'
-// есть autoPlacement, но его нельзя использовать с flip. Можно только одно. Разница:
-// https://floating-ui.com/docs/autoPlacement#conflict-with-flip
+
+type Model = boolean
 
 const props = withDefaults(defineProps<Props>(), {
   mode: 'click',
@@ -32,7 +36,7 @@ const props = withDefaults(defineProps<Props>(), {
   width: 'auto',
 })
 
-const model = defineModel<boolean>({ default: true })
+const model = defineModel<Model>({ default: false })
 
 const reference = ref<HTMLElement | null>(null)
 const floating = ref<HTMLElement | null>(null)
@@ -41,17 +45,16 @@ let closeTimeout: ReturnType<typeof setTimeout> | undefined = undefined
 
 const { floatingStyles } = useFloating(reference, floating, {
   placement: props.placement,
+  strategy: 'fixed',
   middleware: [
     offset(8),
-    // TODO(YURA): если нет props.placement испоьзуем autoPlacement()
-    // autoPlacement(),
-    flip(),
+    ...(props.placement ? [] : [autoPlacement()]),
     shift({ padding: 8 }),
     size({
       padding: 8,
       apply({ elements }) {
         Object.assign(elements.floating.style, {
-          width: props.width,
+          ...floatingWidth.value,
         })
       },
     }),
@@ -62,14 +65,32 @@ const classname = computed(() => ([
   'floater',
 ]))
 
-const componentTag = computed(() => props.portal ? 'div' : Teleport)
+const floatingWidth = computed(() => {
+  const referenceWidth = reference.value?.getBoundingClientRect().width ?? 0
+  const px = (value: number) => `${value}px`
+
+  switch (props.width) {
+    case 'auto':
+      return { width: 'auto' }
+
+    case 'reference':
+      return { width: px(referenceWidth) }
+
+    case 'min-reference':
+      return { minWidth: px(referenceWidth) }
+
+    default:
+      return { width: px(props.width) }
+  }
+})
 
 const onMouseLeave = () => {
   if (props.mode !== 'hover') return
   closeTimeout = setTimeout(() => {
     model.value = false
   }, 100)
-}// TODO(YURA): перенос строки
+}
+
 const onMouseEnter = () => {
   clearTimeout(closeTimeout)
   if (props.mode === 'hover') model.value = true
@@ -83,16 +104,12 @@ const onClickReference = () => {
 onClickOutside(
   floating,
   () => {
-    // TODO(YURA): так почише выглядит
     model.value = props.mode === 'click' && props.dismissible ? false : true
-    // if (props.mode === 'click' && !props.dismissible) model.value = false
   }, {
-    // TODO(YURA): так при клике по reference, и при mode=click сработает закрытие
-    // как то колхозно немного, мб есть лучше реализации, например ref="root" сделать, хз, подумай
     ignore: [floating, reference],
   })
 
-export type { Props as FloaterProps }
+export type { Props as FloaterProps, Model as FloaterModel }
 </script>
 
 <template>
@@ -106,11 +123,8 @@ export type { Props as FloaterProps }
     >
       <slot />
     </div>
-    <!-- TODO(YURA):
-          Важно сделать использолвание телепорта условным, в дальнейшем избавляем себя от мучений, например, при использоании флоатера в таблице
-        -->
-    <Component
-      :is="componentTag"
+    <Teleport
+      :disabled="!portal"
       :to="portal"
     >
       <div
@@ -123,7 +137,7 @@ export type { Props as FloaterProps }
       >
         <slot name="content" />
       </div>
-    </Component>
+    </Teleport>
   </div>
 </template>
 

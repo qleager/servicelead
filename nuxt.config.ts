@@ -1,17 +1,19 @@
 /*
  * Guide: https://nuxt.com/docs/api/configuration/nuxt-config
- * Spritemap plugin: https://spiriitlabs.github.io/vite-plugin-svg-spritemap/options/
  */
 import { fileURLToPath } from 'node:url'
 import VitePluginSvgSpritemap from '@spiriit/vite-plugin-svg-spritemap'
 
 export default defineNuxtConfig({
-  modules: ['@nuxt/eslint'],
+  modules: ['@nuxt/eslint', '@chettapong/nuxt-lodash'],
   devtools: { enabled: true },
   css: ['./app/assets/scss/globals.scss'],
 
   alias: {
     '@scss': fileURLToPath(new URL('./app/assets/scss', import.meta.url)),
+    '@app': fileURLToPath(new URL('./app', import.meta.url)),
+    '@server': fileURLToPath(new URL('./server', import.meta.url)),
+    '@shared': fileURLToPath(new URL('./shared', import.meta.url)),
   },
 
   compatibilityDate: '2025-07-15',
@@ -25,7 +27,7 @@ export default defineNuxtConfig({
       },
     },
     plugins: [
-      VitePluginSvgSpritemap('./assets/icon/*.svg', {
+      VitePluginSvgSpritemap('./assets/icons/*.svg', {
         prefix: false,
         route: 'sprite',
         output: 'sprite.[hash][extname]',
@@ -43,6 +45,12 @@ export default defineNuxtConfig({
               name: 'prefixIds',
               params: {
                 prefix: false,
+              },
+            },
+            {
+              name: 'removeAttrs',
+              params: {
+                attrs: '(fill|stroke)',
               },
             },
           ],
