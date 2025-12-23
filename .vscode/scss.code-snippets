@@ -35,11 +35,21 @@
     "scope": "scss",
     "prefix": "inc",
     "body": [
-      "@include $1 {",
-      "  $2",
+      "@include ${1|sm, md, lg, xl, xxl|} {",
+      "  $0",
       "}"
     ],
     "description": "Include"
+  },
+    "@include xxl": {
+    "scope": "scss",
+    "prefix": "ixxl",
+    "body": [
+      "@include xxl {",
+      "  $0",
+      "}"
+    ],
+    "description": "Include media query XXL >=1536px"
   },
   "@include xl": {
     "scope": "scss",
@@ -49,7 +59,7 @@
       "  $0",
       "}"
     ],
-    "description": "Include media query XL <=1399px"
+    "description": "Include media query XL >=1280px"
   },
   "@include lg": {
     "scope": "scss",
@@ -59,7 +69,7 @@
       "  $0",
       "}"
     ],
-    "description": "Include media query LG <=1199px"
+    "description": "Include media query LG >=1024px"
   },
   "@include md": {
     "scope": "scss",
@@ -69,7 +79,7 @@
       "  $0",
       "}"
     ],
-    "description": "Include media query MD <=991px"
+    "description": "Include media query MD >=768px"
   },
   "@include sm": {
     "scope": "scss",
@@ -79,17 +89,7 @@
       "  $0",
       "}"
     ],
-    "description": "Include media query SM <=767px"
-  },
-  "@include xs": {
-    "scope": "scss",
-    "prefix": "ixs",
-    "body": [
-      "@include xs {",
-      "  $0",
-      "}"
-    ],
-    "description": "Include media query XS <=575px"
+    "description": "Include media query SM >=640px"
   },
   "Duration Variable": {
     "scope": "scss",
