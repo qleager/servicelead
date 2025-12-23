@@ -4,8 +4,9 @@ import type { IconProps } from './Icon.vue'
 interface Props {
   title?: string
   icon?: IconProps['name']
+  // А зачем defaultOpen?
   defaultOpen?: boolean
-  overlay?: boolean // def: true
+  overlay?: boolean
 }
 
 interface Emits {
@@ -16,7 +17,9 @@ interface Emits {
 
 type Model = boolean
 
-defineProps<Props>()
+withDefaults(defineProps<Props>(), {
+  overlay: true,
+})
 
 const emits = defineEmits<Emits>()
 
@@ -31,7 +34,6 @@ export type { Props as SheetProps, Emits as SheetEmits, Model as SheetModel }
 </script>
 
 <template>
-  <!-- Trigger -->
   <div @click="model = !model">
     <slot />
   </div>
@@ -54,7 +56,23 @@ export type { Props as SheetProps, Emits as SheetEmits, Model as SheetModel }
       >
         <header class="sheet__header">
           <div class="sheet__title">
-            {{ title }}
+            <AppIcon
+              v-if="icon"
+              class="sheet__title-image"
+              :name="icon!"
+            />
+            <div class="sheet__title-text">
+              {{ title }}
+            </div>
+          </div>
+          <div
+            class="sheet__close"
+            @click="close()"
+          >
+            <AppIcon
+              class="sheet__close-image"
+              name="close"
+            />
           </div>
         </header>
         <div class="sheet__main">
@@ -65,8 +83,8 @@ export type { Props as SheetProps, Emits as SheetEmits, Model as SheetModel }
             />
           </div>
         </div>
+        <!-- А зачем футер? Это из navigation actions или slideover как будто. Вырезать?  -->
         <footer class="sheet__footer">
-          .sheet__slot.sheet__slot-footer
           <slot
             name="footer"
             :close
@@ -80,5 +98,51 @@ export type { Props as SheetProps, Emits as SheetEmits, Model as SheetModel }
 <style lang="scss">
 .sheet {
   $this: &;
+
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+
+  width: 100%;
+  max-height: 90dvh;
+  margin-top: auto;
+  padding: $space-6;
+  border-radius: $space-6 $space-6 0 0;
+
+  background: white;
+  box-shadow: $shadow-light-mode;
+
+  &__header {
+    display: flex;
+    gap: $space-4;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: $space-2;
+  }
+
+  &__title {
+    display: flex;
+    gap: $space-2;
+    align-items: center;
+    font-weight: 500;
+
+    &-text {
+      :empty {
+        display: none;
+      }
+    }
+  }
+
+  &__close {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+  }
 }
 </style>
