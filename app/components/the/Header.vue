@@ -33,10 +33,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   padding-block: $space-4;
-
-  background-color: $color-neutral-light-50;
 
   &__search {
     width: 412px;

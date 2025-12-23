@@ -28,12 +28,14 @@
     'sidebar header'
     'sidebar main'
     'sidebar footer' / 100%;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: minmax(0, auto) minmax(0, 1fr);
   grid-template-rows: auto 1fr auto;
   gap: $space-8 $space-10;
 
   min-height: 100dvh;
   padding-right: $space-6;
+
+  background-color: $color-neutral-light-50;
 
   &__header {
     position: sticky;
@@ -50,8 +52,8 @@
 
     height: 100dvh;
 
-    &:not(:hover)::-webkit-scrollbar {
-      visibility: hidden;;
+    &::-webkit-scrollbar {
+      display: none;
     }
   }
 

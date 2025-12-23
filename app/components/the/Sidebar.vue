@@ -41,27 +41,39 @@ const logoIcon = computed(() =>
 
   display: flex;
   flex-direction: column;
-  gap: $space-8;
+  gap: $space-2;
 
   min-width: 200px;
-  padding-block: $space-6;
+  padding-bottom: $space-6;
 
   &__logo {
+    position: sticky;
+    top: 0;
+
     display: flex;
     justify-content: flex-start;
 
     width: 100%;
-    height: 48px;
-    padding-inline: $space-6;
+    padding: $space-6;
+
+    // Gradient blur
+    &::after {
+      pointer-events: none;
+      content: '';
+
+      position: absolute;
+      inset: 0;
+
+      opacity: 1;
+      backdrop-filter: blur(25px);
+
+      mask: linear-gradient($color-neutral-light-50 70%, transparent);
+    }
 
     &-image {
-      width: 100%;
-      height: 100%;
-    }
-    #{$collapsed} & {
-      width: 48px;
-      margin-left: $space-6;
-      padding: 0;
+      z-index: 2;
+      width: auto;
+      height: 44px;
     }
   }
 
