@@ -11,6 +11,9 @@ importers:
       '@floating-ui/vue':
         specifier: ^1.1.9
         version: 1.1.9(vue@3.5.22(typescript@5.9.3))
+      '@nuxtjs/device':
+        specifier: 4.0.0
+        version: 4.0.0
       '@vueuse/core':
         specifier: ^14.0.0
         version: 14.0.0(vue@3.5.22(typescript@5.9.3))
@@ -648,6 +651,9 @@ packages:
     peerDependenciesMeta:
       rolldown:
         optional: true
+
+  '@nuxtjs/device@4.0.0':
+    resolution: {integrity: sha512-Tkbvde/GInmigbS/n3X3X+qXJWi6hsYrViKpZrakaBBYY3NbGYJb0c8aVxd3vI636HBbOhu0I39rv7MSjP7w8Q==}
 
   '@oxc-minify/binding-android-arm64@0.94.0':
     resolution: {integrity: sha512-7VEBFFFAi4cYqlW/ziVs5XmNM/0IqAp7duBuTM/zus/EOc3Q2zhS9ApJo0zIwbRUZMlIm1RHe8Hths//xE7K1A==}
@@ -5249,6 +5255,10 @@ snapshots:
       - vti
       - vue-tsc
       - yaml
+
+  '@nuxtjs/device@4.0.0':
+    dependencies:
+      defu: 6.1.4
 
   '@oxc-minify/binding-android-arm64@0.94.0':
     optional: true
