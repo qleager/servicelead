@@ -6,6 +6,7 @@ interface Props {
   variant?: 'filled' | 'lined' | 'nofilled'
   icon?: IconProps['name']
   size?: '3xs' | 'xxs' | 'xs' | 'sm' | 'md'
+  iconSize?: IconProps['size']
   color?: 'primary' | 'white' | 'lighter' | 'darker'
   type?: 'button' | 'submit' | 'reset'
   // TODO: типы из router, чтобы тут затипизированы только реальные роуты
@@ -68,6 +69,7 @@ export type { Props as ButtonProps }
       v-if="isIconVisible"
       class="button__icon"
       :name="iconName!"
+      :size="iconSize"
     />
     <span
       class="button__slot"
