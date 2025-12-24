@@ -82,14 +82,15 @@ const classname = computed(() => [
 
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: $space-6;
+  align-items: center;
 
   &#{$navigation-actions-mobile} {
     position: absolute;
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
+
     max-width: 100vw;
   }
 
@@ -100,25 +101,31 @@ const classname = computed(() => [
   }
 
   &__item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: $space-4;
-    width: 275px;
-    border-radius: 40px;
-    padding: $space-2 $space-2 $space-2 $space-4;
-    background: $color-neutral-light-50;
     cursor: pointer;
     user-select: none;
 
+    display: flex;
+    gap: $space-4;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 275px;
+    padding: $space-2 $space-2 $space-2 $space-4;
+    border-radius: 40px;
+
+    background: $color-neutral-light-50;
+
     &-icon {
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
+
       width: 32px;
       height: 32px;
       border-radius: 50%;
+
       color: white;
+
       background: $color-primary-500;
     }
   }
@@ -127,15 +134,19 @@ const classname = computed(() => [
     display: none;
 
     #{$navigation-actions-mobile} & {
+      cursor: pointer;
+
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
+
       width: 40px;
       height: 40px;
-      background: $color-neutral-light-50;
       border-radius: 50%;
+
       color: $color-neutral-light-400;
-      cursor: pointer;
+
+      background: $color-neutral-light-50;
     }
   }
 }
