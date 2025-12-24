@@ -1,6 +1,9 @@
 <script lang="ts" setup>
+import type { FloaterProps } from './Floater.vue'
+
 interface Props {
   text: string
+  placement?: FloaterProps['placement']
 }
 
 defineProps<Props>()
@@ -12,6 +15,7 @@ export type { Props as TooltipProps }
   <div class="tooltip">
     <AppFloater
       mode="hover"
+      :placement
     >
       <div class="tooltip__slot tooltip__slot-default">
         <slot>
