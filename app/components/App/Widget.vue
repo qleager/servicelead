@@ -60,10 +60,10 @@ const isHeadVisible = computed (() => Boolean(props.icon || props.title || props
         />
         <span class="widget__title-text">{{ title }}</span>
       </div>
-      <button
+      <div
         v-if="action"
         class="widget__action"
-        type="button"
+        role="button"
         @click="emits('actionClick')"
       >
         <span class="widget__action-text">{{ actionText }}</span>
@@ -74,7 +74,7 @@ const isHeadVisible = computed (() => Boolean(props.icon || props.title || props
           color="lighter"
           icon="arrow_right"
         />
-      </button>
+      </div>
     </div>
     <div class="widget__header">
       <slot name="header" />
@@ -148,6 +148,10 @@ const isHeadVisible = computed (() => Boolean(props.icon || props.title || props
     &:hover {
       color: $color-neutral-light-500;
       transition: $hover-duration-lg
+    }
+
+    &:focus {
+      border: 1px solid red;
     }
 
     &:active {
