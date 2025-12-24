@@ -9,18 +9,18 @@ const props = defineProps<Props>()
 
 const mainItems: NavigationMenuItem[] = [
   { icon: 'main_menu_main', label: 'Главная', to: '/dashboard', onClick: () => {} },
-  { icon: 'main_menu_offer', label: 'Офферы', to: '/offers', onClick: () => {} },
-  { icon: 'main_menu_flows', label: 'Потоки', to: '/threads', onClick: () => {} },
-  { icon: 'main_menu_money', label: 'Финансы', to: '/finances', onClick: () => {} },
-  { icon: 'main_menu_statistic', label: 'Статистика', to: '/statistic', onClick: () => {} },
-  { icon: 'main_menu_tools', label: 'Инструменты', to: '/tools', onClick: () => {} },
+  { icon: 'main_menu_offer', label: 'Офферы', to: '', onClick: () => {} },
+  { icon: 'main_menu_flows', label: 'Потоки', to: '', onClick: () => {} },
+  { icon: 'main_menu_money', label: 'Финансы', to: '', onClick: () => {} },
+  { icon: 'main_menu_statistic', label: 'Статистика', to: '', onClick: () => {} },
+  { icon: 'main_menu_tools', label: 'Инструменты', to: '', onClick: () => {} },
 ]
 
 const helpItems: NavigationMenuItem[] = [
-  { icon: 'main_menu_help', label: 'Справка', to: '/help', onClick: () => {} },
-  { icon: 'main_menu_tickets', label: 'Тикеты', to: '/tickets', onClick: () => {} },
-  { icon: 'main_menu_doc_API', label: 'Документация API', to: '/docapi', onClick: () => {} },
-  { icon: 'main_menu_account', label: 'Личный кабинет', to: '/account', onClick: () => {} },
+  { icon: 'main_menu_help', label: 'Справка', to: '', onClick: () => {} },
+  { icon: 'main_menu_tickets', label: 'Тикеты', to: '', onClick: () => {} },
+  { icon: 'main_menu_doc_API', label: 'Документация API', to: '', onClick: () => {} },
+  { icon: 'main_menu_account', label: 'Личный кабинет', to: '', onClick: () => {} },
 ]
 
 const classname = computed(() => [
@@ -63,38 +63,38 @@ const classname = computed(() => [
   $minimal: $this + '-minimal';
 
   &__add-button {
-      cursor: pointer;
+    cursor: pointer;
 
-      display: flex;
-      gap: $space-3;
-      align-items: center;
-      justify-content: flex-start;
+    display: flex;
+    gap: $space-3;
+    align-items: center;
+    justify-content: flex-start;
 
-      height: 56px;
-      margin: $space-2;
-      margin-left: $space-6;
-      padding-inline: $space-1 $space-4;
-      border: 1px dashed $color-neutral-light-300;
-      border-radius: $space-20;
+    height: 56px;
+    margin: $space-2;
+    margin-left: $space-6;
+    padding-inline: $space-1 $space-4;
+    border: 1px dashed $color-neutral-light-300;
+    border-radius: $space-20;
 
-      color: $color-neutral-light-500;
-      white-space: nowrap;
+    color: $color-neutral-light-500;
+    white-space: nowrap;
 
-      &-icon {
-        width: 48px;
-        height: 48px;
-        padding: $space-3;
-        border-radius: 50%;
+    &-icon {
+      width: 48px;
+      height: 48px;
+      padding: $space-3;
+      border-radius: 50%;
 
-        background-color: $color-neutral-light-100;
-      }
-
-      #{$minimal} & {
-        width: fit-content;
-        height: auto;
-        padding-inline: $space-1;
-        border: none;
-      }
+      background-color: $color-neutral-light-100;
     }
+
+    #{$minimal} & {
+      width: fit-content;
+      height: auto;
+      padding-inline: $space-1;
+      border: none;
+    }
+  }
 }
 </style>
