@@ -3,7 +3,7 @@
 
 <template>
   <section class="dashboard">
-    Dashboard Page
+    <OffersList />
   </section>
 </template>
 
