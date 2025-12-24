@@ -38,6 +38,7 @@ const classname = computed(() => [
 .dropdown {
   $this: &;
 
+  z-index: 3;
   width: fit-content;
 
   &__slot {
