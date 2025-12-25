@@ -1,15 +1,11 @@
 <script lang="ts" setup>
-interface Props {
-  isDesktop: boolean
-}
+import type { FloaterProps } from '../App/Floater.vue'
 
-interface Emits {
-  close: []
+interface Props {
+  placement: FloaterProps['placement']
 }
 
 const props = defineProps<Props>()
-
-const emits = defineEmits<Emits>()
 
 const items = [
   {
@@ -41,58 +37,47 @@ const classname = computed(() => [
 </script>
 
 <template>
-  <div :class="classname">
-    <div class="navigation-actions__items">
-      <div
-        v-for="item in items"
-        :key="item.label"
-        class="navigation-actions__item"
-        @click="item.onClick"
-      >
-        <div>
-          {{ item.label }}
-        </div>
-        <div
-          class="navigation-actions__item-icon"
-        >
-          <AppIcon
-            name="plus"
-            :size="16"
-          />
+  <AppFloater
+    :placement
+  >
+    <AppButton
+      icon="plus"
+    />
+    <template #content>
+      <div :class="classname">
+        <div class="navigation-actions__items">
+          <div
+            v-for="item in items"
+            :key="item.label"
+            class="navigation-actions__item"
+            @click="item.onClick"
+          >
+            <div>
+              {{ item.label }}
+            </div>
+            <div
+              class="navigation-actions__item-icon"
+            >
+              <AppIcon
+                name="plus"
+                :size="16"
+              />
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div
-      class="navigation-actions__close"
-      @click="emits('close')"
-    >
-      <AppIcon
-        name="close"
-        :size="16"
-      />
-    </div>
-    <div />
-  </div>
+    </template>
+  </AppFloater>
 </template>
 
 <style lang="scss">
 .navigation-actions {
   $this: &;
-  $navigation-actions-mobile: $this + '-mobile';
 
   display: flex;
   flex-direction: column;
   gap: $space-6;
   align-items: center;
-
-  &#{$navigation-actions-mobile} {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-
-    max-width: 100vw;
-  }
 
   &__items {
     display: flex;
@@ -131,23 +116,21 @@ const classname = computed(() => [
   }
 
   &__close {
+    cursor: pointer;
+
     display: none;
 
-    #{$navigation-actions-mobile} & {
-      cursor: pointer;
+    // display: flex;
+    align-items: center;
+    justify-content: center;
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
 
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
+    color: $color-neutral-light-400;
 
-      color: $color-neutral-light-400;
-
-      background: $color-neutral-light-50;
-    }
+    background: $color-neutral-light-50;
   }
 }
 </style>

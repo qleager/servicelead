@@ -18,7 +18,7 @@
         color="lighter"
       />
       <ManagerButton class="header__manager" />
-      <NavigationActions />
+      <NavigationActions placement="bottom" />
     </div>
   </header>
 </template>
