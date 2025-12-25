@@ -28,12 +28,12 @@
     'sidebar header'
     'sidebar main'
     'sidebar footer' / 100%;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: minmax(0, auto) minmax(0, 1fr);
   grid-template-rows: auto 1fr auto;
-  gap: $space-8 $space-10;
+
+  // gap: $space-8 $space-10;
 
   min-height: 100dvh;
-  padding-right: $space-6;
 
   &__header {
     position: sticky;
@@ -44,8 +44,15 @@
   &__sidebar {
     position: sticky;
     top: 0;
+
+    overflow: auto;
     grid-area: sidebar;
+
     height: 100dvh;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   &__footer {
@@ -54,6 +61,7 @@
 
   &__main {
     grid-area: main;
+    padding-inline: $space-5 $space-7;
   }
 }
 </style>

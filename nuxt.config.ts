@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url'
 import VitePluginSvgSpritemap from '@spiriit/vite-plugin-svg-spritemap'
 
 export default defineNuxtConfig({
-  modules: ['@nuxt/eslint'],
+  modules: ['@nuxt/eslint', '@nuxt/image', '@chettapong/nuxt-lodash'],
   devtools: { enabled: true },
   css: ['./app/assets/scss/globals.scss'],
 

@@ -1,11 +1,13 @@
 <script lang="ts" setup>
-import type { FloaterProps } from './Floater.vue'
+import type { FloaterModel, FloaterProps } from './Floater.vue'
 
 interface Props {
   mode?: FloaterProps['mode']
 }
 
 const props = defineProps<Props>()
+
+const model = defineModel<FloaterModel>()
 
 const classname = computed(() => [
   'dropdown',
@@ -16,6 +18,8 @@ const classname = computed(() => [
 <template>
   <div :class="classname">
     <AppFloater
+      v-model="model"
+      width="min-reference"
       :mode
     >
       <div class="dropdown__slot dropdown__slot-default">

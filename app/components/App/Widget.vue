@@ -1,17 +1,42 @@
 <script lang="ts" setup>
-import type { IconProps } from '@/components/App/Icon.vue'
+import type { IconProps } from './Icon.vue'
 
+// TODO: Если action не задан, показывать ошибку для actionText, что он не имеет смысла без action
 interface Props {
   icon?: IconProps['name']
   title?: string
-  action?: [(() => void), string | undefined]
+  /**
+   * Text on the action button
+   *
+   * @defaultvalue undefined
+   */
+  actionText?: string
+  /**
+   * Whether to show the action button
+   *
+   * @defaultvalue false
+   */
+  action?: boolean
+  /**
+   * Widget layout variant
+   *
+   * - `'card'`         – like article/widget
+   * - `'section'`      – like section/block of site
+   *
+   * @defaultvalue `'card'`
+   */
   variant?: 'card' | 'section'
 }
 
+interface Emits {
+  actionClick: []
+}
+
 const props = withDefaults(defineProps<Props>(), {
-  title: '',
   variant: 'card',
 })
+
+const emits = defineEmits<Emits>()
 
 const classname = computed(() => ([
   'widget',
@@ -38,10 +63,10 @@ const isHeadVisible = computed (() => Boolean(props.icon || props.title || props
       <div
         v-if="action"
         class="widget__action"
-        type="button"
-        @click="action[0]"
+        role="button"
+        @click="emits('actionClick')"
       >
-        <span class="widget__action-text">{{ props.action?.[1] }}</span>
+        <span class="widget__action-text">{{ actionText }}</span>
         <AppButton
           class="widget__action-button"
           size="xs"
@@ -66,9 +91,11 @@ const isHeadVisible = computed (() => Boolean(props.icon || props.title || props
   $variant-card: $this + '-variant-card';
   $variant-section: $this + '-variant-section';
 
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   gap: $space-4;
+
   padding: $space-4;
 
   &#{$variant-card} {
@@ -108,14 +135,32 @@ const isHeadVisible = computed (() => Boolean(props.icon || props.title || props
   }
 
   &__action {
+    cursor: pointer;
+
     display: flex;
     gap: $space-4;
     align-items: center;
 
+    color: $color-neutral-light-400;
+
+    transition: $blur-duration-sm;
+
+    &:hover {
+      color: $color-neutral-light-500;
+      transition: $hover-duration-lg
+    }
+
+    &:focus {
+      border: 1px solid red;
+    }
+
+    &:active {
+      color: $color-neutral-light-500;
+      transition: $active-duration-sm
+    }
+
     &-text {
       @include text(regular, sm);
-
-      color: $color-neutral-light-400;
 
       &:empty {
         display: none;
