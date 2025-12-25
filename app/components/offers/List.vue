@@ -102,32 +102,11 @@ const mockOffers: any[] = [
 
 <template>
   <div class="offers-list">
-    <div class="offers-list__header">
-      <div class="offers-list__title">
-        <AppIcon
-          name="top_fire"
-        />
-        <div>Топ Офферы</div>
-      </div>
-      <div class="offers-list__actions">
-        Смотреть все
-        <AppButton
-          icon="arrow_right"
-          variant="lined"
-          color="darker"
-          to="/offers"
-          size="xs"
-          :icon-size="16"
-        />
-      </div>
-    </div>
-    <div class="offers-list__items">
-      <OffersEntry
-        v-for="offer in mockOffers"
-        :key="offer.id"
-        :offer="offer"
-      />
-    </div>
+    <OffersEntry
+      v-for="offer in mockOffers"
+      :key="offer.id"
+      :offer="offer"
+    />
   </div>
 </template>
 
@@ -136,38 +115,8 @@ const mockOffers: any[] = [
   $this: &;
 
   display: flex;
-  flex-direction: column;
   gap: $space-4;
+  justify-content: space-between;
   width: 100%;
-
-  &__header {
-    display: flex;
-    gap: $space-4;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  &__title {
-    display: flex;
-    gap: $space-3;
-    align-items: center;
-    justify-content: space-between;
-
-    @include text(semibold, xl);
-  }
-
-  &__actions {
-    display: flex;
-    gap: $space-4;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  &__items {
-    display: flex;
-    gap: $space-4;
-    justify-content: space-between;
-    width: 100%;
-  }
 }
 </style>
