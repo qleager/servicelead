@@ -2,13 +2,69 @@
 </script>
 
 <template>
-  <section class="dashboard">
-    <OffersList />
+  <section class="page-dashboard">
+    <AppCarousel class="page-dashboard__carousel" />
+    <FinanceBalanceWidget class="page-dashboard__balance" />
+    <StatisticsLeadsWidget class="page-dashboard__leads" />
+    <StatisticsOrdersWidget class="page-dashboard__orders" />
+    <StatisticsWidget class="page-dashboard__statistics" />
+    <NewsWidget class="page-dashboard__news" />
+    <FinanceIncomeWidget class="page-dashboard__income" />
+    <StatisticsTrafficWidget class="page-dashboard__traffic" />
+    <OffersWidget class="page-dashboard__offers" />
   </section>
 </template>
 
 <style lang="scss">
-.dashboard {
+.page-dashboard {
   $this: &;
+
+  display: grid;
+  grid-template:
+    'carousel carousel carousel balance balance leads'
+    'carousel carousel carousel balance balance orders'
+    'statistics statistics statistics statistics news news'
+    'income income income traffic traffic traffic'
+    'offers offers offers offers offers offers'
+  ;
+  grid-template-columns: minmax(0, 1.4fr) repeat(4, minmax(0, 1fr)) minmax(0, 1.4fr);
+  grid-template-rows: repeat(5, minmax(132px, auto));
+  gap: $space-6;
+
+  &__carousel {
+    grid-area: carousel;
+  }
+
+  &__balance {
+    grid-area: balance;
+  }
+
+  &__leads {
+    grid-area: leads;
+  }
+
+  &__orders {
+    grid-area: orders;
+  }
+
+  &__statistics {
+    grid-area: statistics;
+  }
+
+  &__news {
+    grid-area: news;
+  }
+
+  &__income {
+    grid-area: income;
+  }
+
+  &__traffic {
+    grid-area: traffic;
+  }
+
+  &__offers {
+    grid-area: offers;
+  }
 }
 </style>

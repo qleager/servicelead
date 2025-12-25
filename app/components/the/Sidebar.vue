@@ -44,6 +44,7 @@ const logoIcon = computed(() =>
   gap: $space-2;
 
   min-width: 200px;
+  padding-right: $space-5;
   padding-bottom: $space-6;
 
   &__logo {
@@ -53,22 +54,27 @@ const logoIcon = computed(() =>
     display: flex;
     justify-content: flex-start;
 
-    width: 100%;
+    min-width: 100%;
+    margin-right: -#{$space-5};
     padding: $space-6;
+    padding-bottom: $space-5;
+
+    background-color: rgba($color-neutral-light-50, 70%);
+    backdrop-filter: blur(8px);
 
     // Gradient blur
-    &::after {
-      pointer-events: none;
-      content: '';
+    // &::after {
+    //   pointer-events: none;
+    //   content: '';
 
-      position: absolute;
-      inset: 0;
+    //   position: absolute;
+    //   inset: 0;
 
-      opacity: 1;
-      backdrop-filter: blur(25px);
+    //   opacity: 1;
+    //   backdrop-filter: blur(25px);
 
-      mask: linear-gradient($color-neutral-light-50 70%, transparent);
-    }
+    //   mask: linear-gradient($color-neutral-light-50 70%, transparent);
+    // }
 
     &-image {
       z-index: 2;

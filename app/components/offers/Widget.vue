@@ -1,7 +1,15 @@
-<!--
-  Todo: AppWidget + OffersList
-  Офферы передаем сверху или фетчим тут внутри?
+<script lang="ts" setup>
 
-  клик по смотреть все = переход на страницу /offers
-  иконка пока скип
--->
+</script>
+
+<template>
+  <AppWidget
+    title="Топ офферы"
+    icon="money"
+    variant="section"
+    action-text="Смотреть все"
+    action
+  >
+    OffersWidget.vue
+  </AppWidget>
+</template>

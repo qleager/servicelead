@@ -30,12 +30,10 @@
     'sidebar footer' / 100%;
   grid-template-columns: minmax(0, auto) minmax(0, 1fr);
   grid-template-rows: auto 1fr auto;
-  gap: $space-8 $space-10;
+
+  // gap: $space-8 $space-10;
 
   min-height: 100dvh;
-  padding-right: $space-6;
-
-  background-color: $color-neutral-light-50;
 
   &__header {
     position: sticky;
@@ -63,6 +61,7 @@
 
   &__main {
     grid-area: main;
+    padding-inline: $space-5 $space-7;
   }
 }
 </style>

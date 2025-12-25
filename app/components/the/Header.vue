@@ -33,7 +33,12 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   padding-block: $space-4;
+  padding-inline: $space-5 $space-7;
+
+  background-color: rgba($color-neutral-light-50, 70%);
+  backdrop-filter: blur(8px);
 
   &__search {
     width: 412px;
