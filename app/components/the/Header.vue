@@ -31,8 +31,11 @@
   align-items: center;
   justify-content: space-between;
 
-  height: $space-14;
-  margin-top: $space-4;
+  padding-block: $space-4;
+  padding-inline: $space-5 $space-7;
+
+  background-color: rgba($color-neutral-light-50, 70%);
+  backdrop-filter: blur(8px);
 
   &__search {
     width: 412px;

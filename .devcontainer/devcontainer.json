@@ -42,6 +42,15 @@
             "source.fixAll.stylelint": "explicit"
           }
         },
+        "remote.extensionKind": {
+          /*
+          * Forces the ChatGPT extension to run in the VS Code UI (host), not inside the dev container.
+          * This fixes the "Work with app" integration issue described in:
+          * https://community.openai.com/t/codex-started-to-be-useless-in-vscode-dev-containers-on-2025-10-09/1361878
+          * Only for MacOS with Chat GPT app 🤓
+          */
+          "openai.chatgpt": ["ui"]
+        },
         "stylelint": {
           "configFile": "./stylelint.config.mjs",
           "validate": [

@@ -14,9 +14,21 @@ interface Props {
   mode?: 'click' | 'hover'
   placement?: Placement
   dismissible?: boolean
-  width?: string
+  /**
+   * Width of Floater
+   *
+   * - `'auto'`         – width: auto
+   * - `'reference'`    – width: reference.width
+   * - `'minReference'` – min-width: reference.width
+   * - `number`         – width: `number`px
+   *
+   * @defaultvalue `'auto'`
+   */
+  width?: 'auto' | 'reference' | 'min-reference' | number
   portal?: TeleportProps['to']
 }
+
+type Model = boolean
 
 const props = withDefaults(defineProps<Props>(), {
   mode: 'click',
@@ -24,7 +36,7 @@ const props = withDefaults(defineProps<Props>(), {
   width: 'auto',
 })
 
-const model = defineModel<boolean>({ default: false })
+const model = defineModel<Model>({ default: false })
 
 const reference = ref<HTMLElement | null>(null)
 const floating = ref<HTMLElement | null>(null)
@@ -42,7 +54,7 @@ const { floatingStyles } = useFloating(reference, floating, {
       padding: 8,
       apply({ elements }) {
         Object.assign(elements.floating.style, {
-          width: props.width,
+          ...floatingWidth.value,
         })
       },
     }),
@@ -52,6 +64,25 @@ const { floatingStyles } = useFloating(reference, floating, {
 const classname = computed(() => ([
   'floater',
 ]))
+
+const floatingWidth = computed(() => {
+  const referenceWidth = reference.value?.getBoundingClientRect().width ?? 0
+  const px = (value: number) => `${value}px`
+
+  switch (props.width) {
+    case 'auto':
+      return { width: 'auto' }
+
+    case 'reference':
+      return { width: px(referenceWidth) }
+
+    case 'min-reference':
+      return { minWidth: px(referenceWidth) }
+
+    default:
+      return { width: px(props.width) }
+  }
+})
 
 const onMouseLeave = () => {
   if (props.mode !== 'hover') return
@@ -78,7 +109,7 @@ onClickOutside(
     ignore: [floating, reference],
   })
 
-export type { Props as FloaterProps }
+export type { Props as FloaterProps, Model as FloaterModel }
 </script>
 
 <template>
