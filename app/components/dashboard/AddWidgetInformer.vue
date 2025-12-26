@@ -5,19 +5,19 @@ const onButtonClick = async () => {
 </script>
 
 <template>
-  <div class="help-widget">
-    <div class="help-widget__info">
+  <div class="widget-informer">
+    <div class="widget-informer__info">
       <AppIcon
-        class="help-widget__icon"
+        class="widget-informer__icon"
         name="new_widget"
         :size="40"
       />
 
-      <div class="help-widget__text">
-        <div class="help-widget__title">
+      <div class="widget-informer__text">
+        <div class="widget-informer__title">
           Не нашли нужный виджет?
         </div>
-        <div class="help-widget__subtitle">
+        <div class="widget-informer__subtitle">
           Напишите нам и наша команда разработки обязательно добавит его!
         </div>
       </div>
@@ -26,7 +26,7 @@ const onButtonClick = async () => {
     <AppButton
       variant="filled"
       color="lighter"
-      class="help-widget__ticket-btn"
+      class="widget-informer__ticket-btn"
       @click="onButtonClick"
     >
       Создать тикет
@@ -35,11 +35,12 @@ const onButtonClick = async () => {
 </template>
 
 <style lang="scss">
-.help-widget {
+.widget-informer {
   $this: &;
 
   display: flex;
   gap: $space-2;
+  align-items: center;
   justify-content: space-between;
 
   &__top {

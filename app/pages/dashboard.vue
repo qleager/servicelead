@@ -12,7 +12,7 @@
     <FinanceIncomeWidget class="page-dashboard__income" />
     <StatisticsTrafficWidget class="page-dashboard__traffic" />
     <OffersWidget class="page-dashboard__offers" />
-    <HelpWidgetEmpty class="page-dashboard__help" />
+    <DashboardAddWidgetInformer class="page-dashboard__informer" />
   </section>
 </template>
 
@@ -69,7 +69,7 @@
     grid-area: offers;
   }
 
-  &__help {
+  &__informer {
     grid-area: help;
   }
 }
