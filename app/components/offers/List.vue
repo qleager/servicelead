@@ -7,7 +7,6 @@ const mockOffers: any[] = [
     image: 'https://picsum.photos/600/300',
     tag: 'Мастер на час',
     maxPrice: 1200,
-    isHot: false,
     cities: [
       'Москва',
       'Санкт-Петербург',
@@ -25,15 +24,15 @@ const mockOffers: any[] = [
       { value: 'geo_radar', label: 'Погодное' },
     ],
     isFavorite: true,
+    isHot: false,
     isLocked: false,
   },
   {
     id: 2,
-    title: 'Ремонт холодильников',
+    title: 'Ремонт холодильников Ремонт холодильников Ремонт холодильников Ремонт холодильников',
     image: 'https://picsum.photos/600/400',
     tag: 'Универсальный',
     maxPrice: 900,
-    isHot: false,
     cities: [
       'Москва',
       'Санкт-Петербург',
@@ -49,15 +48,15 @@ const mockOffers: any[] = [
       { value: 'geo_radar', label: 'Погодное' },
     ],
     isFavorite: false,
+    isHot: false,
     isLocked: true,
   },
   {
     id: 3,
-    title: 'Ремонт холодильников',
+    title: 'Ремонт холодильниковРемонт холодильников',
     image: 'https://picsum.photos/600/500',
     tag: 'Бытовая техника',
     maxPrice: 500,
-    isHot: true,
     cities: [
       'Москва',
       'Санкт-Петербург',
@@ -74,7 +73,8 @@ const mockOffers: any[] = [
       { value: 'geo_radar', label: 'Погодное' },
     ],
     isFavorite: false,
-    isLocked: false,
+    isHot: true,
+    isLocked: true,
   },
   {
     id: 4,
@@ -82,7 +82,6 @@ const mockOffers: any[] = [
     image: 'https://picsum.photos/600/600',
     tag: 'Мастер на час',
     maxPrice: 2300,
-    isHot: true,
     cities: [
       'Новосибирск',
       'Томск',
@@ -95,6 +94,7 @@ const mockOffers: any[] = [
       { value: 'geo_radar', label: 'Погодное' },
     ],
     isFavorite: false,
+    isHot: true,
     isLocked: false,
   },
 ]
