@@ -4,7 +4,11 @@ interface Props {
   offer: any
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
+
+const favoritesText = computed(() => props.offer.isFavorite ? 'Удалить из избранного' : 'Добавить в избранное')
+
+const favoritesColor = computed(() => props.offer.isFavorite ? 'darker' : 'white')
 </script>
 
 <template>
@@ -23,7 +27,6 @@ defineProps<Props>()
             v-for="tag in offer.tags"
             :key="tag.value"
             :text="tag.label"
-            placement="bottom"
           >
             <AppIcon
               :size="20"
@@ -31,13 +34,20 @@ defineProps<Props>()
             />
           </AppTooltip>
         </div>
-        <AppButton
-          icon="favorites"
-          variant="nofilled"
-          size="xs"
-          :icon-size="32"
-          color="white"
-        />
+        <AppTooltip
+          :text="favoritesText"
+        >
+          <AppButton
+            variant="nofilled"
+            size="xs"
+            :color="favoritesColor"
+          >
+            <AppIcon
+              name="favorites"
+              :size="32"
+            />
+          </AppButton>
+        </AppTooltip>
       </div>
     </div>
     <div class="offers-entry__body">
@@ -68,39 +78,37 @@ defineProps<Props>()
           </AppDropdown>
         </div>
         <div class="offers-entry__title">
-          <AppIcon
+          <NuxtImg
             v-if="offer.isHot"
             class="offers-entry__title-icon"
-            name="top_fire"
+            :src="'/images/top-fire.png'"
           />
           <div class="offers-entry__title-text">
             {{ offer.title }}
           </div>
         </div>
       </div>
-      <div class="offers-entry__footer">
-        <div class="offers-entry__price">
-          <div class="offers-entry__price-header">
-            Ставка
-          </div>
-          <div class="offers-entry__price-value">
-            До {{ offer.maxPrice }} ₽
-          </div>
+    </div>
+    <div class="offers-entry__footer">
+      <div class="offers-entry__price">
+        <div class="offers-entry__price-header">
+          Ставка
         </div>
-        <div class="offers-entry__actions">
-          <AppButton
-            icon="lock"
-            variant="nofilled"
-            color="darker"
-            @click="console.log(`lock ${offer.id}`)"
-          />
-          <AppButton
-            icon="arrow_right"
-            variant="lined"
-            color="darker"
-            :to="`/offers/${offer.id}`"
-          />
+        <div class="offers-entry__price-value">
+          До {{ offer.maxPrice }} <span class="offers-entry__price-value--currency">₽</span>
         </div>
+      </div>
+      <div class="offers-entry__actions">
+        <AppIcon
+          v-if="offer.isLocked"
+          name="lock"
+        />
+        <AppButton
+          icon="arrow_right"
+          variant="lined"
+          color="darker"
+          :to="`/offers/${offer.id}`"
+        />
       </div>
     </div>
   </div>
@@ -129,7 +137,7 @@ defineProps<Props>()
     aspect-ratio: 2 / 1;
     width: 100%;
     padding: $space-3 $space-3 0 $space-3;
-    border-radius: $radius-3;
+    border-radius: $radius-5;
 
     background: $color-blue-350;
 
@@ -151,12 +159,13 @@ defineProps<Props>()
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
+
+      color: white;
     }
 
     &-tags {
       display: flex;
       gap: $space-05;
-      color: white;
     }
   }
 
@@ -187,15 +196,22 @@ defineProps<Props>()
   &__title {
     display: flex;
     gap: $space-1;
-    align-items: center;
 
     @include text(semibold, md);
+
+    &-icon {
+      width: 20px;
+      height: 20px;
+    }
   }
 
   &__footer {
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
+
+    margin-top: auto;
+    padding: $space-2;
   }
 
   &__price {
@@ -211,6 +227,10 @@ defineProps<Props>()
 
     &-value {
       @include text(medium, lg);
+
+      &--currency {
+        @include text(semibold, sm);
+      }
     }
   }
 
@@ -218,6 +238,7 @@ defineProps<Props>()
     display: flex;
     gap: $space-3;
     align-items: center;
+    color: $color-neutral-light-200;
   }
 }
 </style>
