@@ -5,7 +5,9 @@ interface Props {
   placement: FloaterProps['placement']
 }
 
-const props = defineProps<Props>()
+defineProps<Props>()
+
+const isFloaterContentVisible = ref<boolean>(false)
 
 const items = [
   {
@@ -30,10 +32,8 @@ const items = [
   },
 ]
 
-const classname = computed(() => [
-  'navigation-actions',
-  { 'navigation-actions-mobile': !props.isDesktop },
-])
+const buttonIcon = computed(() => isFloaterContentVisible.value ? 'close' : 'plus')
+const buttonColor = computed(() => isFloaterContentVisible.value ? 'lighter' : 'primary')
 </script>
 
 <template>
@@ -41,10 +41,12 @@ const classname = computed(() => [
     :placement
   >
     <AppButton
-      icon="plus"
+      :icon="buttonIcon"
+      :color="buttonColor"
+      @click="isFloaterContentVisible = !isFloaterContentVisible"
     />
     <template #content>
-      <div :class="classname">
+      <div class="navigation-actions">
         <div class="navigation-actions__items">
           <div
             v-for="item in items"
