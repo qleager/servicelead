@@ -4,8 +4,6 @@ import type { IconProps } from './Icon.vue'
 interface Props {
   title?: string
   icon?: IconProps['name']
-  // А зачем defaultOpen?
-  defaultOpen?: boolean
   overlay?: boolean
 }
 
@@ -59,7 +57,7 @@ export type { Props as SheetProps, Emits as SheetEmits, Model as SheetModel }
             <AppIcon
               v-if="icon"
               class="sheet__title-image"
-              :name="icon!"
+              :name="icon"
             />
             <div class="sheet__title-text">
               {{ title }}
@@ -83,7 +81,6 @@ export type { Props as SheetProps, Emits as SheetEmits, Model as SheetModel }
             />
           </div>
         </div>
-        <!-- А зачем футер? Это из navigation actions или slideover как будто. Вырезать?  -->
         <footer class="sheet__footer">
           <slot
             name="footer"
