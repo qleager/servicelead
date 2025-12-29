@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 const initSettings = {
-  variant: undefined,
+  variant: 'filled',
   size: 'sm',
-  color: undefined,
-  rounded: undefined,
-  icon: 'notice',
+  color: 'neutral',
+  rounded: true,
+  icon: 'domain',
 }
 
 const settings = ref(initSettings)
