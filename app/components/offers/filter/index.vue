@@ -38,6 +38,31 @@ const onUpdateFilters = (appliedFilters: Filter['filters']) => {
   emits('refresh')
 }
 
+const activeFiltersCount = computed(() => {
+  return Object.values(model.value.filters).filter(
+    value => Array.isArray(value) && value.length > 0,
+  ).length
+})
+
+const activeFilterValues = computed(() => {
+  const filters = model.value.filters
+  return Object.values(filters).flat().filter(Boolean) as string[]
+})
+
+const onRemoveFilterValue = (valueToRemove: string) => {
+  const newFilters: Filter['filters'] = { ...model.value.filters }
+
+  for (const key in newFilters) {
+    if (newFilters[key as keyof typeof newFilters].includes(valueToRemove)) {
+      newFilters[key as keyof typeof newFilters]
+        = newFilters[key as keyof typeof newFilters].filter(v => v !== valueToRemove)
+    }
+  }
+
+  model.value.filters = newFilters
+  emits('refresh')
+}
+
 export type { Filter as OffersFilter }
 </script>
 
@@ -47,11 +72,27 @@ export type { Filter as OffersFilter }
       Офферы
     </div>
     <div class="offers-header__filters">
-      <OffersFilterTabs
-        v-model="model.selectedTab"
-        class="offers-header__filters-tabs"
-        :items="tabsItems"
-      />
+      <div class="offers-header__filters-active">
+        <OffersFilterTabs
+          v-model="model.selectedTab"
+          class="offers-header__filters-tabs"
+          :items="tabsItems"
+        />
+        <div
+          v-if="activeFilterValues.length"
+          class="offers-header__filters-tags"
+        >
+          <AppTag
+            v-for="(value, index) in activeFilterValues"
+            :key="index"
+            closable
+            color="white"
+            @close="() => onRemoveFilterValue(value)"
+          >
+            {{ value }}
+          </AppTag>
+        </div>
+      </div>
 
       <div class="offers-header__filters-buttons">
         <OffersFilterSearch
@@ -63,7 +104,15 @@ export type { Filter as OffersFilter }
           variant="lined"
           color="darker"
           @click="isFiltersSlideoverVisible = true"
-        />
+        >
+          <!-- TODO: заменить на AppIndicator -->
+          <AppTag
+            v-if="activeFiltersCount > 0"
+            color="white"
+          >
+            {{ activeFiltersCount }}
+          </AppTag>
+        </AppButton>
       </div>
     </div>
     <OffersFilterSlideover
@@ -78,7 +127,6 @@ export type { Filter as OffersFilter }
 .offers-header {
   display: flex;
   gap: $space-10;
-  align-items: center;
   width: 100%;
 
   &__title {
@@ -91,8 +139,21 @@ export type { Filter as OffersFilter }
     justify-content: space-between;
     width: 100%;
 
+    &-active {
+      display: flex;
+      flex-direction: column;
+      gap: $space-2;
+      max-width: 700px;
+    }
+
     &-tabs {
       margin-right: auto;
+    }
+
+    &-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: $space-2;
     }
 
     &-buttons {

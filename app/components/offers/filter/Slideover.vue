@@ -37,12 +37,13 @@ watch(localFilters, () => {
   isChanged.value = true
 }, { deep: true })
 
-watch(model, (open) => {
-  if (open) isChanged.value = false
-  else {
-    Object.assign(localFilters, props.filters)
-  }
-})
+watch(
+  () => props.filters,
+  (newFilters) => {
+    Object.assign(localFilters, newFilters)
+  },
+  { deep: true },
+)
 
 const resetFilters = () => {
   localFilters.region = []
