@@ -47,7 +47,9 @@ const formattedDate = computed(() => {
       <div class="news-entry__title">
         {{ news.title }}
       </div>
-      <
+      <div class="news-entry__indicator">
+        [·]
+      </div>
       <!-- тег пока просто серый используем -->
       <!-- tag и заголовок, маренр прочтения -->
     </header>
@@ -64,6 +66,7 @@ const formattedDate = computed(() => {
         variant="lined"
         color="darker"
         icon="arrow_right"
+        size="xs"
       />
       <!-- дата и кнопка далее -->
     </footer>
@@ -78,17 +81,34 @@ const formattedDate = computed(() => {
   display: flex;
   flex-direction: column;
   gap: $space-2;
+
+  min-height: 270px;
+  max-height: 100%;
   padding: $space-6;
+  border-radius: $radius-2;
 
   &#{$minimal} {
     gap: $space-1;
+    min-height: auto;
     padding: $space-2 $space-3;
+
+      &:hover {
+        cursor: pointer;
+        background-color: $color-neutral-light-50;
+      }
   }
 
   &__header {
     display: flex;
     flex-direction: column;
     gap: $space-4;
+
+    #{$minimal} & {
+      flex-direction: row;
+      gap: $space-4;
+      justify-content: space-between;
+      width: 100%;
+    }
   }
 
   &__tag {
@@ -102,6 +122,14 @@ const formattedDate = computed(() => {
 
     #{$minimal} & {
       @include text(regular, sm);
+    }
+  }
+
+  &__indicator {
+    display: none;
+
+    #{$minimal} & {
+      display: block;
     }
   }
 
