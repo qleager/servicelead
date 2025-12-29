@@ -15,10 +15,10 @@ const onButtonClick = async () => {
 
       <div class="widget-informer__text">
         <div class="widget-informer__title">
-          Не нашли нужный виджет?
+          Не&nbsp;нашли нужный виджет?
         </div>
         <div class="widget-informer__subtitle">
-          Напишите нам и наша команда разработки обязательно добавит его!
+          Напишите нам и&nbsp;наша команда разработки обязательно добавит&nbsp;его!
         </div>
       </div>
     </div>
@@ -64,15 +64,15 @@ const onButtonClick = async () => {
   }
 
   &__title {
-    color: $color-neutral-light-950;
-
     @include text(regular, xl);
+
+    color: $color-neutral-light-950;
   }
 
   &__subtitle {
-    color: $color-neutral-light-500;
-
     @include text(regular, md);
+
+    color: $color-neutral-light-500;
   }
 
   &__ticket-btn {
