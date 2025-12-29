@@ -9,7 +9,7 @@ interface Props {
 }
 
 interface Emits {
-  (e: 'apply', filters: typeof props.filters): void
+  (e: 'update', filters: typeof props.filters): void
 }
 
 const props = defineProps<Props>()
@@ -50,13 +50,13 @@ const resetFilters = () => {
   localFilters.tools = []
   localFilters.scenarios = []
 
-  emits('apply', { ...localFilters })
+  emits('update', { ...localFilters })
   model.value = false
 }
 
 const applyFilters = () => {
   if (!isChanged.value) return
-  emits('apply', { ...localFilters })
+  emits('update', { ...localFilters })
   model.value = false
 }
 </script>

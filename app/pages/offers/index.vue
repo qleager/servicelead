@@ -1,52 +1,31 @@
 <script lang="ts" setup>
-import type { TabsItem } from '~/components/App/Tabs.vue'
+import type { OffersFilter } from '~/components/offers/filter/index.vue'
 
 const route = useRoute()
 
-const isFiltersSlideoverVisible = ref<boolean>(false)
-
-const tabsItems = ref<TabsItem[]>([
-  { label: 'Все', value: 1 },
-  { label: 'Действует акция', value: 2 },
-  { label: 'Топ офферы', value: 3 },
-  { label: 'Избранные', value: 4 },
-  { label: 'Новые', value: 5 },
-])
-
-const selectedTab = ref<number>(
-  typeof route.query.tab === 'string'
-    ? Number(route.query.tab)
-    : Number(tabsItems.value[0]?.value),
-)
-
-const offersFilters = reactive({
-  region: [] as string[],
-  city: [] as string[],
-  tools: [] as string[],
-  scenarios: [] as string[],
+const offersFilter = reactive<OffersFilter>({
+  selectedTab: typeof route.query.tab === 'string' ? Number(route.query.tab) : 1,
+  searchQuery: null,
+  filters: { region: [], city: [], tools: [], scenarios: [] },
 })
-
-const searchQuery = ref<string | null>(null)
-
-const onApplyFilters = (appliedFilters: typeof offersFilters) => {
-  console.log('Фильтры применены:', appliedFilters)
-  Object.assign(offersFilters, appliedFilters)
-}
 
 const { data: offers, refresh, pending } = await useAsyncData(
   'offers',
   () => {
     console.log({
-      tab: selectedTab.value,
-      search: searchQuery.value,
-      filters: { ...offersFilters },
+      tab: offersFilter.selectedTab,
+      search: offersFilter.searchQuery,
+      filters: offersFilter.filters,
     })
     console.log('fetchOffers')
   },
   {
     server: false,
     lazy: true,
-    watch: [selectedTab, searchQuery, offersFilters],
+    watch: [
+      () => offersFilter.selectedTab,
+      () => offersFilter.searchQuery,
+    ],
     default: () => [],
   },
 )
@@ -57,39 +36,13 @@ const { data: offers, refresh, pending } = await useAsyncData(
     <div class="offers__projects">
       Проекты
     </div>
-    <div class="offers__header">
-      <div class="offers__title">
-        Офферы
-      </div>
-      <div class="offers__filters">
-        <OffersFilterTabs
-          v-model="selectedTab"
-          class="offers__filters-tabs"
-          :items="tabsItems"
-        />
-
-        <div class="offers__filters-buttons">
-          <OffersFilterSearch
-            v-model="searchQuery"
-          />
-
-          <AppButton
-            icon="filter"
-            variant="lined"
-            color="darker"
-            @click="isFiltersSlideoverVisible = true"
-          />
-        </div>
-      </div>
-    </div>
+    <OffersFilter
+      v-model="offersFilter"
+      @refresh="refresh"
+    />
     <div class="offers__items">
       Сетка офферов
     </div>
-    <OffersFilterSlideover
-      v-model="isFiltersSlideoverVisible"
-      :filters="offersFilters"
-      @apply="onApplyFilters"
-    />
   </div>
 </template>
 
