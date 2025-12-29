@@ -104,6 +104,7 @@ const isHeadVisible = computed (() => Boolean(props.icon || props.title || props
   }
 
   &#{$variant-section} {
+    padding: 0;
     background-color: transparent;
   }
 
