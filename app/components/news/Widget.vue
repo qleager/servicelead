@@ -65,6 +65,7 @@ const mockNews: any[] = [
         :key="news.id"
         :news="news"
         minimal
+        @click="console.log(`Open /news/${news.id}`)"
       />
     </div>
   </AppWidget>
@@ -75,7 +76,7 @@ const mockNews: any[] = [
     max-height: 440px;
 
     &__list {
-      overflow-y: scroll;
+      overflow-y: auto;
       max-width: 100%;
     }
   }
