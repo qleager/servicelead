@@ -218,6 +218,7 @@ const favoritesColor = computed(() => props.offer.isFavorite ? 'darker' : 'white
     display: flex;
     flex-direction: column;
     gap: $space-05;
+    text-transform: lowercase;
 
     &-header {
       @include text(regular, xs);
