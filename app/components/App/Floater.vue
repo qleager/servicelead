@@ -152,6 +152,10 @@ export type { Props as FloaterProps, Model as FloaterModel }
     &-trigger {
       display: inline-block;
     }
+
+    &-content {
+      z-index: 9;
+    }
   }
 }
 </style>

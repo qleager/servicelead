@@ -1,9 +1,11 @@
 <script lang="ts" setup>
+import type { IconProps } from '../Icon.vue'
 import type { SelectOptionProps } from './_Option.vue'
 
 interface Props {
   items: Item[]
   multiple?: boolean
+  variant?: 'filled' | 'lined' | 'nofilled'
   /**
    * How to display selected items in multiple mode
    *
@@ -19,7 +21,9 @@ interface Props {
    * @defaultvalue false
    */
   search?: boolean
-  size?: 'xs' | 'md'
+  size?: 'xs' | 'sm' | 'md' | 'lg'
+  color?: 'white' | 'neutral' | 'primary'
+  icon?: IconProps['name']
   placeholder?: string
   /**
    * Controls how the placeholder behaves when a value is selected
@@ -63,8 +67,11 @@ interface Injection {
   isSelected: typeof isSelected
   isCollapsed: typeof isCollapsed
   counter: typeof props.counter
+  variant: typeof props.variant
   multiple: typeof props.multiple
+  icon: typeof props.icon
   size: typeof props.size
+  color: typeof props.color
   placeholder: typeof props.placeholder
   placeholderMode: typeof props.placeholderMode
   rounded: typeof props.rounded
@@ -76,11 +83,13 @@ const isOptionObject = (option: Option | Value): option is Option => {
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  variant: 'lined',
   multiple: false,
   counter: 'number',
   placeholder: 'Выберите...',
   search: false,
   size: 'md',
+  color: 'neutral',
   label: undefined,
 })
 
@@ -187,7 +196,10 @@ const resetAll = () => {
 provide<Injection>('selectState', {
   isSelected,
   isCollapsed,
+  variant: props.variant,
   size: props.size,
+  color: props.color,
+  icon: props.icon,
   multiple: props.multiple,
   counter: props.counter,
   placeholder: props.placeholder,
@@ -209,7 +221,6 @@ export type {
   <div :class="classname">
     <AppDropdown
       v-model="isCollapsed"
-      placeholder="bottom"
     >
       <AppSelectField>
         <AppSelectPlaceholder />
@@ -263,10 +274,12 @@ export type {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .select {
   $this: &;
   $disabled: $this + '-disabled';
+
+  width: 250px;
 
   &#{$disabled} {
     pointer-events: none;
@@ -297,5 +310,13 @@ export type {
       display: none;
     }
   }
+
+  .dropdown,
+  .floater,
+  /* stylelint-disable-next-line selector-class-pattern */
+  .floater__slot-default {
+    width: 100%;
+  }
+
 }
 </style>

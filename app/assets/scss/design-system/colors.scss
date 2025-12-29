@@ -17,8 +17,8 @@ $color-success: $color-green;
 $color-info: $color-blue;
 
 // Palette of Primary
-$color-primary-50: color.adjust($color-primary, $lightness: 90%);
-$color-primary-100: color.adjust($color-primary, $lightness: 80%);
+$color-primary-50: #e6effd;
+$color-primary-100: #cedffc;
 $color-primary-150: color.adjust($color-primary, $lightness: 70%);
 $color-primary-200: color.adjust($color-primary, $lightness: 60%);
 $color-primary-250: color.adjust($color-primary, $lightness: 50%);
