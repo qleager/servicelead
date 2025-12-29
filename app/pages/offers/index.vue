@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import type { TabsItem } from '~/components/App/Tabs.vue'
 
+const route = useRoute()
+
 const isFiltersSlideoverVisible = ref<boolean>(false)
 
 const tabsItems = ref<TabsItem[]>([
@@ -11,7 +13,11 @@ const tabsItems = ref<TabsItem[]>([
   { label: 'Новые', value: 5 },
 ])
 
-const selectedTab = ref(tabsItems.value[0]?.value)
+const selectedTab = ref<number>(
+  typeof route.query.tab === 'string'
+    ? Number(route.query.tab)
+    : Number(tabsItems.value[0]?.value),
+)
 
 const offersFilters = reactive({
   region: [] as string[],
