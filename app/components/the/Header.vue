@@ -10,12 +10,12 @@
       <NotificationsButton
         class="header__notifications"
         variant="lined"
-        color="lighter"
+        color="neutral"
       />
       <TicketsButton
         class="header__tickets"
         variant="lined"
-        color="lighter"
+        color="neutral"
       />
       <ManagerButton class="header__manager" />
       <NavigationActions placement="bottom" />

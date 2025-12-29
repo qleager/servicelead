@@ -5,8 +5,8 @@ import type { IconProps } from './Icon.vue'
 interface Props {
   variant?: 'filled' | 'lined' | 'nofilled'
   icon?: IconProps['name']
-  size?: '3xs' | 'xxs' | 'xs' | 'sm' | 'md'
-  color?: 'primary' | 'white' | 'lighter' | 'darker'
+  size?: 'xs' | 'sm' | 'md' | 'lg'
+  color?: | 'white' | 'neutral' | 'primary'
   type?: 'button' | 'submit' | 'reset'
   // TODO: типы из router, чтобы тут затипизированы только реальные роуты
   to?: string

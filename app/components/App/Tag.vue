@@ -164,7 +164,7 @@ const classname = computed(() => ([
     padding-inline: $space-2;
     border-radius: $radius-2;
 
-    @include text(regular, 2xs);
+    @include text(regular, xs);
   }
 
   &#{$size-md} {

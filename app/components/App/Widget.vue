@@ -71,7 +71,7 @@ const isHeadVisible = computed (() => Boolean(props.icon || props.title || props
           class="widget__action-button"
           size="xs"
           variant="lined"
-          color="lighter"
+          color="neutral"
           icon="arrow_right"
         />
       </div>

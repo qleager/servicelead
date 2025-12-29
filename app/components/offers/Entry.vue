@@ -8,7 +8,7 @@ const props = defineProps<Props>()
 
 const favoritesText = computed(() => props.offer.isFavorite ? 'Удалить из избранного' : 'Добавить в избранное')
 
-const favoritesColor = computed(() => props.offer.isFavorite ? 'darker' : 'white')
+const favoritesColor = computed(() => props.offer.isFavorite ? 'primary' : 'white')
 </script>
 
 <template>
@@ -54,13 +54,16 @@ const favoritesColor = computed(() => props.offer.isFavorite ? 'darker' : 'white
       <div class="offers-entry__content">
         <div class="offers-entry__info">
           <div class="offers-entry__info-category">
-            <AppTag>
+            <AppTag size="sm">
               {{ offer.tag }}
             </AppTag>
           </div>
           <AppDropdown mode="hover">
             <div class="offers-entry__info-location">
-              <AppIcon name="geo_16" />
+              <AppIcon
+                name="geo_16"
+                :size="16"
+              />
               <div>
                 {{ offer.cities.length }}
               </div>
@@ -106,7 +109,8 @@ const favoritesColor = computed(() => props.offer.isFavorite ? 'darker' : 'white
         <AppButton
           icon="arrow_right"
           variant="lined"
-          color="darker"
+          size="xs"
+          color="neutral"
           :to="`/offers/${offer.id}`"
         />
       </div>
@@ -184,12 +188,15 @@ const favoritesColor = computed(() => props.offer.isFavorite ? 'darker' : 'white
 
   &__info {
     display: flex;
+    align-items: center;
     justify-content: space-between;
 
     &-location {
       display: flex;
-      gap: $space-1;
+      gap: $space-05;
       align-items: center;
+
+      @include text(medium, sm);
     }
   }
 
