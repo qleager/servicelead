@@ -9,7 +9,7 @@ const props = defineProps<Props>()
 
 const mainItems: NavigationMenuItem[] = [
   { icon: 'main_menu_main', label: 'Главная', to: '/dashboard', onClick: () => {} },
-  { icon: 'main_menu_offer', label: 'Офферы', to: '', onClick: () => {} },
+  { icon: 'main_menu_offer', label: 'Офферы', to: '/offers', onClick: () => {} },
   { icon: 'main_menu_flows', label: 'Потоки', to: '', onClick: () => {} },
   { icon: 'main_menu_money', label: 'Финансы', to: '', onClick: () => {} },
   { icon: 'main_menu_statistic', label: 'Статистика', to: '', onClick: () => {} },
