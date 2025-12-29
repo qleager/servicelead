@@ -1,24 +1,137 @@
 <script lang="ts" setup>
 interface Props {
   // минимал версия только с заголовком/текстом/маркером
+  news: any
   minimal?: boolean
 }
+
+const props = defineProps<Props>()
+
+const classname = computed(() => [
+  'news-entry',
+  { 'news-entry-minimal': props.minimal },
+])
+
+const formattedDate = computed(() => {
+  if (!props.news?.created_at) return ''
+
+  const date = new Date(props.news.created_at)
+  const now = new Date()
+
+  const isToday
+    = date.getFullYear() === now.getFullYear()
+      && date.getMonth() === now.getMonth()
+      && date.getDate() === now.getDate()
+
+  const hours = String(date.getHours()).padStart(2, '0')
+  const minutes = String(date.getMinutes()).padStart(2, '0')
+
+  if (isToday) {
+    return `Сегодня, ${hours}:${minutes}`
+  }
+
+  const day = String(date.getDate()).padStart(2, '0')
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const year = date.getFullYear()
+
+  return `${day}.${month}.${year}, ${hours}:${minutes}`
+})
 </script>
 
 <template>
-  <article>
-    <header>
+  <article :class="classname">
+    <header class="news-entry__header">
+      <AppTag class="news-entry__tag">
+        {{ news.tag }}
+      </AppTag>
+      <div class="news-entry__title">
+        {{ news.title }}
+      </div>
+      <
       <!-- тег пока просто серый используем -->
       <!-- tag и заголовок, маренр прочтения -->
     </header>
-    <div>
+    <div class="news-entry__text">
       <!-- первью текста -->
+      {{ news.text }}
     </div>
-    <footer>
+    <footer class="news-entry__footer">
+      <div class="news-entry__date">
+        {{ formattedDate }}
+      </div>
+      <AppButton
+        class="news-entry__button"
+        variant="lined"
+        color="darker"
+        icon="arrow_right"
+      />
       <!-- дата и кнопка далее -->
     </footer>
   </article>
 </template>
 
 <style lang="scss">
+.news-entry {
+  $this: &;
+  $minimal: & + '-minimal';
+
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  padding: $space-6;
+
+  &#{$minimal} {
+    gap: $space-1;
+    padding: $space-2 $space-3;
+  }
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+  }
+
+  &__tag {
+    #{$minimal} & {
+      display: none;
+    }
+  }
+
+  &__title {
+    @include text(medium, md);
+
+    #{$minimal} & {
+      @include text(regular, sm);
+    }
+  }
+
+  &__text {
+    @include text(regular, sm);
+
+    color: $color-neutral-light-500;
+
+    #{$minimal} & {
+      display: none;
+    }
+  }
+
+  &__footer {
+    display: flex;
+    gap: $space-2;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    margin-top: auto;
+
+    @include text(regular, xs);
+
+    color: $color-neutral-light-400;
+  }
+
+  &__button {
+    #{$minimal} & {
+      display: none;
+    }
+  }
+}
 </style>
