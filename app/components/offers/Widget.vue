@@ -10,6 +10,6 @@
     action-text="Смотреть все"
     action
   >
-    OffersWidget.vue
+    <OffersList />
   </AppWidget>
 </template>
