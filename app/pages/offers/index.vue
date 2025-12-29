@@ -22,16 +22,6 @@ const selectedTab = ref(items.value[0]?.value)
 
 const searchQuery = ref<string | null>(null)
 
-const isChanged = ref<boolean>(false)
-
-watch(filters, () => {
-  isChanged.value = true
-}, { deep: true })
-
-watch(isFiltersVisible, (open) => {
-  if (open) isChanged.value = false
-})
-
 const { data: offers, refresh, pending } = await useAsyncData(
   'offers',
   () => {
