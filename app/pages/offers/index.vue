@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import type { TabsItem } from '~/components/App/Tabs.vue'
 
-const isFiltersVisible = ref<boolean>(false)
+const isFiltersSlideoverVisible = ref<boolean>(false)
 
-const items = ref<TabsItem[]>([
+const tabsItems = ref<TabsItem[]>([
   { label: 'Все', value: 1 },
   { label: 'Действует акция', value: 2 },
   { label: 'Топ офферы', value: 3 },
@@ -11,16 +11,21 @@ const items = ref<TabsItem[]>([
   { label: 'Новые', value: 5 },
 ])
 
-const filters = reactive({
+const selectedTab = ref(tabsItems.value[0]?.value)
+
+const offersFilters = reactive({
   region: [] as string[],
   city: [] as string[],
   tools: [] as string[],
   scenarios: [] as string[],
 })
 
-const selectedTab = ref(items.value[0]?.value)
-
 const searchQuery = ref<string | null>(null)
+
+const onApplyFilters = (appliedFilters: typeof offersFilters) => {
+  console.log('Фильтры применены:', appliedFilters)
+  Object.assign(offersFilters, appliedFilters)
+}
 
 const { data: offers, refresh, pending } = await useAsyncData(
   'offers',
@@ -28,63 +33,72 @@ const { data: offers, refresh, pending } = await useAsyncData(
     console.log({
       tab: selectedTab.value,
       search: searchQuery.value,
-      filters: { ...filters },
+      filters: { ...offersFilters },
     })
     console.log('fetchOffers')
   },
   {
     server: false,
     lazy: true,
-    watch: [selectedTab, searchQuery, filters],
+    watch: [selectedTab, searchQuery, offersFilters],
     default: () => [],
   },
 )
-
-const onApplyFilters = (appliedFilters: typeof filters) => {
-  console.log('Фильтры применены:', appliedFilters)
-  Object.assign(filters, appliedFilters)
-}
 </script>
 
 <template>
-  <div class="offers-head">
-    <div class="offers-head__title">
-      Офферы
+  <div class="offers">
+    <div class="offers__projects">
+      Проекты
     </div>
-    <div class="offers-head__filters">
-      <OffersFilterTabs
-        v-model="selectedTab"
-        class="offers-head__filters-tabs"
-        :items="items"
-      />
-
-      <div class="offers-head__filters-buttons">
-        <OffersFilterSearch
-          v-model="searchQuery"
+    <div class="offers__header">
+      <div class="offers__title">
+        Офферы
+      </div>
+      <div class="offers__filters">
+        <OffersFilterTabs
+          v-model="selectedTab"
+          class="offers__filters-tabs"
+          :items="tabsItems"
         />
 
-        <AppButton
-          icon="filter"
-          variant="lined"
-          color="darker"
-          @click="isFiltersVisible = true"
-        />
+        <div class="offers__filters-buttons">
+          <OffersFilterSearch
+            v-model="searchQuery"
+          />
+
+          <AppButton
+            icon="filter"
+            variant="lined"
+            color="darker"
+            @click="isFiltersSlideoverVisible = true"
+          />
+        </div>
       </div>
     </div>
+    <div class="offers__items">
+      Сетка офферов
+    </div>
     <OffersFilterSlideover
-      v-model="isFiltersVisible"
-      :filters="filters"
+      v-model="isFiltersSlideoverVisible"
+      :filters="offersFilters"
       @apply="onApplyFilters"
     />
   </div>
 </template>
 
 <style lang="scss">
-.offers-head {
+.offers {
   display: flex;
-  gap: $space-10;
-  align-items: center;
-  width: 100%;
+  flex-direction: column;
+  gap: $space-9;
+
+  &__header {
+    display: flex;
+    gap: $space-10;
+    align-items: center;
+    width: 100%;
+  }
 
   &__title {
     @include text(bold, 5xl);
