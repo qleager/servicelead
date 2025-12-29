@@ -49,7 +49,7 @@
           * https://community.openai.com/t/codex-started-to-be-useless-in-vscode-dev-containers-on-2025-10-09/1361878
           * Only for MacOS with Chat GPT app 🤓
           */
-          "openai.chatgpt": ["ui"]
+          "openai.chatgpt": ["workspace"]
         },
         "stylelint": {
           "configFile": "./stylelint.config.mjs",
@@ -60,6 +60,9 @@
         },
         "eslint": {
           "useFlatConfig": true
+        },
+        "chatgpt":  {
+          "commentCodeLensEnabled": false
         }
       }
     }

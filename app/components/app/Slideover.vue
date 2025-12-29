@@ -2,7 +2,6 @@
 import type { IconProps } from './Icon.vue'
 
 interface Props {
-  defaultOpen?: boolean
   title?: string
   icon?: IconProps['name']
   overlay?: boolean
@@ -53,15 +52,14 @@ export type { Props as SlideoverProps, Emits as SlideoverEmits, Model as Slideov
               {{ title }}
             </div>
           </div>
-          <div
+          <AppButton
             class="slideover__close"
+            icon="close"
+            size="sm"
+            color="lighter"
+            variant="nofilled"
             @click="close()"
-          >
-            <AppIcon
-              class="slideover__close-image"
-              name="close"
-            />
-          </div>
+          />
         </header>
         <div class="slideover__main">
           <div class="slideover__slot slideover__slot-default">
@@ -94,7 +92,7 @@ export type { Props as SlideoverProps, Emits as SlideoverEmits, Model as Slideov
   gap: $space-8;
 
   width: auto;
-  min-width: 200px;
+  min-width: 320px;
   max-width: 100vw;
   height: 100dvh;
   padding: $space-8 $space-4;

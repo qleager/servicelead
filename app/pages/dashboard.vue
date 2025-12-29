@@ -12,6 +12,7 @@
     <FinanceIncomeWidget class="page-dashboard__income" />
     <StatisticsTrafficWidget class="page-dashboard__traffic" />
     <OffersWidget class="page-dashboard__offers" />
+    <DashboardAddWidgetInformer class="page-dashboard__informer" />
   </section>
 </template>
 
@@ -26,6 +27,7 @@
     'statistics statistics statistics statistics news news'
     'income income income traffic traffic traffic'
     'offers offers offers offers offers offers'
+    'help help help help help help'
   ;
   grid-template-columns: minmax(0, 1.4fr) repeat(4, minmax(0, 1fr)) minmax(0, 1.4fr);
   grid-template-rows: repeat(5, minmax(132px, auto));
@@ -65,6 +67,10 @@
 
   &__offers {
     grid-area: offers;
+  }
+
+  &__informer {
+    grid-area: help;
   }
 }
 </style>
