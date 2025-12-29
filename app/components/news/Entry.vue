@@ -7,12 +7,14 @@ interface Props {
 
 const props = defineProps<Props>()
 
+const formattedDate = ref('')
+
 const classname = computed(() => [
   'news-entry',
   { 'news-entry-minimal': props.minimal },
 ])
 
-const formattedDate = computed(() => {
+onMounted(() => {
   if (!props.news?.created_at) return ''
 
   const date = new Date(props.news.created_at)
@@ -27,14 +29,14 @@ const formattedDate = computed(() => {
   const minutes = String(date.getMinutes()).padStart(2, '0')
 
   if (isToday) {
-    return `Сегодня, ${hours}:${minutes}`
+    formattedDate.value = `Сегодня, ${hours}:${minutes}`
   }
-
-  const day = String(date.getDate()).padStart(2, '0')
-  const month = String(date.getMonth() + 1).padStart(2, '0')
-  const year = date.getFullYear()
-
-  return `${day}.${month}.${year}, ${hours}:${minutes}`
+  else {
+    const day = String(date.getDate()).padStart(2, '0')
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const year = date.getFullYear()
+    formattedDate.value = `${day}.${month}.${year}, ${hours}:${minutes}`
+  }
 })
 </script>
 
