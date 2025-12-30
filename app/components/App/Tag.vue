@@ -91,7 +91,7 @@ const classname = computed(() => ([
   &#{$variant-filled} {
     --variant-filled-text-color: inherit;
 
-    color: var(--variant-filled-text-color) !important;
+    color: var(--variant-filled-text-color);
     background-color: transparent;
   }
 
@@ -99,12 +99,15 @@ const classname = computed(() => ([
     --variant-lined-text-color: unset;
 
     border: 1px solid transparent;
-    color: var(--variant-lined-text-color) !important;
+    color: var(--variant-lined-text-color);
     background-color: transparent !important;
   }
 
   &#{$variant-nofilled} {
+    --variant-nofilled-text-color: inherit;
+
     border: none !important;
+    color: var(--variant-nofilled-text-color) ;
     background-color: transparent !important;
   }
 
@@ -126,26 +129,26 @@ const classname = computed(() => ([
   &#{$white-color} {
     --variant-lined-text-color: white;
     --variant-filled-text-color: $color-neutral-light-950;
+    --variant-nofilled-text-color: white;
 
     border-color: white;
-    color: white;
     background-color: white;
   }
 
   &#{$neutral-color} {
     --variant-lined-text-color: #{$color-neutral-light-950};
+    --variant-nofilled-text-color: #{$color-neutral-light-400};
 
     border-color: $color-neutral-light-300;
-    color: $color-neutral-light-300;
     background-color: $color-neutral-light-100;
   }
 
   &#{$primary-color} {
     --variant-filled-text-color: white;
     --variant-lined-text-color: #{$color-primary};
+    --variant-nofilled-text-color: #{$color-primary};
 
     border-color: $color-primary;
-    color: $color-primary;
     background-color: $color-primary;
   }
 
