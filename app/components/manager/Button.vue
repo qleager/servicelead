@@ -32,6 +32,19 @@ const imgSrc = ''
   padding: $space-1 $space-6 $space-1 $space-1;
   border-radius: $space-12;
 
+  &:hover {
+    background: #fff;
+  }
+
+  &:active {
+    background: $color-neutral-light-100;
+  }
+
+  &:disabled {
+    pointer-events: none;
+    cursor: default;
+  }
+
   &__avatar {
     overflow: hidden;
     width: 48px;
@@ -63,19 +76,6 @@ const imgSrc = ''
 
   &__role {
     @include text(light, xs);
-  }
-
-  &:hover {
-    background: #fff;
-  }
-
-  &:active {
-    background: $color-neutral-light-200;
-  }
-
-  &:disabled {
-    pointer-events: none;
-    cursor: default;
   }
 }
 </style>
