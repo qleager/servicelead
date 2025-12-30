@@ -12,6 +12,7 @@ const formattedDate = ref('')
 const classname = computed(() => [
   'news-entry',
   { 'news-entry-minimal': props.minimal },
+  { 'news-entry-read': props.news.isRead },
 ])
 
 onMounted(() => {
@@ -49,14 +50,14 @@ onMounted(() => {
       <div class="news-entry__title">
         {{ news.title }}
       </div>
+      <!-- TODO: заменить на indicator -->
       <div class="news-entry__indicator">
-        [·]
+        <div class="news-entry__indicator-dot" />
       </div>
       <!-- тег пока просто серый используем -->
       <!-- tag и заголовок, маренр прочтения -->
     </header>
     <div class="news-entry__text">
-      <!-- первью текста -->
       {{ news.text }}
     </div>
     <footer class="news-entry__footer">
@@ -70,7 +71,6 @@ onMounted(() => {
         icon="arrow_right"
         size="xs"
       />
-      <!-- дата и кнопка далее -->
     </footer>
   </article>
 </template>
@@ -79,6 +79,7 @@ onMounted(() => {
 .news-entry {
   $this: &;
   $minimal: & + '-minimal';
+  $read: & + '-read';
 
   display: flex;
   flex-direction: column;
@@ -129,9 +130,37 @@ onMounted(() => {
 
   &__indicator {
     display: none;
+    flex: 0 0 24px;
+
+    width: 24px;
+    height: 24px;
+    border-radius: $radius-2;
+
+    background-color: $color-blue-300;
+    outline: 1px dashed $color-primary-500;
 
     #{$minimal} & {
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #{$read} & {
+      background-color: $color-neutral-light-200;
+    }
+
+    &-dot {
+      flex: 0 0 8px;
+
+      width: 8px;
+      height: 8px;
+      border-radius: $radius-6;
+
+      background-color: $color-blue-500;
+
+      #{$read} & {
+        background-color: $color-neutral-light-400;
+      }
     }
   }
 
