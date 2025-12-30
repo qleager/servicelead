@@ -38,7 +38,7 @@ const reset = () => settings.value = { ...initSettings }
       >
         Badge
       </AppTag>
-      <AppSelect
+      <!-- <AppSelect
         :key="`select-${settings.color} select-${settings.size} ${settings.variant} ${settings.rounded} ${settings.icon}`"
         :variant="settings.variant"
         :size="settings.size"
@@ -49,14 +49,21 @@ const reset = () => settings.value = { ...initSettings }
         :multiple="false"
         :model-value="'Paul'"
         placeholder="First Name"
-      />
-      <AppInput
+      /> -->
+      <!-- <AppInput
         :variant="settings.variant"
         :size="settings.size"
         :color="settings.color"
         :rounded="settings.rounded"
         :icon="settings.icon"
-      />
+      /> -->
+      <!-- <AppTabs
+        :items="[{ label: 'Вкладка 1', value: 1 }, { label: '2', value: 2 }, { label: '3', value: 3 }]"
+        :size="settings.size"
+        :variant="settings.variant"
+        :color="settings.color"
+        :rounded="settings.rounded"
+      /> -->
     </div>
     <div class="settings">
       <AppLabel
