@@ -48,6 +48,8 @@ const menuItems: MenuItem[] = [
   gap: $space-2;
   align-items: stretch;
 
+  padding: 0 $space-5;
+
   &__menu {
     display: flex;
     gap: $space-4;
