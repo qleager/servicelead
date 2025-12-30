@@ -54,8 +54,6 @@ onMounted(() => {
       <div class="news-entry__indicator">
         <div class="news-entry__indicator-dot" />
       </div>
-      <!-- тег пока просто серый используем -->
-      <!-- tag и заголовок, маренр прочтения -->
     </header>
     <div class="news-entry__text">
       {{ news.text }}
@@ -121,6 +119,12 @@ onMounted(() => {
   }
 
   &__title {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+
     @include text(medium, md);
 
     #{$minimal} & {
@@ -165,6 +169,12 @@ onMounted(() => {
   }
 
   &__text {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+    line-clamp: 5;
+
     @include text(regular, sm);
 
     color: $color-neutral-light-500;
