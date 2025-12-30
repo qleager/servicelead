@@ -33,9 +33,6 @@ const props = withDefaults(defineProps<Props>(), {
   placeholder: 'Введите...',
   color: 'neutral',
 })
-
-defineOptions({ inheritAttrs: false })
-
 const emits = defineEmits<Emits>()
 
 const model = defineModel<Model>()
@@ -151,9 +148,9 @@ export type { Props as InputProps, Emits as InputEmits, Model as InputModel }
   }
 
   &:focus-within {
-    outline: 1px solid;
-    outline-color: transparent;
-    outline-offset: -1px;
+    // outline: 1px solid;
+    // outline-color: transparent;
+    // outline-offset: -1px;
     transition: $active-duration-sm;
   }
 
@@ -188,13 +185,15 @@ export type { Props as InputProps, Emits as InputEmits, Model as InputModel }
     border: none !important;
     color: var(--variant-filled-text-color) !important;
     background-color: transparent;
-    outline: none !important;
+    outline: none !important
   }
 
   &#{$variant-nofilled} {
     --variant-nofilled-background-color: transparent;
+    --variant-nofilled-text-color: inherit;
 
     border: none !important;
+    color: var(--variant-nofilled-text-color) !important;
     background: var(--variant-nofilled-background-color) !important;
   }
 
@@ -217,6 +216,8 @@ export type { Props as InputProps, Emits as InputEmits, Model as InputModel }
     height: 40px;
     padding-inline: $space-4;
     border-radius: $radius-2;
+
+    @include text(regular, xs);
   }
 
   // Стили блока при состоянии компонента
@@ -225,6 +226,8 @@ export type { Props as InputProps, Emits as InputEmits, Model as InputModel }
     height: 48px;
     padding-inline: $space-5;
     border-radius: $radius-2;
+
+    @include text(regular, xs);
   }
 
   &#{$size-lg} {
@@ -232,6 +235,8 @@ export type { Props as InputProps, Emits as InputEmits, Model as InputModel }
     height: 56px;
     padding-inline: $space-6;
     border-radius: $radius-3;
+
+    @include text(regular, sm);
   }
 
   &#{$white-color} {
@@ -244,11 +249,11 @@ export type { Props as InputProps, Emits as InputEmits, Model as InputModel }
     &:hover {
       --variant-lined-background-color: white;
       --variant-nofilled-background-color: white;
-      --variant-lined-text-color: #{$color-neutral-light-950};
+      --variant-lined-text-color: white;
 
       border-color: #{$color-neutral-light-50};
       color:  #{$color-neutral-light-950};
-      background-color: #{$color-neutral-light-150};
+      background-color: white;
     }
 
     &:active {
@@ -257,33 +262,44 @@ export type { Props as InputProps, Emits as InputEmits, Model as InputModel }
 
       border-color: #{$color-neutral-light-150};
       color: #{$color-neutral-light-950};
-      background-color: #{$color-neutral-light-150};
+      background-color: white;
+    }
+
+    &:focus-within {
+      --variant-nofilled-text-color: #{$color-neutral-light-500};
+      --variant-lined-background-color: white;
+
+      transform: $active-duration-sm;
+      border-color: white;
+      color: $color-neutral-light-950 !important;
+      background-color: white;
     }
   }
 
   &#{$neutral-color} {
+    --variant-nofilled-text-color: #{$color-neutral-light-400};
+
     transform: $blur-duration-sm;
     border-color: $color-neutral-light-300;
     color: $color-neutral-light-300;
     background-color: $color-neutral-light-100;
 
     &:hover {
-      --variant-nofilled-background-color: #{$color-neutral-light-100};
-      --variant-lined-background-color: #{$color-neutral-light-100};
+      --variant-nofilled-text-color: #{$color-neutral-light-500};
+      --variant-lined-background-color: transparent;
 
       transform: $hover-duration-sm;
-      border-color: $color-neutral-light-400;
-      background-color: $color-neutral-light-150;
+      border-color: $color-neutral-light-300;
+      background-color: $color-neutral-light-100;
     }
 
     &:focus-within {
-      --variant-nofilled-background-color: #{$color-neutral-light-100};
-      --variant-lined-background-color: #{$color-neutral-light-100};
+      --variant-nofilled-text-color: #{$color-neutral-light-500};
+      --variant-lined-background-color: transparent;
 
       transform: $active-duration-sm;
-      background-color: $color-neutral-light-150;
-
-      // outline-color: $color-neutral-light-500;
+      border-color: $color-neutral-light-300;
+      background-color: $color-neutral-light-100;
     }
   }
 
@@ -322,6 +338,8 @@ export type { Props as InputProps, Emits as InputEmits, Model as InputModel }
 
   // Стиль элемента блока
   &__field {
+    --field-text-color: $color-neutral-light-950;
+
     flex: 1;
 
     height: 100%;
@@ -330,20 +348,20 @@ export type { Props as InputProps, Emits as InputEmits, Model as InputModel }
     border: none;
     border-radius: unset;
 
-    color: inherit;
+    color: var(--field-text-color);
 
     background-color: transparent;
 
     #{$size-xs} & {
-      @include text(regular, xs);
+      @include text(regular, 2xs);
     }
 
     #{$size-sm} & {
-      @include text(regular, sm);
+      @include text(regular, xs);
     }
 
     #{$size-md} & {
-      @include text(regular, md);
+      @include text(regular, sm);
     }
 
     #{$size-lg} & {
