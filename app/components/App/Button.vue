@@ -169,100 +169,107 @@ export type { Props as ButtonProps }
 
   &#{$variant-filled} {
     --variant-filled-text-color: inherit;
+    --variant-filled-background-color: inherit;
 
     border: none !important;
-    color: var(--variant-filled-text-color) !important;
-    background-color: transparent;
+    color: var(--variant-filled-text-color);
+    background-color: var(--variant-filled-background-color);
   }
 
   &#{$variant-lined} {
     --variant-lined-background-color: inherit;
-    --variant-lined-text-color: unset;
+    --variant-lined-text-color: inherit;
 
     border: 1px solid transparent;
-    color: var(--variant-lined-text-color) !important;
-    background-color: var(--variant-lined-background-color) !important;
+    color: var(--variant-lined-text-color) ;
+    background-color: var(--variant-lined-background-color);
   }
 
   &#{$variant-nofilled} {
-    --variant-nofilled-background-color: inherit;
+    --variant-nofilled-text-color: inherit;
 
     border: none !important;
+    color: var(--variant-nofilled-text-color);
     background-color: var(--variant-nofilled-background-color) !important;
   }
 
   &#{$primary-color} {
     --variant-filled-text-color: white;
-    --variant-nofilled-background-color: transparent;
+    --variant-filled-background-color: #{$color-primary};
+    --variant-nofilled-text-color: #{$color-primary};
     --variant-lined-text-color: #{$color-primary};
 
     border-color: $color-primary;
-    color: $color-primary;
-    background-color: $color-primary;
 
     &:hover {
-      --variant-nofilled-background-color: #{$color-primary-100};
-      --variant-lined-background-color: #{$color-primary-100};
+      --variant-lined-text-color: white;
+      --variant-filled-background-color: #{$color-primary-600};
+      --variant-nofilled-text-color: #{$color-primary-600};
+      --variant-lined-background-color: #{$color-primary};
 
       border-color: $color-primary-600;
-      background-color: $color-primary-600;
     }
 
-    &:active {
+    #{$active} {
+      --variant-nofilled-text-color: #{$color-primary-700};
+      --variant-filled-background-color: #{$color-primary-700};
+      --variant-lined-background-color: #{$color-primary-700};
+
       border-color: #{$color-primary-700};
-      background-color: #{$color-primary-700};
     }
   }
 
   &#{$white-color} {
+    --variant-filled-background-color: white;
     --variant-filled-text-color: $color-neutral-light-950;
     --variant-lined-text-color: white;
+    --variant-nofilled-background-color: transparent;
+    --variant-nofilled-text-color: white;
 
     border-color: white;
-    color: white;
-    background-color: white;
 
     &:hover {
+      --variant-filled-background-color: #{$color-neutral-light-100};
       --variant-nofilled-background-color: white;
       --variant-lined-background-color: white;
       --variant-lined-text-color: #{$color-neutral-light-950};
 
       border-color: #{$color-neutral-light-50};
       color: #{$color-neutral-light-950};
-      background-color: #{$color-neutral-light-100};
     }
 
-    &:active {
+    #{$active} {
+      --variant-filled-background-color: #{$color-neutral-light-150};
       --variant-nofilled-background-color: #{$color-neutral-light-100};
       --variant-lined-background-color: #{$color-neutral-light-100};
 
       border-color: #{$color-neutral-light-150};
       color: #{$color-neutral-light-950};
-      background-color: #{$color-neutral-light-150};
     }
   }
 
   &#{$neutral-color} {
     --variant-filled-text-color: $color-neutral-light-950;
+    --variant-filled-background-color: #{$color-neutral-light-100};
     --variant-lined-text-color: #{$color-neutral-light-950};
+    --variant-nofilled-text-color: #{$color-neutral-light-400};
 
     border-color: $color-neutral-light-300;
-    color: $color-neutral-light-300;
-    background-color: $color-neutral-light-100;
 
     &:hover {
-      --variant-nofilled-background-color: #{$color-neutral-light-100};
-      --variant-lined-background-color: #{$color-neutral-light-100};
+      --variant-filled-background-color: #{$color-neutral-light-150};
+      --variant-lined-background-color: white;
+      --variant-nofilled-text-color: #{$color-neutral-light-500};
 
-      transform: $hover-duration-sm;
-      border-color: $color-neutral-light-400;
-      background-color: $color-neutral-light-150;
+      border-color: white;
     }
 
-    &:active {
-      transform: $active-duration-sm;
-      border-color: $color-neutral-light-500;
-      background-color: $color-neutral-light-200;
+    #{$active} {
+      --variant-filled-background-color: #{$color-neutral-light-200};
+      --variant-lined-background-color: #{$color-neutral-light-100};
+      --variant-nofilled-text-color: #{$color-neutral-light-600};
+
+      border-color: $color-neutral-light-100;
     }
   }
 
