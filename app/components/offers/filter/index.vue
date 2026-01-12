@@ -102,7 +102,7 @@ export type { Filter as OffersFilter }
         <AppButton
           icon="filter"
           variant="lined"
-          color="darker"
+          color="neutral"
           @click="isFiltersSlideoverVisible = true"
         >
           <!-- TODO: заменить на AppIndicator -->

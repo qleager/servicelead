@@ -15,6 +15,6 @@ const model = defineModel<number | string>()
     v-model="model"
     :items="items"
     variant="lined"
-    color="darker"
+    color="neutral"
   />
 </template>

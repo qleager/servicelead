@@ -31,7 +31,7 @@ const close = () => {
       v-else
       icon="search"
       variant="lined"
-      color="darker"
+      color="neutral"
       @click="toggle"
     />
   </div>

@@ -112,7 +112,7 @@ const applyFilters = () => {
     <template #footer>
       <AppButton
         variant="nofilled"
-        color="darker"
+        color="neutral"
         @click="resetFilters"
       >
         Сбросить все
