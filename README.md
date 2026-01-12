@@ -42,7 +42,7 @@
 **Примеры:**  
 fix(offer): error when save offer to favorite  
 feat(AppIcon): setup component  
-style: add padding to body  
+style: add props comment at AppComponent  
 docs(readme): add Use Conventional Commits block
 
 > [!Tip]
