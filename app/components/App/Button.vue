@@ -221,7 +221,7 @@ export type { Props as ButtonProps }
 
   &#{$white-color} {
     --variant-filled-background-color: white;
-    --variant-filled-text-color: $color-neutral-light-950;
+    --variant-filled-text-color: $color-neutral-950;
     --variant-lined-text-color: white;
     --variant-nofilled-background-color: transparent;
     --variant-nofilled-text-color: white;
@@ -229,47 +229,47 @@ export type { Props as ButtonProps }
     border-color: white;
 
     &:hover {
-      --variant-filled-background-color: #{$color-neutral-light-100};
+      --variant-filled-background-color: #{$color-neutral-100};
       --variant-nofilled-background-color: white;
       --variant-lined-background-color: white;
-      --variant-lined-text-color: #{$color-neutral-light-950};
+      --variant-lined-text-color: #{$color-neutral-950};
 
-      border-color: #{$color-neutral-light-50};
-      color: #{$color-neutral-light-950};
+      border-color: #{$color-neutral-50};
+      color: #{$color-neutral-950};
     }
 
     #{$active} {
-      --variant-filled-background-color: #{$color-neutral-light-150};
-      --variant-nofilled-background-color: #{$color-neutral-light-100};
-      --variant-lined-background-color: #{$color-neutral-light-100};
+      --variant-filled-background-color: #{$color-neutral-150};
+      --variant-nofilled-background-color: #{$color-neutral-100};
+      --variant-lined-background-color: #{$color-neutral-100};
 
-      border-color: #{$color-neutral-light-150};
-      color: #{$color-neutral-light-950};
+      border-color: #{$color-neutral-150};
+      color: #{$color-neutral-950};
     }
   }
 
   &#{$neutral-color} {
-    --variant-filled-text-color: $color-neutral-light-950;
-    --variant-filled-background-color: #{$color-neutral-light-100};
-    --variant-lined-text-color: #{$color-neutral-light-950};
-    --variant-nofilled-text-color: #{$color-neutral-light-400};
+    --variant-filled-text-color: $color-neutral-950;
+    --variant-filled-background-color: #{$color-neutral-100};
+    --variant-lined-text-color: #{$color-neutral-950};
+    --variant-nofilled-text-color: #{$color-neutral-400};
 
-    border-color: $color-neutral-light-300;
+    border-color: $color-neutral-300;
 
     &:hover {
-      --variant-filled-background-color: #{$color-neutral-light-150};
+      --variant-filled-background-color: #{$color-neutral-150};
       --variant-lined-background-color: white;
-      --variant-nofilled-text-color: #{$color-neutral-light-500};
+      --variant-nofilled-text-color: #{$color-neutral-500};
 
       border-color: white;
     }
 
     #{$active} {
-      --variant-filled-background-color: #{$color-neutral-light-200};
-      --variant-lined-background-color: #{$color-neutral-light-100};
-      --variant-nofilled-text-color: #{$color-neutral-light-600};
+      --variant-filled-background-color: #{$color-neutral-200};
+      --variant-lined-background-color: #{$color-neutral-100};
+      --variant-nofilled-text-color: #{$color-neutral-600};
 
-      border-color: $color-neutral-light-100;
+      border-color: $color-neutral-100;
     }
   }
 
@@ -280,7 +280,7 @@ export type { Props as ButtonProps }
   &#{$disabled} {
     pointer-events: none;
     cursor: not-allowed;
-    color: $color-neutral-light-300;
+    color: $color-neutral-300;
   }
 
   &#{$loading} {

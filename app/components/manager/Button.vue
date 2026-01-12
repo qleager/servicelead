@@ -37,7 +37,7 @@ const imgSrc = ''
   }
 
   &:active {
-    background: $color-neutral-light-100;
+    background: $color-neutral-100;
   }
 
   &:disabled {
@@ -67,7 +67,7 @@ const imgSrc = ''
 
     height: 42px;
 
-    color: $color-neutral-light-950;
+    color: $color-neutral-950;
   }
 
   &__name {

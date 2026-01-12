@@ -52,7 +52,7 @@ const captionText = computed(() =>
 
     @include label(md, medium);
 
-    color: $color-neutral-light-950;
+    color: $color-neutral-950;
 
     &:empty {
       display: none;
@@ -75,7 +75,7 @@ const captionText = computed(() =>
 
     @include text(regular, xs);
 
-    color: $color-neutral-light-400;
+    color: $color-neutral-400;
 
     &:empty {
       display: none;

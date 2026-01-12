@@ -303,7 +303,7 @@ export type {
     @include text(regular, sm);
 
     padding-block: $space-3;
-    color: $color-neutral-light-500;
+    color: $color-neutral-500;
     text-align: center;
 
     &:empty {

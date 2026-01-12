@@ -31,7 +31,7 @@ const classname = computed(() => [
 
   margin-inline: -#{$space-1};
   padding-inline: $space-1;
-  color: $color-neutral-light-400;
+  color: $color-neutral-400;
 
   &#{$size-xs} {
     @include text(regular, xs);
@@ -42,13 +42,13 @@ const classname = computed(() => [
     top: 0;
     transform: translateY(-50%);
 
-    color: $color-neutral-light-900;
+    color: $color-neutral-900;
 
     backdrop-filter: blur(20px);
   }
 
   &#{$static} {
-    color: $color-neutral-light-900;
+    color: $color-neutral-900;
   }
 
   &#{$hidden} {

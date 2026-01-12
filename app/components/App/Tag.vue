@@ -128,7 +128,7 @@ const classname = computed(() => ([
 
   &#{$white-color} {
     --variant-lined-text-color: white;
-    --variant-filled-text-color: $color-neutral-light-950;
+    --variant-filled-text-color: $color-neutral-950;
     --variant-nofilled-text-color: white;
 
     border-color: white;
@@ -136,11 +136,11 @@ const classname = computed(() => ([
   }
 
   &#{$neutral-color} {
-    --variant-lined-text-color: #{$color-neutral-light-950};
-    --variant-nofilled-text-color: #{$color-neutral-light-400};
+    --variant-lined-text-color: #{$color-neutral-950};
+    --variant-nofilled-text-color: #{$color-neutral-400};
 
-    border-color: $color-neutral-light-300;
-    background-color: $color-neutral-light-100;
+    border-color: $color-neutral-300;
+    background-color: $color-neutral-100;
   }
 
   &#{$primary-color} {

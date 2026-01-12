@@ -100,7 +100,7 @@ const buttonColor = computed(() => isFloaterContentVisible.value ? 'neutral' : '
     padding: $space-2 $space-2 $space-2 $space-4;
     border-radius: 40px;
 
-    background: $color-neutral-light-50;
+    background: $color-neutral-50;
 
     &-icon {
       display: flex;
@@ -130,9 +130,9 @@ const buttonColor = computed(() => isFloaterContentVisible.value ? 'neutral' : '
     height: 40px;
     border-radius: 50%;
 
-    color: $color-neutral-light-400;
+    color: $color-neutral-400;
 
-    background: $color-neutral-light-50;
+    background: $color-neutral-50;
   }
 }
 </style>

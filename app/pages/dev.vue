@@ -171,7 +171,7 @@ const reset = () => settings.value = { ...initSettings }
     padding: $space-8;
     border-radius: 20px;
 
-    background-color: $color-neutral-light-100;
+    background-color: $color-neutral-100;
 
     &-footer {
       display: flex;

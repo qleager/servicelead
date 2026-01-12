@@ -59,16 +59,16 @@ const classname = computed(() => [
   align-items: center;
 
   width: 100%;
-  border: 1px solid $color-neutral-light-300;
+  border: 1px solid $color-neutral-300;
   border-radius: $radius-2;
 
   &:hover {
-    border-color: $color-neutral-light-400;
+    border-color: $color-neutral-400;
     transition: $hover-duration-sm;
   }
 
   &:focus {
-    border-color: $color-neutral-light-400;
+    border-color: $color-neutral-400;
     transition: $active-duration-sm;
   }
 
@@ -145,7 +145,7 @@ const classname = computed(() => [
   }
 
   &#{$white-color} {
-    --variant-filled-text-color: $color-neutral-light-950;
+    --variant-filled-text-color: $color-neutral-950;
     --variant-lined-text-color: white;
 
     border-color: white;
@@ -155,47 +155,47 @@ const classname = computed(() => [
     &:hover {
       --variant-lined-background-color: white;
       --variant-nofilled-background-color: white;
-      --variant-lined-text-color: #{$color-neutral-light-950};
+      --variant-lined-text-color: #{$color-neutral-950};
 
-      border-color: #{$color-neutral-light-50};
-      color:  #{$color-neutral-light-950};
-      background-color: #{$color-neutral-light-150};
+      border-color: #{$color-neutral-50};
+      color:  #{$color-neutral-950};
+      background-color: #{$color-neutral-150};
     }
 
     &:active {
-      --variant-nofilled-background-color: #{$color-neutral-light-100};
-      --variant-lined-background-color: #{$color-neutral-light-100};
+      --variant-nofilled-background-color: #{$color-neutral-100};
+      --variant-lined-background-color: #{$color-neutral-100};
 
-      border-color: #{$color-neutral-light-150};
-      color: #{$color-neutral-light-950};
-      background-color: #{$color-neutral-light-150};
+      border-color: #{$color-neutral-150};
+      color: #{$color-neutral-950};
+      background-color: #{$color-neutral-150};
     }
   }
 
   &#{$neutral-color} {
-    --variant-filled-text-color: $color-neutral-light-950;
-    --variant-lined-text-color: #{$color-neutral-light-950};
+    --variant-filled-text-color: $color-neutral-950;
+    --variant-lined-text-color: #{$color-neutral-950};
 
     transform: $blur-duration-sm;
-    border-color: $color-neutral-light-300;
-    color: $color-neutral-light-300;
-    background-color: $color-neutral-light-100;
+    border-color: $color-neutral-300;
+    color: $color-neutral-300;
+    background-color: $color-neutral-100;
 
     &:hover {
-      --variant-nofilled-background-color: #{$color-neutral-light-100};
-      --variant-lined-background-color: #{$color-neutral-light-100};
+      --variant-nofilled-background-color: #{$color-neutral-100};
+      --variant-lined-background-color: #{$color-neutral-100};
 
       transform: $hover-duration-sm;
-      border-color: $color-neutral-light-400;
-      background-color: $color-neutral-light-150;
+      border-color: $color-neutral-400;
+      background-color: $color-neutral-150;
     }
 
     &:focus-within {
-      --variant-nofilled-background-color: #{$color-neutral-light-100};
-      --variant-lined-background-color: #{$color-neutral-light-100};
+      --variant-nofilled-background-color: #{$color-neutral-100};
+      --variant-lined-background-color: #{$color-neutral-100};
 
       transform: $active-duration-sm;
-      background-color: $color-neutral-light-150;
+      background-color: $color-neutral-150;
     }
   }
 
@@ -222,10 +222,10 @@ const classname = computed(() => [
     }
 
     &:disabled {
-      --variant-filled-text-color: #{$color-neutral-light-400};
+      --variant-filled-text-color: #{$color-neutral-400};
 
-      border-color: #{$color-neutral-light-100};
-      background-color: #{$color-neutral-light-100};
+      border-color: #{$color-neutral-100};
+      background-color: #{$color-neutral-100};
     }
   }
 
@@ -310,7 +310,7 @@ const classname = computed(() => [
     }
 
     #{$neutral-color} & {
-      color: $color-neutral-light-400;
+      color: $color-neutral-400;
     }
 
     #{$size-xs} & {

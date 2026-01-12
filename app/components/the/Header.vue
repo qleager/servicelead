@@ -34,7 +34,7 @@
   padding-block: $space-4;
   padding-inline: $space-5 $space-7;
 
-  background-color: rgba($color-neutral-light-50, 70%);
+  background-color: rgba($color-neutral-50, 70%);
   backdrop-filter: blur(8px);
 
   &__search {

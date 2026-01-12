@@ -138,12 +138,12 @@ export type { Props as InputProps, Emits as InputEmits, Model as InputModel }
   border-radius: $radius-2;
 
   &:hover {
-    border-color: $color-neutral-light-400;
+    border-color: $color-neutral-400;
     transition: $hover-duration-sm;
   }
 
   &:focus {
-    border-color: $color-neutral-light-400;
+    border-color: $color-neutral-400;
     transition: $active-duration-sm;
   }
 
@@ -251,55 +251,55 @@ export type { Props as InputProps, Emits as InputEmits, Model as InputModel }
       --variant-nofilled-background-color: white;
       --variant-lined-text-color: white;
 
-      border-color: #{$color-neutral-light-50};
-      color:  #{$color-neutral-light-950};
+      border-color: #{$color-neutral-50};
+      color:  #{$color-neutral-950};
       background-color: white;
     }
 
     &:active {
-      --variant-nofilled-background-color: #{$color-neutral-light-100};
-      --variant-lined-background-color: #{$color-neutral-light-100};
+      --variant-nofilled-background-color: #{$color-neutral-100};
+      --variant-lined-background-color: #{$color-neutral-100};
 
-      border-color: #{$color-neutral-light-150};
-      color: #{$color-neutral-light-950};
+      border-color: #{$color-neutral-150};
+      color: #{$color-neutral-950};
       background-color: white;
     }
 
     &:focus-within {
-      --variant-nofilled-text-color: #{$color-neutral-light-500};
+      --variant-nofilled-text-color: #{$color-neutral-500};
       --variant-lined-background-color: white;
 
       transform: $active-duration-sm;
       border-color: white;
-      color: $color-neutral-light-950 !important;
+      color: $color-neutral-950 !important;
       background-color: white;
     }
   }
 
   &#{$neutral-color} {
-    --variant-nofilled-text-color: #{$color-neutral-light-400};
+    --variant-nofilled-text-color: #{$color-neutral-400};
 
     transform: $blur-duration-sm;
-    border-color: $color-neutral-light-300;
-    color: $color-neutral-light-300;
-    background-color: $color-neutral-light-100;
+    border-color: $color-neutral-300;
+    color: $color-neutral-300;
+    background-color: $color-neutral-100;
 
     &:hover {
-      --variant-nofilled-text-color: #{$color-neutral-light-500};
+      --variant-nofilled-text-color: #{$color-neutral-500};
       --variant-lined-background-color: transparent;
 
       transform: $hover-duration-sm;
-      border-color: $color-neutral-light-300;
-      background-color: $color-neutral-light-100;
+      border-color: $color-neutral-300;
+      background-color: $color-neutral-100;
     }
 
     &:focus-within {
-      --variant-nofilled-text-color: #{$color-neutral-light-500};
+      --variant-nofilled-text-color: #{$color-neutral-500};
       --variant-lined-background-color: transparent;
 
       transform: $active-duration-sm;
-      border-color: $color-neutral-light-300;
-      background-color: $color-neutral-light-100;
+      border-color: $color-neutral-300;
+      background-color: $color-neutral-100;
     }
   }
 
@@ -338,7 +338,7 @@ export type { Props as InputProps, Emits as InputEmits, Model as InputModel }
 
   // Стиль элемента блока
   &__field {
-    --field-text-color: $color-neutral-light-950;
+    --field-text-color: $color-neutral-950;
 
     flex: 1;
 
@@ -369,7 +369,7 @@ export type { Props as InputProps, Emits as InputEmits, Model as InputModel }
     }
 
     &::placeholder {
-      color: $color-neutral-light-400;
+      color: $color-neutral-400;
 
       #{$primary-color} & {
         color: $color-primary-400;

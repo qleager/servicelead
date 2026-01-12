@@ -9,10 +9,10 @@ import type { TabsItem, TabsModel } from '~/components/App/Tabs.vue'
 // 3) нету color с цветом Purple_100 как в макете
 
 // Button
-// 1) нет цвета как в макете $color-neutral-light-300
+// 1) нет цвета как в макете $color-neutral-300
 
 // Tags
-// 1) нет цвета как в макете $color-neutral-light-300
+// 1) нет цвета как в макете $color-neutral-300
 // 2) нет возможности воткнуть индикатор=счетчик вместо иконки. Пример на макете таб "География"
 
 // нету в макете разных статусов "подключен/отключен", только "подключен", потому пока статус захардкожен
@@ -212,7 +212,7 @@ export type { Tag, Rate }
     }
 
     &--text {
-      color: $color-neutral-light-400;
+      color: $color-neutral-400;
 
       @include text(regular, xs);
     }

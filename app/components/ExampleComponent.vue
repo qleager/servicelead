@@ -272,11 +272,11 @@ const deleteWorld = () => {
 
     // Стиль элемента блока при состоянии компонента $variant-lined
     #{$variant-lined} & {
-      border: 1px solid $color-neutral-light-300;
+      border: 1px solid $color-neutral-300;
       background: none !important;
 
       &:focus {
-        border-color: $color-neutral-light-900;
+        border-color: $color-neutral-900;
       }
     }
 
@@ -285,7 +285,7 @@ const deleteWorld = () => {
       background: transparent;
 
       &:hover::placeholder {
-        color: $color-neutral-light-900;
+        color: $color-neutral-900;
       }
     }
 
@@ -294,13 +294,13 @@ const deleteWorld = () => {
     }
 
     #{$color-darker} & {
-      border-color: $color-neutral-light-300;
-      background-color: $color-neutral-light-300;
+      border-color: $color-neutral-300;
+      background-color: $color-neutral-300;
     }
 
     #{$color-lighter} & {
-      border-color: $color-neutral-light-50;
-      background-color: $color-neutral-light-50;
+      border-color: $color-neutral-50;
+      background-color: $color-neutral-50;
     }
 
     #{$error} & {
@@ -324,7 +324,7 @@ const deleteWorld = () => {
     &::placeholder {
       @include text(regular, sm);
 
-      color: $color-neutral-light-400;
+      color: $color-neutral-400;
 
       #{$error} & {
         color: color.adjust($color-error, $lightness: 25%);

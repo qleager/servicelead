@@ -49,7 +49,7 @@
     &-label {
       @include text(light, xs);
 
-      color: $color-neutral-light-450;
+      color: $color-neutral-450;
     }
   }
 }

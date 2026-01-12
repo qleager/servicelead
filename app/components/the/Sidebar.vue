@@ -59,7 +59,7 @@ const logoIcon = computed(() =>
     padding: $space-6;
     padding-bottom: $space-5;
 
-    background-color: rgba($color-neutral-light-50, 70%);
+    background-color: rgba($color-neutral-50, 70%);
     backdrop-filter: blur(8px);
 
     // Gradient blur
@@ -73,7 +73,7 @@ const logoIcon = computed(() =>
     //   opacity: 1;
     //   backdrop-filter: blur(25px);
 
-    //   mask: linear-gradient($color-neutral-light-50 70%, transparent);
+    //   mask: linear-gradient($color-neutral-50 70%, transparent);
     // }
 
     &-image {
@@ -95,7 +95,7 @@ const logoIcon = computed(() =>
     margin-top: auto;
     padding: $space-3 0 $space-3 $space-10;
 
-    color: $color-neutral-light-500;
+    color: $color-neutral-500;
 
     #{$collapsed} & {
       transform: rotate(180deg);

@@ -55,7 +55,7 @@ const currentTab = ref<TabsModel>(tabs[0]?.value || '')
 
   &__active {
     height: 200px;
-    border: 1px solid $color-neutral-dark-950 ;
+    border: 1px solid $color-gray-950 ;
   }
 }
 </style>

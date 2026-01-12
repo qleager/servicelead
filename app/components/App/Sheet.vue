@@ -111,7 +111,7 @@ export type { Props as SheetProps, Emits as SheetEmits, Model as SheetModel }
   border-radius: $space-6 $space-6 0 0;
 
   background: white;
-  box-shadow: $shadow-light-mode;
+  box-shadow: $shadow-md;
 
   &__header {
     display: flex;

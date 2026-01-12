@@ -230,7 +230,7 @@ const favoritesColor = computed(() => props.offer.isFavorite ? 'primary' : 'whit
     &-header {
       @include text(regular, xs);
 
-      color: $color-neutral-light-400;
+      color: $color-neutral-400;
     }
 
     &-value {
@@ -246,7 +246,7 @@ const favoritesColor = computed(() => props.offer.isFavorite ? 'primary' : 'whit
     display: flex;
     gap: $space-3;
     align-items: center;
-    color: $color-neutral-light-200;
+    color: $color-neutral-200;
   }
 }
 </style>
