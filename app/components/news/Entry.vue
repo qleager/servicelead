@@ -65,7 +65,7 @@ onMounted(() => {
       <AppButton
         class="news-entry__button"
         variant="lined"
-        color="darker"
+        color="neutral"
         icon="arrow_right"
         size="xs"
       />
@@ -95,7 +95,7 @@ onMounted(() => {
 
       &:hover {
         cursor: pointer;
-        background-color: $color-neutral-light-50;
+        background-color: $color-neutral-50;
       }
   }
 
@@ -150,7 +150,7 @@ onMounted(() => {
     }
 
     #{$read} & {
-      background-color: $color-neutral-light-200;
+      background-color: $color-neutral-200;
     }
 
     &-dot {
@@ -163,7 +163,7 @@ onMounted(() => {
       background-color: $color-blue-500;
 
       #{$read} & {
-        background-color: $color-neutral-light-400;
+        background-color: $color-neutral-400;
       }
     }
   }
@@ -177,7 +177,7 @@ onMounted(() => {
 
     @include text(regular, sm);
 
-    color: $color-neutral-light-500;
+    color: $color-neutral-500;
 
     #{$minimal} & {
       display: none;
@@ -194,7 +194,7 @@ onMounted(() => {
 
     @include text(regular, xs);
 
-    color: $color-neutral-light-400;
+    color: $color-neutral-400;
   }
 
   &__button {
