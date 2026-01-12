@@ -9,6 +9,7 @@ const model = defineModel<boolean>() // def: false
 </script>
 
 <template>
+  <!-- default-slot триггер на открытие/закрытие окна -->
   <AppOverlay>
     <div class="modal">
       <header class="modal__header">
@@ -36,7 +37,7 @@ const model = defineModel<boolean>() // def: false
         </div>
       </header>
       <div class="modal__main">
-        <slot name="main" />
+        <slot name="content" />
       </div>
       <footer class="modal__footer">
         <slot name="footer" />
