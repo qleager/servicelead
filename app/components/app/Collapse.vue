@@ -5,7 +5,7 @@ interface Props {
 
 const classname = computed(() => ([
   'collapse',
-  model.value ? 'expanded' : 'collapsed',
+  `collapse-${model.value ? 'expanded' : 'collapsed'}`,
 ]))
 
 const model = defineModel<boolean>() // раскрыто или свернуто -- def: false
@@ -16,6 +16,16 @@ const model = defineModel<boolean>() // раскрыто или свернуто
 <template>
   <div :class="classname">
     <!-- defautl-слот это триггре по которому происходит расскрытие/скрытие -->
+    <div
+      class="collapse__slot collapse__slot-default"
+      @click="model = !model"
+    >
+      <slot />
+      <AppIcon
+        name="dropdown"
+        class="collapse__dropdown-icon"
+      />
+    </div>
     <div class="collapse__content">
       <!-- манипуляции с высотой только с .collapse__content -->
       <div class="collapse__slot collapse__slot-content">
@@ -26,6 +36,30 @@ const model = defineModel<boolean>() // раскрыто или свернуто
   </div>
 </template>
 
-<style>
-  /* анимация не требуется */
+<style lang="scss">
+.collapse {
+  $this: &;
+  $expanded: $this + '-expanded';
+  $collapsed: $this + '-collapsed';
+
+  &__slot {
+    &-default {
+      cursor: pointer;
+
+      display: flex;
+      gap: $space-4;
+      justify-content: space-between;
+
+      width: 100%;
+    }
+  }
+
+  #{$expanded} {
+    #{$this} {
+      &__dropdown-icon {
+        transform: rotate(180deg);
+      }
+    }
+  }
+}
 </style>
