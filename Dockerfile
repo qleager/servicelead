@@ -24,7 +24,17 @@ FROM base AS build
 
 COPY . .
 
-RUN pnpm types:generate:icons && pnpm build
+RUN pnpm run build:container
+
+FROM base AS storybook-build
+
+COPY . .
+
+RUN pnpm storybook:build
+
+FROM nginx:alpine AS storybook-prod
+
+COPY --from=storybook-build /app/storybook-static /usr/share/nginx/html
 
 FROM node:22-alpine AS prod
 

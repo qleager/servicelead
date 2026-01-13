@@ -11,6 +11,15 @@ services:
       HOST: "0.0.0.0"
       PORT: "3000"
     restart: unless-stopped
+  storybook:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: storybook-prod
+    container_name: storybook-prod
+    ports:
+      - "6006:80"
+    restart: unless-stopped
   caddy:
     image: caddy:2-alpine
     container_name: caddy
