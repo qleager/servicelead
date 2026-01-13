@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { FloaterProps } from '../App/Floater.vue'
+import type { FloaterProps } from '../app/Floater.vue'
 
 interface Props {
   placement: FloaterProps['placement']
@@ -33,7 +33,7 @@ const items = [
 ]
 
 const buttonIcon = computed(() => isFloaterContentVisible.value ? 'close' : 'plus')
-const buttonColor = computed(() => isFloaterContentVisible.value ? 'lighter' : 'primary')
+const buttonColor = computed(() => isFloaterContentVisible.value ? 'neutral' : 'primary')
 </script>
 
 <template>
@@ -100,7 +100,7 @@ const buttonColor = computed(() => isFloaterContentVisible.value ? 'lighter' : '
     padding: $space-2 $space-2 $space-2 $space-4;
     border-radius: 40px;
 
-    background: $color-neutral-light-50;
+    background: $color-neutral-50;
 
     &-icon {
       display: flex;
@@ -130,9 +130,9 @@ const buttonColor = computed(() => isFloaterContentVisible.value ? 'lighter' : '
     height: 40px;
     border-radius: 50%;
 
-    color: $color-neutral-light-400;
+    color: $color-neutral-400;
 
-    background: $color-neutral-light-50;
+    background: $color-neutral-50;
   }
 }
 </style>

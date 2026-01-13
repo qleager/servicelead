@@ -71,7 +71,7 @@ const isHeadVisible = computed (() => Boolean(props.icon || props.title || props
           class="widget__action-button"
           size="xs"
           variant="lined"
-          color="lighter"
+          color="neutral"
           icon="arrow_right"
         />
       </div>
@@ -104,6 +104,7 @@ const isHeadVisible = computed (() => Boolean(props.icon || props.title || props
   }
 
   &#{$variant-section} {
+    padding: 0;
     background-color: transparent;
   }
 
@@ -120,13 +121,13 @@ const isHeadVisible = computed (() => Boolean(props.icon || props.title || props
     align-items: center;
 
     &-icon {
-      color: $color-neutral-light-500;
+      color: $color-neutral-500;
     }
 
     &-text {
       @include text(semiBold, xl);
 
-      color: $color-neutral-light-950;
+      color: $color-neutral-950;
 
       &:empty {
         display: none;
@@ -141,12 +142,12 @@ const isHeadVisible = computed (() => Boolean(props.icon || props.title || props
     gap: $space-4;
     align-items: center;
 
-    color: $color-neutral-light-400;
+    color: $color-neutral-400;
 
     transition: $blur-duration-sm;
 
     &:hover {
-      color: $color-neutral-light-500;
+      color: $color-neutral-500;
       transition: $hover-duration-lg
     }
 
@@ -155,7 +156,7 @@ const isHeadVisible = computed (() => Boolean(props.icon || props.title || props
     }
 
     &:active {
-      color: $color-neutral-light-500;
+      color: $color-neutral-500;
       transition: $active-duration-sm
     }
 

@@ -46,7 +46,7 @@ const classname = computed(() => [
       padding: $space-4 $space-2;
       border-radius: $radius-2;
       background: white;
-      box-shadow: $shadow-light-mode;
+      box-shadow: $shadow-md;
     }
   }
 }

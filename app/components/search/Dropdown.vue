@@ -3,10 +3,18 @@
 </script>
 
 <template>
-  <div>
-    <div>SearchDrowpdown.vue</div>
-    <div><small>Ожидает дизайн</small></div>
-  </div>
+  <AppInput
+    class="search-dropdown"
+    placeholder="Начните поиск..."
+    icon="search"
+    rounded
+  />
 </template>
 
-<style lang="scss"></style>
+<style lang="scss">
+.search-dropdown {
+  flex: 1;
+  width: 100%;
+  max-width: 412px;
+}
+</style>

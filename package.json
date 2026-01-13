@@ -13,7 +13,8 @@
     "lint:styles": "stylelint **/*.{vue,scss}",
     "lint:scripts:fix": "eslint . --fix",
     "lint:styles:fix": "stylelint **/*.{scss,vue} --fix",
-    "types:generate:icons": "node ./scripts/generate-icon-name-types.mjs"
+    "types:generate:icons": "node ./scripts/generate-icon-name-types.mjs",
+    "storybook": "storybook dev -p 6006 --host 0.0.0.0"
   },
   "dependencies": {
     "@floating-ui/vue": "^1.1.9",
@@ -29,6 +30,7 @@
   "devDependencies": {
     "@chettapong/nuxt-lodash": "^2.5.4",
     "@nuxt/eslint": "1.9.0",
+    "@nuxtjs/storybook": "^9.0.1",
     "@spiriit/vite-plugin-svg-spritemap": "^5.0.0",
     "eslint": "^9.39.2",
     "postcss-html": "^1.8.0",

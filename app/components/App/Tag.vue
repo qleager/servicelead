@@ -3,28 +3,24 @@ import type { IconProps } from './Icon.vue'
 
 interface Props {
   variant?: 'filled' | 'lined' | 'nofilled'
-  color?: 'neutral' | 'white'
+  color?: 'white' | 'neutral' | 'primary'
   icon?: IconProps['name']
   trailingIcon?: boolean
   size?: 'sm' | 'md' | 'lg'
   actionable?: boolean
   closable?: boolean
+  rounded?: boolean
 }
 
 interface Emits {
   close: []
 }
 
-const ICON_SIZE_MAP = {
-  sm: 12,
-  md: 16,
-  lg: 20,
-} as const
-
 const props = withDefaults(defineProps<Props>(), {
   variant: 'filled',
-  color: 'neutral',
+  color: 'primary',
   size: 'md',
+  rounded: true,
 })
 
 const emits = defineEmits<Emits>()
@@ -36,11 +32,11 @@ const classname = computed(() => ([
   `tag-size-${props.size}`,
   {
     'tag-icon': props.icon,
+    'tag-actionable': props.actionable,
+    'tag-rounded': props.rounded,
     'tag-icon-trailing': props.icon && props.trailingIcon,
   },
 ]))
-
-const iconSize = computed(() => ICON_SIZE_MAP[props.size])
 </script>
 
 <template>
@@ -48,7 +44,6 @@ const iconSize = computed(() => ICON_SIZE_MAP[props.size])
     <AppIcon
       v-if="icon"
       :name="icon"
-      :size="iconSize"
       class="tag__icon"
     />
     <span class="tag__slot">
@@ -58,7 +53,6 @@ const iconSize = computed(() => ICON_SIZE_MAP[props.size])
       v-if="closable"
       class="tag__close"
       name="close_20"
-      :size="iconSize"
       @click.stop="emits('close')"
     />
   </span>
@@ -74,8 +68,11 @@ const iconSize = computed(() => ICON_SIZE_MAP[props.size])
   $size-sm: $this + '-size-sm';
   $size-md: $this + '-size-md';
   $size-lg: $this + '-size-lg';
-  $color-neutral: $this + '-color-neutral';
-  $color-white: $this + '-color-white';
+  $actionable: $this + '-actionable';
+  $rounded: $this + '-rounded';
+  $neutral-color: $this + '-color-neutral';
+  $white-color: $this + '-color-white';
+  $primary-color: $this + '-color-primary';
   $icon: $this + '-icon';
   $icon-trailing: $this + '-icon-trailing';
 
@@ -86,58 +83,109 @@ const iconSize = computed(() => ICON_SIZE_MAP[props.size])
   justify-content: center;
 
   width: fit-content;
-  border-radius: 25px;
+
+  &#{$rounded} {
+    border-radius: 50px !important;
+  }
 
   &#{$variant-filled} {
     --variant-filled-text-color: inherit;
 
-    color: var(--variant-filled-text-color) !important;
+    color: var(--variant-filled-text-color);
     background-color: transparent;
   }
 
   &#{$variant-lined} {
+    --variant-lined-text-color: unset;
+
     border: 1px solid transparent;
+    color: var(--variant-lined-text-color);
     background-color: transparent !important;
   }
 
   &#{$variant-nofilled} {
+    --variant-nofilled-text-color: inherit;
+
     border: none !important;
+    color: var(--variant-nofilled-text-color) ;
     background-color: transparent !important;
   }
 
-  &#{$color-neutral} {
-    border-color: $color-neutral-light-300;
-    color: inherit;
-    background-color: $color-neutral-light-100;
+  &#{$actionable} {
+    cursor: pointer;
+    transition: $blur-duration-sm;
+
+    &:hover {
+      filter: grayscale(.2);
+      transition: $hover-duration-sm;
+    }
+
+    &:active {
+      filter: grayscale(.3);
+      transition: $active-duration-sm;
+    }
   }
 
-  &#{$color-white} {
-    --variant-filled-text-color: $color-neutral-light-950;
+  &#{$white-color} {
+    --variant-lined-text-color: white;
+    --variant-filled-text-color: $color-neutral-950;
+    --variant-nofilled-text-color: white;
 
     border-color: white;
-    color: $color-neutral-light-50;
     background-color: white;
   }
 
-  &#{$size-sm} {
+  &#{$neutral-color} {
+    --variant-lined-text-color: #{$color-neutral-950};
+    --variant-nofilled-text-color: #{$color-neutral-400};
+
+    border-color: $color-neutral-300;
+    background-color: $color-neutral-100;
+  }
+
+  &#{$primary-color} {
+    --variant-filled-text-color: white;
+    --variant-lined-text-color: #{$color-primary};
+    --variant-nofilled-text-color: #{$color-primary};
+
+    border-color: $color-primary;
+    background-color: $color-primary;
+  }
+
+  &#{$size-xs} {
+    gap: $space-1;
     height: 16px;
-    padding: 1px $space-2;
+    padding-inline: $space-1;
+    border-radius: $radius-1;
 
     @include text(regular, 2xs);
   }
 
-  &#{$size-md} {
+  &#{$size-sm} {
+    gap: $space-1;
     height: 24px;
-    padding: $space-05 $space-2;
+    padding-inline: $space-2;
+    border-radius: $radius-2;
+
+    @include text(regular, xs);
+  }
+
+  &#{$size-md} {
+    gap: $space-2;
+    height: 32px;
+    padding-inline: $space-3;
+    border-radius: $radius-2;
 
     @include text(regular, xs);
   }
 
   &#{$size-lg} {
-    height: 32px;
-    padding: $space-05 $space-3;
+    gap: $space-3;
+    height: 40px;
+    padding-inline: $space-4;
+    border-radius: $radius-2;
 
-    @include text(regular, base);
+    @include text(regular, sm);
   }
 
   &#{icon-trailing} {
@@ -146,12 +194,32 @@ const iconSize = computed(() => ICON_SIZE_MAP[props.size])
 
   &__icon {
     flex-shrink: 0;
-    margin-right: $space-1;
+
+    #{$size-xs} & {
+      width: 12px;
+      height: 12px;
+    }
+
+    #{$size-sm} & {
+      width: 16px;
+      height: 16px;
+      margin-inline: -#{$space-05};
+    }
+
+    #{$size-md} & {
+      width: 16px;
+      height: 16px;
+      margin-inline: -#{$space-1};
+    }
+
+    #{$size-lg} & {
+      width: 20px;
+      height: 20px;
+      margin-inline: -#{$space-2};
+    }
 
     #{$icon-trailing} & {
       order: 2;
-      margin-right: 0;
-      margin-left: $space-1;
     }
   }
 
@@ -167,8 +235,31 @@ const iconSize = computed(() => ICON_SIZE_MAP[props.size])
     order: 9;
     transition: $blur-duration-sm;
 
+    #{$size-xs} & {
+      width: 14px;
+      height: 14px;
+    }
+
+    #{$size-sm} & {
+      width: 16px;
+      height: 16px;
+      margin-inline: -#{$space-05};
+    }
+
+    #{$size-md} & {
+      width: 20px;
+      height: 20px;
+      margin-inline: -#{$space-1};
+    }
+
+    #{$size-lg} & {
+      width: 24px;
+      height: 24px;
+      margin-inline: -#{$space-2};
+    }
+
     &:hover {
-      filter: invert(.5);
+      filter: opacity(.8);
       transition: $hover-duration-sm;
     }
 

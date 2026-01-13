@@ -10,12 +10,12 @@
       <NotificationsButton
         class="header__notifications"
         variant="lined"
-        color="lighter"
+        color="neutral"
       />
       <TicketsButton
         class="header__tickets"
         variant="lined"
-        color="lighter"
+        color="neutral"
       />
       <ManagerButton class="header__manager" />
       <NavigationActions placement="bottom" />
@@ -34,7 +34,7 @@
   padding-block: $space-4;
   padding-inline: $space-5 $space-7;
 
-  background-color: rgba($color-neutral-light-50, 70%);
+  background-color: rgba($color-neutral-50, 70%);
   backdrop-filter: blur(8px);
 
   &__search {

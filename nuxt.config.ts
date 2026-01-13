@@ -5,7 +5,12 @@ import { fileURLToPath } from 'node:url'
 import VitePluginSvgSpritemap from '@spiriit/vite-plugin-svg-spritemap'
 
 export default defineNuxtConfig({
-  modules: ['@nuxt/eslint', '@nuxt/image', '@chettapong/nuxt-lodash'],
+  modules: [
+    '@nuxt/eslint',
+    '@nuxt/image',
+    '@chettapong/nuxt-lodash',
+    '@nuxtjs/storybook',
+  ],
   devtools: { enabled: true },
   css: ['./app/assets/scss/globals.scss'],
 
@@ -63,5 +68,10 @@ export default defineNuxtConfig({
     config: {
       stylistic: true,
     },
+  },
+
+  storybook: {
+    enabled: false,
+    port: 6006,
   },
 })

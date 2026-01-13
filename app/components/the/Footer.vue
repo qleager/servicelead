@@ -48,6 +48,8 @@ const menuItems: MenuItem[] = [
   gap: $space-2;
   align-items: stretch;
 
+  padding: 0 $space-5;
+
   &__menu {
     display: flex;
     gap: $space-4;
@@ -62,11 +64,11 @@ const menuItems: MenuItem[] = [
       gap: $space-4;
       align-items: center;
 
-      color: $color-neutral-light-500;
+      color: $color-neutral-500;
       text-decoration: none;
 
       &:hover {
-        color: $color-neutral-light-600;
+        color: $color-neutral-600;
       }
     }
 

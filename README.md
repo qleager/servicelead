@@ -37,12 +37,13 @@
 | refactor      |	Правки кода без исправления ошибок или добавления новых функций |
 | revert        |	Откат на предыдущие коммиты                                     |
 | style	        | Правки по кодстайлу (табы, отступы, точки, запятые и т.д.)      |
+| chore         |	Изменения, не связанных напрямую с кодом приложения             |
 | test	        | Добавление тестов                                               |
 
 **Примеры:**  
 fix(offer): error when save offer to favorite  
 feat(AppIcon): setup component  
-style: add padding to body  
+style: add props comment at AppComponent  
 docs(readme): add Use Conventional Commits block
 
 > [!Tip]
@@ -93,7 +94,7 @@ https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-cont
 ### 3. Запуск nuxt в dev режиме в терминале VS Code в конейнере
 
 ```bash
-pnpm run dev:container
+pnpm dev:container
 ```
 
 ---
@@ -118,9 +119,3 @@ npx nuxi module add <module-name>
 
 ## 📥 Как именовать коммиты:
 https://habr.com/ru/companies/yandex/articles/431432/
-
-## Use Composables
-
-### useOverlay()
-
-add description

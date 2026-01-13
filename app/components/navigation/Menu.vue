@@ -65,7 +65,7 @@ export type { Item as NavigationMenuItem }
     padding: $space-3 0 $space-3 $space-10;
 
     font-weight: 600;
-    color: $color-neutral-light-500;
+    color: $color-neutral-500;
 
     @include text(semibold, xs);
 
@@ -110,7 +110,7 @@ export type { Item as NavigationMenuItem }
       padding-block: $space-3;
       padding-inline: $space-10 $space-4;
 
-      color: $color-neutral-light-500;
+      color: $color-neutral-500;
       text-decoration: none;
 
       &:hover {
@@ -123,7 +123,7 @@ export type { Item as NavigationMenuItem }
         border-left: 4px solid $color-primary-500;
         border-radius: 0 $space-20 $space-20 0;
 
-        color: $color-neutral-light-950;
+        color: $color-neutral-950;
 
         background-color: rgba($color-primary-300, 40%);
       }

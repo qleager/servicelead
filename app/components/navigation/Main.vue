@@ -9,11 +9,12 @@ const props = defineProps<Props>()
 
 const mainItems: NavigationMenuItem[] = [
   { icon: 'main_menu_main', label: 'Главная', to: '/dashboard', onClick: () => {} },
-  { icon: 'main_menu_offer', label: 'Офферы', to: '', onClick: () => {} },
+  { icon: 'main_menu_offer', label: 'Офферы', to: '/offers', onClick: () => {} },
   { icon: 'main_menu_flows', label: 'Потоки', to: '', onClick: () => {} },
   { icon: 'main_menu_money', label: 'Финансы', to: '', onClick: () => {} },
   { icon: 'main_menu_statistic', label: 'Статистика', to: '', onClick: () => {} },
   { icon: 'main_menu_tools', label: 'Инструменты', to: '', onClick: () => {} },
+  { icon: 'main_menu_tools', label: 'DS-Mode', to: '/dev', onClick: () => {} },
 ]
 
 const helpItems: NavigationMenuItem[] = [
@@ -74,10 +75,10 @@ const classname = computed(() => [
     margin: $space-2;
     margin-left: $space-6;
     padding-inline: $space-1 $space-4;
-    border: 1px dashed $color-neutral-light-300;
+    border: 1px dashed $color-neutral-300;
     border-radius: $space-20;
 
-    color: $color-neutral-light-500;
+    color: $color-neutral-500;
     white-space: nowrap;
 
     &-icon {
@@ -86,7 +87,7 @@ const classname = computed(() => [
       padding: $space-3;
       border-radius: 50%;
 
-      background-color: $color-neutral-light-100;
+      background-color: $color-neutral-100;
     }
 
     #{$minimal} & {

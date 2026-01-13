@@ -57,7 +57,7 @@ export type { Props as OverlayProps, Emits as OverlayEmits, Model as OverlayMode
   width: 100%;
   height: 100%;
 
-  background-color: rgba($color-neutral-light-700, 50%);
+  background-color: rgba($color-neutral-700, 50%);
 
   &#{$transparent} {
     background-color: transparent;
