@@ -3,7 +3,8 @@
  */
 {
   "name": "Servicelead Dev",
-  "dockerComposeFile": "../docker-compose.yaml",
+  // Todo: переебашить названия
+  "dockerComposeFile": ["../docker-compose.yml", "../docker-compose.override.yml"],
   "service": "web",
   "workspaceFolder": "/app",
   "overrideCommand": false,
