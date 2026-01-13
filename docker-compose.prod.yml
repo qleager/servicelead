@@ -1,0 +1,13 @@
+services:
+  web:
+    build:
+      target: prod
+    container_name: nuxt4-prod
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      NUXT_TELEMETRY_DISABLED: "1"
+      HOST: "0.0.0.0"
+      PORT: "3000"
+    restart: unless-stopped

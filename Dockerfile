@@ -1,22 +1,44 @@
-FROM node:22-alpine
+FROM node:22-alpine AS base
 
-# Рабочая папка внутри контейнера
 WORKDIR /app
 
-# Git + SSH-клиент + корневые сертификаты (HTTPS)
 RUN apk add --no-cache git openssh ca-certificates
+RUN corepack enable && corepack prepare pnpm@10.18.1 --activate
 
-# Включаем pnpm через corepack (рекомендуемый способ)
-RUN corepack enable && corepack prepare pnpm@10.0.0 --activate
-
-# Копируем только манифесты сначала — кэшируем установку deps
 COPY package.json pnpm-lock.yaml* .npmrc ./
-
-# Ставим зависимости один раз на этапе сборки
 RUN pnpm install --frozen-lockfile
 
-# Докидываем остальное приложение
+FROM base AS dev
+
+ENV HOST=0.0.0.0
+ENV PORT=3000
+ENV NUXT_TELEMETRY_DISABLED=1
+
 COPY . .
 
-# Nuxt dev: 3000; Vite HMR: 24678 (важно для hot reload из-под Docker)
 EXPOSE 3000 24678
+
+CMD ["pnpm", "dev:container"]
+
+FROM base AS build
+
+COPY . .
+
+RUN pnpm types:generate:icons && pnpm build
+
+FROM node:22-alpine AS prod
+
+WORKDIR /app
+
+ENV NODE_ENV=production
+ENV NUXT_TELEMETRY_DISABLED=1
+
+RUN addgroup -g 1001 -S nodejs && adduser -S nuxt -u 1001
+
+COPY --from=build /app/.output /app/.output
+
+EXPOSE 3000
+
+USER nuxt
+
+CMD ["node", "/app/.output/server/index.mjs"]
