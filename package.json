@@ -5,7 +5,6 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "pnpm types:generate:icons && nuxt dev",
-    "build:container": "pnpm build",
     "dev:container": "pnpm types:generate:icons && nuxt dev --host 0.0.0.0 --port 3000",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
@@ -15,8 +14,7 @@
     "lint:scripts:fix": "eslint . --fix",
     "lint:styles:fix": "stylelint **/*.{scss,vue} --fix",
     "types:generate:icons": "node ./scripts/generate-icon-name-types.mjs",
-    "storybook": "storybook dev -p 6006 --host 0.0.0.0",
-    "storybook:build": "storybook build"
+    "storybook": "storybook dev -p 6006 --host 0.0.0.0"
   },
   "dependencies": {
     "@floating-ui/vue": "^1.1.9",
