@@ -1,7 +1,5 @@
 <script lang="ts" setup>
 interface Props {
-  // минимал версия только с заголовком/текстом/маркером
-  news: any
   minimal?: boolean
 }
 
@@ -10,7 +8,7 @@ const props = defineProps<Props>()
 const classname = computed(() => [
   'news-entry',
   { 'news-entry-minimal': props.minimal },
-  { 'news-entry-read': props.news.isRead },
+  { 'news-entry-read': false },
 ])
 </script>
 
@@ -18,10 +16,10 @@ const classname = computed(() => [
   <article :class="classname">
     <header class="news-entry__header">
       <AppTag class="news-entry__tag">
-        {{ news.tag }}
+        Улучшение
       </AppTag>
       <div class="news-entry__title">
-        {{ news.title }}
+        Обновление комиссий Компьютерная и периферийная техника Обновление комиссий Компьютерная и периферийная техника
       </div>
       <!-- TODO: заменить на indicator -->
       <div class="news-entry__indicator">
@@ -29,7 +27,7 @@ const classname = computed(() => [
       </div>
     </header>
     <div class="news-entry__text">
-      {{ news.text }}
+      Дополнительное улучшение комиссий на основе анализа эффективности оферов. Дополнительное улучшение комиссий на основе анализа эффективности оферов. Дополнительное улучшение комиссий на основе анализа эффективности оферов.
     </div>
     <footer class="news-entry__footer">
       <div class="news-entry__date">
