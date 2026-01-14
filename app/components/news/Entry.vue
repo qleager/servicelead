@@ -7,38 +7,11 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const formattedDate = ref('')
-
 const classname = computed(() => [
   'news-entry',
   { 'news-entry-minimal': props.minimal },
   { 'news-entry-read': props.news.isRead },
 ])
-
-onMounted(() => {
-  if (!props.news?.created_at) return ''
-
-  const date = new Date(props.news.created_at)
-  const now = new Date()
-
-  const isToday
-    = date.getFullYear() === now.getFullYear()
-      && date.getMonth() === now.getMonth()
-      && date.getDate() === now.getDate()
-
-  const hours = String(date.getHours()).padStart(2, '0')
-  const minutes = String(date.getMinutes()).padStart(2, '0')
-
-  if (isToday) {
-    formattedDate.value = `Сегодня, ${hours}:${minutes}`
-  }
-  else {
-    const day = String(date.getDate()).padStart(2, '0')
-    const month = String(date.getMonth() + 1).padStart(2, '0')
-    const year = date.getFullYear()
-    formattedDate.value = `${day}.${month}.${year}, ${hours}:${minutes}`
-  }
-})
 </script>
 
 <template>
@@ -60,7 +33,12 @@ onMounted(() => {
     </div>
     <footer class="news-entry__footer">
       <div class="news-entry__date">
-        {{ formattedDate }}
+        <NuxtTime
+          datetime="2024-12-18T08:55:00Z"
+          locale="ru-RU"
+          numeric="auto"
+          relative
+        />
       </div>
       <AppButton
         class="news-entry__button"
