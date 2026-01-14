@@ -34,7 +34,8 @@
         "nuxtr.nuxtr-vscode",
         "openai.chatgpt",
         "stylelint.vscode-stylelint",
-        "mrmlnc.vscode-scss"
+        "mrmlnc.vscode-scss",
+        "ms-azuretools.vscode-containers"
       ],
       "settings": {
         "editor": {
