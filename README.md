@@ -4,7 +4,7 @@
 После клонирования репозитория проекта, действия по установке и запуску выполняются **через VS Code**.
 
 ## Stack
-`Docker` `Nuxt 4` `Typescript` `ESLint` `Stylelint` `SCSS` `pnpm`
+`Docker` `Nuxt 4` `Typescript` `ESLint` `Stylelint` `SCSS` `pnpm` `Storybook`
 
 ## Features
 - **Consistent development environment**
@@ -116,6 +116,35 @@ npx nuxi module add <module-name>
 Пример установки пакета из терминала внутри контейнера:
 
 ![Терминал внутри контейнера](https://i.postimg.cc/qMNvppTk/image.png)
+
+## How to run on a VPS
+
+1. Install Docker and Docker Compose
+> [!important]
+> Don’t forget to enable Docker service auto-start and add your user to the `docker` group (so you can run Docker without sudo)
+
+2. Clone the repository:
+```bash
+git clone git@github.com:qleager/servicelead.git
+```
+
+3. Go to the cloned repository directory:
+```bash
+cd servicelead
+```
+
+4. Start:
+```bash
+docker compose -f docker-compose.yml -f docker-compose.production.yml up -d --build
+```
+
+## How to update
+```bash
+cd /to/project/directory/
+git pull
+docker compose -f docker-compose.yml -f docker-compose.production.yml up -d --build
+```
+
 
 ## 📥 Как именовать коммиты:
 https://habr.com/ru/companies/yandex/articles/431432/
