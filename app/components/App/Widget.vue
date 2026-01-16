@@ -176,6 +176,10 @@ const isHeadVisible = computed (() => Boolean(props.icon || props.title || props
   }
 
   &__main {
+    overflow: hidden;
+    display: flex;
+    flex: 1;
+
     &:empty {
       display: none;
     }
