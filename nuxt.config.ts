@@ -11,7 +11,18 @@ export default defineNuxtConfig({
     '@chettapong/nuxt-lodash',
     '@nuxtjs/storybook',
   ],
+
   devtools: { enabled: true },
+
+  app: {
+    head: {
+      title: 'Servicelead',
+      meta: [
+        { name: 'robots', content: 'noindex,nofollow' },
+      ],
+    },
+  },
+
   css: ['./app/assets/scss/globals.scss'],
 
   alias: {
