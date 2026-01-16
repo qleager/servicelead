@@ -1,0 +1,3 @@
+v7.servicelead.top {
+  reverse_proxy web:3000
+}

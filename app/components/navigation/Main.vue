@@ -14,7 +14,6 @@ const mainItems: NavigationMenuItem[] = [
   { icon: 'main_menu_money', label: 'Финансы', to: '', onClick: () => {} },
   { icon: 'main_menu_statistic', label: 'Статистика', to: '', onClick: () => {} },
   { icon: 'main_menu_tools', label: 'Инструменты', to: '', onClick: () => {} },
-  { icon: 'main_menu_tools', label: 'DS-Mode', to: '/dev', onClick: () => {} },
 ]
 
 const helpItems: NavigationMenuItem[] = [
