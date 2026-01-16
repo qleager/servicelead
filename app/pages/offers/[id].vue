@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { Tag, Rate } from '~/components/offers/offer/head.vue'
-import type { TabsItem, TabsModel } from '~/components/App/Tabs.vue'
+import type { TabsItem, TabsModel } from '~/components/app/Tabs.vue'
 
 const tabs: TabsItem[] = [
   { label: 'Статистика', value: 'stats' },

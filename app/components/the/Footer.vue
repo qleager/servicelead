@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { IconProps } from '@/components/App/Icon.vue'
+import type { IconProps } from '@/components/app/Icon.vue'
 
 interface MenuItem {
   label?: string
