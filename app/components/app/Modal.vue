@@ -1,13 +1,8 @@
 <script lang="ts" setup>
-import type { TeleportProps } from 'vue'
-
-// AppButton
-// 1) Кнопка закрыть модалку, нету варианта цвета фона и иконки из макета. Покрасил иконку пока через color !important, цвет поставил белый
 interface Props {
   title?: string
   description?: string
   overlay?: boolean
-  portal?: TeleportProps['to']
 }
 
 interface Emits {
@@ -16,9 +11,10 @@ interface Emits {
 
 type Model = boolean
 
-withDefaults(defineProps<Props>(), {
+const slots = useSlots()
+
+const prop = withDefaults(defineProps<Props>(), {
   overlay: true,
-  portal: 'body',
 })
 
 const emits = defineEmits<Emits>()
@@ -28,6 +24,10 @@ const model = defineModel<Model>({ default: false })
 const classname = computed(() => ([
   'modal',
 ]))
+
+const isTitileVisible = computed(() => slots.title || prop.title)
+const isDescriptionVisible = computed(() => slots.description || prop.description)
+const isVisibleHeader = computed(() => isTitileVisible.value || isDescriptionVisible.value)
 
 const toggle = () => {
   model.value = !model.value
@@ -44,7 +44,7 @@ export type { Props as ModalProps, Emits as ModalEmits, Model as ModalModel }
 <template>
   <div
     v-if="$slots.default"
-    class="modal__trigger"
+    class="modal__slot modal__trigger"
     @click="toggle"
   >
     <slot />
@@ -52,8 +52,8 @@ export type { Props as ModalProps, Emits as ModalEmits, Model as ModalModel }
 
   <AppOverlay
     v-model="model"
+    class="modal__overlay"
     :transparent="!overlay"
-    :portal="portal"
     @click:backdrop="close"
   >
     <div :class="classname">
@@ -64,9 +64,12 @@ export type { Props as ModalProps, Emits as ModalEmits, Model as ModalModel }
         size="sm"
         @click="close"
       />
-      <header class="modal__header">
+      <header
+        v-if="isVisibleHeader"
+        class="modal__header"
+      >
         <div
-          v-if="$slots.title || title"
+          v-if="isTitileVisible"
           class="modal__header-title"
         >
           <div
@@ -82,7 +85,7 @@ export type { Props as ModalProps, Emits as ModalEmits, Model as ModalModel }
         </div>
 
         <div
-          v-if="$slots.description || description"
+          v-if="isDescriptionVisible"
           class="modal__header-description"
         >
           <div
@@ -100,7 +103,7 @@ export type { Props as ModalProps, Emits as ModalEmits, Model as ModalModel }
 
       <div
         v-if="$slots.content"
-        class="modal__main"
+        class="modal__slot modal__main"
       >
         <slot
           name="content"
@@ -110,7 +113,7 @@ export type { Props as ModalProps, Emits as ModalEmits, Model as ModalModel }
 
       <footer
         v-if="$slots.footer"
-        class="modal__footer"
+        class="modal__slot modal__footer"
       >
         <slot
           name="footer"
@@ -123,10 +126,7 @@ export type { Props as ModalProps, Emits as ModalEmits, Model as ModalModel }
 
 <style lang="scss">
 .modal {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: relative;
 
   display: flex;
   flex-direction: column;
@@ -134,11 +134,21 @@ export type { Props as ModalProps, Emits as ModalEmits, Model as ModalModel }
   align-items: center;
   justify-content: center;
 
+  width: 100%;
   max-width: 560px;
   padding: $space-10 $space-16 $space-8;
   border-radius: $radius-6;
 
   background-color: white;
+
+  &__overlay {
+    overflow: auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    place-items: center;
+
+    padding: $space-8 0;
+  }
 
   &__header {
     display: flex;
@@ -168,8 +178,6 @@ export type { Props as ModalProps, Emits as ModalEmits, Model as ModalModel }
     right: -$space-16;
 
     color: $color-neutral-400 !important;
-
-    outline: 1px dashed $color-primary;
   }
 }
 </style>
