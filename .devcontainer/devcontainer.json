@@ -11,6 +11,11 @@
     "HTTPS_PROXY": "http://host.docker.internal:1082",
     "NO_PROXY": "localhost,127.0.0.1,::1"
   },
+  "mounts": [
+    "source=${localEnv:HOME}/.ssh,target=/root/.ssh,type=bind,readonly"
+  ],
+  // One-time: add GitHub host key to avoid prompt; fix OpenSSH perms.
+  "postCreateCommand": "mkdir -p ~/.ssh && chmod 700 ~/.ssh && (ssh-keyscan -H github.com >> ~/.ssh/known_hosts || true) && (chmod 600 ~/.ssh/* 2>/dev/null || true)",
 
   "customizations": {
     "vscode": {
