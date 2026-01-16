@@ -1,6 +1,7 @@
 import { computed } from 'vue'
 import type { Meta, StoryObj } from '@storybook/vue3'
-import AppButton from '/app/components/app/Button.vue'
+// Important: Use path as ~/..., not @alias/... it is crash storybook build
+import AppButton from '~/components/app/Button.vue'
 
 const iconOptions = ['plus', 'check_24', 'arrow_right', 'change'] as const
 
