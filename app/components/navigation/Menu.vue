@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { IconProps } from '../App/Icon.vue'
+import type { IconProps } from '../app/Icon.vue'
 
 interface Props {
   items: Item[]

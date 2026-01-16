@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import type { TagProps } from '~/components/App/Tag.vue'
-import type { TabsItem, TabsModel } from '~/components/App/Tabs.vue'
+import type { TagProps } from '~/components/app/Tag.vue'
+import type { TabsItem, TabsModel } from '~/components/app/Tabs.vue'
 
 // нужные доработки в других компонентах
 // Tag:
