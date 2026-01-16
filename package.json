@@ -15,7 +15,7 @@
     "lint:styles:fix": "stylelint **/*.{scss,vue} --fix",
     "storybook": "storybook dev -p 6006",
     "storybook:container": "storybook dev -p 6006 --host 0.0.0.0",
-    "storybook:build": "storybook build",
+    "storybook:build": "storybook build -o storybook-static",
     "types:generate:icons": "node ./scripts/generate-icon-name-types.mjs"
   },
   "dependencies": {

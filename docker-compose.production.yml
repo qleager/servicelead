@@ -26,6 +26,14 @@ services:
       web:
         condition: service_healthy
     restart: unless-stopped
+  
+  storybook:
+    build: 
+      target: storybook
+    container_name: storybook
+    expose:
+      - 6006
+    restart: unless-stopped
 
 volumes:
   caddy_data:
