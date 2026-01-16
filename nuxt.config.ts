@@ -83,6 +83,7 @@ export default defineNuxtConfig({
 
   storybook: {
     enabled: false,
+    host: 'localhost',
     port: 6006,
   },
 })
