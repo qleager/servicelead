@@ -1,49 +1,176 @@
 <script lang="ts" setup>
 interface Props {
   title?: string
-  overlay?: boolean // def true -- вкл/вкл подложку под модалкой
-  portal?: TeleportProps['to'] // def: body
+  description?: string
+  overlay?: boolean
 }
 
-const model = defineModel<boolean>() // def: false
+interface Emits {
+  close: []
+}
+
+type Model = boolean
+
+const slots = useSlots()
+
+const props = withDefaults(defineProps<Props>(), {
+  overlay: true,
+})
+
+const emits = defineEmits<Emits>()
+
+const model = defineModel<Model>({ default: false })
+
+const isTitleVisible = computed(() => slots.title || props.title)
+const isDescriptionVisible = computed(() => slots.description || props.description)
+const isHeaderVisible = computed(() => isTitleVisible.value || isDescriptionVisible.value)
+
+const toggle = () => {
+  model.value = !model.value
+}
+
+const close = () => {
+  model.value = false
+  emits('close')
+}
+
+export type { Props as ModalProps, Emits as ModalEmits, Model as ModalModel }
 </script>
 
 <template>
-  <!-- default-slot триггер на открытие/закрытие окна -->
-  <AppOverlay>
+  <div
+    v-if="$slots.default"
+    class="modal__slot modal__trigger"
+    @click="toggle"
+  >
+    <slot />
+  </div>
+
+  <AppOverlay
+    v-model="model"
+    class="modal__overlay"
+    :transparent="!overlay"
+    @click:backdrop="close"
+  >
     <div class="modal">
-      <header class="modal__header">
-        <div class="modal__header-title">
+      <AppButton
+        class="modal__close"
+        icon="close"
+        color="white"
+        size="sm"
+        @click="close"
+      />
+      <header
+        v-if="isHeaderVisible"
+        class="modal__header"
+      >
+        <div
+          v-if="isTitleVisible"
+          class="modal__header-title"
+        >
           <div
             v-if="!$slots.title"
             class="modal__title"
           >
             {{ title }}
           </div>
+
           <div class="modal__slot modal__slot-title">
             <slot name="title" />
           </div>
         </div>
-        <div class="modal__header-description">
+
+        <div
+          v-if="isDescriptionVisible"
+          class="modal__header-description"
+        >
           <div
-            v-if="!$slots.tidescriptiontle"
+            v-if="!$slots.description"
             class="modal__description"
           >
             {{ description }}
           </div>
+
           <div class="modal__slot modal__slot-description">
             <slot name="description" />
           </div>
         </div>
       </header>
-      <div class="modal__main">
-        <slot name="content" />
+
+      <div
+        v-if="$slots.content"
+        class="modal__slot modal__main"
+      >
+        <slot
+          name="content"
+          :close
+        />
       </div>
-      <footer class="modal__footer">
-        <slot name="footer" />
+
+      <footer
+        v-if="$slots.footer"
+        class="modal__slot modal__footer"
+      >
+        <slot
+          name="footer"
+          :close
+        />
       </footer>
     </div>
   </AppOverlay>
 </template>
 
-<style></style>
+<style lang="scss">
+.modal {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  gap: $space-8;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  max-width: 560px;
+  padding: $space-10 $space-16 $space-8;
+  border-radius: $radius-6;
+
+  background-color: white;
+
+  &__overlay {
+    overflow: auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    place-items: center;
+
+    padding: $space-8 0;
+  }
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    gap: $space-3;
+    align-items: center;
+  }
+
+  &__title {
+    @include text(semibold, xl);
+
+    text-align: center;
+  }
+
+  &__description {
+    @include text(regular, md);
+
+    color: $color-neutral;
+    text-align: center;
+  }
+
+  &__close {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: -$space-16;
+  }
+}
+</style>
