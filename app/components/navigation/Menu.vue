@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import type { IconProps } from '../app/Icon.vue'
-import type { RouteTo } from '@shared/types/router.ts'
 
 interface Props {
   items: Item[]

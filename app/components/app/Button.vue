@@ -8,8 +8,7 @@ interface Props {
   size?: 'xs' | 'sm' | 'md' | 'lg'
   color?: | 'white' | 'neutral' | 'primary'
   type?: 'button' | 'submit' | 'reset'
-  // TODO: типы из router, чтобы тут затипизированы только реальные роуты
-  to?: string
+  to?: RouteTo<true>
   target?: AnchorHTMLAttributes['target']
   value?: string | number
   trailingIcon?: boolean
@@ -221,7 +220,7 @@ export type { Props as ButtonProps }
 
   &#{$white-color} {
     --variant-filled-background-color: white;
-    --variant-filled-text-color: $color-neutral-950;
+    --variant-filled-text-color: #{$color-neutral-950};
     --variant-lined-text-color: white;
     --variant-nofilled-background-color: transparent;
     --variant-nofilled-text-color: white;
@@ -249,7 +248,7 @@ export type { Props as ButtonProps }
   }
 
   &#{$neutral-color} {
-    --variant-filled-text-color: $color-neutral-950;
+    --variant-filled-text-color: #{$color-neutral-950};
     --variant-filled-background-color: #{$color-neutral-100};
     --variant-lined-text-color: #{$color-neutral-950};
     --variant-nofilled-text-color: #{$color-neutral-400};

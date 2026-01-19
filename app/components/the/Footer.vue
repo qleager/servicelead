@@ -3,24 +3,24 @@ import type { IconProps } from '@/components/app/Icon.vue'
 
 interface MenuItem {
   label?: string
-  to: string
+  to: RouteTo<true>
   icon: IconProps['name']
 }
 
 const menuItems: MenuItem[] = [
-  { label: 'Приватный Telegram-канал', to: '#', icon: 'tg_line_24' },
-  { label: undefined, to: '#', icon: 'vk' },
-  { label: undefined, to: '#', icon: 'youtube' },
+  { label: 'Приватный Telegram-канал', to: '/dashboard', icon: 'tg_line_24' },
+  { label: undefined, to: '/dashboard', icon: 'vk' },
+  { label: undefined, to: '/dashboard', icon: 'youtube' },
 ]
 </script>
 
 <template>
   <footer class="footer">
     <div class="footer__menu">
-      <a
+      <NuxtLink
         v-for="(item, index) in menuItems"
         :key="index"
-        :href="item.to"
+        :to="item.to"
         class="footer__menu-item"
         target="_blank"
         rel="noreferrer"
@@ -34,7 +34,7 @@ const menuItems: MenuItem[] = [
           :name="item.icon"
           :size="24"
         />
-      </a>
+      </NuxtLink>
     </div>
   </footer>
 </template>
