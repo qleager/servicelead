@@ -1,5 +1,8 @@
 <script lang="ts" setup>
 interface Props {
+  /**
+   * Initial height of content in px
+   */
   initHeight?: number
 }
 
@@ -20,9 +23,7 @@ const contentStyleVariables = computed(() => ({
 }))
 
 onMounted(() => {
-  if (contentRef.value) {
-    fullHeight.value = contentRef.value.scrollHeight
-  }
+  fullHeight.value = contentRef.value?.scrollHeight ?? 0
 })
 </script>
 
@@ -32,7 +33,10 @@ onMounted(() => {
       class="collapse__slot collapse__slot-default"
       @click="model = !model"
     >
-      <slot :model />
+      <slot
+        :is-collapsed="!model"
+        :is-expanded="model"
+      />
     </div>
     <div
       class="collapse__content"
@@ -44,7 +48,8 @@ onMounted(() => {
       >
         <slot
           name="content"
-          :model
+          :is-collapsed="!model"
+          :is-expanded="model"
         />
       </div>
     </div>
