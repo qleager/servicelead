@@ -1,16 +1,27 @@
 <script lang="ts" setup>
-// TODO: Важно, чтобы сделать этот изгиб, надо сделать свг фигуру цвета тени, которая будет в bar__item – потом сделаем ахуевшую анимацию
-// если не знаешь как ее сделать, то ток верстку
 </script>
 
 <template>
   <div class="bar">
-    <!-- <SearchButton color="white" />
+    <div class="bar__aggregate">
+      <!-- это заполниткль -->
+    </div>
+    <div class="bar__item">
+      <!-- тут корнер -->
+      <!-- его вставляем кодом чтобы менять цвет на темной теме -->
+      <SearchButton color="white" />
+      <!-- тут корнер зеркально -->
+    </div>
+    <!-- и тут тоже заполнитель заполнтиль -->
+
+    <!-- с остальными так же -->
     <NavigationActions />
-    <TicketsButton /> -->
+    <TicketsButton />
   </div>
 </template>
 
 <style lang="scss">
-.bar {}
+.bar {
+  display: flex;
+}
 </style>
