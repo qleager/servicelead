@@ -9,8 +9,8 @@ interface MenuItem {
 
 const menuItems: MenuItem[] = [
   { label: 'Приватный Telegram-канал', to: '#', icon: 'tg_line_24' },
-  { label: '', to: '#', icon: 'vk' },
-  { label: '', to: '#', icon: 'youtube' },
+  { label: undefined, to: '#', icon: 'vk' },
+  { label: undefined, to: '#', icon: 'youtube' },
 ]
 </script>
 
@@ -64,9 +64,11 @@ const menuItems: MenuItem[] = [
       gap: $space-4;
       align-items: center;
 
+      // todo-1: без 500 - это дефолтный цвет палитры
       color: $color-neutral-500;
       text-decoration: none;
 
+      // todo-2: transition из ds системы + :active c color-700
       &:hover {
         color: $color-neutral-600;
       }

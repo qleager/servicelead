@@ -28,6 +28,7 @@
   $this: &;
 
   display: flex;
+  gap: $space-2;
   align-items: center;
   justify-content: space-between;
 
@@ -38,7 +39,7 @@
   backdrop-filter: blur(8px);
 
   &__search {
-    width: 412px;
+    max-width: 400px;
   }
 
   &__group {

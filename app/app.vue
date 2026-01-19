@@ -36,6 +36,7 @@
 
   &__header {
     position: sticky;
+    z-index: 9;
     top: 0;
     grid-area: header;
   }
