@@ -25,9 +25,9 @@ const classname = computed(() => ([
   'modal',
 ]))
 
-const isTitileVisible = computed(() => slots.title || prop.title)
+const isTitleVisible = computed(() => slots.title || prop.title)
 const isDescriptionVisible = computed(() => slots.description || prop.description)
-const isVisibleHeader = computed(() => isTitileVisible.value || isDescriptionVisible.value)
+const isHeaderVisible = computed(() => isTitleVisible.value || isDescriptionVisible.value)
 
 const toggle = () => {
   model.value = !model.value
@@ -65,11 +65,11 @@ export type { Props as ModalProps, Emits as ModalEmits, Model as ModalModel }
         @click="close"
       />
       <header
-        v-if="isVisibleHeader"
+        v-if="isHeaderVisible"
         class="modal__header"
       >
         <div
-          v-if="isTitileVisible"
+          v-if="isTitleVisible"
           class="modal__header-title"
         >
           <div
@@ -172,12 +172,9 @@ export type { Props as ModalProps, Emits as ModalEmits, Model as ModalModel }
 
   &__close {
     cursor: pointer;
-
     position: absolute;
     top: 0;
     right: -$space-16;
-
-    color: $color-neutral-400 !important;
   }
 }
 </style>

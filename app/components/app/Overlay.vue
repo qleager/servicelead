@@ -18,7 +18,6 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const emits = defineEmits<Emits>()
-const attrs = useAttrs()
 
 const model = defineModel<Model>({ default: false })
 
@@ -39,7 +38,7 @@ export type { Props as OverlayProps, Emits as OverlayEmits, Model as OverlayMode
     <!-- TODO: добавить анимацию (после систематизации анимаций) -->
     <div
       :class="classname"
-      v-bind="attrs"
+      v-bind="$attrs"
       @click.self="emits('click:backdrop')"
     >
       <slot />
