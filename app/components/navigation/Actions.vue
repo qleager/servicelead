@@ -2,11 +2,13 @@
 import type { FloaterProps } from '../app/Floater.vue'
 
 interface Props {
+  // todo-1: сделать необязательным
   placement: FloaterProps['placement']
 }
 
 defineProps<Props>()
 
+// todo-2: думаю можно сократить нахвание убрав из него Floater
 const isFloaterContentVisible = ref<boolean>(false)
 
 const items = [
@@ -47,7 +49,9 @@ const buttonColor = computed(() => isFloaterContentVisible.value ? 'neutral' : '
     />
     <template #content>
       <div class="navigation-actions">
+        <!-- todo-3: перенименуем класс в __list -->
         <div class="navigation-actions__items">
+          <!-- todo-4: перенименуем класс в __list-item, и так же для его детей -->
           <div
             v-for="item in items"
             :key="item.label"
@@ -98,6 +102,7 @@ const buttonColor = computed(() => isFloaterContentVisible.value ? 'neutral' : '
 
     width: 275px;
     padding: $space-2 $space-2 $space-2 $space-4;
+    // todo-7: взять из ds radius
     border-radius: 40px;
 
     background: $color-neutral-50;
@@ -113,10 +118,12 @@ const buttonColor = computed(() => isFloaterContentVisible.value ? 'neutral' : '
 
       color: white;
 
+      // TODO-6: просто color-neutral -- 500 цвет - это дефолт цвет палитры
       background: $color-primary-500;
     }
   }
 
+  // todo-5: нет элементов с этим классом
   &__close {
     cursor: pointer;
 

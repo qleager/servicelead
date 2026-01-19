@@ -10,7 +10,7 @@ interface Props {
 interface Item {
   icon: IconProps['name']
   label: string
-  // TODO навигация - сделать типы из router, чтобы тут затипизированы были только реальные роуты
+  // Refactoring: навигация - сделать типы из router, чтобы тут затипизированы были только реальные роуты
   to?: string
   onClick: () => void
 }
@@ -22,6 +22,7 @@ const classname = computed(() => [
   { 'navigation-menu-minimal': props.minimal },
 ])
 
+// Todo-2: убираем и делаем через ::before (см todo-2.1)
 const titleText = computed(() => props.minimal && props.title ? '--------' : props.title)
 
 export type { Item as NavigationMenuItem }
@@ -65,6 +66,8 @@ export type { Item as NavigationMenuItem }
     padding: $space-3 0 $space-3 $space-10;
 
     font-weight: 600;
+
+    // TODO-5: просто color-neutral -- 500 цвет - это дефолт цвет палитры
     color: $color-neutral-500;
 
     @include text(semibold, xs);
@@ -83,6 +86,14 @@ export type { Item as NavigationMenuItem }
       padding-left: $space-8;
 
       text-align: center;
+
+      // todo-2.1
+      // font-size: 0px
+
+      // &::before {
+      //   content: '-----'
+      //   font-size: 16px или сколько там
+      // }
 
       &:empty {
         display: none;
@@ -110,6 +121,7 @@ export type { Item as NavigationMenuItem }
       padding-block: $space-3;
       padding-inline: $space-10 $space-4;
 
+      // TODO-1: просто color-neutral -- 500 цвет - это дефолт цвет палитры
       color: $color-neutral-500;
       text-decoration: none;
 
@@ -120,12 +132,13 @@ export type { Item as NavigationMenuItem }
       &#{$active} {
         pointer-events: none;
 
+        // TODO-4: просто color-primary -- 500 цвет - это дефолт цвет палитры
         border-left: 4px solid $color-primary-500;
         border-radius: 0 $space-20 $space-20 0;
 
         color: $color-neutral-950;
 
-        background-color: rgba($color-primary-300, 40%);
+        background-color: rgba($color-primary-100, 40%);
       }
 
       #{$minimal} & {

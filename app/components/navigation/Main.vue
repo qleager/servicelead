@@ -40,6 +40,8 @@ const classname = computed(() => [
       :items="helpItems"
       :minimal
     />
+
+    <!-- TODO-3: заменить div на button(type=button) -->
     <div
       class="navigation__add-button"
     >
@@ -77,6 +79,7 @@ const classname = computed(() => [
     border: 1px dashed $color-neutral-300;
     border-radius: $space-20;
 
+    // TODO-2: просто color-neutral -- 500 цвет - это дефолт цвет палитры
     color: $color-neutral-500;
     white-space: nowrap;
 
@@ -89,6 +92,7 @@ const classname = computed(() => [
       background-color: $color-neutral-100;
     }
 
+    // Todo-1: поднять наверх перед детьми (перед &__icon)
     #{$minimal} & {
       width: fit-content;
       height: auto;
