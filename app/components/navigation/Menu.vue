@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { IconProps } from '../app/Icon.vue'
+import type { RouteTo } from '@shared/types/router.ts'
 
 interface Props {
   items: Item[]
@@ -10,8 +11,7 @@ interface Props {
 interface Item {
   icon: IconProps['name']
   label: string
-  // Refactoring: навигация - сделать типы из router, чтобы тут затипизированы были только реальные роуты
-  to?: string
+  to: RouteTo<true>
   onClick: () => void
 }
 

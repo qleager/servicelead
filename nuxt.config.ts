@@ -10,6 +10,7 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@chettapong/nuxt-lodash',
     '@nuxtjs/storybook',
+    'nuxt-typed-router',
   ],
 
   devtools: { enabled: true },
