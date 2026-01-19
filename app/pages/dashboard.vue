@@ -12,48 +12,11 @@
     <FinanceIncomeWidget class="page-dashboard__income" />
     <StatisticsTrafficWidget class="page-dashboard__traffic" />
     <OffersWidget class="page-dashboard__offers" />
-    <div class="page-dashboard__collapsers">
-      <div class="collapsers-item collapsers-item--1">
-        <AppCollapse>
-          <div class="collapsers-item__header">
-            <div>Выполняем</div>
-          </div>
-        </AppCollapse>
-      </div>
-      <div class="collapsers-item collapsers-item--2">
-        <AppCollapse>
-          <div class="collapsers-item__header">
-            <div>Выполняем</div>
-            <AppIcon name="dropdown" />
-          </div>
-        </AppCollapse>
-      </div>
-    </div>
     <DashboardAddWidgetInformer class="page-dashboard__informer" />
   </section>
 </template>
 
 <style lang="scss">
-.collapsers-item {
-  width: 50%;
-  padding: $space-6;
-  border-radius: $radius-4;
-
-  &__header {
-    display: flex;
-    gap: $space-4;
-    justify-content: space-between;
-  }
-
-  &--1 {
-    background: $color-red-200;
-  }
-
-  &--2 {
-    background: $color-primary-200;
-  }
-}
-
 .page-dashboard {
   $this: &;
 
@@ -64,21 +27,11 @@
     'statistics statistics statistics statistics news news'
     'income income income traffic traffic traffic'
     'offers offers offers offers offers offers'
-    'collapsers collapsers collapsers collapsers collapsers collapsers'
     'help help help help help help'
   ;
   grid-template-columns: minmax(0, 1.4fr) repeat(4, minmax(0, 1fr)) minmax(0, 1.4fr);
   grid-template-rows: repeat(5, minmax(132px, auto));
   gap: $space-6;
-
-  &__collapsers {
-    display: flex;
-    grid-area: collapsers;
-    gap: $space-10;
-    justify-content: space-between;
-
-    min-width: 100%;
-  }
 
   &__carousel {
     grid-area: carousel;
