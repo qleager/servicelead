@@ -32,6 +32,7 @@ onMounted(() => {
       class="collapse__slot collapse__slot-default"
       @click="model = !model"
     >
+      <slot :model />
     </div>
     <div
       class="collapse__content"
@@ -43,6 +44,7 @@ onMounted(() => {
       >
         <slot
           name="content"
+          :model
         />
       </div>
     </div>
