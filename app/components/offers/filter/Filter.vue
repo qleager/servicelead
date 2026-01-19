@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { TabsItem } from '~/components/App/Tabs.vue'
+import type { TabsItem } from '~/components/app/Tabs.vue'
 
 interface Filter {
   selectedTab: number
