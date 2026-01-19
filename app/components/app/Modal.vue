@@ -13,7 +13,7 @@ type Model = boolean
 
 const slots = useSlots()
 
-const prop = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   overlay: true,
 })
 
@@ -21,12 +21,8 @@ const emits = defineEmits<Emits>()
 
 const model = defineModel<Model>({ default: false })
 
-const classname = computed(() => ([
-  'modal',
-]))
-
-const isTitleVisible = computed(() => slots.title || prop.title)
-const isDescriptionVisible = computed(() => slots.description || prop.description)
+const isTitleVisible = computed(() => slots.title || props.title)
+const isDescriptionVisible = computed(() => slots.description || props.description)
 const isHeaderVisible = computed(() => isTitleVisible.value || isDescriptionVisible.value)
 
 const toggle = () => {
@@ -56,7 +52,7 @@ export type { Props as ModalProps, Emits as ModalEmits, Model as ModalModel }
     :transparent="!overlay"
     @click:backdrop="close"
   >
-    <div :class="classname">
+    <div class="modal">
       <AppButton
         class="modal__close"
         icon="close"
@@ -166,7 +162,7 @@ export type { Props as ModalProps, Emits as ModalEmits, Model as ModalModel }
   &__description {
     @include text(regular, md);
 
-    color: $color-neutral-500;
+    color: $color-neutral;
     text-align: center;
   }
 
