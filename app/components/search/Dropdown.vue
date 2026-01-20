@@ -13,8 +13,5 @@
 
 <style lang="scss">
 .search-dropdown {
-  flex: 1;
-  width: 100%;
-  max-width: 412px;
 }
 </style>

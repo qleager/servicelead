@@ -39,6 +39,7 @@
   backdrop-filter: blur(8px);
 
   &__search {
+    width: 100%;
     max-width: 400px;
   }
 
