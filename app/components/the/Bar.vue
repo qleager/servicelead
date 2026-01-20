@@ -1,91 +1,77 @@
 <script lang="ts" setup>
-const bgColor = ref('#fff')
-
-const cssVars = computed(() => ({
-  '--bg-color': bgColor.value,
-}))
 </script>
 
 <template>
-  <div
-    class="bar"
-    :style="cssVars"
-  >
+  <div class="bar">
     <div class="bar__aggregate" />
     <div class="bar__item">
       <svg
-        class="bar__item-corner bar__item-corner_left"
+        class="bar__item-corner bar__item-corner-left"
         viewBox="0 0 32 19"
-        fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
           d="M32 18.9941H0C10.2799 18.9941 19.2661 13.4544 24.1357 5.19727C25.8334 2.31864 28.6818 0.109057 32 0V18.9941Z"
-          :fill="bgColor"
+          fill="currentColor"
         />
       </svg>
       <SearchButton color="white" />
       <svg
-        class="bar__item-corner bar__item-corner_right"
+        class="bar__item-corner bar__item-corner-right"
         viewBox="0 0 32 19"
-        fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
           d="M32 18.9941H0C10.2799 18.9941 19.2661 13.4544 24.1357 5.19727C25.8334 2.31864 28.6818 0.109057 32 0V18.9941Z"
-          :fill="bgColor"
+          fill="currentColor"
         />
       </svg>
     </div>
     <div class="bar__aggregate" />
     <div class="bar__item">
       <svg
-        class="bar__item-corner bar__item-corner_left"
+        class="bar__item-corner bar__item-corner-left"
         viewBox="0 0 32 19"
-        fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
           d="M32 18.9941H0C10.2799 18.9941 19.2661 13.4544 24.1357 5.19727C25.8334 2.31864 28.6818 0.109057 32 0V18.9941Z"
-          :fill="bgColor"
+          fill="currentColor"
         />
       </svg>
       <NavigationActions />
       <svg
-        class="bar__item-corner bar__item-corner_right"
+        class="bar__item-corner bar__item-corner-right"
         viewBox="0 0 32 19"
-        fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
           d="M32 18.9941H0C10.2799 18.9941 19.2661 13.4544 24.1357 5.19727C25.8334 2.31864 28.6818 0.109057 32 0V18.9941Z"
-          :fill="bgColor"
+          fill="currentColor"
         />
       </svg>
     </div>
     <div class="bar__aggregate" />
     <div class="bar__item">
       <svg
-        class="bar__item-corner bar__item-corner_left"
+        class="bar__item-corner bar__item-corner-left"
         viewBox="0 0 32 19"
-        fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
           d="M32 18.9941H0C10.2799 18.9941 19.2661 13.4544 24.1357 5.19727C25.8334 2.31864 28.6818 0.109057 32 0V18.9941Z"
-          :fill="bgColor"
+          fill="currentColor"
         />
       </svg>
       <TicketsButton color="white" />
       <svg
-        class="bar__item-corner bar__item-corner_right"
+        class="bar__item-corner bar__item-corner-right"
         viewBox="0 0 32 19"
-        fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
           d="M32 18.9941H0C10.2799 18.9941 19.2661 13.4544 24.1357 5.19727C25.8334 2.31864 28.6818 0.109057 32 0V18.9941Z"
-          :fill="bgColor"
+          fill="currentColor"
         />
       </svg>
     </div>
@@ -100,17 +86,23 @@ const cssVars = computed(() => ({
   }
 
   to {
-    width: $space-5;
+    width: 20px;
   }
 }
 
 .bar {
   $this: &;
 
-  position: relative;
-  overflow: hidden;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
   display: flex;
-  padding-bottom: 18px;
+
+  padding-bottom: $space-4;
+
+  filter: drop-shadow(0 0 35px #1c265a1a); // TODO: add to design system
 
   &::before {
     content: "";
@@ -120,9 +112,9 @@ const cssVars = computed(() => ({
     bottom: 0;
     left: 0;
 
-    height: 14px;
+    height: 12px;
 
-    background: var(--bg-color);
+    background: #fff;
   }
 
   &__aggregate {
@@ -133,13 +125,13 @@ const cssVars = computed(() => ({
       content: "";
 
       position: absolute;
-      top: 33px;
-      right: 8px;
-      left: 8px;
+      right: $space-2;
+      bottom: -$space-1;
+      left: $space-2;
 
       height: 19px;
 
-      background: var(--bg-color);
+      background: #fff;
     }
 
     &:first-child, &:last-child {
@@ -166,17 +158,19 @@ const cssVars = computed(() => ({
       pointer-events: none;
 
       position: absolute;
-      bottom: -4px;
+      bottom: -$space-1;
 
       width: 32px;
       height: 19px;
 
-      &_left {
-        right: -8px;
+      color: #fff;
+
+      &-left {
+        right: -$space-2;
       }
 
-      &_right {
-        left: -8px;
+      &-right {
+        left: -$space-2;
         transform: scaleX(-1);
       }
     }
