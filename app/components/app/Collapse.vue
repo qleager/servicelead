@@ -1,31 +1,74 @@
 <script lang="ts" setup>
 interface Props {
-  initHeight?: number // def 0 -- высота конетент
+  /**
+   * Initial height of content in px
+   */
+  initHeight?: number
 }
 
-const classname = computed(() => ([
-  'collapse',
-  model.value ? 'expanded' : 'collapsed',
-]))
+const props = withDefaults(defineProps<Props>(), {
+  initHeight: 0,
+})
 
-const model = defineModel<boolean>() // раскрыто или свернуто -- def: false
+const model = defineModel<boolean>()
 
-// сonst fullHeight
+const contentRef = ref<HTMLElement | null>(null)
+
+const fullHeight = ref<number>(0)
+
+const contentStyleVariables = computed(() => ({
+  '--content-height': model.value
+    ? `${fullHeight.value}px`
+    : `${props.initHeight}px`,
+}))
+
+onMounted(() => {
+  fullHeight.value = contentRef.value?.scrollHeight ?? 0
+})
 </script>
 
 <template>
-  <div :class="classname">
-    <!-- defautl-слот это триггре по которому происходит расскрытие/скрытие -->
-    <div class="collapse__content">
-      <!-- манипуляции с высотой только с .collapse__content -->
-      <div class="collapse__slot collapse__slot-content">
-        <slot name="content" />
+  <div class="collapse">
+    <div
+      class="collapse__slot collapse__slot-default"
+      @click="model = !model"
+    >
+      <slot
+        :is-collapsed="!model"
+        :is-expanded="model"
+      />
+    </div>
+    <div
+      class="collapse__content"
+      :style="contentStyleVariables"
+    >
+      <div
+        ref="contentRef"
+        class="collapse__slot collapse__slot-content"
+      >
+        <slot
+          name="content"
+          :is-collapsed="!model"
+          :is-expanded="model"
+        />
       </div>
     </div>
-    <!-- ℹ️ в каждый слот прокидываем model -->
   </div>
 </template>
 
-<style>
-  /* анимация не требуется */
+<style lang="scss">
+.collapse {
+  $this: &;
+
+  &__slot {
+    &-default {
+      cursor: pointer;
+    }
+  }
+
+  &__content {
+    overflow: hidden;
+    height: var(--content-height);
+  }
+}
 </style>
