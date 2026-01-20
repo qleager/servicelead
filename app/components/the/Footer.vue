@@ -67,6 +67,8 @@ const menuItems: MenuItem[] = [
       color: $color-neutral;
       text-decoration: none;
 
+      transition: $blur-duration-sm;
+
       &:hover {
         color: $color-neutral-600;
         transition: $hover-duration-sm;
