@@ -64,13 +64,17 @@ const menuItems: MenuItem[] = [
       gap: $space-4;
       align-items: center;
 
-      // todo-1: без 500 - это дефолтный цвет палитры
-      color: $color-neutral-500;
+      color: $color-neutral;
       text-decoration: none;
 
-      // todo-2: transition из ds системы + :active c color-700
       &:hover {
         color: $color-neutral-600;
+        transition: $hover-duration-sm;
+      }
+
+      &:active {
+        color: $color-neutral-700;
+        transition: $active-duration-sm;
       }
     }
 
