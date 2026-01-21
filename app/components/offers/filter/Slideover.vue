@@ -1,40 +1,31 @@
 <script lang="ts" setup>
-const isFiltersSlideoverVisible = ref(false)
 </script>
 
 <template>
-  <div>
+  <AppSlideover
+    title="Фильтры"
+    icon="filter"
+  >
     <AppButton
       icon="filter"
       variant="lined"
       color="neutral"
-      @click="isFiltersSlideoverVisible = true"
     >
-      <!-- TODO: заменить на AppIndicator -->
       <AppTag
-        v-if="activeFiltersCount > 0"
-        color="white"
+        color="primary"
+        size="sm"
       >
-        {{ activeFiltersCount }}
+        5
       </AppTag>
     </AppButton>
-  </div>
-  <AppSlideover
-    v-model="isFiltersSlideoverVisible"
-    title="Фильтры"
-    icon="filter"
-  >
     <template #footer>
       <AppButton
         variant="nofilled"
         color="neutral"
-        @click="resetFilters"
       >
         Сбросить все
       </AppButton>
-      <AppButton
-        @click="applyFilters"
-      >
+      <AppButton>
         Применить
       </AppButton>
     </template>

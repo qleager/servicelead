@@ -5,13 +5,13 @@ interface Emits {
   update: []
 }
 
+type Model = unknown
+
 const emits = defineEmits<Emits>()
 
-const model = defineModel<any>({
+const model = defineModel<Model>({
   required: true,
 })
-
-const isSearchInputExpanded = ref(false)
 
 const tabsItems = ref<TabsItem[]>([
   { label: 'Все', value: 1 },
@@ -21,108 +21,81 @@ const tabsItems = ref<TabsItem[]>([
   { label: 'Новые', value: 5 },
 ])
 
-const onUpdateFilters = (newFilters: any) => {
+const resetItem = (item: unknown) => {
   emits('update')
-}
-
-const onRemoveFilterValue = (valueToRemove: any) => {
-  emits('update')
-}
-
-const resetSearch = () => {
-  model.value.searchQuery = null
-  isSearchInputExpanded.value = false
 }
 </script>
 
 <template>
   <div class="offers-filter">
-    <div class="offers-filter__filters">
-      <div class="offers-filter__filters-active">
-        <AppTabs
-          v-model="model.selectedTab"
-          class="offers-filter__filters-tabs"
-          :items="tabsItems"
-          variant="lined"
-          color="neutral"
-        />
-        <div
-          v-if="activeFilterValues?.length"
-          class="offers-filter__filters-tags"
-        >
-          <AppTag
-            v-for="(value, index) in activeFilterValues"
-            :key="index"
-            closable
-            color="white"
-            @close="() => onRemoveFilterValue(value)"
-          >
-            {{ value }}
-          </AppTag>
-        </div>
-      </div>
+    <div class="offers-filter__row">
+      <AppTabs
+        class="offers-filter__tabs"
+        :items="tabsItems"
+        variant="lined"
+        color="neutral"
+      />
 
-      <div class="offers-filter__filters-buttons">
-        <div class="offers-filter__search">
-          <AppInput
-            v-if="isSearchInputExpanded"
-            v-model="model.searchQuery"
-            reset
-            rounded
-            placeholder="Начните поиск..."
-            @reset="resetSearch"
-          />
-          <AppButton
-            v-else
-            icon="search"
-            variant="lined"
-            color="neutral"
-            @click="isSearchInputExpanded = !isSearchInputExpanded"
-          />
-        </div>
+      <AppInput
+        class="offers-filter__search"
+        icon="search"
+        placeholder="Начните поиск..."
+        rounded
+        reset
+      />
 
-        <OffersFilterSlideover
-          :filters="model.filters"
-          @update="onUpdateFilters"
-        />
-      </div>
+      <OffersFilterSlideover />
+    </div>
+
+    <div
+      v-if="true"
+      class="offers-filter__selected"
+    >
+      <AppTag
+        v-for="(value, index) in 5"
+        :key="index"
+        closable
+        color="white"
+        @close="() => resetItem(value)"
+      >
+        {{ value }}
+      </AppTag>
     </div>
   </div>
 </template>
 
 <style lang="scss">
 .offers-filter {
-  display: flex;
-  gap: $space-10;
   width: 100%;
 
-  &__filters {
+  &__row {
     display: flex;
-    gap: $space-10;
-    justify-content: space-between;
-    width: 100%;
+    gap: $space-2;
+    margin-bottom: $space-3;
+  }
 
-    &-active {
-      display: flex;
-      flex-direction: column;
-      gap: $space-2;
-      max-width: 700px;
-    }
+  &__tabs {
+    margin-right: auto;
+  }
 
-    &-tabs {
-      margin-right: auto;
-    }
+  &__search {
+    overflow: hidden;
+    width: 48px;
 
-    &-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: $space-2;
+    // реализация-исключение, хук, так как input не root элемент (выгляит хуево, это да)
+    // фокус
+    &:focus-within,
+    // в input что то введнено
+    &:not(:has(:placeholder-shown)) {
+      width: 250px;
     }
+  }
 
-    &-buttons {
-      display: flex;
-      gap: $space-2;
-    }
+  &__selected {
+    display: flex;
+    gap: $space-2;
+    order: 1;
+    width: 100px;
   }
 }
 </style>

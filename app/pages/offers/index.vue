@@ -1,11 +1,17 @@
 <script lang="ts" setup>
 const route = useRoute()
 
-const offersFilter = reactive<any>({
-  selectedTab: typeof route.query.tab === 'string' ? Number(route.query.tab) : 1,
+// @ts-expect-error unknown unknown
+const filter = reactive<unknown>({
+  selectedTab: 1,
 })
 
-const update = () => {}
+// REFACTORING: Упростить
+onMounted(() => {
+  if (typeof route.query.tab === 'string') {
+    filter.selectedTab = Number(route.query.tab)
+  }
+})
 </script>
 
 <template>
@@ -14,12 +20,13 @@ const update = () => {}
       Проекты
     </div>
     <div class="offers__header">
-      <div class="offers__header-title">
+      <div class="offers__title">
         Офферы
       </div>
       <OffersFilter
-        v-model="offersFilter"
-        @update="update"
+        v-model="filter"
+        class="offers__filter"
+        @update="() => {}"
       />
     </div>
     <div class="offers__items">
@@ -37,12 +44,16 @@ const update = () => {}
   &__header {
     display: flex;
     gap: $space-10;
-    align-items: center;
+    align-items: start;
     width: 100%;
+  }
 
-    &-title {
-      @include text(bold, 5xl);
-    }
+  &__title {
+    @include text(bold, 5xl);
+  }
+
+  &__filter {
+    margin-top: $space-1;
   }
 }
 </style>
