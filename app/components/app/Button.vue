@@ -84,7 +84,7 @@ export type { Props as ButtonProps }
 .button {
   $this: &;
   $hover: & + ':hover';
-  $active: ':active, &.button-active';
+  $active: '&.button:active, &.button-active';
 
   ///
   $variant-filled: $this + '-variant-filled';
@@ -221,7 +221,7 @@ export type { Props as ButtonProps }
 
   &#{$white-color} {
     --variant-filled-background-color: white;
-    --variant-filled-text-color: $color-neutral-950;
+    --variant-filled-text-color: #{$color-neutral-950};
     --variant-lined-text-color: white;
     --variant-nofilled-background-color: transparent;
     --variant-nofilled-text-color: white;
@@ -249,7 +249,7 @@ export type { Props as ButtonProps }
   }
 
   &#{$neutral-color} {
-    --variant-filled-text-color: $color-neutral-950;
+    --variant-filled-text-color: #{$color-neutral-950};
     --variant-filled-background-color: #{$color-neutral-100};
     --variant-lined-text-color: #{$color-neutral-950};
     --variant-nofilled-text-color: #{$color-neutral-400};
