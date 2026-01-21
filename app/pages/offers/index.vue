@@ -1,34 +1,11 @@
 <script lang="ts" setup>
-import type { OffersFilter } from '~/components/offers/filter/index.vue'
-
 const route = useRoute()
 
-const offersFilter = reactive<OffersFilter>({
+const offersFilter = reactive<any>({
   selectedTab: typeof route.query.tab === 'string' ? Number(route.query.tab) : 1,
-  searchQuery: null,
-  filters: { region: [], city: [], tools: [], scenarios: [] },
 })
 
-const { data: offers, refresh, pending } = await useAsyncData(
-  'offers',
-  () => {
-    console.log({
-      tab: offersFilter.selectedTab,
-      search: offersFilter.searchQuery,
-      filters: offersFilter.filters,
-    })
-    console.log('fetchOffers')
-  },
-  {
-    server: false,
-    lazy: true,
-    watch: [
-      () => offersFilter.selectedTab,
-      () => offersFilter.searchQuery,
-    ],
-    default: () => [],
-  },
-)
+const update = () => {}
 </script>
 
 <template>
@@ -36,10 +13,15 @@ const { data: offers, refresh, pending } = await useAsyncData(
     <div class="offers__projects">
       Проекты
     </div>
-    <OffersFilter
-      v-model="offersFilter"
-      @refresh="refresh"
-    />
+    <div class="offers__header">
+      <div class="offers__header-title">
+        Офферы
+      </div>
+      <OffersFilter
+        v-model="offersFilter"
+        @update="update"
+      />
+    </div>
     <div class="offers__items">
       Сетка офферов
     </div>
@@ -57,25 +39,10 @@ const { data: offers, refresh, pending } = await useAsyncData(
     gap: $space-10;
     align-items: center;
     width: 100%;
-  }
 
-  &__title {
-    @include text(bold, 5xl);
-  }
-
-  &__filters {
-    display: flex;
-    gap: $space-10;
-    justify-content: space-between;
-    width: 100%;
-
-    &-tabs {
-      margin-right: auto;
-    }
-
-    &-buttons {
-      display: flex;
-      gap: $space-2;
+    &-title {
+      @include text(bold, 5xl);
     }
   }
 }
+</style>

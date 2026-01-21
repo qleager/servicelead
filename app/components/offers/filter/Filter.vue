@@ -1,28 +1,17 @@
 <script lang="ts" setup>
 import type { TabsItem } from '~/components/app/Tabs.vue'
 
-interface Filter {
-  selectedTab: number
-  searchQuery: string | null
-  filters: {
-    region: string[]
-    city: string[]
-    tools: string[]
-    scenarios: string[]
-  }
-}
-
 interface Emits {
-  refresh: []
+  update: []
 }
 
 const emits = defineEmits<Emits>()
 
-const model = defineModel<Filter>({
+const model = defineModel<any>({
   required: true,
 })
 
-const isFiltersSlideoverVisible = ref(false)
+const isSearchInputExpanded = ref(false)
 
 const tabsItems = ref<TabsItem[]>([
   { label: 'Все', value: 1 },
@@ -32,55 +21,34 @@ const tabsItems = ref<TabsItem[]>([
   { label: 'Новые', value: 5 },
 ])
 
-const onUpdateFilters = (appliedFilters: Filter['filters']) => {
-  console.log('Фильтры применены:', appliedFilters)
-  Object.assign(model.value.filters, appliedFilters)
-  emits('refresh')
+const onUpdateFilters = (newFilters: any) => {
+  emits('update')
 }
 
-const activeFiltersCount = computed(() => {
-  return Object.values(model.value.filters).filter(
-    value => Array.isArray(value) && value.length > 0,
-  ).length
-})
-
-const activeFilterValues = computed(() => {
-  const filters = model.value.filters
-  return Object.values(filters).flat().filter(Boolean) as string[]
-})
-
-const onRemoveFilterValue = (valueToRemove: string) => {
-  const newFilters: Filter['filters'] = { ...model.value.filters }
-
-  for (const key in newFilters) {
-    if (newFilters[key as keyof typeof newFilters].includes(valueToRemove)) {
-      newFilters[key as keyof typeof newFilters]
-        = newFilters[key as keyof typeof newFilters].filter(v => v !== valueToRemove)
-    }
-  }
-
-  model.value.filters = newFilters
-  emits('refresh')
+const onRemoveFilterValue = (valueToRemove: any) => {
+  emits('update')
 }
 
-export type { Filter as OffersFilter }
+const resetSearch = () => {
+  model.value.searchQuery = null
+  isSearchInputExpanded.value = false
+}
 </script>
 
 <template>
-  <div class="offers-header">
-    <div class="offers-header__title">
-      Офферы
-    </div>
-    <div class="offers-header__filters">
-      <div class="offers-header__filters-active">
-        <OffersFilterTabs
+  <div class="offers-filter">
+    <div class="offers-filter__filters">
+      <div class="offers-filter__filters-active">
+        <AppTabs
           v-model="model.selectedTab"
-          class="offers-header__filters-tabs"
+          class="offers-filter__filters-tabs"
           :items="tabsItems"
+          variant="lined"
+          color="neutral"
         />
         <div
-          v-if="activeFilterValues.length"
-          class="offers-header__filters-tags"
+          v-if="activeFilterValues?.length"
+          class="offers-filter__filters-tags"
         >
           <AppTag
             v-for="(value, index) in activeFilterValues"
@@ -94,44 +62,39 @@ export type { Filter as OffersFilter }
         </div>
       </div>
 
-      <div class="offers-header__filters-buttons">
-        <OffersFilterSearch
-          v-model="model.searchQuery"
-        />
+      <div class="offers-filter__filters-buttons">
+        <div class="offers-filter__search">
+          <AppInput
+            v-if="isSearchInputExpanded"
+            v-model="model.searchQuery"
+            reset
+            rounded
+            placeholder="Начните поиск..."
+            @reset="resetSearch"
+          />
+          <AppButton
+            v-else
+            icon="search"
+            variant="lined"
+            color="neutral"
+            @click="isSearchInputExpanded = !isSearchInputExpanded"
+          />
+        </div>
 
-        <AppButton
-          icon="filter"
-          variant="lined"
-          color="neutral"
-          @click="isFiltersSlideoverVisible = true"
-        >
-          <!-- TODO: заменить на AppIndicator -->
-          <AppTag
-            v-if="activeFiltersCount > 0"
-            color="white"
-          >
-            {{ activeFiltersCount }}
-          </AppTag>
-        </AppButton>
+        <OffersFilterSlideover
+          :filters="model.filters"
+          @update="onUpdateFilters"
+        />
       </div>
     </div>
-    <OffersFilterSlideover
-      v-model="isFiltersSlideoverVisible"
-      :filters="model.filters"
-      @update="onUpdateFilters"
-    />
   </div>
 </template>
 
 <style lang="scss">
-.offers-header {
+.offers-filter {
   display: flex;
   gap: $space-10;
   width: 100%;
-
-  &__title {
-    @include text(bold, 5xl);
-  }
 
   &__filters {
     display: flex;

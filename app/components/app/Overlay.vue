@@ -52,6 +52,7 @@ export type { Props as OverlayProps, Emits as OverlayEmits, Model as OverlayMode
   $transparent: $this + '-transparent';
 
   position: fixed;
+  z-index: 10;
   top: 0;
   left: 0;
 

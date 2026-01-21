@@ -56,7 +56,7 @@ export type { Props as SlideoverProps, Emits as SlideoverEmits, Model as Slideov
             class="slideover__close"
             icon="close"
             size="sm"
-            color="lighter"
+            color="neutral"
             variant="nofilled"
             @click="close()"
           />

@@ -1,7 +1,4 @@
 <script lang="ts" setup>
-const openTopOffers = () => {
-  navigateTo({ path: '/offers', query: { tab: '3' } })
-}
 </script>
 
 <template>
@@ -11,7 +8,7 @@ const openTopOffers = () => {
     variant="section"
     action-text="Смотреть все"
     action
-    @action-click="openTopOffers"
+    @action-click="navigateTo({ path: '/offers', query: { tab: '3' } })"
   >
     <OffersList />
   </AppWidget>
