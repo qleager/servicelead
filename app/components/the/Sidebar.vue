@@ -5,26 +5,20 @@ const classname = computed(() => [
   'sidebar',
   { 'sidebar-collapsed': isCollapsed.value },
 ])
-
-// TODO-1: Убираем small и big вариации
-// Когда свернуто просто обрезаем буквы с помощтю object-fit
-const logoIcon = computed(() =>
-  isCollapsed.value ? '/images/logo-small-dark.svg' : '/images/logo-big-dark.svg',
-)
 </script>
 
 <template>
   <aside :class="classname">
-    <!-- TODO-5: отказываемся от оберки и меняем класс у NuxtImage на sidebar__logo  -->
-    <!-- либо оставляем на оборачиавем в ссылку с href на главную -->
-    <div class="sidebar__logo">
+    <NuxtLink
+      to="/dashboard"
+      class="sidebar__logo"
+    >
       <NuxtImg
         class="sidebar__logo-image"
-        :src="logoIcon"
+        src="/images/logo-big-dark.svg"
       />
-    </div>
+    </NuxtLink>
     <NavigationMain :minimal="isCollapsed" />
-    <!-- // TODO-7: добавить hover и active как у понктов меню -->
     <div
       class="sidebar__button"
       @click="isCollapsed = !isCollapsed"
@@ -40,10 +34,7 @@ const logoIcon = computed(() =>
 <style lang="scss">
 .sidebar {
   $this: &;
-  $collapsed: & + '-collapsed';
-
-  // TODO-3: перемещаем в порядке правил на то место где обычно текст
-  @include text(semibold, md);
+  $collapsed: $this + '-collapsed';
 
   display: flex;
   flex-direction: column;
@@ -53,7 +44,13 @@ const logoIcon = computed(() =>
   padding-right: $space-5;
   padding-bottom: $space-6;
 
-  // TODO-3.1: получается сюда
+  @include text(semibold, md);
+
+  &#{$collapsed} {
+    align-items: flex-start;
+    min-width: unset;
+    max-width: 100px;
+  }
 
   &__logo {
     position: sticky;
@@ -63,10 +60,7 @@ const logoIcon = computed(() =>
     justify-content: flex-start;
 
     min-width: 100%;
-
-    // TODO-4: В новой sass теперь кажись необязательно задавать отрицание через интерполяцию – оставляем просто -$space-5
-    // Если видим по ходу задач такое – то убираем
-    margin-right: -#{$space-5};
+    margin-right: -$space-5;
     padding: $space-6;
     padding-bottom: $space-5;
 
@@ -91,6 +85,12 @@ const logoIcon = computed(() =>
       z-index: 2;
       width: auto;
       height: 44px;
+
+      #{$collapsed} & {
+        width: 48px;
+        object-fit: cover;
+        object-position: left;
+      }
     }
   }
 
@@ -106,8 +106,7 @@ const logoIcon = computed(() =>
     margin-top: auto;
     padding: $space-3 0 $space-3 $space-10;
 
-    // TODO-6: просто color-neutral -- 500 цвет - это дефолт цвет палитры
-    color: $color-neutral-500;
+    color: $color-neutral;
 
     #{$collapsed} & {
       transform: rotate(180deg);
@@ -115,18 +114,15 @@ const logoIcon = computed(() =>
       padding-left: $space-4;
     }
 
+    &:hover {
+      color: inherit;
+    }
+
     &-text {
       #{$collapsed} & {
         display: none;
       }
     }
-  }
-
-  // TODO-2: поднять в самый верх. Это состояния элмента, его всегда ставим перед его детьми
-  &#{$collapsed} {
-    align-items: flex-start;
-    min-width: unset;
-    max-width: 100px;
   }
 }
 </style>
