@@ -31,7 +31,7 @@ const classname = computed(() => [
   'tabs',
 ])
 
-onMounted(() => {
+onBeforeMount(() => {
   if (!model.value) {
     model.value = props.items[0]?.value
   }

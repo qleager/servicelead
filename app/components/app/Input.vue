@@ -338,7 +338,7 @@ export type { Props as InputProps, Emits as InputEmits, Model as InputModel }
 
   // Стиль элемента блока
   &__field {
-    --field-text-color: #{$color-neutral-950};
+    --field-text-color: $color-neutral-950;
 
     flex: 1;
 
@@ -425,10 +425,6 @@ export type { Props as InputProps, Emits as InputEmits, Model as InputModel }
   &__reset {
     margin-right: $space-3;
     margin-left: auto;
-
-    &-icon {
-      cursor: pointer;
-    }
   }
 }
 </style>

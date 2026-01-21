@@ -149,10 +149,6 @@ export type { Props as FloaterProps, Model as FloaterModel }
   width: fit-content;
 
   &__slot {
-    &-content {
-      z-index: 1;
-    }
-
     &-trigger {
       display: inline-block;
     }
