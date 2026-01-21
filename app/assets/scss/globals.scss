@@ -6,7 +6,7 @@
 }
 
 html {
-  color: $color-neutral-dark-950;
+  color: $color-gray-950;
 
   @include text(regular, md);
 }
@@ -14,7 +14,7 @@ html {
 body {
   margin: 0;
   padding: 0;
-  background-color: $color-neutral-light-50;
+  background-color: $color-neutral-50;
 }
 
 button {

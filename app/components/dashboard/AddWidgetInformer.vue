@@ -25,7 +25,7 @@ const onButtonClick = async () => {
 
     <AppButton
       variant="filled"
-      color="lighter"
+      color="neutral"
       class="widget-informer__ticket-btn"
       @click="onButtonClick"
     >
@@ -54,7 +54,7 @@ const onButtonClick = async () => {
   }
 
   &__icon {
-    color: $color-neutral-light-300
+    color: $color-neutral-300
   }
 
   &__text {
@@ -66,17 +66,13 @@ const onButtonClick = async () => {
   &__title {
     @include text(regular, xl);
 
-    color: $color-neutral-light-950;
+    color: $color-neutral-950;
   }
 
   &__subtitle {
     @include text(regular, md);
 
-    color: $color-neutral-light-500;
-  }
-
-  &__ticket-btn {
-    background: $color-neutral-light-100;
+    color: $color-neutral-500;
   }
 
   &__menu {
@@ -92,12 +88,12 @@ const onButtonClick = async () => {
   &__menu-label {
     @include text(regular, sm);
 
-    color: $color-neutral-light-500;
+    color: $color-neutral-500;
   }
 
   &__menu-item {
     display: inline-flex;
-    color: $color-neutral-light-500;
+    color: $color-neutral-500;
   }
 }
 </style>

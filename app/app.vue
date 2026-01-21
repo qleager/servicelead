@@ -30,13 +30,13 @@
     'sidebar footer' / 100%;
   grid-template-columns: minmax(0, auto) minmax(0, 1fr);
   grid-template-rows: auto 1fr auto;
-
-  // gap: $space-8 $space-10;
+  row-gap: $space-9;
 
   min-height: 100dvh;
 
   &__header {
     position: sticky;
+    z-index: 9;
     top: 0;
     grid-area: header;
   }

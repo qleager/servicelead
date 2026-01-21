@@ -19,15 +19,23 @@
     "scope": "scss",
     "prefix": "color",
     "body": [
-      "$$color-${1|primary,neutral-light,neutral-dark,red,yellow,green,blue,purple|}-${2|50,100,200,300,400,500,600,700,800,900,950|};"
+      "$$color-${1|primary,neutral,gray,red,yellow,green,blue,purple|}-${2|50,100,200,300,400,500,600,700,800,900,950|};"
     ],
     "description": "Выбор SCSS-переменной color с подсказками"
+  },
+  "Radius Variable": {
+    "scope": "scss",
+    "prefix": "radius",
+    "body": [
+      "$$radius-${1|1,2,3,4,5,6,7,8,9,10|}"
+    ],
+    "description": "Choose the radius variable"
   },
   "Space Variable": {
     "scope": "scss",
     "prefix": "space",
     "body": [
-      "$$space-${1|05,1,2,4,6,8,10,12,14,16,18,20,30|}"
+      "$$space-${1|05,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,30|}"
     ],
     "description": "Выбор SCSS-переменной space"
   },

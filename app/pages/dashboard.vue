@@ -71,6 +71,8 @@
 
   &__informer {
     grid-area: help;
+    margin-bottom: -#{$space-6};
+    padding-top: $space-10;
   }
 }
 </style>

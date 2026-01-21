@@ -1,0 +1,21 @@
+services:
+  web:
+    build:
+      target: local
+    container_name: nuxt
+    ports:
+      - "3000:3000"
+      - "24678:24678"
+      - "6006:6006"
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+      - pnpm_store:/pnpm-store
+      - nuxt_build:/app/.nuxt
+    init: true
+    command: ["sleep", "infinity"]
+
+volumes:
+  node_modules:
+  nuxt_build:
+  pnpm_store:

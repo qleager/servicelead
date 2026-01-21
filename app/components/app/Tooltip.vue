@@ -45,7 +45,7 @@ export type { Props as TooltipProps }
     padding: $space-4;
     border-radius: $radius-3;
 
-    color: $color-neutral-light-950;
+    color: $color-neutral-950;
     text-align: center;
 
     background: white;

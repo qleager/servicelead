@@ -51,7 +51,7 @@ export type { Props as SelectOptionProps }
   transition: $blur-duration-sm;
 
   &:hover {
-    background-color: $color-neutral-light-50;
+    background-color: $color-neutral-50;
     transition: $hover-duration-sm;
   }
 

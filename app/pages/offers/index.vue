@@ -79,4 +79,3 @@ const { data: offers, refresh, pending } = await useAsyncData(
     }
   }
 }
-</style>

@@ -5,8 +5,25 @@ import { fileURLToPath } from 'node:url'
 import VitePluginSvgSpritemap from '@spiriit/vite-plugin-svg-spritemap'
 
 export default defineNuxtConfig({
-  modules: ['@nuxt/eslint', '@nuxt/image', '@chettapong/nuxt-lodash'],
+  modules: [
+    '@nuxt/eslint',
+    '@nuxt/image',
+    '@chettapong/nuxt-lodash',
+    '@nuxtjs/storybook',
+    'nuxt-typed-router',
+  ],
+
   devtools: { enabled: true },
+
+  app: {
+    head: {
+      title: 'Servicelead',
+      meta: [
+        { name: 'robots', content: 'noindex,nofollow' },
+      ],
+    },
+  },
+
   css: ['./app/assets/scss/globals.scss'],
 
   alias: {
@@ -63,5 +80,11 @@ export default defineNuxtConfig({
     config: {
       stylistic: true,
     },
+  },
+
+  storybook: {
+    enabled: false,
+    host: 'localhost',
+    port: 6006,
   },
 })

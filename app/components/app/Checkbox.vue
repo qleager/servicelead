@@ -92,14 +92,14 @@ const classname = computed(() => ([
     height: 24px;
     border-radius: 4px;
 
-    background-color: $color-neutral-light-100;
+    background-color: $color-neutral-100;
 
     &-icon {
       color: white
     }
 
     #{$hover} & {
-      background-color: $color-neutral-light-400;
+      background-color: $color-neutral-400;
     }
 
     #{$active} & {
@@ -111,12 +111,12 @@ const classname = computed(() => ([
     }
 
     #{$disabled} & {
-      border: 1px solid $color-neutral-light-400;
+      border: 1px solid $color-neutral-400;
       background-color: transparent;
     }
 
     #{$checked}#{$disabled} & {
-      background-color: $color-neutral-light-400;
+      background-color: $color-neutral-400;
     }
   }
 
@@ -128,7 +128,7 @@ const classname = computed(() => ([
     }
 
     #{$disabled} & {
-      color: $color-neutral-light-400;
+      color: $color-neutral-400;
     }
   }
 }

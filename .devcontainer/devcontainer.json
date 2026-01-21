@@ -2,28 +2,20 @@
  * Guide: https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers
  */
 {
-  "name": "Servicelead Dev",
-  "dockerComposeFile": "../docker-compose.yaml",
+  "name": "Servicelead",
+  "dockerComposeFile": ["../docker-compose.yml", "../docker-compose.local.yml"],
   "service": "web",
   "workspaceFolder": "/app",
-  "overrideCommand": false,
-  // Монтируем ~/.ssh хоста внутрь контейнера пользователя root как read-only.
-  // Так «из коробки» работает на Windows/macOS/Linux/WSL.
-  "mounts": [
-    "source=${localEnv:HOME}/.ssh,target=/root/.ssh,type=bind,readonly"
-  ],
-
-  // Одноразово добавим ключи хоста GitHub, чтобы не было вопроса (yes/no).
-  // Права тоже починим (OpenSSH придирчив).
-  "postCreateCommand": "mkdir -p ~/.ssh && chmod 700 ~/.ssh && (ssh-keyscan -H github.com >> ~/.ssh/known_hosts || true) && (chmod 600 ~/.ssh/* 2>/dev/null || true)",
-
-  // Configure proxy environment variables so tools inside the container (e.g., VS Code server) 
-  // can access the internet through the host proxy
   "containerEnv": {
     "HTTP_PROXY": "http://host.docker.internal:1082",
     "HTTPS_PROXY": "http://host.docker.internal:1082",
     "NO_PROXY": "localhost,127.0.0.1,::1"
   },
+  "mounts": [
+    "source=${localEnv:HOME}/.ssh,target=/root/.ssh,type=bind,readonly"
+  ],
+  // One-time: add GitHub host key to avoid prompt; fix OpenSSH perms.
+  "postCreateCommand": "mkdir -p ~/.ssh && chmod 700 ~/.ssh && (ssh-keyscan -H github.com >> ~/.ssh/known_hosts || true) && (chmod 600 ~/.ssh/* 2>/dev/null || true)",
 
   "customizations": {
     "vscode": {
@@ -33,7 +25,8 @@
         "nuxtr.nuxtr-vscode",
         "openai.chatgpt",
         "stylelint.vscode-stylelint",
-        "mrmlnc.vscode-scss"
+        "mrmlnc.vscode-scss",
+        "ms-azuretools.vscode-containers"
       ],
       "settings": {
         "editor": {
@@ -41,15 +34,6 @@
             "source.fixAll.eslint": "explicit",
             "source.fixAll.stylelint": "explicit"
           }
-        },
-        "remote.extensionKind": {
-          /*
-          * Forces the ChatGPT extension to run in the VS Code UI (host), not inside the dev container.
-          * This fixes the "Work with app" integration issue described in:
-          * https://community.openai.com/t/codex-started-to-be-useless-in-vscode-dev-containers-on-2025-10-09/1361878
-          * Only for MacOS with Chat GPT app 🤓
-          */
-          "openai.chatgpt": ["workspace"]
         },
         "stylelint": {
           "configFile": "./stylelint.config.mjs",
@@ -60,9 +44,6 @@
         },
         "eslint": {
           "useFlatConfig": true
-        },
-        "chatgpt":  {
-          "commentCodeLensEnabled": false
         }
       }
     }

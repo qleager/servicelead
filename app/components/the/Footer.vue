@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { IconProps } from '@/components/App/Icon.vue'
+import type { IconProps } from '@/components/app/Icon.vue'
 
 interface MenuItem {
   label?: string
@@ -9,8 +9,8 @@ interface MenuItem {
 
 const menuItems: MenuItem[] = [
   { label: 'Приватный Telegram-канал', to: '#', icon: 'tg_line_24' },
-  { label: '', to: '#', icon: 'vk' },
-  { label: '', to: '#', icon: 'youtube' },
+  { label: undefined, to: '#', icon: 'vk' },
+  { label: undefined, to: '#', icon: 'youtube' },
 ]
 </script>
 
@@ -48,6 +48,8 @@ const menuItems: MenuItem[] = [
   gap: $space-2;
   align-items: stretch;
 
+  padding: 0 $space-5;
+
   &__menu {
     display: flex;
     gap: $space-4;
@@ -62,11 +64,19 @@ const menuItems: MenuItem[] = [
       gap: $space-4;
       align-items: center;
 
-      color: $color-neutral-light-500;
+      color: $color-neutral;
       text-decoration: none;
 
+      transition: $blur-duration-sm;
+
       &:hover {
-        color: $color-neutral-light-600;
+        color: $color-neutral-600;
+        transition: $hover-duration-sm;
+      }
+
+      &:active {
+        color: $color-neutral-700;
+        transition: $active-duration-sm;
       }
     }
 

@@ -98,7 +98,7 @@ export type { Props as SlideoverProps, Emits as SlideoverEmits, Model as Slideov
   padding: $space-8 $space-4;
 
   background: white;
-  box-shadow: $shadow-light-mode;
+  box-shadow: $shadow-md;
 
   &__header {
     display: flex;

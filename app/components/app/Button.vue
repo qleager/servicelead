@@ -5,8 +5,8 @@ import type { IconProps } from './Icon.vue'
 interface Props {
   variant?: 'filled' | 'lined' | 'nofilled'
   icon?: IconProps['name']
-  size?: '3xs' | 'xxs' | 'xs' | 'sm' | 'md'
-  color?: 'primary' | 'white' | 'lighter' | 'darker'
+  size?: 'xs' | 'sm' | 'md' | 'lg'
+  color?: | 'white' | 'neutral' | 'primary'
   type?: 'button' | 'submit' | 'reset'
   // TODO: типы из router, чтобы тут затипизированы только реальные роуты
   to?: string
@@ -14,6 +14,7 @@ interface Props {
   value?: string | number
   trailingIcon?: boolean
   disabled?: boolean
+  rounded?: boolean
   active?: boolean
   loading?: boolean
 }
@@ -23,6 +24,7 @@ const slots = useSlots()
 const props = withDefaults(defineProps<Props>(), {
   variant: 'filled',
   size: 'md',
+  rounded: true,
   color: 'primary',
   type: 'button',
 })
@@ -47,6 +49,7 @@ const classname = computed(() => [
   { 'button-trailing-icon': props.trailingIcon },
   { 'button-disabled': props.disabled },
   { 'button-active': props.active },
+  { 'button-rounded': props.rounded },
   { 'button-loading': props.loading },
   { 'button-without-slot': !slots.default },
 ])
@@ -89,10 +92,9 @@ export type { Props as ButtonProps }
   $variant-nofilled: $this + '-variant-nofilled';
 
   ///
-  $btn-color-primary: $this + '-color-primary';
-  $btn-color-white: $this + '-color-white';
-  $btn-color-lighter: $this + '-color-lighter';
-  $btn-color-darker: $this + '-color-darker';
+  $primary-color: $this + '-color-primary';
+  $white-color: $this + '-color-white';
+  $neutral-color: $this + '-color-neutral';
 
   ///
   $size-3xs: $this + '-size-3xs';
@@ -100,8 +102,10 @@ export type { Props as ButtonProps }
   $size-xs: $this + '-size-xs';
   $size-sm: $this + '-size-sm';
   $size-md: $this + '-size-md';
+  $size-lg: $this + '-size-lg';
   $trailing-icon: $this + '-trailing-icon';
   $disabled: & + '-disabled';
+  $rounded: & + '-rounded';
   $loading: & + '-loading';
   $without-slot: & + '-without-slot';
 
@@ -112,7 +116,6 @@ export type { Props as ButtonProps }
   justify-content: space-between;
 
   width: fit-content;
-  border-radius: 39px;
 
   transition: $blur-duration-sm;
 
@@ -124,172 +127,150 @@ export type { Props as ButtonProps }
     transition: $active-duration-sm;
   }
 
-  &#{$size-3xs} {
-    height: 20px;
-  }
-
-  &#{$size-xxs} {
-    height: 24px;
+  &#{$rounded} {
+    border-radius: 50px !important;
   }
 
   &#{$size-xs} {
+    gap: $space-2;
     height: 32px;
+    padding-inline: $space-3;
+    border-radius: $radius-2;
+
+    @include text(regular, xs);
   }
 
   &#{$size-sm} {
-    gap: $space-4;
+    gap: $space-3;
     height: 40px;
-    padding: $space-2 $space-6;
-    font-size: 14px;
+    padding-inline: $space-4;
+    border-radius: $radius-2;
+
+    @include text(regular, sm);
   }
 
   &#{$size-md} {
     gap: $space-4;
     height: 48px;
-    padding: $space-3 $space-6;
-    font-size: 16px;
+    padding-inline: $space-5;
+    border-radius: $radius-2;
+
+    @include text(regular, md);
+  }
+
+  &#{$size-lg} {
+    gap: $space-5;
+    height: 56px;
+    padding-inline: $space-6;
+    border-radius: $radius-3;
+
+    @include text(regular, md);
   }
 
   &#{$variant-filled} {
     --variant-filled-text-color: inherit;
+    --variant-filled-background-color: inherit;
 
     border: none !important;
-    color: var(--variant-filled-text-color) !important;
-    background-color: transparent;
+    color: var(--variant-filled-text-color);
+    background-color: var(--variant-filled-background-color);
   }
 
   &#{$variant-lined} {
+    --variant-lined-background-color: inherit;
+    --variant-lined-text-color: inherit;
+
     border: 1px solid transparent;
-    background-color: transparent !important;
+    color: var(--variant-lined-text-color) ;
+    background-color: var(--variant-lined-background-color);
   }
 
   &#{$variant-nofilled} {
+    --variant-nofilled-text-color: inherit;
+
     border: none !important;
-    background-color: transparent !important;
+    color: var(--variant-nofilled-text-color);
+    background-color: var(--variant-nofilled-background-color) !important;
   }
 
-  &#{$btn-color-primary} {
+  &#{$primary-color} {
     --variant-filled-text-color: white;
+    --variant-filled-background-color: #{$color-primary};
+    --variant-nofilled-text-color: #{$color-primary};
+    --variant-lined-text-color: #{$color-primary};
 
-    border-color: #{$color-primary};
-    color: $color-primary;
-    background-color: #{$color-primary};
+    border-color: $color-primary;
 
     &:hover {
-      border-color: #{$color-primary-600};
-      background-color: #{$color-primary-600};
+      --variant-lined-text-color: white;
+      --variant-filled-background-color: #{$color-primary-600};
+      --variant-nofilled-text-color: #{$color-primary-600};
+      --variant-lined-background-color: #{$color-primary};
+
+      border-color: $color-primary-600;
     }
 
-    &#{$active} {
+    #{$active} {
+      --variant-nofilled-text-color: #{$color-primary-700};
+      --variant-filled-background-color: #{$color-primary-700};
+      --variant-lined-background-color: #{$color-primary-700};
+
       border-color: #{$color-primary-700};
-      background-color: #{$color-primary-700};
-    }
-
-    &:disabled {
-      --variant-filled-text-color: #{$color-neutral-light-400};
-
-      border-color: #{$color-neutral-light-100};
-      background-color: #{$color-neutral-light-100};
     }
   }
 
-  &#{$btn-color-white} {
-    --variant-filled-text-color: $color-neutral-light-950;
+  &#{$white-color} {
+    --variant-filled-background-color: white;
+    --variant-filled-text-color: $color-neutral-950;
+    --variant-lined-text-color: white;
+    --variant-nofilled-background-color: transparent;
+    --variant-nofilled-text-color: white;
 
     border-color: white;
-    color: white;
-    background-color: white;
 
     &:hover {
-      border-color: #{$color-neutral-light-200};
-      color: #{$color-neutral-light-200};
-      background-color: #{$color-neutral-light-200};
+      --variant-filled-background-color: #{$color-neutral-100};
+      --variant-nofilled-background-color: white;
+      --variant-lined-background-color: white;
+      --variant-lined-text-color: #{$color-neutral-950};
+
+      border-color: #{$color-neutral-50};
+      color: #{$color-neutral-950};
     }
 
-    &#{$active} {
-      border-color: #{$color-neutral-light-400};
-      color: #{$color-neutral-light-400};
-      background-color: #{$color-neutral-light-400};
+    #{$active} {
+      --variant-filled-background-color: #{$color-neutral-150};
+      --variant-nofilled-background-color: #{$color-neutral-100};
+      --variant-lined-background-color: #{$color-neutral-100};
+
+      border-color: #{$color-neutral-150};
+      color: #{$color-neutral-950};
     }
-
-    &:disabled {
-      --variant-filled-text-color: #{$color-neutral-light-400};
-
-      border-color: #{$color-neutral-light-100};
-      background-color: #{$color-neutral-light-100};
-    }
-
-    // --btn-base: white;
-    // --btn-hover: #{$color-neutral-light-200};
-    // --btn-active: #{$color-neutral-light-400};
-    // --btn-text-base: #{$color-neutral-light-950};
-    // --btn-text-disabled: #{$color-neutral-light-400};
   }
 
-  &#{$btn-color-lighter} {
-    --variant-filled-text-color: $color-neutral-light-950;
+  &#{$neutral-color} {
+    --variant-filled-text-color: $color-neutral-950;
+    --variant-filled-background-color: #{$color-neutral-100};
+    --variant-lined-text-color: #{$color-neutral-950};
+    --variant-nofilled-text-color: #{$color-neutral-400};
 
-    border-color: $color-neutral-light-100;
-    color: $color-neutral-light-100;
-    background-color: $color-neutral-light-100;
-
-    &:hover {
-      border-color: #{$color-neutral-light-300};
-      color: #{$color-neutral-light-300};
-      background-color: #{$color-neutral-light-300};
-    }
-
-    &#{$active} {
-      border-color: #{$color-neutral-light-400};
-      color: #{$color-neutral-light-400};
-      background-color: #{$color-neutral-light-400};
-    }
-
-    &:disabled {
-      --variant-filled-text-color: #{$color-neutral-light-400};
-
-      border-color: #{$color-neutral-light-100};
-      background-color: #{$color-neutral-light-100};
-    }
-
-    // --btn-base: #{$color-neutral-light-100};
-    // --btn-hover: #{$color-neutral-light-300};
-    // --btn-active: #{$color-neutral-light-400};
-    // --btn-text-base: #{$color-neutral-light-950};
-    // --btn-text-disabled: #{$color-neutral-light-400};
-  }
-
-  &#{$btn-color-darker} {
-    --variant-filled-text-color: white;
-
-    border-color: $color-neutral-dark-500;
-    color: $color-neutral-dark-500;
-    background-color: $color-neutral-dark-500;
+    border-color: $color-neutral-300;
 
     &:hover {
-      border-color: #{$color-neutral-light-400};
-      color: #{$color-neutral-light-400};
-      background-color: #{$color-neutral-light-400};
+      --variant-filled-background-color: #{$color-neutral-150};
+      --variant-lined-background-color: white;
+      --variant-nofilled-text-color: #{$color-neutral-500};
+
+      border-color: white;
     }
 
-    &#{$active} {
-      border-color: #{$color-neutral-light-300};
-      color: #{$color-neutral-light-300};
-      background-color: #{$color-neutral-light-300};
+    #{$active} {
+      --variant-filled-background-color: #{$color-neutral-200};
+      --variant-lined-background-color: #{$color-neutral-100};
+      --variant-nofilled-text-color: #{$color-neutral-600};
+
+      border-color: $color-neutral-100;
     }
-
-    &:disabled {
-      --variant-filled-text-color: #{$color-neutral-light-400};
-
-      border-color: #{$color-neutral-light-100};
-      background-color: #{$color-neutral-light-100};
-    }
-
-    // --btn-base: #{$color-neutral-dark-500};
-    // --btn-hover: #{$color-neutral-dark-400};
-    // --btn-active: #{$color-neutral-dark-300};
-    // --btn-text-base: white;
-    // --btn-text-disabled: #{$color-neutral-light-400};
   }
 
   &#{$trailing-icon} {
@@ -299,7 +280,7 @@ export type { Props as ButtonProps }
   &#{$disabled} {
     pointer-events: none;
     cursor: not-allowed;
-    color: $color-neutral-light-300;
+    color: $color-neutral-300;
   }
 
   &#{$loading} {
@@ -322,6 +303,29 @@ export type { Props as ButtonProps }
     // если loading state => rotate animation из https://animate.style
     // в app/assets/scss/design-system/animation.scss добавми
     // как в leadsale
+    #{$size-xs} & {
+      width: 16px;
+      height: 16px;
+      margin-inline: -#{$space-05};
+    }
+
+    #{$size-sm} & {
+      width: 20px;
+      height: 20px;
+      margin-inline: -#{$space-1};
+    }
+
+    #{$size-md} & {
+      width: 24px;
+      height: 24px;
+      margin-inline: -#{$space-2};
+    }
+
+    #{$size-lg} & {
+      width: 28px;
+      height: 28px;
+      margin-inline: -#{$space-3};
+    }
   }
 
   &__slot:empty {

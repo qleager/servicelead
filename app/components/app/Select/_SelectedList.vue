@@ -12,12 +12,27 @@ interface Emits {
 const { size } = inject('selectState') as SelectInjection
 
 defineProps<Props>()
+
 const emits = defineEmits<Emits>()
 
 const classname = computed(() => [
   'select-selected-list',
   `select-selected-list-size-${size}`,
 ])
+
+const tagSize = computed(() => {
+  switch (size) {
+    case 'md':
+      return 'sm'
+      break
+    case 'sm':
+      return 'xs'
+      break
+    default:
+      return 'md'
+      break
+  }
+})
 </script>
 
 <template>
@@ -28,7 +43,9 @@ const classname = computed(() => [
       v-for="(item, index) in items"
       :key="index"
       variant="lined"
-      :size
+      color="neutral"
+      :size="tagSize"
+      icon="mail_24"
       closable
       @close="emits('close', index)"
     >
@@ -55,7 +72,7 @@ const classname = computed(() => [
   }
 
   &#{$size-md} {
-    $space: $space-4;
+    $space: $space-5;
 
     margin-inline: -#{$space};
     padding-inline: $space;

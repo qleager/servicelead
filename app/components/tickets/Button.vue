@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import AppDropdown from '~/components/App/Dropdown.vue'
-import AppSheet from '~/components/App/Sheet.vue'
-import type { ButtonProps } from '~/components/App/Button.vue'
+import AppDropdown from '~/components/app/Dropdown.vue'
+import AppSheet from '~/components/app/Sheet.vue'
+import type { ButtonProps } from '~/components/app/Button.vue'
 
 interface Props {
   mode?: 'page' | 'dropdown' | 'sheet'
