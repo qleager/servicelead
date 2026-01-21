@@ -56,7 +56,7 @@ export type { Props as SlideoverProps, Emits as SlideoverEmits, Model as Slideov
             class="slideover__close"
             icon="close"
             size="sm"
-            color="lighter"
+            color="neutral"
             variant="nofilled"
             @click="close()"
           />
@@ -102,7 +102,7 @@ export type { Props as SlideoverProps, Emits as SlideoverEmits, Model as Slideov
 
   &__header {
     display: flex;
-    gap: $space-4;
+    gap: $space-30;
     align-items: center;
     justify-content: space-between;
 
@@ -131,16 +131,25 @@ export type { Props as SlideoverProps, Emits as SlideoverEmits, Model as Slideov
 
   &__main {
     overflow: auto;
+    padding-top: $space-1;
+  }
+
+  &__footer {
+    margin-top: auto;
   }
 
   &__slot {
+    &-default {
+      display: flex;
+      flex-direction: column;
+      gap: $space-3;
+    }
+
     &-footer {
       display: flex;
       gap: $space-6;
       justify-content: flex-end;
-
       width: 100%;
-      margin-top: auto;
     }
   }
 }
