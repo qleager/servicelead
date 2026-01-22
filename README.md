@@ -14,14 +14,12 @@
 - **Docker-based isolation**
 
 ## Use Snippets
+> [!Note]
+> Currently available only in VS Code
 
 Just start typing...
 
 ![Snippets Demo](docs/readme/snippets.gif)
-
-
-> [!Note]
-> Currently available only in VS Code
 
 ### SCSS Snippets
 
