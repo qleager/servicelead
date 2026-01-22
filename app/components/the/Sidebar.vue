@@ -108,6 +108,8 @@ const classname = computed(() => [
 
     color: $color-neutral;
 
+    transition: color $blur-duration-sm;
+
     #{$collapsed} & {
       transform: rotate(180deg);
       padding-right: $space-10;
@@ -116,6 +118,12 @@ const classname = computed(() => [
 
     &:hover {
       color: inherit;
+      transition-duration: $hover-duration-sm;
+    }
+
+    &:active {
+      color: inherit;
+      transition-duration: $active-duration-sm;
     }
 
     &-text {
