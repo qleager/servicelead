@@ -118,9 +118,7 @@ export type { Item as NavigationMenuItem }
       color: $color-neutral;
       text-decoration: none;
 
-      &:hover {
-        color: inherit;
-      }
+      transition: $blur-duration-sm;
 
       &#{$active} {
         pointer-events: none;
@@ -135,6 +133,16 @@ export type { Item as NavigationMenuItem }
 
       #{$minimal} & {
         width: fit-content;
+      }
+
+      &:hover {
+        color: inherit;
+        transition: $hover-duration-sm;
+      }
+
+      &:active {
+        color: inherit;
+        transition: $active-duration-sm;
       }
 
       &-text {
