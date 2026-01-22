@@ -98,7 +98,7 @@ const classname = computed(() => [
     cursor: pointer;
 
     display: flex;
-    gap: $space-4;
+    gap: $space-6;
     align-items: center;
     justify-content: flex-start;
 
@@ -110,7 +110,7 @@ const classname = computed(() => [
 
     #{$collapsed} & {
       transform: rotate(180deg);
-      padding-right: $space-8;
+      padding-right: $space-10;
       padding-left: $space-4;
     }
 
