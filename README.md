@@ -15,7 +15,47 @@
 
 ## Use Snippets
 
-Рассказать обо всех и показать gif использования
+Just start typing...
+
+![Snippets Demo](docs/readme/snippets.gif)
+
+
+> [!Note]
+> Currently available only in VS Code
+
+### SCSS Snippets
+
+#### `text` – get text typography @mixin
+```scss
+@include text(regular, sm);
+```
+#### `label` – get label typography @mixin
+```scss
+@include label(md, medium);
+```
+#### `color` – get color palette $variable
+```scss
+background: $color-neutral-50;
+```
+#### `radius` – get border radius $variable
+```scss
+border-radius: $radius-2;
+```
+#### `space` – get spacing $variable
+```scss
+gap: $space-2;
+```
+#### `duration` – get duration $variable
+```scss
+transition: $duration-blur-sm;
+```
+
+#### `ixxl`, `ixl`, `ilg`, `imd`, `ism`, `ixs` – get media query @mixin
+```scss
+@include xs {
+  display: none;
+}
+```
 
 ## Use Conventional Commits
 
