@@ -95,9 +95,9 @@ const classname = computed(() => [
     // Todo-1: поднять наверх перед детьми (перед &__icon)
     #{$minimal} & {
       width: fit-content;
-      height: auto;
       padding-inline: $space-1;
       border: none;
+      border-left: 1px solid transparent;
     }
   }
 }
