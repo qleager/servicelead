@@ -16,9 +16,7 @@ onMounted(() => {
 
 <template>
   <div class="offers">
-    <div class="offers__projects">
-      Проекты
-    </div>
+    <OffersProjects />
     <div class="offers__header">
       <div class="offers__title">
         Офферы

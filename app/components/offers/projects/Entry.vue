@@ -119,8 +119,8 @@ const mockTags = ref<string[]>([
 
   transition: $blur-duration-sm;
 
-  &:hover & {
-    transition: $hover-duration-sm;
+  &:hover {
+    transition: $hover-duration-sm;;
   }
 
   &__corner {
