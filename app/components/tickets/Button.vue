@@ -42,7 +42,81 @@ const onButtonClick = async () => {
       @click="onButtonClick"
     />
     <template #content>
-      <p> Тут будет что-то </p>
+      <AppWidget
+        title="Тикеты"
+        icon="message"
+        class="tickets-button__widget"
+      >
+        <div
+          v-if="false"
+          class="tickets-button__list"
+        >
+          <TicketsEntry
+            v-for="i in 4"
+            :key="i"
+            minimal
+          />
+        </div>
+        <div
+          v-else
+          class="tickets-button__empty"
+        >
+          <AppIcon
+            name="parchment"
+            :size="124"
+            class="tickets-button__empty-icon"
+          />
+          <div class="tickets-button__empty-text">
+            <div>У вас еще нет ни одного тикета </div>
+            <div>Хотите создать?</div>
+          </div>
+          <AppButton
+            color="neutral"
+            class="tickets-button__empty-button"
+          >
+            Создать тикет
+          </AppButton>
+        </div>
+      </AppWidget>
     </template>
   </Component>
 </template>
+
+<style lang="scss">
+.tickets-button {
+  &__widget {
+    min-width: 321px;
+    max-width: 321px;
+    padding: $space-8 $space-4;
+  }
+
+  &__empty {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+
+    width: 100%;
+
+    &-icon {
+      color: $color-neutral-400;
+    }
+
+    &-text {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    &-button {
+      justify-content: center;
+      width: 100%;
+    }
+  }
+
+  .dropdown__slot-content {
+    padding: 0;
+    border-radius: 32px;
+  }
+}
+</style>

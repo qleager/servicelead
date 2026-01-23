@@ -16,6 +16,7 @@
         class="header__tickets"
         variant="lined"
         color="neutral"
+        mode="dropdown"
       />
       <ManagerButton class="header__manager" />
       <NavigationActions placement="bottom" />

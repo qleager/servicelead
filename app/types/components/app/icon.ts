@@ -59,6 +59,7 @@ export const iconNames = [
   'news',
   'notice',
   'offers',
+  'parchment',
   'phone_24',
   'plus',
   'price',
