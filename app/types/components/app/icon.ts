@@ -69,6 +69,7 @@ export const iconNames = [
   'search',
   'seasonal_demand',
   'stack',
+  'stairs_corner',
   'statistic',
   'stock',
   'sun_32',
