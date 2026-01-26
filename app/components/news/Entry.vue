@@ -55,6 +55,8 @@ const classname = computed(() => [
   $minimal: & + '-minimal';
   $read: & + '-read';
 
+  cursor: pointer;
+
   display: flex;
   flex-direction: column;
   gap: $space-2;
@@ -70,7 +72,6 @@ const classname = computed(() => [
     padding: $space-2 $space-3;
 
       &:hover {
-        cursor: pointer;
         background-color: $color-neutral-50;
       }
   }

@@ -52,7 +52,7 @@ const onButtonClick = async () => {
           class="tickets-button__list"
         >
           <TicketsEntry
-            v-for="i in 4"
+            v-for
             :key="i"
             minimal
           />
@@ -61,14 +61,15 @@ const onButtonClick = async () => {
           v-else
           class="tickets-button__empty"
         >
-          <AppIcon
-            name="parchment"
-            :size="124"
-            class="tickets-button__empty-icon"
-          />
-          <div class="tickets-button__empty-text">
-            <div>У вас еще нет ни одного тикета </div>
-            <div>Хотите создать?</div>
+          <div class="tickets-button__empty-content">
+            <NuxtImg
+              class="tickets-button__empty-icon"
+              src="/images/tickets/parchment.svg"
+            />
+            <div class="tickets-button__empty-text">
+              <div>У вас еще нет ни одного тикета </div>
+              <div>Хотите создать?</div>
+            </div>
           </div>
           <AppButton
             color="neutral"
@@ -85,6 +86,7 @@ const onButtonClick = async () => {
 <style lang="scss">
 .tickets-button {
   &__widget {
+    gap: 24px;
     min-width: 321px;
     max-width: 321px;
     padding: $space-8 $space-4;
@@ -98,7 +100,16 @@ const onButtonClick = async () => {
 
     width: 100%;
 
+    &-content {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: center;
+    }
+
     &-icon {
+      width: 124px;
+      height: 124px;
       color: $color-neutral-400;
     }
 
@@ -114,9 +125,13 @@ const onButtonClick = async () => {
     }
   }
 
-  .dropdown__slot-content {
-    padding: 0;
-    border-radius: 32px;
+  .dropdown {
+    &__slot {
+      &-content {
+        padding: 0;
+        border-radius: 32px;
+      }
+    }
   }
 }
 </style>
