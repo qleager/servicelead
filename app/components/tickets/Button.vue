@@ -52,7 +52,7 @@ const onButtonClick = async () => {
           class="tickets-button__list"
         >
           <TicketsEntry
-            v-for
+            v-for="i in 4"
             :key="i"
             minimal
           />
