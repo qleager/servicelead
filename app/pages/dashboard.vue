@@ -55,6 +55,7 @@
 
   &__news {
     grid-area: news;
+    max-height: 440px;
   }
 
   &__income {

@@ -21,8 +21,6 @@
 
 <style lang="scss">
   .news-widget {
-    max-height: 440px;
-
     &__list {
       overflow-y: auto;
       max-width: 100%;
