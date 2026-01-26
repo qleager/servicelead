@@ -26,7 +26,7 @@ const rootElement = computed(() => {
 
 const onButtonClick = async () => {
   if (props.mode !== 'page') return
-  await navigateTo('notifications')
+  await navigateTo('/notifications')
 }
 </script>
 

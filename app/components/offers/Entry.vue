@@ -114,7 +114,7 @@ const favoritesColor = computed(() => props.offer.isFavorite ? 'primary' : 'whit
           variant="lined"
           size="xs"
           color="neutral"
-          :to="`/offers/${offer.id}`"
+          :to="{ name: 'offers-id', params: { id: offer.id } }"
         />
       </div>
     </div>
