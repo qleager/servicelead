@@ -61,7 +61,7 @@ transition: $duration-blur-sm;
 `type`(`scope`): `subject`
 
 `type`: Заголовок коммита, указывающего на специфику внесенных в кодовую базу изменений  
-`scope`?: Область, характеризующая фрагмент кода, которую затронули изменения (не обязательно)  
+`scope`?: Область, бизнес-логика или логическая самостоятельная часть приложения, характеризующая фрагмент кода, которую затронули изменения (не обязательно)  
 `subject`: Описание в повелительном наклонении (imperative mood)
 
 | Types         | Is                                                              |
@@ -79,15 +79,14 @@ transition: $duration-blur-sm;
 | test	        | Добавление тестов                                               |
 
 **Примеры:**  
-fix(offer): error when save offer to favorite  
-feat(AppIcon): setup component  
-style: add props comment at AppComponent  
+fix(offer): error when save offer to favorite
+feat(AppIcon): setup component
+style: add space after function in Component
 docs(readme): add Use Conventional Commits block
-
-`scope` — это **логическая самостоятельная часть приложения**, а не файл, компонент или подпапка.
+docs(AppButton): add jsondoc to props
 
 <details>
-<summary>Подробнее `scope`</summary>
+<summary>Подробнее про `scope`</summary>
 
 ### Основной принцип
 
