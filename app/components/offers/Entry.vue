@@ -54,7 +54,10 @@ const favoritesColor = computed(() => props.offer.isFavorite ? 'primary' : 'whit
       <div class="offers-entry__content">
         <div class="offers-entry__info">
           <div class="offers-entry__info-category">
-            <AppTag size="sm">
+            <AppTag
+              size="sm"
+              variant="soft"
+            >
               {{ offer.tag }}
             </AppTag>
           </div>

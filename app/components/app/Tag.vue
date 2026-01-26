@@ -2,8 +2,9 @@
 import type { IconProps } from './Icon.vue'
 
 interface Props {
-  variant?: 'filled' | 'lined' | 'nofilled'
-  color?: 'white' | 'neutral' | 'primary'
+  variant?: 'filled' | 'soft' | 'lined' | 'nofilled'
+  // TODO: взять из ../types/ds/index.ts если уже создан
+  color?: 'white' | 'primary' | 'neutral' | 'gray' | 'red' | 'yellow' | 'green' | 'blue' | 'purple'
   icon?: IconProps['name']
   trailingIcon?: boolean
   size?: 'sm' | 'md' | 'lg'
@@ -62,6 +63,7 @@ const classname = computed(() => ([
 .tag {
   $this: &;
   $variant-filled: $this + '-variant-filled';
+  $variant-soft: $this + '-variant-soft';
   $variant-lined: $this + '-variant-lined';
   $variant-nofilled: $this + '-variant-nofilled';
   $size-xs: $this + '-size-xs';
@@ -70,9 +72,15 @@ const classname = computed(() => ([
   $size-lg: $this + '-size-lg';
   $actionable: $this + '-actionable';
   $rounded: $this + '-rounded';
-  $neutral-color: $this + '-color-neutral';
   $white-color: $this + '-color-white';
   $primary-color: $this + '-color-primary';
+  $neutral-color: $this + '-color-neutral';
+  $gray-color: $this + '-color-gray';
+  $red-color: $this + '-color-red';
+  $yellow-color: $this + '-color-yellow';
+  $green-color: $this + '-color-green';
+  $blue-color: $this + '-color-blue';
+  $purple-color: $this + '-color-purple';
   $icon: $this + '-icon';
   $icon-trailing: $this + '-icon-trailing';
 
@@ -93,6 +101,14 @@ const classname = computed(() => ([
 
     color: var(--variant-filled-text-color);
     background-color: transparent;
+  }
+
+  &#{$variant-soft} {
+    --variant-soft-text-color: inherit;
+    --variant-soft-background-color: transparent;
+
+    color: var(--variant-soft-text-color);
+    background-color: var(--variant-soft-background-color) !important;
   }
 
   &#{$variant-lined} {
@@ -128,28 +144,99 @@ const classname = computed(() => ([
 
   &#{$white-color} {
     --variant-lined-text-color: white;
-    --variant-filled-text-color: $color-neutral-950;
+    --variant-filled-text-color: #{$color-neutral-950};
     --variant-nofilled-text-color: white;
+    --variant-soft-text-color: #{$color-neutral-700};
+    --variant-soft-background-color: white;
 
     border-color: white;
     background-color: white;
-  }
-
-  &#{$neutral-color} {
-    --variant-lined-text-color: #{$color-neutral-950};
-    --variant-nofilled-text-color: #{$color-neutral-400};
-
-    border-color: $color-neutral-300;
-    background-color: $color-neutral-100;
   }
 
   &#{$primary-color} {
     --variant-filled-text-color: white;
     --variant-lined-text-color: #{$color-primary};
     --variant-nofilled-text-color: #{$color-primary};
+    --variant-soft-text-color: #{$color-primary-700};
+    --variant-soft-background-color: #{$color-primary-50};
 
     border-color: $color-primary;
     background-color: $color-primary;
+  }
+
+  &#{$neutral-color} {
+    --variant-lined-text-color: #{$color-neutral-950};
+    --variant-nofilled-text-color: #{$color-neutral-400};
+    --variant-soft-text-color: #{$color-neutral-700};
+    --variant-soft-background-color: #{$color-neutral-50};
+
+    border-color: $color-neutral-300;
+    background-color: $color-neutral-100;
+  }
+
+  &#{$gray-color} {
+    --variant-lined-text-color: #{$color-gray-950};
+    --variant-nofilled-text-color: #{$color-gray-400};
+    --variant-soft-text-color: #{$color-gray-700};
+    --variant-soft-background-color: #{$color-gray-50};
+
+    border-color: $color-gray-300;
+    background-color: $color-gray-100;
+  }
+
+  &#{$red-color} {
+    --variant-filled-text-color: white;
+    --variant-lined-text-color: #{$color-red};
+    --variant-nofilled-text-color: #{$color-red};
+    --variant-soft-text-color: #{$color-red-700};
+    --variant-soft-background-color: #{$color-red-50};
+
+    border-color: $color-red;
+    background-color: $color-red;
+  }
+
+  &#{$yellow-color} {
+    --variant-filled-text-color: white;
+    --variant-lined-text-color: #{$color-yellow};
+    --variant-nofilled-text-color: #{$color-yellow};
+    --variant-soft-text-color: #{$color-yellow-700};
+    --variant-soft-background-color: #{$color-yellow-50};
+
+    border-color: $color-yellow;
+    background-color: $color-yellow;
+  }
+
+  &#{$green-color} {
+    --variant-filled-text-color: white;
+    --variant-lined-text-color: #{$color-green};
+    --variant-nofilled-text-color: #{$color-green};
+    --variant-soft-text-color: #{$color-green-700};
+    --variant-soft-background-color: #{$color-green-50};
+
+    border-color: $color-green;
+    background-color: $color-green;
+  }
+
+  &#{$blue-color} {
+    --variant-filled-text-color: white;
+    --variant-lined-text-color: #{$color-blue};
+    --variant-nofilled-text-color: #{$color-blue};
+    --variant-soft-text-color: #{$color-blue-700};
+    --variant-soft-background-color: #{$color-blue-50};
+
+    border-color: $color-blue;
+    background-color: $color-blue;
+  }
+
+  &#{$purple-color} {
+    --variant-filled-text-color: white;
+    --variant-lined-text-color: #{$color-purple};
+    --variant-nofilled-text-color: #{$color-purple};
+    --variant-soft-text-color: #{$color-purple-700};
+    --variant-soft-background-color: #{$color-purple-50};
+
+    border-color: $color-purple;
+    background-color: $color-purple;
   }
 
   &#{$size-xs} {
