@@ -5,6 +5,7 @@ import type { IconProps } from './Icon.vue'
 interface Props {
   icon?: IconProps['name']
   title?: string
+  description?: string
   /**
    * Text on the action button
    *
@@ -47,6 +48,12 @@ const isHeadVisible = computed (() => Boolean(props.icon || props.title || props
 </script>
 
 <template>
+  <!-- TODO:
+    1. Меняется DOM
+      формула Emmit раземетки: card > (header > title + description) + (main > slot) + (footer > slot)
+      реализацию хедера взять с AppModal (иконку оставить)
+    2. Паддинги задать не самому виджету, а header/main/footer – нужно для скрола без обрезания
+  -->
   <div :class="classname">
     <div
       v-if="isHeadVisible"

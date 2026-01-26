@@ -97,24 +97,29 @@ export type { Props as ModalProps, Emits as ModalEmits, Model as ModalModel }
         </div>
       </header>
 
-      <div
-        v-if="$slots.content"
-        class="modal__slot modal__main"
-      >
-        <slot
-          name="content"
-          :close
-        />
+      <div class="modal__main">
+        <!-- IDEA: сделать компонент слота? мы везде используем такую конструкцию -->
+        <div
+          v-if="$slots.content"
+          class="modal__slot modal__slot-content"
+        >
+          <slot
+            name="content"
+            :close
+          />
+        </div>
       </div>
 
-      <footer
-        v-if="$slots.footer"
-        class="modal__slot modal__footer"
-      >
-        <slot
-          name="footer"
-          :close
-        />
+      <footer class="modal__footer">
+        <div
+          v-if="$slots.footer"
+          class="modal__slot modal__slot-footer"
+        >
+          <slot
+            name="footer"
+            :close
+          />
+        </div>
       </footer>
     </div>
   </AppOverlay>
