@@ -1,3 +1,16 @@
+<!--
+ TODO:
+  Привести к консистентности c AppModal
+  У AppSlideover должна появиться такая же логика работы header: слот-title, слот-description
+  В итоге должно получиться, что если мы изменим название компонента AppModal на AppSlideover, то весь контент компонента будет корректно отображен = будет консистентен
+
+  2. снять паддинги с .slideover и добавить их header/main/footer
+      у header/main/footer должны быть block-padding
+      убедиться, что когда нет header или footer отступы снизу(32) и сверху(40) есть
+        если, отступы между блоками не совпадают из-за этого, можно поработать с обратныйм маргином подбить у header/footer
+
+  3. убравть стили с slideover__slot-footer, я так понял сделано для кнопок - мы стилизуем контент в слотах в родителе
+-->
 <script lang="ts" setup>
 import type { IconProps } from './Icon.vue'
 
@@ -40,13 +53,14 @@ export type { Props as SlideoverProps, Emits as SlideoverEmits, Model as Slideov
       @after-enter="emits('after:enter')"
       @after-leave="emits('after:leave')"
     >
+      <!-- IDEA: AppCard с переопредленными стилями здесь? -->
       <div class="slideover">
         <header class="slideover__header">
           <div class="slideover__title">
             <AppIcon
               v-if="icon"
               class="slideover__title-image"
-              :name="icon!"
+              :name="icon"
             />
             <div class="slideover__title-text">
               {{ title }}
@@ -56,7 +70,7 @@ export type { Props as SlideoverProps, Emits as SlideoverEmits, Model as Slideov
             class="slideover__close"
             icon="close"
             size="sm"
-            color="lighter"
+            color="neutral"
             variant="nofilled"
             @click="close()"
           />
@@ -113,7 +127,8 @@ export type { Props as SlideoverProps, Emits as SlideoverEmits, Model as Slideov
     display: flex;
     gap: $space-2;
     align-items: center;
-    font-weight: 600;
+
+    @include text(semibold, sm);
 
     &-text {
       :empty {

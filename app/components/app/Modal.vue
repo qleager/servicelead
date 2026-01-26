@@ -1,3 +1,20 @@
+<!--
+ TODO
+  1. c default-slot снимает класс trigger, добавлям класс modal__slot-default
+  2. снять паддинги с .modal и добавить их header/main/footer
+      у header/main/footer должны быть block-padding
+      убедиться, что когда нет header или footer отступы снизу(32) и сверху(40) есть
+        если, отступы между блоками не совпадают из-за этого, можно поработать с обратныйм маргином подбить у header/footer
+  3. можно затипизировать слоты (если хочешь)
+      interface Slots {
+        default: () => void
+        footer: (props: { close }) => void // как то так, не помню глянь доку
+      }
+      defineSlots<Slots>()
+
+    и проверить, можно ли тогда отказаться от useSlots()
+ -->
+
 <script lang="ts" setup>
 interface Props {
   title?: string
@@ -97,24 +114,29 @@ export type { Props as ModalProps, Emits as ModalEmits, Model as ModalModel }
         </div>
       </header>
 
-      <div
-        v-if="$slots.content"
-        class="modal__slot modal__main"
-      >
-        <slot
-          name="content"
-          :close
-        />
+      <div class="modal__main">
+        <!-- IDEA: сделать компонент слота? мы везде используем такую конструкцию -->
+        <div
+          v-if="$slots.content"
+          class="modal__slot modal__slot-content"
+        >
+          <slot
+            name="content"
+            :close
+          />
+        </div>
       </div>
 
-      <footer
-        v-if="$slots.footer"
-        class="modal__slot modal__footer"
-      >
-        <slot
-          name="footer"
-          :close
-        />
+      <footer class="modal__footer">
+        <div
+          v-if="$slots.footer"
+          class="modal__slot modal__slot-footer"
+        >
+          <slot
+            name="footer"
+            :close
+          />
+        </div>
       </footer>
     </div>
   </AppOverlay>

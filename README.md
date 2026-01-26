@@ -61,7 +61,7 @@ transition: $duration-blur-sm;
 `type`(`scope`): `subject`
 
 `type`: Заголовок коммита, указывающего на специфику внесенных в кодовую базу изменений  
-`scope`?: Область, характеризующая фрагмент кода, которую затронули изменения (не обязательно)  
+`scope`?: Область, бизнес-логика или логическая самостоятельная часть приложения, характеризующая фрагмент кода, которую затронули изменения (не обязательно)  
 `subject`: Описание в повелительном наклонении (imperative mood)
 
 | Types         | Is                                                              |
@@ -81,12 +81,91 @@ transition: $duration-blur-sm;
 **Примеры:**  
 fix(offer): error when save offer to favorite  
 feat(AppIcon): setup component  
-style: add props comment at AppComponent  
-docs(readme): add Use Conventional Commits block
+style: add space after function in Component  
+docs(readme): add Use Conventional Commits block  
+docs(AppButton): add jsondoc to props  
 
-> [!Tip]
-> Папки, в которых лежат компоненты, по факту уже и есть `scope`.  
-> Кроме App, раз они глобальные, то считаем их `scope` – за них самих
+<details>
+<summary>ℹ️ Подробнее про scope</summary>
+
+### Основной принцип
+
+`scope` определяется по бизнес-логике и функциональной самостоятельности, а не по структуре папок.
+
+Он отвечает на вопрос:  
+**какую часть продукта затрагивает этот коммит?**
+
+Если часть приложения:
+- имеет собственное назначение
+- является самостоятельной логической единицей
+- объединяет внутри себя страницы, компоненты и другую логику
+
+то это и есть `scope`.
+
+### Логические части приложения
+
+Крупные функциональные области проекта, которые уже используются как `scope`:
+
+- `offers`
+- `news`
+- `tickets`
+- `finance`
+- `statistics`
+- `auth`
+- `navigation`
+- `layout`
+- `types`
+- `и другие`
+
+### Примеры правильного использования
+
+#### Страницы
+
+Страница часто относится к самостоятельной логической части приложения.
+
+Бывает сама по себе отдельным scope:
+- `dashboard` → `scope: dashboard`
+
+Бывает частью более большой scope:
+- `/offers` → `scope: offers`
+- страница одного оффера (`/offers/[id]`) → `scope: offers`
+
+#### Компоненты
+
+Имена компонентов не образуют `scope`, 
+если не являются самостоятельной логической частью приложения или глобальным компонентом (components/app)
+
+пример news/Entry.vue:
+
+Правильно:  
+`feat(news): add new fields to Entry`
+
+Неправильно:  
+`feat(entry): add new block`
+`fix(newsEntry): update layout`
+
+#### Глобальные компоненты (components/App)
+
+Компоненты из папки `App` являются глобальными, поэтому их `scope` считается за них самих.
+
+- `feat(AppIcon): add new size option`
+- `fix(AppButton): correct disabled state styles`
+- `style(AppTabs): align typography with design system`
+
+#### Composables и бизнес-логика
+
+`scope` определяется по бизнес-сущности, а не по месту использования.
+
+- форма ввода SMS-кода → `auth`
+- логика статусов тикетов → `tickets`
+
+Примеры:
+- `feat(auth): add sms code input form`
+- `fix(tickets): correct status color mapping`
+
+</details>
+
+
 
 ## 📦 Требования
 

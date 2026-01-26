@@ -19,7 +19,8 @@ const classname = computed(() => [
       />
     </NuxtLink>
     <NavigationMain :minimal="isCollapsed" />
-    <div
+    <button
+      type="button"
       class="sidebar__button"
       @click="isCollapsed = !isCollapsed"
     >
@@ -27,7 +28,7 @@ const classname = computed(() => [
       <div class="sidebar__button-text">
         Свернуть меню
       </div>
-    </div>
+    </button>
   </aside>
 </template>
 
@@ -98,7 +99,7 @@ const classname = computed(() => [
     cursor: pointer;
 
     display: flex;
-    gap: $space-4;
+    gap: $space-6;
     align-items: center;
     justify-content: flex-start;
 
@@ -106,16 +107,26 @@ const classname = computed(() => [
     margin-top: auto;
     padding: $space-3 0 $space-3 $space-10;
 
+    @include text(semibold, md);
+
     color: $color-neutral;
+
+    transition: color $blur-duration-sm;
 
     #{$collapsed} & {
       transform: rotate(180deg);
-      padding-right: $space-8;
+      padding-right: $space-10;
       padding-left: $space-4;
     }
 
     &:hover {
       color: inherit;
+      transition-duration: $hover-duration-sm;
+    }
+
+    &:active {
+      color: inherit;
+      transition-duration: $active-duration-sm;
     }
 
     &-text {

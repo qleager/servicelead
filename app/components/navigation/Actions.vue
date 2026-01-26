@@ -48,7 +48,6 @@ const buttonColor = computed(() => isContentVisible.value ? 'neutral' : 'primary
     <template #content>
       <div class="navigation-actions">
         <div class="navigation-actions__list">
-          <!-- todo-4: перенименуем класс в __list-item, и так же для его детей -->
           <div
             v-for="item in items"
             :key="item.label"

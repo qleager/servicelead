@@ -41,9 +41,9 @@ const classname = computed(() => [
       :minimal
     />
 
-    <!-- TODO-3: заменить div на button(type=button) -->
-    <div
+    <button
       class="navigation__add-button"
+      type="button"
     >
       <AppIcon
         class="navigation__add-button-icon"
@@ -55,7 +55,7 @@ const classname = computed(() => [
       >
         Добавить пункт меню
       </div>
-    </div>
+    </button>
   </nav>
 </template>
 
@@ -79,9 +79,29 @@ const classname = computed(() => [
     border: 1px dashed $color-neutral-300;
     border-radius: $space-20;
 
-    // TODO-2: просто color-neutral -- 500 цвет - это дефолт цвет палитры
-    color: $color-neutral-500;
+    @include text(semibold, sm);
+
+    color: $color-neutral;
     white-space: nowrap;
+
+    transition: $blur-duration-sm;
+
+    &:hover {
+      color: inherit;
+      transition: $hover-duration-sm;
+    }
+
+    &:active {
+      color: inherit;
+      transition: $active-duration-sm;
+    }
+
+    #{$minimal} & {
+      width: fit-content;
+      padding-inline: $space-1;
+      border: none;
+      border-left: 1px solid transparent;
+    }
 
     &-icon {
       width: 48px;
@@ -90,14 +110,6 @@ const classname = computed(() => [
       border-radius: 50%;
 
       background-color: $color-neutral-100;
-    }
-
-    // Todo-1: поднять наверх перед детьми (перед &__icon)
-    #{$minimal} & {
-      width: fit-content;
-      height: auto;
-      padding-inline: $space-1;
-      border: none;
     }
   }
 }

@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import type { IconProps } from '../app/Icon.vue'
-import type { RouteTo } from '@shared/types/router.ts'
 
 interface Props {
   items: Item[]
@@ -97,7 +96,7 @@ export type { Item as NavigationMenuItem }
   &__list {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: $space-05;
     width: 100%;
 
     #{$minimal} & {
@@ -112,14 +111,13 @@ export type { Item as NavigationMenuItem }
 
       max-width: 100%;
       padding-block: $space-3;
-      padding-inline: $space-10 $space-4;
+      padding-inline: $space-9 $space-4;
+      border-left: $space-1 solid transparent;
 
       color: $color-neutral;
       text-decoration: none;
 
-      &:hover {
-        color: inherit;
-      }
+      transition: $blur-duration-sm;
 
       &#{$active} {
         pointer-events: none;
@@ -134,6 +132,16 @@ export type { Item as NavigationMenuItem }
 
       #{$minimal} & {
         width: fit-content;
+      }
+
+      &:hover {
+        color: inherit;
+        transition: $hover-duration-sm;
+      }
+
+      &:active {
+        color: inherit;
+        transition: $active-duration-sm;
       }
 
       &-text {

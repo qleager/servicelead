@@ -1,3 +1,10 @@
+<!--
+  TODO:
+    1. добавить type Model
+    2. экспорт типов props и model по аналогии с AppButton
+    3. убрать со слота стили – взамен обернуть его .dropdown__content
+        никогда не стилизуем слот-обертку
+-->
 <script lang="ts" setup>
 import type { FloaterModel, FloaterProps } from './Floater.vue'
 

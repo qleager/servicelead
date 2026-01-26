@@ -1,3 +1,7 @@
+<!-- TODO:
+  1. не используем цвет 500, просто $color-gray, например
+  2. AppChip добавить, пока просто точкой он
+-->
 <script lang="ts" setup>
 interface Props {
   minimal?: boolean
@@ -55,8 +59,6 @@ const classname = computed(() => [
   $minimal: & + '-minimal';
   $read: & + '-read';
 
-  cursor: pointer;
-
   display: flex;
   flex-direction: column;
   gap: $space-2;
@@ -71,9 +73,10 @@ const classname = computed(() => [
     min-height: auto;
     padding: $space-2 $space-3;
 
-      &:hover {
-        background-color: $color-neutral-50;
-      }
+    &:hover {
+      cursor: pointer;
+      background-color: $color-neutral-50;
+    }
   }
 
   &__header {
