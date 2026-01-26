@@ -9,7 +9,7 @@
  *          AppButton is 250px/48px                   => use sm
  *
  */
-// On blur transition durations
+// On blur transition durations (it's without :pseudo-class)
 $blur-duration-sm: 0.1s;
 $blur-duration-md: 0.25s;
 $blur-duration-lg: 0.4s;
