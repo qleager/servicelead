@@ -87,9 +87,14 @@ const onButtonClick = async () => {
 .tickets-button {
   &__widget {
     gap: 24px;
+
     min-width: 321px;
     max-width: 321px;
     padding: $space-8 $space-4;
+    border-radius: $radius-6 !important;
+
+    background: white;
+    box-shadow: $shadow-md;
   }
 
   &__empty {
@@ -122,15 +127,6 @@ const onButtonClick = async () => {
     &-button {
       justify-content: center;
       width: 100%;
-    }
-  }
-
-  .dropdown {
-    &__slot {
-      &-content {
-        padding: 0;
-        border-radius: 32px;
-      }
     }
   }
 }
