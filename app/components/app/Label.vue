@@ -1,3 +1,9 @@
+<!--
+ TODO
+    1. когда есть required prop компонент "отъезжает" вниз
+    2. добавить экспорт пропсов как в AppButton
+    3. класс слоту label__slot-default
+ -->
 <script lang="ts" setup>
 interface Props {
   title?: string
