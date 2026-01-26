@@ -116,7 +116,7 @@ const classname = computed(() => [
     border-radius: $radius-2;
 
     background-color: $color-blue-300;
-    outline: 1px dashed $color-primary-500;
+    outline: 1px dashed $color-primary;
 
     #{$minimal} & {
       display: flex;
@@ -135,7 +135,7 @@ const classname = computed(() => [
       height: 8px;
       border-radius: $radius-6;
 
-      background-color: $color-blue-500;
+      background-color: $color-blue;
 
       #{$read} & {
         background-color: $color-neutral-400;
@@ -152,7 +152,7 @@ const classname = computed(() => [
 
     @include text(regular, sm);
 
-    color: $color-neutral-500;
+    color: $color-neutral;
 
     #{$minimal} & {
       display: none;

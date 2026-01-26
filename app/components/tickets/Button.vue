@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import AppDropdown from '~/components/app/Dropdown.vue'
+import AppFloater from '~/components/app/Floater.vue'
 import AppSheet from '~/components/app/Sheet.vue'
 import type { ButtonProps } from '~/components/app/Button.vue'
 
@@ -16,7 +16,7 @@ const props = withDefaults(defineProps<Props>(), {
 const rootElement = computed(() => {
   switch (props.mode) {
     case 'dropdown':
-      return AppDropdown
+      return AppFloater
     case 'sheet':
       return AppSheet
     default:
@@ -28,6 +28,8 @@ const onButtonClick = async () => {
   if (props.mode !== 'page') return
   await navigateTo('tickets')
 }
+
+export type { Props as TicketsButtonProps }
 </script>
 
 <template>
@@ -64,7 +66,7 @@ const onButtonClick = async () => {
           <div class="tickets-button__empty-content">
             <NuxtImg
               class="tickets-button__empty-icon"
-              src="/images/tickets/parchment.svg"
+              src="/images/tickets/button__empty-icon.svg"
             />
             <div class="tickets-button__empty-text">
               <div>У вас еще нет ни одного тикета </div>
@@ -86,21 +88,20 @@ const onButtonClick = async () => {
 <style lang="scss">
 .tickets-button {
   &__widget {
-    gap: 24px;
+    gap: $space-6;
 
     min-width: 321px;
     max-width: 321px;
     padding: $space-8 $space-4;
     border-radius: $radius-6 !important;
 
-    background: white;
     box-shadow: $shadow-md;
   }
 
   &__empty {
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: $space-10;
     align-items: center;
 
     width: 100%;
@@ -108,7 +109,7 @@ const onButtonClick = async () => {
     &-content {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: $space-2;
       align-items: center;
     }
 
