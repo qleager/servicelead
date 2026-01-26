@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 const onButtonClick = async () => {
-  await navigateTo({ name: 'tickets' })
+  await navigateTo('/tickets')
 }
 </script>
 
