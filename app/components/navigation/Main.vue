@@ -83,6 +83,18 @@ const classname = computed(() => [
     color: $color-neutral-500;
     white-space: nowrap;
 
+    transition: $blur-duration-sm;
+
+    &:hover {
+      color: inherit;
+      transition: $hover-duration-sm;
+    }
+
+    &:active {
+      color: inherit;
+      transition: $active-duration-sm;
+    }
+
     &-icon {
       width: 48px;
       height: 48px;
@@ -95,9 +107,9 @@ const classname = computed(() => [
     // Todo-1: поднять наверх перед детьми (перед &__icon)
     #{$minimal} & {
       width: fit-content;
-      height: auto;
       padding-inline: $space-1;
       border: none;
+      border-left: 1px solid transparent;
     }
   }
 }
