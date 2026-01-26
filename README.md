@@ -86,7 +86,7 @@ docs(readme): add Use Conventional Commits block
 docs(AppButton): add jsondoc to props
 
 <details>
-<summary>Подробнее про `scope`</summary>
+<summary>ℹ️ Подробнее про scope</summary>
 
 ### Основной принцип
 
