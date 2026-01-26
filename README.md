@@ -79,11 +79,11 @@ transition: $duration-blur-sm;
 | test	        | Добавление тестов                                               |
 
 **Примеры:**  
-fix(offer): error when save offer to favorite
-feat(AppIcon): setup component
-style: add space after function in Component
-docs(readme): add Use Conventional Commits block
-docs(AppButton): add jsondoc to props
+fix(offer): error when save offer to favorite  
+feat(AppIcon): setup component  
+style: add space after function in Component  
+docs(readme): add Use Conventional Commits block  
+docs(AppButton): add jsondoc to props  
 
 <details>
 <summary>ℹ️ Подробнее про scope</summary>
