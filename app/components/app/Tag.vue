@@ -3,6 +3,7 @@ import type { IconProps } from './Icon.vue'
 
 interface Props {
   variant?: 'filled' | 'soft' | 'lined' | 'nofilled'
+  // TODO: взять из ../types/ds/index.ts если уже создан
   color?: 'white' | 'primary' | 'neutral' | 'gray' | 'red' | 'yellow' | 'green' | 'blue' | 'purple'
   icon?: IconProps['name']
   trailingIcon?: boolean
@@ -184,53 +185,58 @@ const classname = computed(() => ([
   }
 
   &#{$red-color} {
-    --variant-lined-text-color: #{$color-red-950};
-    --variant-nofilled-text-color: #{$color-red-400};
+    --variant-filled-text-color: white;
+    --variant-lined-text-color: #{$color-red};
+    --variant-nofilled-text-color: #{$color-red};
     --variant-soft-text-color: #{$color-red-700};
     --variant-soft-background-color: #{$color-red-50};
 
-    border-color: $color-red-300;
-    background-color: $color-red-100;
+    border-color: $color-red;
+    background-color: $color-red;
   }
 
   &#{$yellow-color} {
-    --variant-lined-text-color: #{$color-yellow-950};
-    --variant-nofilled-text-color: #{$color-yellow-400};
+    --variant-filled-text-color: white;
+    --variant-lined-text-color: #{$color-yellow};
+    --variant-nofilled-text-color: #{$color-yellow};
     --variant-soft-text-color: #{$color-yellow-700};
     --variant-soft-background-color: #{$color-yellow-50};
 
-    border-color: $color-yellow-300;
-    background-color: $color-yellow-100;
+    border-color: $color-yellow;
+    background-color: $color-yellow;
   }
 
   &#{$green-color} {
-    --variant-lined-text-color: #{$color-green-950};
-    --variant-nofilled-text-color: #{$color-green-400};
+    --variant-filled-text-color: white;
+    --variant-lined-text-color: #{$color-green};
+    --variant-nofilled-text-color: #{$color-green};
     --variant-soft-text-color: #{$color-green-700};
     --variant-soft-background-color: #{$color-green-50};
 
-    border-color: $color-green-300;
-    background-color: $color-green-100;
+    border-color: $color-green;
+    background-color: $color-green;
   }
 
   &#{$blue-color} {
-    --variant-lined-text-color: #{$color-blue-950};
-    --variant-nofilled-text-color: #{$color-blue-400};
+    --variant-filled-text-color: white;
+    --variant-lined-text-color: #{$color-blue};
+    --variant-nofilled-text-color: #{$color-blue};
     --variant-soft-text-color: #{$color-blue-700};
     --variant-soft-background-color: #{$color-blue-50};
 
-    border-color: $color-blue-300;
-    background-color: $color-blue-100;
+    border-color: $color-blue;
+    background-color: $color-blue;
   }
 
   &#{$purple-color} {
-    --variant-lined-text-color: #{$color-purple-950};
-    --variant-nofilled-text-color: #{$color-purple-400};
+    --variant-filled-text-color: white;
+    --variant-lined-text-color: #{$color-purple};
+    --variant-nofilled-text-color: #{$color-purple};
     --variant-soft-text-color: #{$color-purple-700};
     --variant-soft-background-color: #{$color-purple-50};
 
-    border-color: $color-purple-300;
-    background-color: $color-purple-100;
+    border-color: $color-purple;
+    background-color: $color-purple;
   }
 
   &#{$size-xs} {
