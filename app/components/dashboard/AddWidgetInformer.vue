@@ -1,7 +1,17 @@
+<!-- TODO:
+  1. замена структуры DOM. Emmit формула: &__icon + (&__content > &__title + &__text) + &__button
+  2. 500 в цветах убрать
+  3. padding 24 заменить на переменную
+  4. &__menu? убрать
+  5. &__top? убрать
+
+  .widget-informer__ticket-btn
+  Пример плохого уровня абстракции, если это блок надо будет заюзать в другом месте, и кнопка будет не создать тикет, а например "написать менджеру" - получится путаница
+  Простое правило: нейминг не по принадлежности, а по сущности
+    Плохо: голубая кнопка создать тикет
+    Идеально: кнопка в виджет информере
+-->
 <script lang="ts" setup>
-const onButtonClick = async () => {
-  await navigateTo('/tickets')
-}
 </script>
 
 <template>
@@ -27,7 +37,6 @@ const onButtonClick = async () => {
       variant="filled"
       color="neutral"
       class="widget-informer__ticket-btn"
-      @click="onButtonClick"
     >
       Создать тикет
     </AppButton>
