@@ -1,3 +1,8 @@
+<!--
+  TODO:
+    1. добавить type Model
+    2. экспорт типов props и model по аналогии с AppButton
+-->
 <script lang="ts" setup>
 interface Props {
   /**
