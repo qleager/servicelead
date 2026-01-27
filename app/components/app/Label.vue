@@ -51,9 +51,10 @@ export type { Props as LabelProps }
 
   &__title {
     margin-bottom: $space-2;
-    color: $color-neutral-950;
 
     @include label(md, medium);
+
+    color: $color-neutral-950;
 
     &:empty {
       display: none;
