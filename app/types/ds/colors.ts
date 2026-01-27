@@ -1,12 +1,9 @@
-const colors = [
-  'primary',
-  'neutral',
-  'gray',
-  'red',
-  'yellow',
-  'green',
-  'blue',
-  'purple',
-] as const
-
-export type Colors = (typeof colors)[number]
+export type Colors
+  = | 'primary'
+    | 'neutral'
+    | 'gray'
+    | 'red'
+    | 'yellow'
+    | 'green'
+    | 'blue'
+    | 'purple'
