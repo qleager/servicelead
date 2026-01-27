@@ -112,12 +112,7 @@ const isHeaderVisible = computed(() => isTitleVisible.value || isDescriptionVisi
     </header>
 
     <div class="widget__main">
-      <div
-        v-if="$slots.content"
-        class="widget__slot widget__slot-content"
-      >
-        <slot name="content" />
-      </div>
+      <slot />
     </div>
 
     <footer class="widget__footer">
