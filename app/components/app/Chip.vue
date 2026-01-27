@@ -57,6 +57,7 @@ const classname = computed(() => [
   $position-bottom-left: $this + '-position-bottom-left';
 
   // sizes
+  $size-xs: $this + '-size-xs';
   $size-sm: $this + '-size-sm';
   $size-md: $this + '-size-md';
   $size-lg: $this + '-size-lg';
@@ -93,6 +94,15 @@ const classname = computed(() => [
     border-radius: $space-9;
 
     white-space: nowrap;
+
+    #{$size-xs} & {
+      @include text(regular, 2xs);
+
+      size: 8px;
+      min-width: 8px;
+      min-height: 8px;
+      line-height: 8px;
+    }
 
     #{$size-sm} & {
       @include text(regular, 2xs);
