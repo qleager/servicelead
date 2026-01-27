@@ -1,7 +1,3 @@
-<!-- TODO:
-  1. не используем цвет 500, просто $color-gray, например
-  2. AppChip добавить, пока просто точкой он
--->
 <script lang="ts" setup>
 interface Props {
   minimal?: boolean
@@ -12,7 +8,6 @@ const props = defineProps<Props>()
 const classname = computed(() => [
   'news-entry',
   { 'news-entry-minimal': props.minimal },
-  { 'news-entry-read': false },
 ])
 </script>
 
@@ -25,10 +20,12 @@ const classname = computed(() => [
       <div class="news-entry__title">
         Обновление комиссий Компьютерная и периферийная техника Обновление комиссий Компьютерная и периферийная техника
       </div>
-      <!-- TODO: заменить на indicator -->
-      <div class="news-entry__indicator">
-        <div class="news-entry__indicator-dot" />
-      </div>
+      <AppChip
+        standalone
+        color="blue"
+        size="xs"
+        class="news-entry__indicator"
+      />
     </header>
     <div class="news-entry__text">
       Дополнительное улучшение комиссий на основе анализа эффективности оферов. Дополнительное улучшение комиссий на основе анализа эффективности оферов. Дополнительное улучшение комиссий на основе анализа эффективности оферов.
@@ -114,37 +111,10 @@ const classname = computed(() => [
 
   &__indicator {
     display: none;
-    flex: 0 0 24px;
-
-    width: 24px;
-    height: 24px;
-    border-radius: $radius-2;
-
-    background-color: $color-blue-300;
-    outline: 1px dashed $color-primary-500;
+    outline: 1px dashed $color-primary;
 
     #{$minimal} & {
       display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    #{$read} & {
-      background-color: $color-neutral-200;
-    }
-
-    &-dot {
-      flex: 0 0 8px;
-
-      width: 8px;
-      height: 8px;
-      border-radius: $radius-6;
-
-      background-color: $color-blue-500;
-
-      #{$read} & {
-        background-color: $color-neutral-400;
-      }
     }
   }
 
@@ -157,7 +127,7 @@ const classname = computed(() => [
 
     @include text(regular, sm);
 
-    color: $color-neutral-500;
+    color: $color-neutral;
 
     #{$minimal} & {
       display: none;
