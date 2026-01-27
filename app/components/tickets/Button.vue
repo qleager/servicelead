@@ -4,8 +4,23 @@ import AppSheet from '~/components/app/Sheet.vue'
 import type { ButtonProps } from '~/components/app/Button.vue'
 
 interface Props {
+  /**
+   * Mode of content visibility after clicking the button
+   *
+   * - `'page'`         – route to page /tickets
+   * - `'dropdown'`     – show floater with active tickets
+   * - `'sheet'`        – show AppSheet with active tickets
+   *
+   * @defaultvalue `'page'`
+   */
   mode?: 'page' | 'dropdown' | 'sheet'
+  /**
+   * Color of trigger AppButton
+   */
   color?: ButtonProps['color']
+  /**
+   * Variant of trigger AppButton
+   */
   variant?: ButtonProps['variant']
 }
 
