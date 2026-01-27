@@ -53,16 +53,31 @@ const classname = computed(() => [
 
 <style lang="scss">
 .card {
+  $this: &;
+  $centered: $this + '-centered';
+
   &__header {
     display: flex;
+
+    #{$centered} & {
+      justify-content: center;
+    }
   }
 
   &__main {
     display: flex;
+
+    #{$centered} & {
+      justify-content: center;
+    }
   }
 
   &__footer {
     display: flex;
+
+    #{$centered} & {
+      justify-content: center;
+    }
   }
 }
 </style>
