@@ -165,7 +165,8 @@ docs(AppButton): add jsondoc to props
 
 </details>
 
-
+## Use Composables
+- [useOverlay](docs/composables/use-overlay.md) — shared overlay manager
 
 ## 📦 Требования
 
