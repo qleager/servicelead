@@ -68,13 +68,15 @@ const classname = computed(() => [
           <div>Хотите создать?</div>
         </div>
       </div>
+    </div>
+    <template #footer>
       <AppButton
         color="neutral"
         class="tickets-button-content__empty-button"
       >
         Создать тикет
       </AppButton>
-    </div>
+    </template>
   </Component>
 </template>
 
@@ -85,12 +87,8 @@ $dropdown: $this + '-dropdown';
 
 &#{$dropdown} {
   gap: $space-6;
-
   min-width: 321px;
   max-width: 321px;
-  padding: $space-8 $space-4;
-  border-radius: $radius-6 !important;
-
   box-shadow: $shadow-md;
 }
 

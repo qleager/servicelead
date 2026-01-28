@@ -59,7 +59,7 @@ export type { Props as TicketsButtonProps }
       @click="onButtonClick"
     />
     <template #content>
-      <TicketsContent :mode/>
+      <TicketsContent :mode />
     </template>
   </Component>
 </template>
