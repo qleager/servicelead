@@ -1,7 +1,1 @@
-const sizes = [
-  'sm',
-  'md',
-  'lg',
-] as const
-
-export type Sizes = (typeof sizes)[number]
+export type Sizes = 'xs' | 'sm' | 'md' | 'lg'
