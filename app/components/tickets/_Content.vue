@@ -1,18 +1,9 @@
 <script lang="ts" setup>
-import type { ButtonProps } from '~/components/app/Button.vue'
 import AppWidget from '~/components/app/Widget.vue'
 import type { TicketsButtonProps } from './Button.vue'
 
 interface Props {
   mode?: TicketsButtonProps['mode']
-  /**
-   * Color of trigger AppButton
-   */
-  color?: ButtonProps['color']
-  /**
-   * Variant of trigger AppButton
-   */
-  variant?: ButtonProps['variant']
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -34,6 +25,8 @@ const classname = computed(() => [
   'tickets-button-content',
   `tickets-button-content-${props.mode}`,
 ])
+
+export type { Props as TicketsButtonContentProps }
 </script>
 
 <template>
