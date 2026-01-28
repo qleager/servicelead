@@ -1,65 +1,53 @@
 <script lang="ts" setup>
-import type { Colors } from '~/types/ds/colors'
-import type { Sizes } from '~/types/ds/sizes'
+import type { Colors, Sizes } from '~/types/ds'
 
 interface Props {
   color?: Colors
   size?: Sizes
-  position?: 'top-left'|'top-right'|'bottom-left'|'bottom-right'
+  position?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
   text?: string
   inset?: boolean
   standalone?: boolean
 }
 
-const slots = useSlots()
-
 const props = withDefaults(defineProps<Props>(), {
   color: 'primary',
   size: 'md',
-  position: 'top-right' ,
+  position: 'top-right',
 })
 
 const classname = computed(() => [
   'chip',
   `chip-color-${props.color}`,
   `chip-size-${props.size}`,
-  !props.standalone && `chip-position-${props.position}`,
-  { 
+  `chip-position-${props.position}`,
+  {
     'chip-inset': props.inset,
     'chip-standalone': props.standalone,
-    'chip-has-content': hasContent.value,
   },
 ])
-
-const hasContent = computed(() => {
-  if (props.text && props.text.trim().length > 0) return true
-  return Boolean(slots.content?.().length)
-})
-
 </script>
 
 <template>
-  <div class='chip-anchor'>
-    <span :class=classname>
-      <div class='chip__slot chip__slot-content'>
+  <div :class="classname">
+    <span class="chip__bullet">
+      <div class="chip__slot chip__slot-content">
         <slot name="content">
           {{ text }}
         </slot>
       </div>
     </span>
 
-    <div class='chip__slot chip__slot-default'>
+    <div class="chip__slot chip__slot-default">
       <slot />
     </div>
   </div>
 </template>
 
 <style lang="scss">
-
 .chip {
   $this: &;
   $inset: $this + '-inset';
-  $has-content: $this + '-has-content';
   $standalone: $this + '-standalone';
 
   // positions
@@ -69,12 +57,10 @@ const hasContent = computed(() => {
   $position-bottom-left: $this + '-position-bottom-left';
 
   // sizes
+  $size-xs: $this + '-size-xs';
   $size-sm: $this + '-size-sm';
   $size-md: $this + '-size-md';
   $size-lg: $this + '-size-lg';
-  $chip-size-sm: 10px;
-  $chip-size-md: 12px;
-  $chip-size-lg: 14px;
 
   // colors
   $primary-color: $this + '-color-primary';
@@ -85,123 +71,135 @@ const hasContent = computed(() => {
   $green-color: $this + '-color-green';
   $blue-color: $this + '-color-blue';
   $purple-color: $this + '-color-purple';
-  $chip-float: 50%;
 
-  user-select: none;
-
-  position: absolute;
-  z-index: 1;
-
+  position: relative;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-
-  border-radius: $space-9;
-
-  white-space: nowrap;
-  
-  &#{$size-sm} {
-    @include text(regular, 2xs);
-
-    min-width: $chip-size-sm;
-    min-height: $chip-size-sm;
-  }
-
-  &#{$size-md} {
-    @include text(regular, xs);
-
-    min-width: $chip-size-md;
-    min-height: $chip-size-md;
-  }
-
-  &#{$size-lg} {
-    @include text(regular, sm);
-
-    min-width: $chip-size-lg;
-    min-height: $chip-size-lg;
-  }
-
-  &#{$primary-color} {
-    background-color: $color-primary;
-  }
-
-  &#{$neutral-color} {
-    background-color: $color-neutral;
-  }
-
-  &#{$gray-color} {
-    background-color: $color-gray;
-  }
-
-  &#{$red-color} {
-    background-color: $color-red;
-  }
-
-  &#{$yellow-color} {
-    background-color: $color-yellow;
-  }
-
-  &#{$green-color} {
-    background-color: $color-green;
-  }
-
-  &#{$blue-color} {
-    background-color: $color-blue;
-  }
-
-  &#{$purple-color} {
-    background-color: $color-purple;
-  }
-
-  &#{$position-top-right} {
-    top: 0;
-    right: 0;
-    transform: translate(50%, -50%);
-  }
-
-  &#{$position-top-left} {
-    top: 0;
-    left: 0;
-    transform: translate(-50%, -50%);
-  }
-
-  &#{$position-bottom-right} {
-    right: 0;
-    bottom: 0;
-    transform: translate(50%, 50%);
-  }
-
-  &#{$position-bottom-left} {
-    bottom: 0;
-    left: 0;
-    transform: translate(-50%, 50%);
-  }
-
-  &#{$has-content} {
-    width: auto;
-    min-width: fit-content;
-    height: auto;
-    min-height: fit-content;
-
-    color: $color-neutral-950;
-  }
 
   &#{$standalone} {
-    position: static;
-    z-index: auto;
+    gap: $space-2;
   }
 
-  &#{$inset} {
-    transform: none;
-  }
+  &__bullet {
+    user-select: none;
 
-  &-anchor {
-    position: relative;
+    position: absolute;
+    z-index: 1;
+
     display: inline-flex;
     align-items: center;
+    justify-content: center;
 
-    &:has(.chip-standalone) {
-      gap: $space-3;
+    width: fit-content;
+    border-radius: $space-9;
+
+    white-space: nowrap;
+
+    #{$size-xs} & {
+      @include text(regular, 2xs);
+
+      size: 8px;
+      min-width: 8px;
+      min-height: 8px;
+      line-height: 8px;
+    }
+
+    #{$size-sm} & {
+      @include text(regular, 2xs);
+
+      min-width: 10px;
+      min-height: 10px;
+      line-height: 10px;
+    }
+
+    #{$size-md} & {
+      @include text(regular, xs);
+
+      min-width: 12px;
+      min-height: 12px;
+      line-height: 12px;
+    }
+
+    #{$size-lg} & {
+      @include text(regular, sm);
+
+      min-width: 14px;
+      min-height: 14px;
+      line-height: 14px;
+    }
+
+   #{$primary-color} & {
+      color: $color-neutral-50;
+      background-color: $color-primary;
+    }
+
+    #{$neutral-color} & {
+      color: $color-neutral-50;
+      background-color: $color-neutral;
+    }
+
+    #{$gray-color} & {
+      color: $color-neutral-50;
+      background-color: $color-gray;
+    }
+
+    #{$red-color} & {
+      color: $color-neutral-50;
+      background-color: $color-red;
+    }
+
+    #{$yellow-color} & {
+      color: $color-neutral-950;
+      background-color: $color-yellow;
+    }
+
+    #{$green-color} & {
+      color: $color-neutral-950;
+      background-color: $color-green;
+    }
+
+    #{$blue-color} & {
+      color: $color-neutral-50;
+      background-color: $color-blue;
+    }
+
+    #{$purple-color} & {
+      color: $color-neutral-50;
+      background-color: $color-purple;
+    }
+
+    #{$position-top-right} & {
+      top: 0;
+      right: 0;
+      transform: translate(50%, -50%);
+    }
+
+    #{$position-top-left} & {
+      top: 0;
+      left: 0;
+      transform: translate(-50%, -50%);
+    }
+
+    #{$position-bottom-right} & {
+      right: 0;
+      bottom: 0;
+      transform: translate(50%, 50%);
+    }
+
+    #{$position-bottom-left} & {
+      bottom: 0;
+      left: 0;
+      transform: translate(-50%, 50%);
+    }
+
+    #{$standalone} & {
+      position: unset;
+      z-index: unset;
+      transform: unset;
+    }
+
+    #{$inset} & {
+      transform: unset;
     }
   }
 
@@ -209,6 +207,10 @@ const hasContent = computed(() => {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+
+    &:empty {
+      display: none;
+    }
   }
 }
 </style>

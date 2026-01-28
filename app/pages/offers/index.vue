@@ -27,8 +27,8 @@ onMounted(() => {
         @update="() => {}"
       />
     </div>
-    <div class="offers__items">
-      Сетка офферов
+    <div class="offers__list">
+      <OffersList />
     </div>
   </div>
 </template>

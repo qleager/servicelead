@@ -165,7 +165,9 @@ docs(AppButton): add jsondoc to props
 
 </details>
 
-
+## Use Composables
+- [useOverlay](docs/composables/use-overlay.md) — shared overlay manager
+- [useBreakpoints](docs/composables/use-breakpoints.md) — responsive breakpoint helpers
 
 ## 📦 Требования
 

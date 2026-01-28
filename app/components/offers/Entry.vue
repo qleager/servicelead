@@ -12,7 +12,10 @@ const favoritesColor = computed(() => props.offer.isFavorite ? 'primary' : 'whit
 </script>
 
 <template>
-  <div class="offers-entry">
+  <div
+    class="offers-entry"
+    @click="navigateTo('/offers/1')"
+  >
     <div class="offers-entry__header">
       <div class="offers-entry__header-media">
         <img

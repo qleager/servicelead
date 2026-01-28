@@ -33,6 +33,8 @@ interface Emits {
   actionClick: []
 }
 
+const slots = useSlots()
+
 const props = withDefaults(defineProps<Props>(), {
   variant: 'card',
 })
@@ -43,52 +45,84 @@ const classname = computed(() => ([
   'widget',
   `widget-variant-${props.variant}`,
 ]))
-
-const isHeadVisible = computed (() => Boolean(props.icon || props.title || props.action))
+const isTitleVisible = computed(() => slots.title || props.title)
+const isDescriptionVisible = computed(() => slots.description || props.description)
+const isHeaderVisible = computed(() => isTitleVisible.value || isDescriptionVisible.value)
 </script>
 
 <template>
-  <!-- TODO:
-    1. Меняется DOM
-      формула Emmit раземетки: card > (header > title + description) + (main > slot) + (footer > slot)
-      реализацию хедера взять с AppModal (иконку оставить)
-    2. Паддинги задать не самому виджету, а header/main/footer – нужно для скрола без обрезания
-  -->
   <div :class="classname">
-    <div
-      v-if="isHeadVisible"
-      class="widget__head"
+    <header
+      v-if="isHeaderVisible"
+      class="widget__header"
     >
-      <div class="widget__title">
+      <div
+        v-if="isTitleVisible"
+        class="widget__header-title"
+      >
         <AppIcon
           v-if="icon"
           :name="icon"
           class="widget__title-icon"
         />
-        <span class="widget__title-text">{{ title }}</span>
+
+        <div
+          v-if="!$slots.title"
+          class="widget__title"
+        >
+          {{ title }}
+        </div>
+
+        <div class="widget__slot widget__slot-title">
+          <slot name="title" />
+        </div>
+
+        <div
+          v-if="action"
+          class="widget__action"
+          role="button"
+          @click="emits('actionClick')"
+        >
+          <span class="widget__action-text">{{ actionText }}</span>
+          <AppButton
+            class="widget__action-button"
+            size="xs"
+            variant="lined"
+            color="neutral"
+            icon="arrow_right"
+          />
+        </div>
       </div>
+
       <div
-        v-if="action"
-        class="widget__action"
-        role="button"
-        @click="emits('actionClick')"
+        v-if="isDescriptionVisible"
+        class="widget__header-description"
       >
-        <span class="widget__action-text">{{ actionText }}</span>
-        <AppButton
-          class="widget__action-button"
-          size="xs"
-          variant="lined"
-          color="neutral"
-          icon="arrow_right"
-        />
+        <div
+          v-if="!$slots.description"
+          class="widget__description"
+        >
+          {{ description }}
+        </div>
+
+        <div class="widget__slot widget__slot-description">
+          <slot name="description" />
+        </div>
       </div>
-    </div>
-    <div class="widget__header">
-      <slot name="header" />
-    </div>
+    </header>
+
     <div class="widget__main">
       <slot />
     </div>
+
+    <footer class="widget__footer">
+      <div
+        v-if="$slots.footer"
+        class="widget__slot widget__slot-footer"
+      >
+        <slot name="footer" />
+      </div>
+    </footer>
   </div>
 </template>
 
@@ -103,8 +137,6 @@ const isHeadVisible = computed (() => Boolean(props.icon || props.title || props
   flex-direction: column;
   gap: $space-4;
 
-  padding: $space-4;
-
   &#{$variant-card} {
     border-radius: $space-8;
     background-color: #fff;
@@ -115,31 +147,30 @@ const isHeadVisible = computed (() => Boolean(props.icon || props.title || props
     background-color: transparent;
   }
 
-  &__head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: $space-8;
+  &__header {
+    padding: $space-4 $space-4 0 $space-4;
+
+    &-title {
+      display: flex;
+      gap: $space-3;
+      align-items: center;
+    }
   }
 
   &__title {
-    display: flex;
-    gap: $space-3;
-    align-items: center;
+    @include text(semibold, xl);
+
+    line-height: 1;
 
     &-icon {
-      color: $color-neutral-500;
+      color: $color-neutral;
     }
+  }
 
-    &-text {
-      @include text(semiBold, xl);
+  &__description {
+    @include text(medium, xs);
 
-      color: $color-neutral-950;
-
-      &:empty {
-        display: none;
-      }
-    }
+    color: $color-neutral-400;
   }
 
   &__action {
@@ -149,12 +180,14 @@ const isHeadVisible = computed (() => Boolean(props.icon || props.title || props
     gap: $space-4;
     align-items: center;
 
+    margin-left: auto;
+
     color: $color-neutral-400;
 
     transition: $blur-duration-sm;
 
     &:hover {
-      color: $color-neutral-500;
+      color: $color-neutral;
       transition: $hover-duration-lg
     }
 
@@ -163,7 +196,7 @@ const isHeadVisible = computed (() => Boolean(props.icon || props.title || props
     }
 
     &:active {
-      color: $color-neutral-500;
+      color: $color-neutral;
       transition: $active-duration-sm
     }
 
@@ -176,16 +209,23 @@ const isHeadVisible = computed (() => Boolean(props.icon || props.title || props
     }
   }
 
-  &__header {
-    &:empty {
-      display: none;
-    }
-  }
-
   &__main {
     overflow: hidden;
     display: flex;
     flex: 1;
+    padding: 0 $space-4;
+
+    &:empty {
+      display: none;
+    }
+
+    &:first-child {
+      padding-top: $space-4;
+    }
+  }
+
+  &__footer {
+    padding: 0 $space-4 $space-4;
 
     &:empty {
       display: none;
