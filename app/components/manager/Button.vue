@@ -35,56 +35,12 @@ export type { Props as ManagerButtonProps }
         class="manager-button__avatar"
       />
       <span class="manager-button__info">
-        <span class="manager-button__name">Иванов Иван</span>
+        <span class="manager-button__name">Иванов Иван123</span>
         <span class="manager-button__role">Ваш менеджер</span>
       </span>
     </div>
     <template #content>
-      <AppWidget class="manager-button__wrapper">
-        <div class="manager-button__profile">
-          <NuxtImg
-            :src="'/images/default-avatar.png'"
-            class="manager-button__profile-avatar"
-          />
-          <div class="manager-button__profile-text">
-            <div class="manager-button__profile-role">
-              Ваш менеджер
-            </div>
-            <div class="manager-button__profile-name">
-              Иванов Иван
-            </div>
-          </div>
-          <div class="manager-button__profile-work-time">
-            <AppIcon name="clock" />
-            <div>Время работы: с 10 до 18</div>
-          </div>
-        </div>
-        <div class="manager-button__links">
-          <AppButton
-            color="neutral"
-            icon="tg_line_24"
-          />
-          <AppButton
-            color="neutral"
-            icon="phone_24"
-          />
-          <AppButton
-            color="neutral"
-            icon="mail_24"
-          />
-          <AppButton
-            color="neutral"
-            icon="question_24"
-          />
-        </div>
-        <AppButton
-          variant="nofilled"
-          color="neutral"
-          class="manager-button__feedback"
-        >
-          Проблема с менеджером?
-        </AppButton>
-      </AppWidget>
+      <ManagerContent :mode />
     </template>
   </Component>
 </template>
@@ -152,37 +108,6 @@ export type { Props as ManagerButtonProps }
 
   &__role {
     @include text(light, xs);
-  }
-
-  &__wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: $space-4;
-    align-items: center;
-
-    padding: $space-6 $space-4;
-  }
-
-  &__profile {
-    display: flex;
-    flex-direction: column;
-    gap: $space-2;
-    align-items: center;
-
-    &-avatar {
-      width: 80px;
-      height: 80px;
-    }
-
-    &-work-time {
-      display: flex;
-      gap: $space-1;
-    }
-  }
-
-  &__links {
-    display: flex;
-    gap: $space-4;
   }
 }
 </style>
