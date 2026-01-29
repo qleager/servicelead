@@ -50,6 +50,7 @@ export type { Props as ManagerButtonContentProps }
         </div>
         <div class="manager-button-content__profile-work-time">
           <AppIcon
+            class="manager-button-content__icon"
             name="clock"
             :size="16"
           />
@@ -92,6 +93,14 @@ $dropdown: $this + '-dropdown';
 
 &#{$dropdown} {
   box-shadow: $shadow-md;
+}
+
+// Без этого икона заливается. Надо чтобы диз изменил что-то в иконке?
+&__icon {
+  use {
+    fill: none;
+    stroke: currentcolor;
+  }
 }
 
   &__content {
