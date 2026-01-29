@@ -1,20 +1,3 @@
-<!--
- TODO
-  1. c default-slot снимает класс trigger, добавлям класс modal__slot-default
-  2. снять паддинги с .modal и добавить их header/main/footer
-      у header/main/footer должны быть block-padding
-      убедиться, что когда нет header или footer отступы снизу(32) и сверху(40) есть
-        если, отступы между блоками не совпадают из-за этого, можно поработать с обратныйм маргином подбить у header/footer
-  3. можно затипизировать слоты (если хочешь)
-      interface Slots {
-        default: () => void
-        footer: (props: { close }) => void // как то так, не помню глянь доку
-      }
-      defineSlots<Slots>()
-
-    и проверить, можно ли тогда отказаться от useSlots()
- -->
-
 <script lang="ts" setup>
 interface Props {
   title?: string
@@ -26,9 +9,17 @@ interface Emits {
   close: []
 }
 
+interface Slots {
+  default?: () => unknown
+  title?: () => unknown
+  description?: () => unknown
+  content: (props: { close?: () => void }) => unknown
+  footer?: (props: { close?: () => void }) => unknown
+}
+
 type Model = boolean
 
-const slots = useSlots()
+const slots = defineSlots<Slots>()
 
 const props = withDefaults(defineProps<Props>(), {
   overlay: true,
@@ -57,7 +48,7 @@ export type { Props as ModalProps, Emits as ModalEmits, Model as ModalModel }
 <template>
   <div
     v-if="$slots.default"
-    class="modal__slot modal__trigger"
+    class="modal__slot modal__slot-default"
     @click="toggle"
   >
     <slot />
@@ -70,6 +61,69 @@ export type { Props as ModalProps, Emits as ModalEmits, Model as ModalModel }
     @click:backdrop="close"
   >
     <div class="modal">
+      <div class="modal__content">
+        <header
+          v-if="isHeaderVisible"
+          class="modal__header"
+        >
+          <div
+            v-if="isTitleVisible"
+            class="modal__header-title"
+          >
+            <div
+              v-if="!$slots.title"
+              class="modal__title"
+            >
+              {{ title }}
+            </div>
+
+            <div class="modal__slot modal__slot-title">
+              <slot name="title" />
+            </div>
+          </div>
+
+          <div
+            v-if="isDescriptionVisible"
+            class="modal__header-description"
+          >
+            <div
+              v-if="!$slots.description"
+              class="modal__description"
+            >
+              {{ description }}
+            </div>
+
+            <div class="modal__slot modal__slot-description">
+              <slot name="description" />
+            </div>
+          </div>
+        </header>
+
+        <div class="modal__main">
+          <!-- IDEA: сделать компонент слота? мы везде используем такую конструкцию -->
+          <div
+            v-if="$slots.content"
+            class="modal__slot modal__slot-content"
+          >
+            <slot
+              name="content"
+              :close
+            />
+          </div>
+        </div>
+
+        <footer
+          v-if="$slots.footer"
+          class="modal__footer"
+        >
+          <div class="modal__slot modal__slot-footer">
+            <slot
+              name="footer"
+              :close
+            />
+          </div>
+        </footer>
+      </div>
       <AppButton
         class="modal__close"
         icon="close"
@@ -77,67 +131,6 @@ export type { Props as ModalProps, Emits as ModalEmits, Model as ModalModel }
         size="sm"
         @click="close"
       />
-      <header
-        v-if="isHeaderVisible"
-        class="modal__header"
-      >
-        <div
-          v-if="isTitleVisible"
-          class="modal__header-title"
-        >
-          <div
-            v-if="!$slots.title"
-            class="modal__title"
-          >
-            {{ title }}
-          </div>
-
-          <div class="modal__slot modal__slot-title">
-            <slot name="title" />
-          </div>
-        </div>
-
-        <div
-          v-if="isDescriptionVisible"
-          class="modal__header-description"
-        >
-          <div
-            v-if="!$slots.description"
-            class="modal__description"
-          >
-            {{ description }}
-          </div>
-
-          <div class="modal__slot modal__slot-description">
-            <slot name="description" />
-          </div>
-        </div>
-      </header>
-
-      <div class="modal__main">
-        <!-- IDEA: сделать компонент слота? мы везде используем такую конструкцию -->
-        <div
-          v-if="$slots.content"
-          class="modal__slot modal__slot-content"
-        >
-          <slot
-            name="content"
-            :close
-          />
-        </div>
-      </div>
-
-      <footer class="modal__footer">
-        <div
-          v-if="$slots.footer"
-          class="modal__slot modal__slot-footer"
-        >
-          <slot
-            name="footer"
-            :close
-          />
-        </div>
-      </footer>
     </div>
   </AppOverlay>
 </template>
@@ -146,20 +139,23 @@ export type { Props as ModalProps, Emits as ModalEmits, Model as ModalModel }
 .modal {
   position: relative;
 
-  display: flex;
-  flex-direction: column;
-  gap: $space-8;
-  align-items: center;
-  justify-content: center;
-
   width: 100%;
   max-width: 560px;
-  padding: $space-10 $space-16 $space-8;
   border-radius: $radius-6;
 
   background-color: white;
 
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: $space-8;
+    align-items: center;
+    justify-content: center;
+  }
+
   &__overlay {
+    z-index: 10;
+
     overflow: auto;
     display: grid;
     grid-template-columns: 1fr;
@@ -173,6 +169,32 @@ export type { Props as ModalProps, Emits as ModalEmits, Model as ModalModel }
     flex-direction: column;
     gap: $space-3;
     align-items: center;
+
+    padding: $space-10 $space-16 0;
+
+    &:empty {
+      display: none;
+    }
+
+    &:last-child {
+      padding-bottom: $space-8;
+    }
+  }
+
+  &__main {
+    padding-block: $space-16;
+
+    &:empty {
+      display: none;
+    }
+
+    &:first-child {
+      padding-top: $space-10;
+    }
+
+    &:last-child {
+      padding-bottom: $space-8;
+    }
   }
 
   &__title {
@@ -193,6 +215,18 @@ export type { Props as ModalProps, Emits as ModalEmits, Model as ModalModel }
     position: absolute;
     top: 0;
     right: -$space-16;
+  }
+
+  &__footer {
+    padding: 0 $space-16 $space-8;
+
+    &:empty {
+      display: none;
+    }
+
+    &:first-child {
+      padding-top: $space-10;
+    }
   }
 }
 </style>
