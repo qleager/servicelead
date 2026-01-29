@@ -25,6 +25,8 @@ const classname = computed(() => [
   'manager-button-content',
   `manager-button-content-${props.mode}`,
 ])
+
+export type { Props as ManagerButtonContentProps }
 </script>
 
 <template>
@@ -89,7 +91,6 @@ $this: &;
 $dropdown: $this + '-dropdown';
 
 &#{$dropdown} {
-  gap: $space-6;
   box-shadow: $shadow-md;
 }
 
