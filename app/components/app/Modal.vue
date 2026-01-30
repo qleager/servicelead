@@ -13,7 +13,7 @@ interface Slots {
   default?: () => unknown
   title?: () => unknown
   description?: () => unknown
-  content: (props: { close?: () => void }) => unknown
+  content?: (props: { close?: () => void }) => unknown
   footer?: (props: { close?: () => void }) => unknown
 }
 
@@ -77,7 +77,10 @@ export type { Props as ModalProps, Emits as ModalEmits, Model as ModalModel }
               {{ title }}
             </div>
 
-            <div class="modal__slot modal__slot-title">
+            <div
+              v-else
+              class="modal__slot modal__slot-title"
+            >
               <slot name="title" />
             </div>
           </div>
@@ -93,7 +96,10 @@ export type { Props as ModalProps, Emits as ModalEmits, Model as ModalModel }
               {{ description }}
             </div>
 
-            <div class="modal__slot modal__slot-description">
+            <div
+              v-else
+              class="modal__slot modal__slot-description"
+            >
               <slot name="description" />
             </div>
           </div>
