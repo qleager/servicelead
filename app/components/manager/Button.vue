@@ -35,7 +35,7 @@ export type { Props as ManagerButtonProps }
         class="manager-button__avatar"
       />
       <span class="manager-button__info">
-        <span class="manager-button__name">Иванов Иван123</span>
+        <span class="manager-button__name">Иванов Иван</span>
         <span class="manager-button__role">Ваш менеджер</span>
       </span>
     </div>
