@@ -5,6 +5,7 @@
   <AppSlideover
     title="Фильтры"
     icon="filter"
+    class="offers-filter-slideover"
   >
     <AppButton
       icon="filter"
@@ -19,15 +20,27 @@
       </AppTag>
     </AppButton>
     <template #footer>
-      <AppButton
-        variant="nofilled"
-        color="neutral"
-      >
-        Сбросить все
-      </AppButton>
-      <AppButton>
-        Применить
-      </AppButton>
+      <div class="offers-filter-slideover__footer">
+        <AppButton
+          variant="nofilled"
+          color="neutral"
+        >
+          Сбросить все
+        </AppButton>
+        <AppButton>
+          Применить
+        </AppButton>
+      </div>
     </template>
   </AppSlideover>
 </template>
+
+<style lang="scss">
+.offers-filter-slideover {
+  &__footer {
+    display: flex;
+    gap: $space-6;
+    justify-content: flex-end;
+  }
+}
+</style>

@@ -1,21 +1,9 @@
-<!--
- TODO:
-  Привести к консистентности c AppModal
-  У AppSlideover должна появиться такая же логика работы header: слот-title, слот-description
-  В итоге должно получиться, что если мы изменим название компонента AppModal на AppSlideover, то весь контент компонента будет корректно отображен = будет консистентен
-
-  2. снять паддинги с .slideover и добавить их header/main/footer
-      у header/main/footer должны быть block-padding
-      убедиться, что когда нет header или footer отступы снизу(32) и сверху(40) есть
-        если, отступы между блоками не совпадают из-за этого, можно поработать с обратныйм маргином подбить у header/footer
-
-  3. убравть стили с slideover__slot-footer, я так понял сделано для кнопок - мы стилизуем контент в слотах в родителе
--->
 <script lang="ts" setup>
 import type { IconProps } from './Icon.vue'
 
 interface Props {
   title?: string
+  description?: string
   icon?: IconProps['name']
   overlay?: boolean
 }
@@ -26,13 +14,33 @@ interface Emits {
   'close': []
 }
 
+interface Slots {
+  default?: () => unknown
+  title?: () => unknown
+  description?: () => unknown
+  content?: (props: { close?: () => void }) => unknown
+  footer?: (props: { close?: () => void }) => unknown
+}
+
 type Model = boolean
 
-defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  overlay: true,
+})
 
 const emits = defineEmits<Emits>()
 
 const model = defineModel<Model>({ default: false })
+
+const slots = defineSlots<Slots>()
+
+const isTitleVisible = computed(() => slots.title || props.title)
+const isDescriptionVisible = computed(() => slots.description || props.description)
+const isHeaderVisible = computed(() => isTitleVisible.value || isDescriptionVisible.value)
+
+const toggle = () => {
+  model.value = !model.value
+}
 
 const close = () => {
   model.value = false
@@ -43,9 +51,18 @@ export type { Props as SlideoverProps, Emits as SlideoverEmits, Model as Slideov
 </script>
 
 <template>
+  <div
+    v-if="$slots.default"
+    class="slideover__slot slideover__default"
+    @click="toggle"
+  >
+    <slot />
+  </div>
   <AppOverlay
     v-model="model"
+    class="slideover__overlay"
     :transparent="!overlay"
+    @click:backdrop="close"
   >
     <!-- TODO: добавить анимацию (после систематизации анимаций) -->
     <Transition
@@ -55,32 +72,74 @@ export type { Props as SlideoverProps, Emits as SlideoverEmits, Model as Slideov
     >
       <!-- IDEA: AppCard с переопредленными стилями здесь? -->
       <div class="slideover">
-        <header class="slideover__header">
-          <div class="slideover__title">
+        <header
+          v-if="isHeaderVisible"
+          class="slideover__header"
+        >
+          <div
+            v-if="isTitleVisible"
+            class="slideover__header-title"
+          >
             <AppIcon
               v-if="icon"
-              class="slideover__title-image"
+              class="slideover__title-icon"
               :name="icon"
             />
-            <div class="slideover__title-text">
+            <div
+              v-if="!$slots.title"
+              class="slideover__title"
+            >
               {{ title }}
             </div>
+            <div
+              v-else
+              class="slideover__slot slideover__slot-title"
+            >
+              <slot name="title" />
+            </div>
+            <AppButton
+              class="slideover__close"
+              icon="close"
+              size="sm"
+              color="neutral"
+              variant="nofilled"
+              @click="close()"
+            />
           </div>
-          <AppButton
-            class="slideover__close"
-            icon="close"
-            size="sm"
-            color="neutral"
-            variant="nofilled"
-            @click="close()"
-          />
+          <div
+            v-if="isDescriptionVisible"
+            class="slideover__header-description"
+          >
+            <div
+              v-if="!$slots.description"
+              class="slideover__description"
+            >
+              {{ description }}
+            </div>
+
+            <div
+              v-else
+              class="slideover__slot slideover__slot-description"
+            >
+              <slot name="description" />
+            </div>
+          </div>
         </header>
-        <div class="slideover__main">
-          <div class="slideover__slot slideover__slot-default">
-            <slot :close />
+        <div
+          v-if="$slots.content"
+          class="slideover__main"
+        >
+          <div class="slideover__slot slideover__slot-content">
+            <slot
+              name="content"
+              :close
+            />
           </div>
         </div>
-        <footer class="slideover__footer">
+        <footer
+          v-if="$slots.footer"
+          class="slideover__footer"
+        >
           <div class="slideover__slot slideover__slot-footer">
             <slot
               name="footer"
@@ -109,31 +168,56 @@ export type { Props as SlideoverProps, Emits as SlideoverEmits, Model as Slideov
   min-width: 320px;
   max-width: 100vw;
   height: 100dvh;
-  padding: $space-8 $space-4;
+  padding-inline: $space-6;
 
   background: white;
   box-shadow: $shadow-md;
 
   &__header {
     display: flex;
-    gap: $space-4;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: $space-3;
+    padding-top: $space-8;
 
-    padding: $space-2;
+    &-title {
+      display: flex;
+      gap: $space-2;
+      align-items: center;
+    }
+
+    &:last-child {
+      padding-bottom: $space-8;
+    }
   }
 
   &__title {
-    display: flex;
-    gap: $space-2;
-    align-items: center;
-
     @include text(semibold, sm);
+  }
 
-    &-text {
-      :empty {
-        display: none;
-      }
+  &__description {
+    @include text(regular, sm);
+
+    color: $color-neutral;
+  }
+
+  &__main {
+    overflow: auto;
+
+    &:first-child {
+      padding-top: $space-10;
+    }
+
+    &:last-child {
+      padding-bottom: $space-8;
+    }
+  }
+
+  &__footer {
+    margin-top: auto;
+    padding-bottom: $space-8;
+
+    &:first-child {
+      padding-top: $space-10;
     }
   }
 
@@ -142,21 +226,6 @@ export type { Props as SlideoverProps, Emits as SlideoverEmits, Model as Slideov
     display: flex;
     align-items: center;
     margin-left: auto;
-  }
-
-  &__main {
-    overflow: auto;
-  }
-
-  &__slot {
-    &-footer {
-      display: flex;
-      gap: $space-6;
-      justify-content: flex-end;
-
-      width: 100%;
-      margin-top: auto;
-    }
   }
 }
 </style>
