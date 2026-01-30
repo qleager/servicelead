@@ -182,7 +182,7 @@ export type { Props as ModalProps, Emits as ModalEmits, Model as ModalModel }
   }
 
   &__main {
-    padding-block: $space-16;
+    padding-inline: $space-16;
 
     &:empty {
       display: none;
