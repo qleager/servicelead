@@ -50,6 +50,8 @@ export type { Props as TicketsButtonProps }
 <template>
   <Component
     :is="rootElement"
+    title="Тикеты"
+    icon="message"
     class="tickets-button"
   >
     <AppButton
@@ -59,7 +61,11 @@ export type { Props as TicketsButtonProps }
       @click="onButtonClick"
     />
     <template #content>
-      <TicketsContent :mode />
+      <TicketsContent
+        title="Тикеты"
+        icon="message"
+        :mode
+      />
     </template>
   </Component>
 </template>

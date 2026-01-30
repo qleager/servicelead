@@ -1,8 +1,12 @@
 <script lang="ts" setup>
 import AppWidget from '~/components/app/Widget.vue'
 import type { TicketsButtonProps } from './Button.vue'
+import type { IconProps } from '../app/Icon.vue'
 
 interface Props {
+  title?: string
+  description?: string
+  icon?: IconProps['name']
   mode?: TicketsButtonProps['mode']
 }
 
@@ -32,8 +36,9 @@ export type { Props as TicketsButtonContentProps }
 <template>
   <Component
     :is="rootElement"
-    title="Тикеты"
-    icon="message"
+    :title
+    :description
+    :icon
     :class="classname"
     class="tickets-button-content"
   >
