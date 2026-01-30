@@ -172,10 +172,6 @@ export type { Props as ModalProps, Emits as ModalEmits, Model as ModalModel }
 
     padding: $space-10 $space-16 0;
 
-    &:empty {
-      display: none;
-    }
-
     &:last-child {
       padding-bottom: $space-8;
     }
@@ -183,10 +179,6 @@ export type { Props as ModalProps, Emits as ModalEmits, Model as ModalModel }
 
   &__main {
     padding-inline: $space-16;
-
-    &:empty {
-      display: none;
-    }
 
     &:first-child {
       padding-top: $space-10;
@@ -219,10 +211,6 @@ export type { Props as ModalProps, Emits as ModalEmits, Model as ModalModel }
 
   &__footer {
     padding: 0 $space-16 $space-8;
-
-    &:empty {
-      display: none;
-    }
 
     &:first-child {
       padding-top: $space-10;
