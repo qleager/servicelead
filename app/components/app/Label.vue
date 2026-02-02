@@ -1,9 +1,3 @@
-<!--
- TODO
-    1. когда есть required prop компонент "отъезжает" вниз
-    2. добавить экспорт пропсов как в AppButton
-    3. класс слоту label__slot-default
- -->
 <script lang="ts" setup>
 interface Props {
   title?: string
@@ -22,6 +16,8 @@ const classname = computed(() => [
 const captionText = computed(() =>
   props.error || props.caption,
 )
+
+export type { Props as LabelProps }
 </script>
 
 <template>
@@ -30,12 +26,12 @@ const captionText = computed(() =>
       class="label__title"
     >
       {{ title }}
-      <sup
+      <span
         v-if="required"
-        class="label__title-required"
-      >*</sup>
+        class="label__required"
+      >*</span>
     </div>
-    <div class="label__slot">
+    <div class="label__slot label__slot-default">
       <slot :required />
     </div>
     <div
@@ -67,13 +63,10 @@ const captionText = computed(() =>
     #{$error} & {
       color: $color-error;
     }
+  }
 
-    &-required {
-      position: relative;
-      top: .40em;
-
-      @include text(medium, sm);
-    }
+  &__required {
+    color: $color-red;;
   }
 
   &__caption {
