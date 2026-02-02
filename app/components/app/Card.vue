@@ -23,7 +23,6 @@ const classname = computed(() => [
     'card-centered': props.centered,
   },
 ])
-const isTitleVisible = computed(() => props.title && !slots.header)
 const isHeaderVisible = computed(() => props.title || props.icon || slots.header)
 </script>
 
@@ -39,7 +38,7 @@ const isHeaderVisible = computed(() => props.title || props.icon || slots.header
         class="card__icon"
       />
       <div
-        v-if="isTitleVisible"
+        v-if="title"
         class="card__title"
       >
         {{ title }}
@@ -99,10 +98,6 @@ const isHeaderVisible = computed(() => props.title || props.icon || slots.header
     display: flex;
     padding: 0 $space-4;
 
-    #{$centered} & {
-      justify-content: center;
-    }
-
     &:empty {
       display: none;
     }
@@ -113,6 +108,10 @@ const isHeaderVisible = computed(() => props.title || props.icon || slots.header
 
     &:last-child {
       padding-bottom: $space-4;
+    }
+
+    #{$centered} & {
+      justify-content: center;
     }
   }
 
