@@ -28,7 +28,7 @@ export type { Props as LabelProps }
       {{ title }}
       <span
         v-if="required"
-        class="label__title-required"
+        class="label__required"
       >*</span>
     </div>
     <div class="label__slot label__slot-default">
@@ -63,6 +63,10 @@ export type { Props as LabelProps }
     #{$error} & {
       color: $color-error;
     }
+  }
+
+  &__required {
+    color: $color-red;;
   }
 
   &__caption {
