@@ -22,10 +22,12 @@ interface Props {
    * Variant of trigger AppButton
    */
   variant?: ButtonProps['variant']
+  tickets?: unknown[]
 }
 
 const props = withDefaults(defineProps<Props>(), {
   mode: 'page',
+  tickets: () => [] as unknown[],
 })
 
 const rootElement = computed(() => {
@@ -61,10 +63,8 @@ export type { Props as TicketsButtonProps }
       @click="onButtonClick"
     />
     <template #content>
-      <TicketsContent
-        title="Тикеты"
-        icon="message"
-        :mode
+      <TicketsButtonContent
+        :tickets
       />
     </template>
   </Component>
