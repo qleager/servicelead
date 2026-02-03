@@ -58,17 +58,12 @@ export type { Props as CheckboxProps, Model as CheckboxModel }
       class="checkbox__label"
     >
       <span
-        v-if="!$slots.label"
+        v-if="label"
         class="checkbox__label-text"
       >
         {{ label }}
       </span>
-
-      <div class="checkbox__slot checkbox__slot-label">
-        <slot
-          name="label"
-        />
-      </div>
+      <slot name="label" />
     </div>
   </div>
 </template>
