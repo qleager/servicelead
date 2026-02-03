@@ -1,8 +1,3 @@
-<!--
-  TODO:
-    1. добавить type Model
-    2. экспорт типов props и model по аналогии с AppButton
--->
 <script lang="ts" setup>
 interface Props {
   /**
@@ -11,11 +6,13 @@ interface Props {
   initHeight?: number
 }
 
+type Model = boolean
+
 const props = withDefaults(defineProps<Props>(), {
   initHeight: 0,
 })
 
-const model = defineModel<boolean>()
+const model = defineModel<Model>()
 
 const contentRef = ref<HTMLElement | null>(null)
 
@@ -30,6 +27,8 @@ const contentStyleVariables = computed(() => ({
 onMounted(() => {
   fullHeight.value = contentRef.value?.scrollHeight ?? 0
 })
+
+export type { Props as CollapseProps }
 </script>
 
 <template>
