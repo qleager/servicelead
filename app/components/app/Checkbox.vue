@@ -1,13 +1,3 @@
-<!-- TODO:
-  1. добавить type Model
-  2. экспорт типов props и model по аналогии с AppButton
-  3. слот лейбл
-    {{ label }} обернуть в &__label-text и перенести на него стили с &__label
-    в &__label добавить слот:label(сам слот обернуть в аналогичкную конструкцию как AppModal:114)
-    если слот задан, props.label не показывается (есть похожий пример в AppModal:71)
-  4. Добавить transition из ds для интерактивных псевдоклассов
-  5. если есть 500 цвет - замена на дефолтный (просто убрать 500)
--->
 <script lang="ts" setup>
 interface Props {
   label?: string
@@ -18,15 +8,26 @@ interface Props {
   id?: string
 }
 
+interface Slots {
+  label: () => void
+}
+
+type Model = boolean
+
 const props = defineProps<Props>()
 
-const model = defineModel<boolean>({ default: false })
+const slots = defineSlots<Slots>()
+
+const model = defineModel<Model>({ default: false })
 
 const classname = computed(() => ([
   'checkbox',
   { 'checkbox-checked': model.value },
   { 'checkbox-disabled': props.disabled },
 ]))
+const isLabelVisible = computed(() => props.label || slots.label)
+
+export type { Props as CheckboxProps, Model as CheckboxModel }
 </script>
 
 <template>
@@ -52,19 +53,28 @@ const classname = computed(() => ([
         class="checkbox__bullet-icon"
       />
     </span>
-    <span class="checkbox__label">
-      {{ label }}
-    </span>
+    <div
+      v-if="isLabelVisible"
+      class="checkbox__label"
+    >
+      <span
+        v-if="label"
+        class="checkbox__label-text"
+      >
+        {{ label }}
+      </span>
+      <slot name="label" />
+    </div>
   </div>
 </template>
 
 <style lang="scss">
 .checkbox {
   $this: &;
-  $hover: & + ':hover';
-  $active: & + ':active';
-  $checked: & + '-checked';
-  $disabled: & + '-disabled';
+  $hover: $this + ':hover';
+  $active: $this + ':active';
+  $checked: $this + '-checked';
+  $disabled: $this + '-disabled';
 
   cursor: pointer;
 
@@ -104,16 +114,20 @@ const classname = computed(() => ([
 
     background-color: $color-neutral-100;
 
+    transition: $blur-duration-sm;
+
     &-icon {
       color: white
     }
 
     #{$hover} & {
       background-color: $color-neutral-400;
+      transition: $hover-duration-sm;
     }
 
     #{$active} & {
-      background-color: $color-primary
+      background-color: $color-primary;
+      transition: $active-duration-sm;
     }
 
     #{$checked} & {
@@ -130,7 +144,7 @@ const classname = computed(() => ([
     }
   }
 
-  &__label {
+  &__label-text {
     @include text(regular, sm);
 
     &:empty {
