@@ -103,7 +103,7 @@ const triggerProps = (isOpen: FloaterModel) => ({
     display: flex;
     flex-direction: column;
     gap: $space-1;
-    padding-inline: $space-5;
+    padding-inline: $space-3;
 
     &-item {
       cursor: pointer;

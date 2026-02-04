@@ -11,6 +11,7 @@ import {
   offset,
   autoPlacement,
   size,
+  shift,
   // autoUpdate,
 } from '@floating-ui/vue'
 
@@ -60,6 +61,7 @@ const { floatingStyles } = useFloating(reference, floating, {
   middleware: [
     offset(8),
     ...(props.placement ? [] : [autoPlacement()]),
+    shift({ padding: 14 }),
     size({
       padding: 8,
       apply({ elements, availableHeight }) {
