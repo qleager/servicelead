@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { ButtonProps } from '../app/Button.vue'
 import type { FloaterModel, FloaterProps } from '../app/Floater.vue'
+import { useScrollLock } from '@vueuse/core'
 
 interface Props {
   placement?: FloaterProps['placement']
@@ -31,6 +32,8 @@ const items = [
   },
 ]
 
+const isLockedScrollDocument = useScrollLock(document)
+
 const triggerProps = (isOpen: FloaterModel) => ({
   color: isOpen ? 'neutral' : 'primary',
   icon: isOpen ? 'close' : 'plus' as const,
@@ -42,6 +45,7 @@ const triggerProps = (isOpen: FloaterModel) => ({
     <AppFloater
       :placement
       class="navigation-actions__floater"
+      @update:model-value="isLockedScrollDocument = $event"
     >
       <template #default="{ isOpen }">
         <AppBackdrop v-if="isOpen" />
@@ -88,7 +92,6 @@ const triggerProps = (isOpen: FloaterModel) => ({
 
   &__floater {
     position: relative;
-    position: 49;
   }
 
   &__trigger {
