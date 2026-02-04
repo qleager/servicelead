@@ -1,13 +1,17 @@
+<!-- TIPS:
+      Если настанет время, когда потребуется ограничить область всплывающей хуйни каким то контейнером,
+      стоит обратить внимание на boundary
+-->
 <script lang="ts" setup>
 import type { Placement } from '@floating-ui/vue'
-import type { TeleportProps } from 'vue'
+import type { TeleportProps, VNodeChild } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 import {
   useFloating,
   offset,
   autoPlacement,
-  shift,
   size,
+  // autoUpdate,
 } from '@floating-ui/vue'
 
 interface Props {
@@ -30,11 +34,18 @@ interface Props {
 
 type Model = boolean
 
+interface Slots {
+  default?: (props: { isOpen: Model }) => VNodeChild
+  content: (props: { isOpen: Model }) => VNodeChild
+}
+
 const props = withDefaults(defineProps<Props>(), {
   mode: 'click',
   dismissible: true,
   width: 'auto',
 })
+
+defineSlots<Slots>()
 
 const model = defineModel<Model>({ default: false })
 
@@ -45,16 +56,18 @@ let closeTimeout: ReturnType<typeof setTimeout> | undefined = undefined
 
 const { floatingStyles } = useFloating(reference, floating, {
   placement: props.placement,
-  strategy: 'fixed',
+  // whileElementsMounted: autoUpdate,
   middleware: [
     offset(8),
     ...(props.placement ? [] : [autoPlacement()]),
-    shift({ padding: 8 }),
     size({
       padding: 8,
-      apply({ elements }) {
+      apply({ elements, availableHeight }) {
+        console.log(availableHeight)
+
         Object.assign(elements.floating.style, {
           ...floatingWidth.value,
+          height: `${availableHeight}px`,
         })
       },
     }),
@@ -109,14 +122,14 @@ onClickOutside(
     ignore: [floating, reference],
   })
 
-export type { Props as FloaterProps, Model as FloaterModel }
+export type { Props as FloaterProps, Slots as FloaterSlots, Model as FloaterModel }
 </script>
 
 <template>
   <div :class="classname">
     <div
       ref="reference"
-      class="floater__slot floater__slot-default floater__slot-trigger"
+      class="floater__trigger"
       @mouseenter="onMouseEnter"
       @mouseleave="onMouseLeave"
       @click="onClickReference"
@@ -130,7 +143,7 @@ export type { Props as FloaterProps, Model as FloaterModel }
       <div
         v-if="model"
         ref="floating"
-        class="floater__slot floater__slot-content"
+        class="floater__content"
         :style="floatingStyles"
         @mouseenter="onMouseEnter"
         @mouseleave="onMouseLeave"
@@ -150,14 +163,8 @@ export type { Props as FloaterProps, Model as FloaterModel }
 
   width: fit-content;
 
-  &__slot {
-    &-trigger {
-      display: inline-block;
-    }
-
-    &-content {
-      z-index: 9;
-    }
+  &__trigger {
+    display: inline-block;
   }
 }
 </style>
