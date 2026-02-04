@@ -121,7 +121,7 @@ export type { Props as FloaterProps, Model as FloaterModel }
       @mouseleave="onMouseLeave"
       @click="onClickReference"
     >
-      <slot />
+      <slot :is-open="model" />
     </div>
     <Teleport
       :disabled="!portal"
@@ -135,7 +135,10 @@ export type { Props as FloaterProps, Model as FloaterModel }
         @mouseenter="onMouseEnter"
         @mouseleave="onMouseLeave"
       >
-        <slot name="content" />
+        <slot
+          name="content"
+          :is-open="model"
+        />
       </div>
     </Teleport>
   </div>
@@ -145,7 +148,6 @@ export type { Props as FloaterProps, Model as FloaterModel }
 .floater {
   $this: &;
 
-  z-index: 10;
   width: fit-content;
 
   &__slot {
