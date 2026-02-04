@@ -40,7 +40,7 @@ export type { Props as ManagerButtonProps }
       </span>
     </div>
     <template #content>
-      <ManagerContent :mode />
+      <ManagerButtonContent :mode />
     </template>
   </Component>
 </template>
