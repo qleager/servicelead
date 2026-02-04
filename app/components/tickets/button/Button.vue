@@ -15,13 +15,18 @@ interface Props {
    */
   mode?: 'page' | 'dropdown' | 'sheet'
   /**
-   * Color of trigger AppButton
+   * Color of trigger button (AppButton)
+   *
+   * @defaultvalue `'primary'`
    */
   color?: ButtonProps['color']
   /**
-   * Variant of trigger AppButton
+   * Variant of trigger button (AppButton)
+   *
+   * @defaultvalue `'filled'`
    */
   variant?: ButtonProps['variant']
+  // TODO: тикеты в сторе? или по клику грузим?
   tickets?: unknown[]
 }
 
