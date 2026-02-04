@@ -65,8 +65,6 @@ const { floatingStyles } = useFloating(reference, floating, {
     size({
       padding: 8,
       apply({ elements, availableHeight }) {
-        console.log(availableHeight)
-
         Object.assign(elements.floating.style, {
           ...floatingWidth.value,
           height: `${availableHeight}px`,
