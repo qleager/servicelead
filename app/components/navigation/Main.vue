@@ -18,7 +18,7 @@ const mainItems: NavigationMenuItem[] = [
 
 const helpItems: NavigationMenuItem[] = [
   { icon: 'main_menu_help', label: 'Справка', to: '', onClick: () => {} },
-  { icon: 'main_menu_tickets', label: 'Тикеты', to: '', onClick: () => {} },
+  { icon: 'main_menu_tickets', label: 'Тикеты', to: '/tickets', onClick: () => {} },
   { icon: 'main_menu_doc_API', label: 'Документация API', to: '', onClick: () => {} },
   { icon: 'main_menu_account', label: 'Личный кабинет', to: '', onClick: () => {} },
 ]
