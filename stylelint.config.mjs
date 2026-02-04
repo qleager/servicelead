@@ -16,6 +16,7 @@ export default {
   rules: {
     'order/order': null,
     'prettier/prettier': [true, { singleQuote: true, tabWidth: 2 }],
+    'selector-class-pattern': '^[a-z](?:[a-z0-9]*)(?:-[a-z0-9]+)*(?:__[a-z0-9]+(?:-[a-z0-9]+)*)?(?:--[a-z0-9]+(?:-[a-z0-9]+)*)?$',
   },
   overrides: [
     {
