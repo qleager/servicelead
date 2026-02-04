@@ -1,18 +1,10 @@
 <script lang="ts" setup>
-interface Emits {
-  click: []
-}
-
-defineEmits<Emits>()
-
-export type { Emits as BackdropEmits }
 </script>
 
 <template>
   <!-- TODO: добавить анимацию (после систематизации анимаций) -->
   <div
     class="backdrop"
-    @click.self="$emit('click')"
   />
 </template>
 

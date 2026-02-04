@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import type { BackdropEmits } from '../Backdrop.vue'
-
 interface Props {
   /**
    * Show backdrop
@@ -12,7 +10,7 @@ interface Props {
 
 // TODO: Сделать недоступным эмит если backdrod = false
 interface Emits {
-  'click:backdrop': BackdropEmits['click']
+  'click:backdrop': []
 }
 
 withDefaults(defineProps<Props>(), {
