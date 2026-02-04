@@ -40,7 +40,7 @@ export type { Props as ManagerButtonProps }
       </span>
     </div>
     <template #content>
-      <ManagerButtonContent :mode />
+      <ManagerButtonContent />
     </template>
   </Component>
 </template>
@@ -103,7 +103,7 @@ export type { Props as ManagerButtonProps }
   }
 
   &__name {
-    @include text(SemiBold, md);
+    @include text(semibold, md);
   }
 
   &__role {

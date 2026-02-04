@@ -54,63 +54,53 @@
 </template>
 
 <style lang="scss">
-.manager-button {
-$this: &;
+.manager-button__content {
+  $this: &;
 
-  // Без этого икона заливается. Надо чтобы диз изменил что-то в иконке?
-  &__icon {
-    use {
-      fill: none;
-      stroke: currentcolor;
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  align-items: center;
+
+  &-profile {
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+    align-items: center;
+
+    &-avatar {
+      width: 80px;
+      height: 80px;
+    }
+
+    &-text {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    &-role {
+      @include text(regular, sm);
+
+      color: $color-neutral;
+    }
+
+    &-name {
+      @include text(regular, xl);
+    }
+
+    &-work-time {
+      display: flex;
+      gap: $space-1;
+      align-items: flex-end;
+
+      @include text(regular, xs);
     }
   }
 
-  &__content {
+  &-links {
     display: flex;
-    flex-direction: column;
     gap: $space-4;
-    align-items: center;
-
-    &-profile {
-      display: flex;
-      flex-direction: column;
-      gap: $space-2;
-      align-items: center;
-
-      &-avatar {
-        width: 80px;
-        height: 80px;
-      }
-
-      &-text {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-
-      &-role {
-        @include text(regular, sm);
-
-        color: $color-neutral;
-      }
-
-      &-name {
-        @include text(regular, xl);
-      }
-
-      &-work-time {
-        display: flex;
-        gap: $space-1;
-        align-items: flex-end;
-
-        @include text(regular, xs);
-      }
-    }
-
-    &-links {
-      display: flex;
-      gap: $space-4;
-    }
   }
 }
 </style>
