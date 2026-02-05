@@ -52,12 +52,6 @@
   &__cell {
     height: $space-10;
     padding-inline: $space-2;
-    text-align: end;
-    vertical-align: middle;
-
-    &:first-child {
-      text-align: start;
-    }
 
     &-head {
       height: $space-6;
