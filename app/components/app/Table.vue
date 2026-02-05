@@ -40,10 +40,9 @@
   border-collapse: collapse;
 
   &__head {
-    @include text(regular, xs);
+    @include label(regular, md);
 
     color: $color-neutral-400;
-    text-transform: uppercase
   }
 
   &__body {
@@ -51,15 +50,12 @@
   }
 
   &__cell {
-    min-width: 107px;
     height: $space-10;
     padding-inline: $space-2;
-
     text-align: end;
     vertical-align: middle;
 
     &:first-child {
-      min-width: 223px;
       text-align: start;
     }
 
