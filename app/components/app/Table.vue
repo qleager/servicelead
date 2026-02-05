@@ -44,6 +44,7 @@
     @include label(regular, md);
 
     color: $color-neutral-400;
+    text-align: left;
   }
 
   &__body {
@@ -52,6 +53,7 @@
 
   &__cell {
     height: 39px;
+    padding-inline: $space-2;
 
     &-head {
       height: 24px;
