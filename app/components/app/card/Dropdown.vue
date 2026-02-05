@@ -1,139 +1,54 @@
 <script lang="ts" setup>
-import type { IconProps } from '../Icon.vue'
+import type { VNodeChild } from 'vue'
+import type { CardProps } from './Card.vue'
+import type { FloaterModel } from '../Floater.vue'
 
-interface Props {
-  icon?: IconProps['name']
-  title?: string
-  centered?: boolean
-}
+type Props = CardProps
 
 interface Slots {
-  header?: () => void
-  default?: () => void
-  content: () => void
-  footer?: () => void
+  default?: (props: { isOpen: FloaterModel }) => VNodeChild
+  header?: () => VNodeChild
+  content: () => VNodeChild
+  footer?: () => VNodeChild
 }
 
-const props = defineProps<Props>()
+defineProps<Props>()
 
-const slots = defineSlots<Slots>()
-
-const classname = computed(() => [
-  'card-dropdown',
-  {
-    'card-dropdown-centered': props.centered,
-  },
-])
-const isHeaderVisible = computed(() => props.title || props.icon || slots.header)
+defineSlots<Slots>()
 </script>
 
 <template>
-  <div :class="classname">
+  <div class="card-dropdown">
     <AppFloater
       placement="bottom"
     >
-      <slot />
+      <template #default="defaultProps">
+        <slot :is-open="defaultProps.isOpen" />
+      </template>
 
       <template #content>
-        <div class="card-dropdown">
-          <header
-            v-if="isHeaderVisible"
-            class="card-dropdown__header"
+        <AppCard
+          :icon="$props.icon"
+          :title="$props.title"
+          :centered="$props.centered"
+        >
+          <template
+            v-if="$slots.header"
+            #header
           >
-            <AppIcon
-              v-if="icon"
-              :name="icon"
-              class="card-dropdown__icon"
-            />
-            <div
-              v-if="title"
-              class="card-dropdown__title"
-            >
-              {{ title }}
-            </div>
             <slot name="header" />
-          </header>
+          </template>
 
-          <div class="card-dropdown__main">
-            <slot name="content" />
-          </div>
+          <slot name="content" />
 
-          <footer
+          <template
             v-if="$slots.footer"
-            class="card-dropdown__footer"
+            #footer
           >
             <slot name="footer" />
-          </footer>
-        </div>
+          </template>
+        </AppCard>
       </template>
     </AppFloater>
   </div>
 </template>
-
-<style lang="scss">
-.card-dropdown {
-  $this: &;
-  $centered: $this + '-centered';
-
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  gap: $space-4;
-
-  border-radius: $space-8;
-
-  background-color: #fff;
-  box-shadow: $shadow-md;
-
-  &__header {
-    display: flex;
-    gap: $space-3;
-    align-items: center;
-    padding: $space-4 $space-4 0 $space-4;
-
-    #{$centered} & {
-      justify-content: center;
-    }
-  }
-
-  &__icon {
-    color: $color-neutral;
-  }
-
-  &__title {
-    @include text(semibold, xl);
-
-    line-height: 1;
-  }
-
-  &__main {
-    display: flex;
-    padding: 0 $space-4;
-
-    &:empty {
-      display: none;
-    }
-
-    &:first-child {
-      padding-top: $space-4;
-    }
-
-    &:last-child {
-      padding-bottom: $space-4;
-    }
-
-    #{$centered} & {
-      justify-content: center;
-    }
-  }
-
-  &__footer {
-    display: flex;
-    padding: 0 $space-4 $space-4;
-
-    #{$centered} & {
-      justify-content: center;
-    }
-  }
-}
-</style>
