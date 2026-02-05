@@ -54,7 +54,7 @@
     padding-inline: $space-2;
 
     &-head {
-      height: $space-6;
+      height: 24px;
     }
   }
 }
