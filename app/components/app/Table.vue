@@ -38,6 +38,7 @@
   $this: &;
 
   border-collapse: collapse;
+  width: 100%;
 
   &__head {
     @include label(regular, md);
@@ -51,7 +52,6 @@
 
   &__cell {
     height: 39px;
-    padding-inline: $space-2;
 
     &-head {
       height: 24px;
