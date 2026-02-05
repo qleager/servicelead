@@ -3,10 +3,10 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 // Important: Use path as ~/..., not @alias/... it is crash storybook build
 import AppButton from '~/components/app/Button.vue'
 
-const iconOptions = ['plus', 'check_24', 'arrow_right', 'change'] as const
+const iconOptions = [null, 'plus', 'check_24', 'arrow_right', 'change'] as const
 
 const meta: Meta<typeof AppButton> = {
-  title: 'App/Button',
+  title: 'App/Design/Button',
   component: AppButton,
   tags: ['autodocs'],
   parameters: {
@@ -25,18 +25,14 @@ const meta: Meta<typeof AppButton> = {
       control: 'select',
       options: ['primary', 'neutral', 'white'],
     },
-    type: {
-      control: 'select',
-      options: ['button', 'submit', 'reset'],
-    },
     icon: {
       control: 'select',
       options: iconOptions,
     },
-    target: {
-      control: 'select',
-      options: ['_self', '_blank', '_parent', '_top'],
-    },
+    type: { table: { disable: true } },
+    active: { table: { disable: true } },
+    to: { table: { disable: true } },
+    value: { table: { disable: true } },
     label: {
       control: 'text',
       description: 'Default slot content',
@@ -89,6 +85,9 @@ export const TrailingIcon: Story = {
   args: {
     icon: 'arrow_right',
     trailingIcon: true,
+  },
+  parameters: {
+    controls: { exclude: ['trailingIcon'] },
   },
 }
 
