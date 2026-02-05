@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { IconProps } from './Icon.vue'
+import type { IconProps } from '../Icon.vue'
 
 interface Props {
   icon?: IconProps['name']
