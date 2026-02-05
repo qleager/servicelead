@@ -79,21 +79,29 @@ import ConfirmDialog from '~/components/app/ConfirmDialog.vue'
 
 const { create } = useOverlay()
 
-const confirm = create(ConfirmDialog, {
-  props: { title: 'Delete item' },
+const confirmLogoutModal = create(Modal, {
+  props: { title: 'Are you sure you want to logut?' },
   destroyOnClose: true,
 })
 
-const result = await confirm.open({ message: 'Are you sure?' })
-// handle result
+const onClickButton = async () => {
+  const result = await confirmLogoutModal.open()
+
+  if (result === 'accept') {
+    try {
+      await $api.auth.logout()
+    }
+    ...
+  }
+}
 ```
 
 ### 3) Emit close from the overlay component
 ```ts
-const emit = defineEmits<{ close: [boolean] }>()
+const emit = defineEmits<{ close: 'accept' | 'reject' }>()
 
-const onConfirm = () => emit('close', true)
-const onCancel = () => emit('close', false)
+const onConfirm = () => emit('close', 'accept')
+const onCancel = () => emit('close', 'reject')
 ```
 
 ## Notes
