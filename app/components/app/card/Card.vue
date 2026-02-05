@@ -24,6 +24,8 @@ const classname = computed(() => [
   },
 ])
 const isHeaderVisible = computed(() => props.title || props.icon || slots.header)
+
+export type { Props as CardProps }
 </script>
 
 <template>
