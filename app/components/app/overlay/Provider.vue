@@ -8,8 +8,8 @@ const onAfterLeave = (id: symbol) => {
   unmount(id)
 }
 
-const onClose = (id: symbol) => {
-  close(id)
+const onClose = (id: symbol, payload?: unknown) => {
+  close(id, payload)
 }
 </script>
 
@@ -20,7 +20,7 @@ const onClose = (id: symbol) => {
     :key="overlay.id"
     v-model="overlay.isOpen"
     v-bind="overlay.props"
-    @close="onClose(overlay.id)"
+    @close="onClose(overlay.id, $event)"
     @after:leave="onAfterLeave(overlay.id)"
   />
 </template>
