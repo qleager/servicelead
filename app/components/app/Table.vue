@@ -50,7 +50,7 @@
   }
 
   &__cell {
-    height: $space-10;
+    height: 39px;
     padding-inline: $space-2;
 
     &-head {
