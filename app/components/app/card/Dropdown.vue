@@ -18,37 +18,36 @@ defineSlots<Slots>()
 </script>
 
 <template>
-  <div class="card-dropdown">
-    <AppFloater
-      placement="bottom"
-    >
-      <template #default="defaultProps">
-        <slot :is-open="defaultProps.isOpen" />
-      </template>
+  <AppFloater
+    placement="bottom"
+    class="card-dropdown"
+  >
+    <template #default="{ isOpen }">
+      <slot :is-open />
+    </template>
 
-      <template #content>
-        <AppCard
-          :icon="$props.icon"
-          :title="$props.title"
-          :centered="$props.centered"
+    <template #content>
+      <AppCard
+        :icon
+        :title
+        :centered
+      >
+        <template
+          v-if="$slots.header"
+          #header
         >
-          <template
-            v-if="$slots.header"
-            #header
-          >
-            <slot name="header" />
-          </template>
+          <slot name="header" />
+        </template>
 
-          <slot name="content" />
+        <slot name="content" />
 
-          <template
-            v-if="$slots.footer"
-            #footer
-          >
-            <slot name="footer" />
-          </template>
-        </AppCard>
-      </template>
-    </AppFloater>
-  </div>
+        <template
+          v-if="$slots.footer"
+          #footer
+        >
+          <slot name="footer" />
+        </template>
+      </AppCard>
+    </template>
+  </AppFloater>
 </template>
