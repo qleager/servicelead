@@ -10,7 +10,7 @@
           :key="col"
           class="table__cell table__cell-head"
         >
-          Lorem
+          Lorem ipsum dolor sit amet consectetur.
         </th>
       </tr>
     </thead>
@@ -26,7 +26,7 @@
           :key="col"
           class="table__cell table__cell-body"
         >
-          Lorem ipsum
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maiores perferendis nostrum sapiente.
         </td>
       </tr>
     </tbody>
@@ -42,8 +42,13 @@
   &__head {
     @include label(regular, md);
 
+    position: sticky;
+    top: 0;
+
     color: $color-neutral-400;
     text-align: left;
+
+    backdrop-filter: blur(20px) brightness(1.1);
   }
 
   &__body {
@@ -51,11 +56,12 @@
   }
 
   &__cell {
-    height: 39px;
-    padding-inline: $space-2;
+    padding: $space-3 $space-3;
+    border: 1px solid transparent;
 
     &-head {
-      height: 24px;
+      padding: $space-2 $space-3;
+      font-weight: inherit;
     }
   }
 }
