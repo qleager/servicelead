@@ -70,7 +70,7 @@ $label-weights: (
   medium: map.get($font-weights, medium),
 );
 
-@mixin label($size-name, $weight-name) {
+@mixin label($weight-name, $size-name) {
   $size: map.get($label-sizes, $size-name);
   $weight: map.get($label-weights, $weight-name);
 
