@@ -103,9 +103,6 @@ export const TrailingIcon: Story = {
     icon: 'arrow_right',
     trailingIcon: true,
   },
-  parameters: {
-    controls: { exclude: ['trailingIcon'] },
-  },
 }
 
 export const Loading: Story = {
