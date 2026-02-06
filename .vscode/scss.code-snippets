@@ -11,7 +11,7 @@
     "scope": "scss",
     "prefix": "label",
     "body": [
-      "@include label(${1|sm,md|}, ${2|regular,medium|});"
+      "@include label(${2|regular,medium|}, ${1|sm,md|});"
     ],
     "description": "Вставить @include label(size, weight)"
   },
