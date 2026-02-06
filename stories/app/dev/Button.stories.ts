@@ -2,58 +2,11 @@ import { computed } from 'vue'
 import type { Meta, StoryObj } from '@storybook/vue3'
 // Important: Use path as ~/..., not @alias/... it is crash storybook build
 import AppButton from '~/components/app/Button.vue'
-
-const iconOptions = [null, 'plus', 'check_24', 'arrow_right', 'change'] as const
+import { baseMeta } from '../Button.meta'
 
 const meta: Meta<typeof AppButton> = {
+  ...baseMeta,
   title: 'App/Dev/Button',
-  component: AppButton,
-  tags: ['autodocs'],
-  parameters: {
-    layout: 'centered',
-  },
-  argTypes: {
-    variant: {
-      control: 'select',
-      options: ['filled', 'lined', 'nofilled'],
-    },
-    size: {
-      control: 'select',
-      options: ['xs', 'sm', 'md', 'lg'],
-    },
-    color: {
-      control: 'select',
-      options: ['primary', 'neutral', 'white'],
-    },
-    type: {
-      control: 'select',
-      options: ['button', 'submit', 'reset'],
-    },
-    icon: {
-      control: 'select',
-      options: iconOptions,
-    },
-    target: {
-      control: 'select',
-      options: ['_self', '_blank', '_parent', '_top'],
-    },
-    label: {
-      control: 'text',
-      description: 'Default slot content',
-    },
-  },
-  args: {
-    label: 'Button',
-    variant: 'filled',
-    size: 'md',
-    color: 'primary',
-    type: 'button',
-    rounded: true,
-    trailingIcon: false,
-    disabled: false,
-    active: false,
-    loading: false,
-  },
 }
 
 export default meta

@@ -2,53 +2,19 @@ import { computed } from 'vue'
 import type { Meta, StoryObj } from '@storybook/vue3'
 // Important: Use path as ~/..., not @alias/... it is crash storybook build
 import AppButton from '~/components/app/Button.vue'
-
-const iconOptions = [null, 'plus', 'check_24', 'arrow_right', 'change'] as const
+import { baseMeta } from '../Button.meta'
 
 const meta: Meta<typeof AppButton> = {
+  ...baseMeta,
   title: 'App/Design/Button',
-  component: AppButton,
-  tags: ['autodocs'],
-  parameters: {
-    layout: 'centered',
-  },
   argTypes: {
-    variant: {
-      control: 'select',
-      options: ['filled', 'lined', 'nofilled'],
-    },
-    size: {
-      control: 'select',
-      options: ['xs', 'sm', 'md', 'lg'],
-    },
-    color: {
-      control: 'select',
-      options: ['primary', 'neutral', 'white'],
-    },
-    icon: {
-      control: 'select',
-      options: iconOptions,
-    },
+    ...baseMeta.argTypes,
     type: { table: { disable: true } },
     active: { table: { disable: true } },
     to: { table: { disable: true } },
+    target: { table: { disable: true } },
     value: { table: { disable: true } },
-    label: {
-      control: 'text',
-      description: 'Default slot content',
-    },
-  },
-  args: {
-    label: 'Button',
-    variant: 'filled',
-    size: 'md',
-    color: 'primary',
-    type: 'button',
-    rounded: true,
-    trailingIcon: false,
-    disabled: false,
-    active: false,
-    loading: false,
+    default: { table: { disable: true } },
   },
 }
 
