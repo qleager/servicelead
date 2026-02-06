@@ -38,7 +38,6 @@
   $this: &;
 
   border-collapse: collapse;
-  width: 100%;
 
   &__head {
     @include label(regular, md);
