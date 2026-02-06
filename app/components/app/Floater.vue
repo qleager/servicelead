@@ -55,8 +55,23 @@ const floating = ref<HTMLElement | null>(null)
 
 let closeTimeout: ReturnType<typeof setTimeout> | undefined = undefined
 
-const { floatingStyles } = useFloating(reference, floating, {
+const transition = computed(() => {
+  // split for cases like bottom-start
+  switch (placement.value.split('-')[0]) {
+    case 'left':
+      return { autoAlpha: 0, x: -8 }
+    case 'right':
+      return { autoAlpha: 0, x: 8 }
+    case 'top':
+      return { autoAlpha: 0, y: -8 }
+    default:
+      return { autoAlpha: 0, y: 8 }
+  }
+})
+
+const { floatingStyles, placement } = useFloating(reference, floating, {
   placement: props.placement,
+  transform: false,
   // whileElementsMounted: autoUpdate,
   middleware: [
     offset(8),
@@ -130,9 +145,9 @@ export type { Props as FloaterProps, Slots as FloaterSlots, Model as FloaterMode
     <div
       ref="reference"
       class="floater__trigger"
+      @click="onClickReference"
       @mouseenter="onMouseEnter"
       @mouseleave="onMouseLeave"
-      @click="onClickReference"
     >
       <slot :is-open="model" />
     </div>
@@ -140,19 +155,24 @@ export type { Props as FloaterProps, Slots as FloaterSlots, Model as FloaterMode
       :disabled="!portal"
       :to="portal"
     >
-      <div
-        v-if="model"
-        ref="floating"
-        class="floater__content"
-        :style="floatingStyles"
-        @mouseenter="onMouseEnter"
-        @mouseleave="onMouseLeave"
+      <GSAPTransition
+        :duration=".2"
+        :hidden="transition"
       >
-        <slot
-          name="content"
-          :is-open="model"
-        />
-      </div>
+        <div
+          v-if="model"
+          ref="floating"
+          class="floater__content"
+          :style="floatingStyles"
+          @mouseenter="onMouseEnter"
+          @mouseleave="onMouseLeave"
+        >
+          <slot
+            :is-open="model"
+            name="content"
+          />
+        </div>
+      </GSAPTransition>
     </Teleport>
   </div>
 </template>
