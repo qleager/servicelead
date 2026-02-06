@@ -23,7 +23,7 @@ interface Props {
 }
 
 interface Emits {
-  close: ['accept' | 'reject' ]
+  close: [ 'accept' | 'reject' ]
 }
 
 withDefaults(defineProps<Props>(), {
@@ -33,6 +33,8 @@ withDefaults(defineProps<Props>(), {
 })
 
 defineEmits<Emits>()
+
+export type { Props as ConfirmDialogProps }
 </script>
 
 <template>
