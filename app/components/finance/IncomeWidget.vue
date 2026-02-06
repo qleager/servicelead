@@ -4,10 +4,10 @@
 
 <template>
   <AppWidget
-    title="Выручка по проектам"
-    icon="chart"
     action
     action-text="Подробнее"
+    icon="chart"
+    title="Выручка по проектам"
   >
     FinanceIncomeWidget.vue
   </AppWidget>
