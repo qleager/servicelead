@@ -24,20 +24,15 @@ const onButtonClick = async () => {
     icon="statistic"
     action
   >
-<<<<<<< AppTable__dev_dushik
     <div class="div1">
       <AppTable class="table1" />
+      <AppButton
+        size="xs"
+        @click="onButtonClick"
+      >
+        Выйти
+      </AppButton>
     </div>
-    <!-- StatisticsWidget.vue -->
-=======
-    StatisticsWidget.vue
-    <AppButton
-      size="xs"
-      @click="onButtonClick"
-    >
-      Выйти
-    </AppButton>
->>>>>>> dev_q
   </AppWidget>
 </template>
 
