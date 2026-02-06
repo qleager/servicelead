@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import type { TableColumn } from '~/components/app/Table.vue'
+
 const initSettings = {
   variant: 'filled',
   size: 'sm',
@@ -10,10 +12,38 @@ const initSettings = {
 const settings = ref(initSettings)
 
 const reset = () => settings.value = { ...initSettings }
+
+type PaymentRow = {
+  id: string
+  date: string
+  status: string
+  email: string
+  amount: number
+}
+
+const data: PaymentRow[] = [
+  { id: '4600', date: '2024-03-11', status: 'paid', email: 'a@a.com', amount: 594 },
+  { id: '4599', date: '2024-03-10', status: 'failed', email: 'b@b.com', amount: 276 },
+  { id: '4598', date: '2024-03-09', status: 'refunded', email: 'c@c.com', amount: 315 },
+  { id: '4597', date: '2024-03-08', status: 'paid', email: 'd@d.com', amount: 529 },
+  { id: '4596', date: '2024-03-07', status: 'paid', email: 'e@e.com', amount: 639 },
+]
+
+const columns: TableColumn<PaymentRow>[] = [
+  { accessorKey: 'id', header: 'ID' },
+  { accessorKey: 'date', header: 'Date' },
+  { accessorKey: 'status', header: 'Status' },
+  { accessorKey: 'email', header: 'Email' },
+  { accessorKey: 'amount', header: 'Amount' },
+]
 </script>
 
 <template>
   <section class="offers-page">
+    <AppTable
+      :columns="columns"
+      :data="data"
+    />
     <div
       :keys="[settings.size, settings.color, settings.variant]"
       class="elements"
