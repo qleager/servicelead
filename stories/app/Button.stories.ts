@@ -2,11 +2,71 @@ import { computed } from 'vue'
 import type { Meta, StoryObj } from '@storybook/vue3'
 // Important: Use path as ~/..., not @alias/... it is crash storybook build
 import AppButton from '~/components/app/Button.vue'
-import { baseMeta } from '../Button.meta'
+import { iconNames } from '~/types/components/app/icon'
+
+const iconOptions = [null, ...iconNames] as const
 
 const meta: Meta<typeof AppButton> = {
-  ...baseMeta,
-  title: 'App/Dev/Button',
+
+  title: 'AppButton',
+  component: AppButton,
+  tags: ['autodocs'],
+  parameters: {
+    layout: 'centered',
+  },
+  argTypes: {
+    label: {
+      control: 'text',
+      description: 'Default slot content',
+    },
+    variant: {
+      control: 'select',
+      options: ['filled', 'lined', 'nofilled'],
+    },
+    size: {
+      control: 'select',
+      options: ['xs', 'sm', 'md', 'lg'],
+    },
+    color: {
+      control: 'select',
+      options: ['primary', 'neutral', 'white'],
+    },
+    type: {
+      control: 'select',
+      options: ['button', 'submit', 'reset'],
+      table: { category: 'Not for design props Only development' },
+    },
+    active: {
+      table: { category: 'Not for design props Only development' },
+    },
+    icon: {
+      control: 'select',
+      options: iconOptions,
+    },
+    to: {
+      table: { category: 'Not for design props Only development' },
+    },
+    target: {
+      control: 'select',
+      options: ['_self', '_blank', '_parent', '_top'],
+      table: { category: 'Not for design props Only development' },
+    },
+    value: {
+      table: { category: 'Not for design props Only development' },
+    },
+  },
+  args: {
+    label: 'Button',
+    variant: 'filled',
+    size: 'md',
+    color: 'primary',
+    type: 'button',
+    rounded: true,
+    trailingIcon: false,
+    disabled: false,
+    active: false,
+    loading: false,
+  },
 }
 
 export default meta
