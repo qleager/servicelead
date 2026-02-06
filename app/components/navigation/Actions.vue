@@ -1,13 +1,13 @@
 <script lang="ts" setup>
-import type { FloaterProps } from '../app/Floater.vue'
+import type { ButtonProps } from '../app/Button.vue'
+import type { FloaterModel, FloaterProps } from '../app/Floater.vue'
+import { useScrollLock } from '@vueuse/core'
 
 interface Props {
   placement?: FloaterProps['placement']
 }
 
 defineProps<Props>()
-
-const isContentVisible = ref<boolean>(false)
 
 const items = [
   {
@@ -32,21 +32,30 @@ const items = [
   },
 ]
 
-const buttonIcon = computed(() => isContentVisible.value ? 'close' : 'plus')
-const buttonColor = computed(() => isContentVisible.value ? 'neutral' : 'primary')
+const isLockedScrollDocument = useScrollLock(document)
+
+const triggerProps = (isOpen: FloaterModel) => ({
+  color: isOpen ? 'neutral' : 'primary',
+  icon: isOpen ? 'close' : 'plus' as const,
+}) as ButtonProps
 </script>
 
 <template>
-  <AppFloater
-    :placement
-  >
-    <AppButton
-      :icon="buttonIcon"
-      :color="buttonColor"
-      @click="isContentVisible = !isContentVisible"
-    />
-    <template #content>
-      <div class="navigation-actions">
+  <div class="navigation-actions">
+    <AppFloater
+      :placement
+      class="navigation-actions__floater"
+      @update:model-value="isLockedScrollDocument = $event"
+    >
+      <template #default="{ isOpen }">
+        <AppBackdrop v-if="isOpen" />
+        <AppButton
+          v-bind="triggerProps(isOpen)"
+          class="navigation-actions__trigger"
+        />
+      </template>
+
+      <template #content>
         <div class="navigation-actions__list">
           <div
             v-for="item in items"
@@ -67,9 +76,9 @@ const buttonColor = computed(() => isContentVisible.value ? 'neutral' : 'primary
             </div>
           </div>
         </div>
-      </div>
-    </template>
-  </AppFloater>
+      </template>
+    </AppFloater>
+  </div>
 </template>
 
 <style lang="scss">
@@ -81,10 +90,20 @@ const buttonColor = computed(() => isContentVisible.value ? 'neutral' : 'primary
   gap: $space-6;
   align-items: center;
 
+  &__floater {
+    position: relative;
+  }
+
+  &__trigger {
+    position: relative;
+    z-index: inherit;
+  }
+
   &__list {
     display: flex;
     flex-direction: column;
     gap: $space-1;
+    padding-inline: $space-3;
 
     &-item {
       cursor: pointer;

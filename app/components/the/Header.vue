@@ -16,6 +16,7 @@
         class="header__tickets"
         variant="lined"
         color="neutral"
+        mode="dropdown"
       />
       <ManagerButton class="header__manager" />
       <NavigationActions placement="bottom" />
@@ -36,7 +37,24 @@
   padding-inline: $space-5 $space-7;
 
   background-color: rgba($color-neutral-50, 70%);
-  backdrop-filter: blur(8px);
+
+  // Не используем backdrop-filter, он ломает z-index у детей
+  // backdrop-filter: blur(8px);
+  // реализовываем через ::pseudo
+
+  &::before {
+    content: '';
+
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    backdrop-filter: blur(8px);
+  }
 
   &__search {
     width: 100%;

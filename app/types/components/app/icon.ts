@@ -17,6 +17,7 @@ export const iconNames = [
   'city_circle',
   'city_square',
   'city_triangle',
+  'clock',
   'close',
   'close_20',
   'collapse',

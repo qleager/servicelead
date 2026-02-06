@@ -26,3 +26,9 @@ button {
 
   background: none;
 }
+
+/* stylelint-disable-next-line selector-id-pattern */
+#__nuxt {
+  position: relative;
+  z-index: 0;
+}
