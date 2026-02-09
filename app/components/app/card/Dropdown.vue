@@ -31,6 +31,7 @@ defineSlots<Slots>()
         :icon
         :title
         :centered
+        class="card-dropdown__drop"
       >
         <template
           v-if="$slots.header"
@@ -51,3 +52,13 @@ defineSlots<Slots>()
     </template>
   </AppFloater>
 </template>
+
+<style lang="scss">
+.card-dropdown {
+  $this: &;
+
+  &__drop {
+    box-shadow: $shadow-md;
+  }
+}
+</style>

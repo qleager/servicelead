@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import AppFloater from '~/components/app/Floater.vue'
+import AppCardDropdown from '~/components/app/card/Dropdown.vue'
 import AppSheet from '~/components/app/Sheet.vue'
 
 interface Props {
@@ -13,7 +13,7 @@ const props = withDefaults(defineProps<Props>(), {
 const rootElement = computed(() => {
   switch (props.mode) {
     case 'dropdown':
-      return AppFloater
+      return AppCardDropdown
     case 'sheet':
       return AppSheet
     default:
