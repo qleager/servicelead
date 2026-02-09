@@ -1,55 +1,49 @@
 <script lang="ts" setup>
-import type { IconProps } from '../Icon.vue'
-
-interface Props {
-  icon?: IconProps['name']
-  title?: string
-  centered?: boolean
-}
+import type { VNodeChild } from 'vue'
 
 interface Slots {
-  header?: () => void
-  default: () => void
-  footer?: () => void
+  header?: () => VNodeChild
+  title?: () => VNodeChild
+  subtitle?: () => VNodeChild
+  content?: () => VNodeChild
+  footer?: () => VNodeChild
 }
 
-const props = defineProps<Props>()
+defineSlots<Slots>()
 
-const slots = defineSlots<Slots>()
-
-const classname = computed(() => [
-  'card',
-  {
-    'card-centered': props.centered,
-  },
-])
-const isHeaderVisible = computed(() => props.title || props.icon || slots.header)
-
-export type { Props as CardProps }
+export type { Slots as CardSlots }
 </script>
 
 <template>
-  <div :class="classname">
+  <div class="card">
     <header
-      v-if="isHeaderVisible"
+      v-if="$slots.header"
       class="card__header"
     >
-      <AppIcon
-        v-if="icon"
-        :name="icon"
-        class="card__icon"
-      />
-      <div
-        v-if="title"
-        class="card__title"
-      >
-        {{ title }}
-      </div>
       <slot name="header" />
     </header>
 
-    <div class="card__main">
-      <slot />
+    <div class="card__group-title">
+      <div
+        v-if="$slots.title"
+        class="card__title"
+      >
+        <slot name="title" />
+      </div>
+
+      <div
+        v-if="$slots.subtitle"
+        class="card__subtitle"
+      >
+        <slot name="subtitle" />
+      </div>
+    </div>
+
+    <div
+      v-if="$slots.subtitle"
+      class="card__content"
+    >
+      <slot name="content" />
     </div>
 
     <footer
@@ -64,7 +58,6 @@ export type { Props as CardProps }
 <style lang="scss">
 .card {
   $this: &;
-  $centered: $this + '-centered';
 
   overflow: hidden;
   display: flex;
@@ -76,53 +69,40 @@ export type { Props as CardProps }
   background-color: #fff;
 
   &__header {
-    display: flex;
-    gap: $space-3;
-    align-items: center;
-    padding: $space-4 $space-4 0 $space-4;
-
-    #{$centered} & {
-      justify-content: center;
-    }
-  }
-
-  &__icon {
-    color: $color-neutral;
+    padding-inline: $space-4;
   }
 
   &__title {
-    @include text(semibold, xl);
+    padding-inline: $space-4;
 
-    line-height: 1;
+    @include text(semibold, xl);
   }
 
-  &__main {
-    display: flex;
-    padding: 0 $space-4;
+  &__subtitle {
+    padding-inline: $space-4;
 
-    &:empty {
-      display: none;
-    }
+    @include text(medium, xs);
 
-    &:first-child {
-      padding-top: $space-4;
-    }
+    color: $color-neutral-400;
+  }
 
-    &:last-child {
-      padding-bottom: $space-4;
-    }
-
-    #{$centered} & {
-      justify-content: center;
-    }
+  &__content {
+    padding-inline: $space-4;
   }
 
   &__footer {
-    display: flex;
-    padding: 0 $space-4 $space-4;
+    padding-inline: $space-4;
+  }
 
-    #{$centered} & {
-      justify-content: center;
+  & > * {
+    &:first-child {
+      margin-bottom: -$space-4;
+      padding: $space-4;
+    }
+
+    &:last-child {
+      margin-top: -$space-4;
+      padding: $space-4;
     }
   }
 }
