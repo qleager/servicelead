@@ -2,17 +2,23 @@ import { computed } from 'vue'
 import type { Meta, StoryObj } from '@storybook/vue3'
 // Important: Use path as ~/..., not @alias/... it is crash storybook build
 import AppButton from '~/components/app/Button.vue'
+import { iconNames } from '~/types/components/app/icon'
 
-const iconOptions = ['plus', 'check_24', 'arrow_right', 'change'] as const
+const iconOptions = [null, ...iconNames] as const
 
 const meta: Meta<typeof AppButton> = {
-  title: 'App/Button',
+
+  title: 'AppButton',
   component: AppButton,
   tags: ['autodocs'],
   parameters: {
     layout: 'centered',
   },
   argTypes: {
+    label: {
+      control: 'text',
+      description: 'Default slot content',
+    },
     variant: {
       control: 'select',
       options: ['filled', 'lined', 'nofilled'],
@@ -28,18 +34,25 @@ const meta: Meta<typeof AppButton> = {
     type: {
       control: 'select',
       options: ['button', 'submit', 'reset'],
+      table: { category: 'Behavioral props' },
+    },
+    active: {
+      table: { category: 'Behavioral props' },
     },
     icon: {
       control: 'select',
       options: iconOptions,
     },
+    to: {
+      table: { category: 'Behavioral props' },
+    },
     target: {
       control: 'select',
       options: ['_self', '_blank', '_parent', '_top'],
+      table: { category: 'Behavioral props' },
     },
-    label: {
-      control: 'text',
-      description: 'Default slot content',
+    value: {
+      table: { category: 'Behavioral props' },
     },
   },
   args: {

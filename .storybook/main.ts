@@ -1,4 +1,5 @@
-import type { StorybookConfig } from '@nuxtjs/storybook'
+import type { StorybookConfig } from '@storybook-vue/nuxt'
+import { svgSpritePlugin } from '../build/vite-svg-sprite'
 
 const config: StorybookConfig = {
   stories: [
@@ -7,6 +8,14 @@ const config: StorybookConfig = {
   framework: {
     name: '@storybook-vue/nuxt',
     options: {},
+  },
+
+  viteFinal(config) {
+    config.plugins = config.plugins ||= []
+
+    config.plugins.push(svgSpritePlugin())
+
+    return config
   },
 }
 

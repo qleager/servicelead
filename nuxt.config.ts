@@ -3,6 +3,7 @@
  */
 import { fileURLToPath } from 'node:url'
 import VitePluginSvgSpritemap from '@spiriit/vite-plugin-svg-spritemap'
+import { svgSpritePlugin } from './build/vite-svg-sprite'
 
 export default defineNuxtConfig({
   modules: [
@@ -45,35 +46,7 @@ export default defineNuxtConfig({
       },
     },
     plugins: [
-      VitePluginSvgSpritemap('./assets/icons/*.svg', {
-        prefix: false,
-        route: 'sprite',
-        output: 'sprite.[hash][extname]',
-        svgo: {
-          plugins: [
-            {
-              name: 'preset-default',
-              params: {
-                overrides: {
-                  cleanupIds: false,
-                },
-              },
-            },
-            {
-              name: 'prefixIds',
-              params: {
-                prefix: false,
-              },
-            },
-            {
-              name: 'removeAttrs',
-              params: {
-                attrs: '(fill|stroke)',
-              },
-            },
-          ],
-        },
-      }),
+      svgSpritePlugin(),
     ],
   },
 
