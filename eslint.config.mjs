@@ -22,7 +22,7 @@ export default withNuxt([
           'EVENTS',
           'CONTENT',
         ],
-        alphabetical: true, // внутри групп — по алфавиту
+        alphabetical: true,
         sortLineLength: false,
       }],
     },
