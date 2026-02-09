@@ -21,13 +21,13 @@ type PaymentRow = {
   amount: number
 }
 
-const data: PaymentRow[] = [
+const data = ref<PaymentRow[]> ([
   { id: '4600', date: '2024-03-11', status: 'paid', email: 'a@a.com', amount: 594 },
   { id: '4599', date: '2024-03-10', status: 'failed', email: 'b@b.com', amount: 276 },
   { id: '4598', date: '2024-03-09', status: 'refunded', email: 'c@c.com', amount: 315 },
   { id: '4597', date: '2024-03-08', status: 'paid', email: 'd@d.com', amount: 529 },
   { id: '4596', date: '2024-03-07', status: 'paid', email: 'e@e.com', amount: 639 },
-]
+])
 
 const columns: TableColumn<PaymentRow>[] = [
   { accessorKey: 'id', header: 'ID' },
@@ -36,6 +36,14 @@ const columns: TableColumn<PaymentRow>[] = [
   { accessorKey: 'email', header: 'Email' },
   { accessorKey: 'amount', header: 'Amount' },
 ]
+let count = 0
+const increaseСount = () => {
+  count = count + 1
+  if (data.value[0]) data.value[0].status = 'paid' + count
+}
+const addRow = () => {
+  data.value.push({ id: '4596', date: '2024-03-07', status: 'NEW ROW!', email: 'e@e.com', amount: 639 })
+}
 </script>
 
 <template>
@@ -44,6 +52,13 @@ const columns: TableColumn<PaymentRow>[] = [
       :columns="columns"
       :data="data"
     />
+    <AppButton @click="increaseСount">
+      count + 1
+    </AppButton>
+    <AppButton @click="addRow">
+      addRow
+    </AppButton>
+
     <div
       :keys="[settings.size, settings.color, settings.variant]"
       class="elements"

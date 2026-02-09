@@ -11,8 +11,18 @@ interface Props {
 
 const props = defineProps<Props>()
 
+const tableData = shallowRef<T[]>(props.data)
+
+watch(
+  props.data,
+  (next) => {
+    tableData.value = [...next]
+  },
+  { deep: true },
+)
+
 const tableApi = useVueTable({
-  data: props.data,
+  data: tableData,
   columns: props.columns,
   getCoreRowModel: getCoreRowModel(),
 })
