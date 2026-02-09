@@ -13,6 +13,12 @@ const props = defineProps<Props>()
 
 const tableData = shallowRef<T[]>(props.data)
 
+const tableApi = useVueTable({
+  data: tableData,
+  columns: props.columns,
+  getCoreRowModel: getCoreRowModel(),
+})
+
 watch(
   props.data,
   (next) => {
@@ -20,12 +26,6 @@ watch(
   },
   { deep: true },
 )
-
-const tableApi = useVueTable({
-  data: tableData,
-  columns: props.columns,
-  getCoreRowModel: getCoreRowModel(),
-})
 </script>
 
 <template>
