@@ -31,8 +31,8 @@ export type { Props as ManagerButtonProps }
   >
     <div class="manager-button__trigger">
       <NuxtImg
-        :src="'/images/default-avatar.png'"
         class="manager-button__avatar"
+        :src="'/images/default-avatar.png'"
       />
       <span class="manager-button__info">
         <span class="manager-button__name">Иванов Иван</span>
