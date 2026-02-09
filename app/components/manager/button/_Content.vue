@@ -45,6 +45,7 @@
     </div>
     <AppButton
       variant="nofilled"
+      size="sm"
       color="neutral"
       class="manager-button__content-feedback"
     >
