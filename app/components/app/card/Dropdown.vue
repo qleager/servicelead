@@ -1,26 +1,19 @@
 <script lang="ts" setup>
 import type { VNodeChild } from 'vue'
-import type { CardProps } from './Card.vue'
 import type { FloaterModel } from '../Floater.vue'
+import type { CardSlots } from './Card.vue'
 
-type Props = CardProps
-
-interface Slots {
+interface Slots extends CardSlots {
   default?: (props: { isOpen: FloaterModel }) => VNodeChild
-  header?: () => VNodeChild
-  content: () => VNodeChild
-  footer?: () => VNodeChild
 }
-
-defineProps<Props>()
 
 defineSlots<Slots>()
 </script>
 
 <template>
   <AppFloater
-    placement="bottom"
     class="card-dropdown"
+    placement="bottom"
   >
     <template #default="{ isOpen }">
       <slot :is-open />
@@ -28,9 +21,6 @@ defineSlots<Slots>()
 
     <template #content>
       <AppCard
-        :icon
-        :title
-        :centered
         class="card-dropdown__drop"
       >
         <template
@@ -40,7 +30,26 @@ defineSlots<Slots>()
           <slot name="header" />
         </template>
 
-        <slot name="content" />
+        <template
+          v-if="$slots.title"
+          #title
+        >
+          <slot name="title" />
+        </template>
+
+        <template
+          v-if="$slots.subtitle"
+          #subtitle
+        >
+          <slot name="subtitle" />
+        </template>
+
+        <template
+          v-if="$slots.content"
+          #content
+        >
+          <slot name="content" />
+        </template>
 
         <template
           v-if="$slots.footer"
