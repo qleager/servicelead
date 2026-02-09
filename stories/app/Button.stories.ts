@@ -34,25 +34,25 @@ const meta: Meta<typeof AppButton> = {
     type: {
       control: 'select',
       options: ['button', 'submit', 'reset'],
-      table: { category: 'Not for design props Only development' },
+      table: { category: 'Behavioral props' },
     },
     active: {
-      table: { category: 'Not for design props Only development' },
+      table: { category: 'Behavioral props' },
     },
     icon: {
       control: 'select',
       options: iconOptions,
     },
     to: {
-      table: { category: 'Not for design props Only development' },
+      table: { category: 'Behavioral props' },
     },
     target: {
       control: 'select',
       options: ['_self', '_blank', '_parent', '_top'],
-      table: { category: 'Not for design props Only development' },
+      table: { category: 'Behavioral props' },
     },
     value: {
-      table: { category: 'Not for design props Only development' },
+      table: { category: 'Behavioral props' },
     },
   },
   args: {
