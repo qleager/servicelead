@@ -11,6 +11,7 @@
         class="header__notifications"
         variant="lined"
         color="neutral"
+        mode="dropdown"
       />
       <TicketsButton
         class="header__tickets"
