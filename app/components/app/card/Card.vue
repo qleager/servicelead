@@ -23,7 +23,10 @@ export type { Slots as CardSlots }
       <slot name="header" />
     </header>
 
-    <div class="card__group-title">
+    <div
+      v-if="$slots.title && $slots.subtitle"
+      class="card__group-title"
+    >
       <div
         v-if="$slots.title"
         class="card__title"
@@ -40,7 +43,7 @@ export type { Slots as CardSlots }
     </div>
 
     <div
-      v-if="$slots.subtitle"
+      v-if="$slots.content"
       class="card__content"
     >
       <slot name="content" />
@@ -64,6 +67,7 @@ export type { Slots as CardSlots }
   flex-direction: column;
   gap: $space-4;
 
+  padding-block: $space-4;
   border-radius: $space-8;
 
   background-color: #fff;
@@ -96,12 +100,12 @@ export type { Slots as CardSlots }
 
   & > * {
     &:first-child {
-      margin-bottom: -$space-4;
+      margin-block: -$space-4;
       padding: $space-4;
     }
 
     &:last-child {
-      margin-top: -$space-4;
+      margin-block: -$space-4;
       padding: $space-4;
     }
   }
