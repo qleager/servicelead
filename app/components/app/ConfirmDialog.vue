@@ -47,7 +47,7 @@ export type { Props as ConfirmDialogProps }
       {{ description }}
     </template>
     <template #footer>
-      <div class="confirm-dialog">
+      <div class="confirm-dialog__footer">
         <AppButton
           color="neutral"
           @click="$emit('close', 'reject')"

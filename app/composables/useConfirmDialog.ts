@@ -6,7 +6,6 @@ export const useConfirmDialog = () => {
 
   return (options: ConfirmDialogProps): Promise<boolean> => {
     const modal = overlay.create(ConfirmDialog, {
-      destroyOnClose: true,
       props: options,
     })
 
