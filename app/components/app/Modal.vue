@@ -11,27 +11,24 @@ interface Emits {
 
 interface Slots {
   default?: () => unknown
+  header?: () => unknown
   title?: () => unknown
-  description?: () => unknown
+  subtitle?: () => unknown
   content?: (props: { close?: () => void }) => unknown
   footer?: (props: { close?: () => void }) => unknown
 }
 
 type Model = boolean
 
-const slots = defineSlots<Slots>()
+defineSlots<Slots>()
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   overlay: true,
 })
 
 const emits = defineEmits<Emits>()
 
 const model = defineModel<Model>({ default: false })
-
-const isTitleVisible = computed(() => slots.title || props.title)
-const isDescriptionVisible = computed(() => slots.description || props.description)
-const isHeaderVisible = computed(() => isTitleVisible.value || isDescriptionVisible.value)
 
 const toggle = () => {
   model.value = !model.value
@@ -61,79 +58,82 @@ export type { Props as ModalProps, Emits as ModalEmits, Model as ModalModel }
     @click:backdrop="close"
   >
     <div class="modal">
-      <div class="modal__content">
-        <header
-          v-if="isHeaderVisible"
-          class="modal__header"
+      <AppCard class="modal__content">
+        <template
+          v-if="$slots.header"
+          #header
         >
-          <div
-            v-if="isTitleVisible"
-            class="modal__header-title"
-          >
+          <slot name="header" />
+        </template>
+        <template
+          v-else-if="title || description"
+          #header
+        >
+          <header class="modal__header">
             <div
-              v-if="!$slots.title"
+              v-if="title"
               class="modal__title"
             >
               {{ title }}
             </div>
-
-            <div
-              v-else
-              class="modal__slot modal__slot-title"
-            >
-              <slot name="title" />
+            <div v-else>
+              else title
             </div>
-          </div>
 
-          <div
-            v-if="isDescriptionVisible"
-            class="modal__header-description"
-          >
             <div
-              v-if="!$slots.description"
+              v-if="description"
               class="modal__description"
             >
               {{ description }}
             </div>
-
-            <div
-              v-else
-              class="modal__slot modal__slot-description"
-            >
-              <slot name="description" />
+            <div v-else>
+              else description
             </div>
-          </div>
-        </header>
+          </header>
+        </template>
 
-        <div class="modal__main">
-          <!-- IDEA: сделать компонент слота? мы везде используем такую конструкцию -->
-          <div
-            v-if="$slots.content"
-            class="modal__slot modal__slot-content"
-          >
-            <slot
-              name="content"
-              :close
-            />
-          </div>
-        </div>
-
-        <footer
-          v-if="$slots.footer"
-          class="modal__footer"
+        <template
+          v-if="$slots.title"
+          #title
         >
-          <div class="modal__slot modal__slot-footer">
+          <slot name="title" />
+        </template>
+        <template
+          v-if="$slots.subtitle"
+          #subtitle
+        >
+          <slot name="subtitle" />
+        </template>
+
+        <template
+          v-if="$slots.content"
+          #content
+        >
+          <div class="modal__main">
+            <!-- IDEA: сделать компонент слота? мы везде используем такую конструкцию -->
             <slot
-              name="footer"
               :close
+              name="content"
             />
           </div>
-        </footer>
-      </div>
+        </template>
+
+        <template
+          v-if="$slots.footer"
+          #footer
+        >
+          <footer class="modal__footer">
+            <slot
+              :close
+              name="footer"
+            />
+          </footer>
+        </template>
+      </AppCard>
       <AppButton
         class="modal__close"
-        icon="close"
         color="white"
+        icon="close"
         size="sm"
         @click="close"
       />
@@ -151,14 +151,6 @@ export type { Props as ModalProps, Emits as ModalEmits, Model as ModalModel }
 
   background-color: white;
 
-  &__content {
-    display: flex;
-    flex-direction: column;
-    gap: $space-8;
-    align-items: center;
-    justify-content: center;
-  }
-
   &__overlay {
     z-index: 10;
 
@@ -168,31 +160,6 @@ export type { Props as ModalProps, Emits as ModalEmits, Model as ModalModel }
     place-items: center;
 
     padding: $space-8 0;
-  }
-
-  &__header {
-    display: flex;
-    flex-direction: column;
-    gap: $space-3;
-    align-items: center;
-
-    padding: $space-10 $space-16 0;
-
-    &:last-child {
-      padding-bottom: $space-8;
-    }
-  }
-
-  &__main {
-    padding-inline: $space-16;
-
-    &:first-child {
-      padding-top: $space-10;
-    }
-
-    &:last-child {
-      padding-bottom: $space-8;
-    }
   }
 
   &__title {
@@ -213,14 +180,6 @@ export type { Props as ModalProps, Emits as ModalEmits, Model as ModalModel }
     position: absolute;
     top: 0;
     right: -$space-16;
-  }
-
-  &__footer {
-    padding: 0 $space-16 $space-8;
-
-    &:first-child {
-      padding-top: $space-10;
-    }
   }
 }
 </style>
