@@ -98,7 +98,7 @@ export type { Props as ChipProps }
     justify-content: center;
 
     width: fit-content;
-    border-radius: $space-9;
+    border-radius: $radius-8;
 
     white-space: nowrap;
 
