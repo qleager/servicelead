@@ -23,7 +23,7 @@ interface Props {
 }
 
 interface Emits {
-  close: ['accept' | 'reject' ]
+  close: [ 'accept' | 'reject' ]
 }
 
 withDefaults(defineProps<Props>(), {
@@ -33,6 +33,8 @@ withDefaults(defineProps<Props>(), {
 })
 
 defineEmits<Emits>()
+
+export type { Props as ConfirmDialogProps }
 </script>
 
 <template>
@@ -45,7 +47,7 @@ defineEmits<Emits>()
       {{ description }}
     </template>
     <template #footer>
-      <div class="confirm-dialog">
+      <div class="confirm-dialog__footer">
         <AppButton
           color="neutral"
           @click="$emit('close', 'reject')"
