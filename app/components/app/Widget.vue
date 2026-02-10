@@ -17,6 +17,8 @@ interface Slots {
 defineProps<Props>()
 
 defineSlots<Slots>()
+
+export type { Props as WidgetProps, Slots as WidgetSlots }
 </script>
 
 <template>
