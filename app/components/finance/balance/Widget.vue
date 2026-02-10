@@ -4,10 +4,27 @@
 
 <template>
   <AppWidget
-    title="Деньги"
     icon="money"
-    action
+    title="Деньги"
   >
-    FinanceBalaneWidget.vue
+    <template #title>
+      <AppButton
+        color="neutral"
+        icon="arrow_right"
+        size="xs"
+        variant="lined"
+      />
+    </template>
+    <template #subtitle>
+      За период: 20.04.25 - 20.05.25
+    </template>
+    <template #content>
+      <AppTag
+        color="purple"
+        variant="soft"
+      >
+        FinanceBalaneWidget.vue
+      </AppTag>
+    </template>
   </AppWidget>
 </template>

@@ -3,27 +3,33 @@
 
 <template>
   <AppWidget
-    title="Новости"
     icon="news"
-    action
-    action-text="Смотреть все"
-    class="news-widget"
+    title="Новости"
   >
-    <div class="news-widget__list">
-      <NewsEntry
-        v-for="i in 6"
-        :key="i"
-        minimal
+    <template #title>
+      <AppButton
+        color="neutral"
+        icon="arrow_right"
+        size="xs"
+        variant="lined"
       />
-    </div>
+    </template>
+    <template #content>
+      <div class="news-widget__list">
+        <NewsEntry
+          v-for="i in 6"
+          :key="i"
+          minimal
+        />
+      </div>
+    </template>
   </AppWidget>
 </template>
 
 <style lang="scss">
   .news-widget {
     &__list {
-      overflow-y: auto;
-      max-width: 100%;
+      margin-inline: -$space-2;
     }
   }
 </style>

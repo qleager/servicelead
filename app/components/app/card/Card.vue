@@ -24,7 +24,7 @@ export type { Slots as CardSlots }
     </header>
 
     <div
-      v-if="$slots.title && $slots.subtitle"
+      v-if="$slots.title || $slots.subtitle"
       class="card__group-title"
     >
       <div
@@ -76,15 +76,15 @@ export type { Slots as CardSlots }
     padding-inline: $space-4;
   }
 
-  &__title {
+  &__group-title {
     padding-inline: $space-4;
+  }
 
+  &__title {
     @include text(semibold, xl);
   }
 
   &__subtitle {
-    padding-inline: $space-4;
-
     @include text(medium, xs);
 
     color: $color-neutral-400;

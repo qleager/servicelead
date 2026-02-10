@@ -4,11 +4,24 @@
 
 <template>
   <AppWidget
-    title="Трафик"
     icon="traffic"
-    action
-    action-text="Подробнее"
+    title="Трафик"
   >
-    FinanceTrafficWidget.vue
+    <template #title>
+      <AppButton
+        color="neutral"
+        icon="arrow_right"
+        size="xs"
+        variant="lined"
+      />
+    </template>
+    <template #content>
+      <AppTag
+        color="green"
+        variant="soft"
+      >
+        StatisticsTrafficWidget.vue
+      </AppTag>
+    </template>
   </AppWidget>
 </template>

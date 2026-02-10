@@ -1,45 +1,55 @@
 <script lang="ts" setup>
-import Modal from '~/components/app/ConfirmDialog.vue'
-
-const { create } = useOverlay()
-
-const exitModal = create(Modal, {
-  props: {
-    title: 'Уже уходите?',
-    description: 'Вы уверены, что хотите выйти из аккаунта',
-    accept: 'Yeh!',
-  },
-})
-
-const onButtonClick = async () => {
-  const result = await exitModal.open()
-
-  alert(result)
-}
 </script>
 
 <template>
   <AppWidget
-    title="Статистика"
+    class="statistics-widget"
     icon="statistic"
-    action
+    title="Статистика"
   >
-    <div class="div1">
-      <AppTable class="table1" />
+    <template #title>
       <AppButton
+        color="neutral"
+        icon="arrow_right"
         size="xs"
-        @click="onButtonClick"
+        variant="lined"
+      />
+    </template>
+    <template #subtitle>
+      <div class="statistics-widget__tabs">
+        <AppButton
+          v-for="item in 4"
+          :key="item"
+          class="statistics-widget__tabs-item"
+          color="neutral"
+          :rounded="false"
+          size="sm"
+        />
+      </div>
+    </template>
+    <template #content>
+      <AppTag
+        color="green"
+        variant="soft"
       >
-        Выйти
-      </AppButton>
-    </div>
+        StatisticsWidget.vue
+      </AppTag>
+    </template>
   </AppWidget>
 </template>
 
 <style lang="scss">
-.div1 {
+.statistics-widget {
   overflow: auto;
-  height: 376px;
-  margin-inline: -#{$space-2};
+
+  &__tabs {
+    display: flex;
+    gap: $space-2;
+    padding-top: $space-4;
+
+    &-item {
+      width: 100%;
+    }
+  }
 }
 </style>
