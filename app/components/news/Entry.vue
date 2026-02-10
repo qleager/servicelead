@@ -21,10 +21,10 @@ const classname = computed(() => [
         Обновление комиссий Компьютерная и периферийная техника Обновление комиссий Компьютерная и периферийная техника
       </div>
       <AppChip
-        standalone
+        class="news-entry__indicator"
         color="blue"
         size="xs"
-        class="news-entry__indicator"
+        standalone
       />
     </header>
     <div class="news-entry__text">
@@ -41,10 +41,10 @@ const classname = computed(() => [
       </div>
       <AppButton
         class="news-entry__button"
-        variant="lined"
         color="neutral"
         icon="arrow_right"
         size="xs"
+        variant="lined"
       />
     </footer>
   </article>
