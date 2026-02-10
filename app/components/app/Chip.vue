@@ -29,6 +29,8 @@ const classname = computed(() => [
     'chip-standalone': props.standalone,
   },
 ])
+
+export type { Props as ChipProps }
 </script>
 
 <template>
