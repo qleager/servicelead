@@ -4,14 +4,14 @@ import AppSheet from '~/components/app/Sheet.vue'
 import type { ButtonProps } from '~/components/app/Button.vue'
 
 interface Props {
-  mode?: 'page' | 'dropdown' | 'sheet'
+  mode?: 'dropdown' | 'sheet'
   color?: ButtonProps['color']
   variant?: ButtonProps['variant']
   notifications?: unknown[]
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  mode: 'page',
+  mode: 'dropdown',
   notifications: () => [] as unknown[],
 })
 
@@ -25,11 +25,6 @@ const rootElement = computed(() => {
       return 'div'
   }
 })
-
-const onButtonClick = async () => {
-  if (props.mode !== 'page') return
-  await navigateTo('/notifications')
-}
 
 export type { Props as NotificationsButtonProps }
 </script>
@@ -45,7 +40,6 @@ export type { Props as NotificationsButtonProps }
       :color
       icon="notice"
       :variant
-      @click="onButtonClick"
     />
     <template #header>
       <div class="notifications-button__header">
