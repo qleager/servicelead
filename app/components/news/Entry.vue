@@ -21,10 +21,11 @@ const classname = computed(() => [
         Обновление комиссий Компьютерная и периферийная техника Обновление комиссий Компьютерная и периферийная техника
       </div>
       <AppChip
-        standalone
-        color="blue"
-        size="xs"
         class="news-entry__indicator"
+        color="primary"
+        size="xs"
+        standalone
+        variant="soft"
       />
     </header>
     <div class="news-entry__text">
@@ -41,10 +42,10 @@ const classname = computed(() => [
       </div>
       <AppButton
         class="news-entry__button"
-        variant="lined"
         color="neutral"
         icon="arrow_right"
         size="xs"
+        variant="lined"
       />
     </footer>
   </article>
@@ -112,7 +113,9 @@ const classname = computed(() => [
 
   &__indicator {
     display: none;
-    outline: 1px dashed $color-primary;
+    height: fit-content;
+    margin-top: $space-2;
+    margin-right: $space-1;
 
     #{$minimal} & {
       display: flex;

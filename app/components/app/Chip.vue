@@ -107,11 +107,11 @@ export type { Props as ChipProps }
         content: "";
 
         position: absolute;
-        top: -50%;
-        left: -50%;
+        top: -100%;
+        left: -100%;
 
-        width: 200%;
-        height: 200%;
+        width: 300%;
+        height: 300%;
         border-radius: $radius-2;
 
         opacity: .1;
