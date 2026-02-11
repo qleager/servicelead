@@ -2,6 +2,7 @@
 import type { Colors, Sizes } from '~/types/ds'
 
 interface Props {
+  variant?: 'filled' | 'soft'
   color?: Colors
   size?: Sizes
   position?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
@@ -11,6 +12,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  variant: 'filled',
   color: 'primary',
   size: 'md',
   position: 'top-right',
@@ -18,6 +20,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const classname = computed(() => [
   'chip',
+  `chip-variant-${props.variant}`,
   `chip-color-${props.color}`,
   `chip-size-${props.size}`,
   `chip-position-${props.position}`,
@@ -26,6 +29,8 @@ const classname = computed(() => [
     'chip-standalone': props.standalone,
   },
 ])
+
+export type { Props as ChipProps }
 </script>
 
 <template>
@@ -47,6 +52,8 @@ const classname = computed(() => [
 <style lang="scss">
 .chip {
   $this: &;
+  $variant-filled: $this + '-variant-filled';
+  $variant-soft: $this + '-variant-soft';
   $inset: $this + '-inset';
   $standalone: $this + '-standalone';
 
@@ -91,9 +98,26 @@ const classname = computed(() => [
     justify-content: center;
 
     width: fit-content;
-    border-radius: $space-9;
+    border-radius: $radius-8;
 
     white-space: nowrap;
+
+    #{$variant-soft} & {
+      &::before {
+        content: "";
+
+        position: absolute;
+        top: -100%;
+        left: -100%;
+
+        width: 300%;
+        height: 300%;
+        border-radius: $radius-2;
+
+        opacity: .1;
+        background-color: inherit;
+      }
+    }
 
     #{$size-xs} & {
       @include text(regular, 2xs);
