@@ -23,6 +23,7 @@
     "@nuxt/image": "2.0.0",
     "@tanstack/vue-table": "^8.21.3",
     "@vueuse/core": "^14.1.0",
+    "animate.css": "^4.1.1",
     "fuse.js": "^7.1.0",
     "nuxt": "^4.2.2",
     "nuxt-typed-router": "4.0.2",
