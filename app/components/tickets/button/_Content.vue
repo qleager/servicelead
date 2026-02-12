@@ -25,7 +25,7 @@ defineProps<Props>()
       <div class="tickets-button__content-empty-content">
         <NuxtImg
           class="tickets-button__content-empty-icon"
-          src="/images/tickets/button__content-empty-icon.svg"
+          src="/images/tickets/button__empty-icon.svg"
         />
         <div class="tickets-button__content-empty-text">
           <div>У вас еще нет ни одного тикета </div>
@@ -33,8 +33,8 @@ defineProps<Props>()
         </div>
       </div>
       <AppButton
-        color="neutral"
         class="tickets-button__content-empty-button"
+        color="neutral"
       >
         Создать тикет
       </AppButton>

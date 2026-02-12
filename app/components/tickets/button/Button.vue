@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import AppFloater from '~/components/app/Floater.vue'
+import AppDropdown from '~/components/app/card/Dropdown.vue'
 import AppSheet from '~/components/app/Sheet.vue'
 import type { ButtonProps } from '~/components/app/Button.vue'
 
@@ -38,7 +38,7 @@ const props = withDefaults(defineProps<Props>(), {
 const rootElement = computed(() => {
   switch (props.mode) {
     case 'dropdown':
-      return AppFloater
+      return AppDropdown
     case 'sheet':
       return AppSheet
     default:
@@ -57,20 +57,49 @@ export type { Props as TicketsButtonProps }
 <template>
   <Component
     :is="rootElement"
-    title="Тикеты"
-    icon="message"
     class="tickets-button"
+    icon="message"
+    title="Тикеты"
   >
     <AppButton
-      :variant
       :color
       icon="message"
+      :variant
       @click="onButtonClick"
     />
+    <template #header>
+      <div class="tickets-button__header">
+        <AppIcon
+          class="tickets-button__header-icon"
+          name="message"
+        />
+        <div>Тикеты</div>
+      </div>
+    </template>
     <template #content>
       <TicketsButtonContent
+        class="tickets-button__content"
         :tickets
       />
     </template>
   </Component>
 </template>
+
+<style lang="scss">
+.tickets-button {
+  padding-block: $space-8;
+
+  &__header {
+    display: flex;
+    gap: $space-2;
+    align-items: center;
+    padding-inline: $space-2;
+
+    @include text(regular, xl);
+
+    &-icon {
+      color: $color-neutral
+    }
+  }
+}
+</style>
