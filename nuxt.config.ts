@@ -2,8 +2,7 @@
  * Guide: https://nuxt.com/docs/api/configuration/nuxt-config
  */
 import { fileURLToPath } from 'node:url'
-import VitePluginSvgSpritemap from '@spiriit/vite-plugin-svg-spritemap'
-import { svgSpritePlugin } from './build/vite-svg-sprite'
+import { svgSpritePlugin } from './config/vite-svg-sprite'
 
 export default defineNuxtConfig({
   modules: [

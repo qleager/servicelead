@@ -1,5 +1,5 @@
 import type { StorybookConfig } from '@storybook-vue/nuxt'
-import { svgSpritePlugin } from '../build/vite-svg-sprite'
+import { svgSpritePlugin } from '../config/vite-svg-sprite'
 
 const config: StorybookConfig = {
   stories: [
