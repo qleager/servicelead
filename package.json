@@ -39,6 +39,7 @@
     "@nuxtjs/storybook": "^9.0.1",
     "@spiriit/vite-plugin-svg-spritemap": "^5.0.0",
     "eslint": "^9.39.2",
+    "eslint-plugin-perfectionist": "^5.5.0",
     "postcss-html": "^1.8.1",
     "stylelint": "^16.26.1",
     "stylelint-config-clean-order": "^7.0.0",
