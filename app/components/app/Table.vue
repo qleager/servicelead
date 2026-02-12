@@ -1,32 +1,70 @@
-<script lang="ts" setup>
+<script lang="ts" setup generic="T">
+import type { ColumnDef } from '@tanstack/vue-table'
+import { FlexRender, getCoreRowModel, useVueTable } from '@tanstack/vue-table'
+
+export type TableColumn<TData> = ColumnDef<TData>
+
+interface Props {
+  columns: TableColumn<T>[]
+  data: T[]
+}
+
+const props = defineProps<Props>()
+
+const tableData = shallowRef<T[]>(props.data)
+
+const tableApi = useVueTable({
+  data: tableData,
+  columns: props.columns,
+  getCoreRowModel: getCoreRowModel(),
+})
+
+watch(
+  props.data,
+  (next) => {
+    tableData.value = [...next]
+  },
+  { deep: true },
+)
 </script>
 
 <template>
   <table class="table">
     <thead class="table__head">
-      <tr class="table__row table__row-head">
+      <tr
+        v-for="headerGroup in tableApi.getHeaderGroups()"
+        :key="headerGroup.id"
+        class="table__row table__row-head"
+      >
         <th
-          v-for="col in 4"
-          :key="col"
+          v-for="header in headerGroup.headers"
+          :key="header.id"
           class="table__cell table__cell-head"
         >
-          Lorem ipsum dolor sit amet consectetur.
+          <FlexRender
+            v-if="!header.isPlaceholder"
+            :render="header.column.columnDef.header"
+            :props="header.getContext()"
+          />
         </th>
       </tr>
     </thead>
 
     <tbody class="table__body">
       <tr
-        v-for="row in 5"
-        :key="row"
+        v-for="row in tableApi.getRowModel().rows"
+        :key="row.id"
         class="table__row table__row-body"
       >
         <td
-          v-for="col in 4"
-          :key="col"
+          v-for="cell in row.getVisibleCells()"
+          :key="cell.id"
           class="table__cell table__cell-body"
         >
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maiores perferendis nostrum sapiente.
+          <FlexRender
+            :render="cell.column.columnDef.cell"
+            :props="cell.getContext()"
+          />
         </td>
       </tr>
     </tbody>
