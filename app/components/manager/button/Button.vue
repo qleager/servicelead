@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import AppCardDropdown from '~/components/app/card/Dropdown.vue'
+import AppCardDropdown from '~/components/app/WidgetDropdown.vue'
 import AppSheet from '~/components/app/Sheet.vue'
 
 interface Props {
@@ -7,6 +7,14 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  /**
+   * Mode of content visibility after clicking the button
+   *
+   * - `'dropdown'`     – show floater with manager data
+   * - `'sheet'`        – show AppSheet with manager data
+   *
+   * @defaultvalue `'page'`
+   */
   mode: 'dropdown',
 })
 
