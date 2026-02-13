@@ -3,26 +3,26 @@ import type { IconProps } from '~/components/app/Icon.vue'
 import type { InputHTMLAttributes } from 'vue'
 
 interface Props {
-  variant?: 'filled' | 'lined'
-  icon?: IconProps['name']
-  trailingIcon?: boolean
-  rounded?: boolean
-  size?: 'xs' | 'sm' | 'md' | 'lg'
-  color?: 'white' | 'neutral' | 'primary'
   autocomplete?: InputHTMLAttributes['autocomplete']
-  // TODO: взять логику с nuxt ui
-  type?: 'text' | 'number' | 'password' | 'search'
-  name?: InputHTMLAttributes['name']
+  color?: 'white' | 'neutral' | 'primary'
   disabled?: InputHTMLAttributes['disabled']
+  error?: boolean
+  icon?: IconProps['name']
+  name?: InputHTMLAttributes['name']
   placeholder?: InputHTMLAttributes['placeholder']
   reset?: boolean
-  error?: boolean
+  rounded?: boolean
+  size?: 'xs' | 'sm' | 'md' | 'lg'
+  trailingIcon?: boolean
+  // TODO: взять логику с nuxt ui
+  type?: 'text' | 'number' | 'password' | 'search'
+  variant?: 'filled' | 'lined'
 }
 
 interface Emits {
-  reset: []
-  input: []
   click: []
+  input: []
+  reset: []
 }
 
 type Model = null | string | number
@@ -76,29 +76,30 @@ export type { Props as InputProps, Emits as InputEmits, Model as InputModel }
   >
     <AppIcon
       v-if="isIconVisible && icon"
-      :name="icon"
       class="input__icon"
+      :name="icon"
     />
     <input
       ref="field"
       v-model="model"
-      class="input__field"
       :autocomplete
+      class="input__field"
+      :disabled
+      :name
       :placeholder
       :type
-      :name
-      :disabled
     >
-    <button
-      v-if="isResetVisible"
-      class="input__reset"
-    >
-      <AppIcon
-        name="close"
-        class="input__reset-icon"
+    <Transition name="input__transition-reset">
+      <AppButton
+        v-if="isResetVisible"
+        class="input__reset"
+        color="neutral"
+        icon="close"
+        size="xs"
+        variant="nofilled"
         @click="onReset"
       />
-    </button>
+    </Transition>
   </div>
 </template>
 
@@ -124,7 +125,7 @@ export type { Props as InputProps, Emits as InputEmits, Model as InputModel }
   $trailing-icon: $this + '-icon-trailing';
 
   // Стили блока
-  cursor: pointer;
+  cursor: text;
 
   position: relative;
   z-index: 0;
@@ -338,7 +339,7 @@ export type { Props as InputProps, Emits as InputEmits, Model as InputModel }
 
   // Стиль элемента блока
   &__field {
-    --field-text-color: $color-neutral-950;
+    --field-text-color: #{$color-neutral-950};
 
     flex: 1;
 
@@ -423,8 +424,46 @@ export type { Props as InputProps, Emits as InputEmits, Model as InputModel }
   }
 
   &__reset {
-    margin-right: $space-3;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
     margin-left: auto;
+
+    #{$size-xs} & {
+      margin-inline: -#{$space-05};
+    }
+
+    #{$size-sm} & {
+      margin-inline: -#{$space-1};
+    }
+
+    #{$size-md} & {
+      margin-inline: -#{$space-2};
+    }
+
+    #{$size-lg} & {
+      margin-inline: -#{$space-3};
+    }
+  }
+
+  &__transition {
+    &-reset {
+      &-enter {
+        &-from {
+          visibility: hidden;
+        }
+
+        &-to {
+          animation: fadeInRight $show-duration-sm forwards;
+        }
+      }
+
+      &-leave {
+        &-to {
+          animation: fadeOutRight $hide-duration-sm forwards;
+        }
+      }
+    }
   }
 }
 </style>
