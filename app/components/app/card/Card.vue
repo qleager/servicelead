@@ -1,13 +1,22 @@
 <script lang="ts" setup>
 import type { VNodeChild } from 'vue'
 
+interface Props {
+  description?: string
+  title?: string
+}
+
 interface Slots {
+  bottom?: () => VNodeChild
+  content?: () => VNodeChild
+  description?: () => VNodeChild
+  footer?: () => VNodeChild
   header?: () => VNodeChild
   title?: () => VNodeChild
-  subtitle?: () => VNodeChild
-  content?: () => VNodeChild
-  footer?: () => VNodeChild
+  top?: () => VNodeChild
 }
+
+defineProps<Props>()
 
 defineSlots<Slots>()
 
@@ -16,30 +25,36 @@ export type { Slots as CardSlots }
 
 <template>
   <div class="card">
-    <header
-      v-if="$slots.header"
-      class="card__header"
+    <div
+      v-if="$slots.top"
+      class="card__top"
     >
-      <slot name="header" />
-    </header>
+      <slot name="top" />
+    </div>
 
     <div
-      v-if="$slots.title || $slots.subtitle"
-      class="card__group-title"
+      v-if="$slots.title || $slots.description || title || description"
+      class="card__header"
     >
-      <div
-        v-if="$slots.title"
-        class="card__title"
-      >
-        <slot name="title" />
-      </div>
+      <slot name="header">
+        <div
+          v-if="$slots.title || title"
+          class="card__title"
+        >
+          <slot name="title">
+            {{ title }}
+          </slot>
+        </div>
 
-      <div
-        v-if="$slots.subtitle"
-        class="card__subtitle"
-      >
-        <slot name="subtitle" />
-      </div>
+        <div
+          v-if="$slots.description || description"
+          class="card__description"
+        >
+          <slot name="description">
+            {{ description }}
+          </slot>
+        </div>
+      </slot>
     </div>
 
     <div
@@ -49,12 +64,19 @@ export type { Slots as CardSlots }
       <slot name="content" />
     </div>
 
-    <footer
+    <div
       v-if="$slots.footer"
       class="card__footer"
     >
       <slot name="footer" />
-    </footer>
+    </div>
+
+    <div
+      v-if="$slots.bottom"
+      class="card__bottom"
+    >
+      <slot name="bottom" />
+    </div>
   </div>
 </template>
 
@@ -62,51 +84,52 @@ export type { Slots as CardSlots }
 .card {
   $this: &;
 
-  overflow: hidden;
   display: flex;
   flex-direction: column;
-  gap: $space-4;
-
-  padding-block: $space-4;
   border-radius: $space-8;
-
   background-color: #fff;
 
   &__header {
-    padding-inline: $space-4;
+    padding: $space-4;
+
+    &:first-child {
+      padding-top: $space-4;
+    }
   }
 
   &__group-title {
-    padding-inline: $space-4;
+    padding: $space-2 $space-4;
   }
 
   &__title {
     @include text(semibold, xl);
   }
 
-  &__subtitle {
+  &__description {
     @include text(medium, xs);
 
     color: $color-neutral-400;
   }
 
   &__content {
-    padding-inline: $space-4;
-  }
+    overflow: scroll;
+    flex: 1;
+    padding: $space-2 $space-4;
 
-  &__footer {
-    padding-inline: $space-4;
-  }
-
-  & > * {
     &:first-child {
-      margin-block: -$space-4;
-      padding: $space-4;
+      padding-top: $space-4;
     }
 
     &:last-child {
-      margin-block: -$space-4;
-      padding: $space-4;
+      padding-bottom: $space-4;
+    }
+  }
+
+  &__footer {
+    padding: $space-4;
+
+    &:last-child {
+      padding-bottom: $space-4;
     }
   }
 }
