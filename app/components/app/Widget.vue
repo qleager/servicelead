@@ -3,47 +3,73 @@ import type { VNodeChild } from 'vue'
 import type { IconProps } from './Icon.vue'
 
 interface Props {
-  icon: IconProps['name']
-  title: string
+  description?: string
+  icon?: IconProps['name']
+  title?: string
+}
+
+interface Emits {
+  'click:button': []
 }
 
 interface Slots {
-  title?: () => VNodeChild
-  subtitle?: () => VNodeChild
-  content?: () => VNodeChild
+  content: () => VNodeChild
+  description?: () => VNodeChild
   footer?: () => VNodeChild
 }
 
 defineProps<Props>()
 
+defineEmits<Emits>()
+
 defineSlots<Slots>()
+
+const isShowMoreListener = computed(() => getCurrentInstance()?.vnode?.props?.['onClick:button'])
 
 export type { Props as WidgetProps, Slots as WidgetSlots }
 </script>
 
 <template>
   <AppCard class="widget">
-    <template #title>
+    <template
+      v-if="title"
+      #title
+    >
       <div class="widget__header">
-        <div class="widget__header-group">
-          <AppIcon
-            class="widget__icon"
-            :name="icon"
-          />
-          <div class="widget__title">
-            {{ title }}
-          </div>
-        </div>
-        <slot name="title" />
+        <AppTitle
+          :icon
+          :title
+        />
+
+        <AppButton
+          v-if="isShowMoreListener"
+          class="widget__button"
+          color="neutral"
+          icon="arrow_right"
+          size="xs"
+          variant="lined"
+          @click="$emit('click:button')"
+        />
       </div>
     </template>
-    <template #subtitle>
-      <slot name="subtitle" />
+
+    <template
+      v-if="$slots.description || description"
+      #description
+    >
+      <slot name="description">
+        {{ description }}
+      </slot>
     </template>
+
     <template #content>
       <slot name="content" />
     </template>
-    <template #footer>
+
+    <template
+      v-if="$slots.footer"
+      #footer
+    >
       <slot name="footer" />
     </template>
   </AppCard>
@@ -55,20 +81,10 @@ export type { Props as WidgetProps, Slots as WidgetSlots }
 
   &__header {
     display: flex;
-    gap: $space-3;
-    align-items: center;
-    justify-content: space-between;
-
-    &-group {
-      display: flex;
-      gap: $space-3;
-      align-items: center;
-      margin-bottom: auto;
-    }
   }
 
-  &__icon {
-    color: $color-neutral;
+  &__button {
+    margin-left: auto;
   }
 }
 </style>
