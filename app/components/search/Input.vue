@@ -5,13 +5,12 @@
 <template>
   <AppInput
     class="search-dropdown"
-    placeholder="Начните поиск..."
     icon="search"
+    placeholder="Начните поиск..."
+    reset
     rounded
   />
 </template>
 
 <style lang="scss">
-.search-dropdown {
-}
 </style>
