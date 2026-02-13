@@ -5,19 +5,19 @@
 <template>
   <header class="header">
     <FinanceBalance class="header__balance" />
-    <SearchDropdown class="header__search" />
+    <SearchInput class="header__search" />
     <div class="header__group">
-      <NotificationsButton
-        class="header__notifications"
-        variant="lined"
+      <NotificationButton
+        class="header__notification"
         color="neutral"
         mode="dropdown"
+        variant="lined"
       />
-      <TicketsButton
-        class="header__tickets"
-        variant="lined"
+      <TicketButton
+        class="header__ticket"
         color="neutral"
         mode="dropdown"
+        variant="lined"
       />
       <ManagerButton class="header__manager" />
       <NavigationActions placement="bottom" />
