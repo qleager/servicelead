@@ -63,7 +63,7 @@
           fill="currentColor"
         />
       </svg>
-      <TicketsButton color="white" />
+      <TicketButton color="white" />
       <svg
         class="bar__item-corner bar__item-corner-right"
         viewBox="0 0 32 19"
