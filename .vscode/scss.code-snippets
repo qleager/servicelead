@@ -113,7 +113,7 @@
     "scope": "scss",
     "prefix": "duration",
     "body": [
-      "$${1|blur,hover,active|}-duration-${2|sm,md,lg|}"
+      "$${1|blur,hover,active,show,hi|}-duration-${2|sm,md,lg|}"
     ],
     "description": "Choose of ds-duration variable"
   },
