@@ -4,9 +4,26 @@ import AppSheet from '@components/app/Sheet.vue'
 import type { ButtonProps } from '@components/app/Button.vue'
 
 interface Props {
+  /**
+   * Color of trigger button (AppButton)
+   *
+   * @defaultvalue `'primary'`
+   */
   color?: ButtonProps['color']
+  /**
+   * Mode of content visibility after clicking the button
+   *
+   * - `'dropdown'`     – show floater with active notifictaions
+   * - `'sheet'`        – show AppSheet with active notifictaions
+   *
+   * @defaultvalue `'page'`
+   */
   mode?: 'dropdown' | 'sheet'
-  notification?: unknown[]
+  /**
+   * Variant of trigger button (AppButton)
+   *
+   * @defaultvalue `'filled'`
+   */
   variant?: ButtonProps['variant']
 }
 
