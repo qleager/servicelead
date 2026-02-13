@@ -24,11 +24,10 @@ export type { Props as OverlayProps, Emits as OverlayEmits }
 
 <template>
   <Teleport
-    defer
     to="#teleports"
   >
     <AppBackdrop
-      v-if="backdrod"
+      :visible="backdrod"
       @click="$emit('click:backdrop')"
     />
     <slot />
