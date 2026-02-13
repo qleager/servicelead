@@ -6,51 +6,51 @@ interface Props {
 const props = defineProps<Props>()
 
 const classname = computed(() => [
-  'tickets-entry',
-  { 'tickets-entry-minimal': props.minimal },
-  { 'tickets-entry-read': false },
+  'ticket-entry',
+  { 'ticket-entry-minimal': props.minimal },
+  { 'ticket-entry-read': false },
 ])
 </script>
 
 <template>
   <article :class="classname">
-    <header class="tickets-entry__header">
+    <header class="ticket-entry__header">
       <AppTag
-        class="tickets-entry__tag"
+        class="ticket-entry__tag"
         color="neutral"
         varinat="soft"
       >
         Выполнен
       </AppTag>
-      <div class="tickets-entry__title">
-        Обновление комиссий Компьютерная и периферийная техника Обновление комиссий Компьютерная и периферийная техника
+      <div class="ticket-entry__title">
+        Паттерн повторяется с уведомлениями – давайте делать компонент Entry
       </div>
     </header>
-    <div class="tickets-entry__text">
+    <div class="ticket-entry__text">
       Дополнительное улучшение комиссий на основе анализа эффективности оферов. Дополнительное улучшение комиссий на основе анализа эффективности оферов. Дополнительное улучшение комиссий на основе анализа эффективности оферов.
     </div>
-    <footer class="tickets-entry__footer">
-      <div class="tickets-entry__date">
+    <footer class="ticket-entry__footer">
+      <div class="ticket-entry__date">
         <NuxtTime
-          datetime="2024-12-18T08:55:00Z"
+          :datetime="new Date()"
           locale="ru-RU"
           numeric="auto"
           relative
         />
       </div>
       <AppButton
-        class="tickets-entry__button"
-        variant="lined"
+        class="ticket-entry__button"
         color="neutral"
         icon="arrow_right"
         size="xs"
+        variant="lined"
       />
     </footer>
   </article>
 </template>
 
 <style lang="scss">
-.tickets-entry {
+.ticket-entry {
   $this: &;
   $minimal: & + '-minimal';
   $read: & + '-read';
