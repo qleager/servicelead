@@ -65,8 +65,8 @@ type Model = boolean
 
 // Затем тип слотов
 interface Slots {
-  default?: (props: { isOpen: ModalModel }) => VNodeChild
   content: (props: { isOpen: ModalModel }) => VNodeChild
+  default?: (props: { isOpen: ModalModel }) => VNodeChild
 }
 
 // Прочие служебные типы
@@ -160,16 +160,17 @@ const onRejectClick = () => {
     </template>
     <template #footer>
       <!--
-      Всегда выносим обработчики в <script>.
-      ⚠️ Здесь — никаких вычислений и условной логики(??, if(), *?*:*)).
-      Допустимо только менять значение переменной,
-      например, с true на false, с «открыть» на «закрыть» и $emit
-
-      Классы именуем по методологии БЭМ.
-    -->
+        Всегда выносим обработчики в <script>.
+        ⚠️ Здесь — никаких вычислений, условной логики, преобразований (??, if(), *?*:*), *.filter()).
+        Допустимо:
+          Менять значение переменной, например, с true на false, $emit, $attr
+          Scoped-slots: model = isOpen
+          Для отрисовка DOM, типа v-if="$slots || title"
+      -->
+      <!-- Классы именуем по методологии БЭМ. -->
       <AppButton
-        color="neutral"
         class="confirm-dialog__reject"
+        color="neutral"
         @click="onRejectClick"
       >
         Нет
