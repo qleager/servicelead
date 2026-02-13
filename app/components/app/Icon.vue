@@ -16,8 +16,8 @@ export type { Props as IconProps }
 <template>
   <svg
     class="icon"
-    :width="size"
     :height="size"
+    :width="size"
   >
     <use :xlink:href="`/sprite#${name}`" />
   </svg>
