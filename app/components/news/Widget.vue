@@ -5,15 +5,8 @@
   <AppWidget
     icon="news"
     title="Новости"
+    @click:button="undefined"
   >
-    <template #title>
-      <AppButton
-        color="neutral"
-        icon="arrow_right"
-        size="xs"
-        variant="lined"
-      />
-    </template>
     <template #content>
       <div class="news-widget__list">
         <NewsEntry

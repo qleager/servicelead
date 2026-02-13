@@ -6,16 +6,9 @@
     class="statistics-widget"
     icon="statistic"
     title="Статистика"
+    @click:button="undefined"
   >
-    <template #title>
-      <AppButton
-        color="neutral"
-        icon="arrow_right"
-        size="xs"
-        variant="lined"
-      />
-    </template>
-    <template #subtitle>
+    <template #description>
       <div class="statistics-widget__tabs">
         <AppButton
           v-for="item in 4"

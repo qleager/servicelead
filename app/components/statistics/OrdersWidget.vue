@@ -4,20 +4,11 @@
 
 <template>
   <AppWidget
+    description="20.04.25 - 20.05.25"
     icon="money"
     title="Заявки"
+    @click:button="undefined"
   >
-    <template #title>
-      <AppButton
-        color="neutral"
-        icon="arrow_right"
-        size="xs"
-        variant="lined"
-      />
-    </template>
-    <template #subtitle>
-      20.04.25 - 20.05.25
-    </template>
     <template #content>
       <AppTag
         color="green"

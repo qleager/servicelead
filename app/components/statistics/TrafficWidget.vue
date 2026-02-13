@@ -6,15 +6,8 @@
   <AppWidget
     icon="traffic"
     title="Трафик"
+    @click:button="undefined"
   >
-    <template #title>
-      <AppButton
-        color="neutral"
-        icon="arrow_right"
-        size="xs"
-        variant="lined"
-      />
-    </template>
     <template #content>
       <AppTag
         color="green"
