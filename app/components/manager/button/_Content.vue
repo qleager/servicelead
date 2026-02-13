@@ -5,8 +5,8 @@
   <div class="manager-button__content">
     <div class="manager-button__content-profile">
       <NuxtImg
-        :src="'/images/default-avatar.png'"
         class="manager-button__content-profile-avatar"
+        :src="'/images/default-avatar.png'"
       />
       <div class="manager-button__content-profile-text">
         <div class="manager-button__content-profile-role">
@@ -44,10 +44,10 @@
       />
     </div>
     <AppButton
-      variant="nofilled"
-      size="sm"
-      color="neutral"
       class="manager-button__content-feedback"
+      color="neutral"
+      size="sm"
+      variant="nofilled"
     >
       Проблема с менеджером?
     </AppButton>
