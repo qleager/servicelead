@@ -3,14 +3,15 @@
 
 <template>
   <AppSlideover
-    title="Фильтры"
-    icon="filter"
     class="offers-filter-slideover"
+    description="Чтобы отфильтровать офферы"
+    icon="filter"
+    title="Фильтры"
   >
     <AppButton
+      color="neutral"
       icon="filter"
       variant="lined"
-      color="neutral"
     >
       <AppTag
         color="primary"
@@ -19,15 +20,27 @@
         5
       </AppTag>
     </AppButton>
-    <template #footer>
+
+    <template #content>
+      <div class="offers-filter-slideover__content">
+        <AppSelect
+          v-for="i in 20"
+          :key="i"
+          :items="[]"
+          placeholder="Город"
+        />
+      </div>
+    </template>
+
+    <template #footer="{ close }">
       <div class="offers-filter-slideover__footer">
         <AppButton
-          variant="nofilled"
           color="neutral"
+          variant="nofilled"
         >
           Сбросить все
         </AppButton>
-        <AppButton>
+        <AppButton @click="close">
           Применить
         </AppButton>
       </div>
@@ -37,6 +50,12 @@
 
 <style lang="scss">
 .offers-filter-slideover {
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: $space-3;
+  }
+
   &__footer {
     display: flex;
     gap: $space-6;
