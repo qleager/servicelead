@@ -36,9 +36,9 @@ const classname = computed(() => [
       :minimal
     />
     <NavigationMenu
-      title="Помощь"
       :items="helpItems"
       :minimal
+      title="Помощь"
     />
 
     <button
