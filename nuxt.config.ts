@@ -11,7 +11,6 @@ export default defineNuxtConfig({
     '@chettapong/nuxt-lodash',
     '@nuxtjs/storybook',
     'nuxt-typed-router',
-    'v-gsap-nuxt',
   ],
 
   devtools: { enabled: true },

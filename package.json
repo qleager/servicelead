@@ -29,7 +29,6 @@
     "nuxt-typed-router": "4.0.2",
     "prettier": "^3.6.2",
     "storybook": "~9.0.18",
-    "v-gsap-nuxt": "1.4.4",
     "vue": "^3.5.26",
     "vue-router": "^4.6.4"
   },
