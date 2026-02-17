@@ -16,9 +16,15 @@ import {
 } from '@floating-ui/vue'
 
 interface Props {
+  /**
+   * When `false`, the Floater will not close when clicking outside or pressing escape.
+   *
+   * @defaultvalue `true`
+   */
+  dismissible?: boolean
   mode?: 'click' | 'hover'
   placement?: Placement
-  dismissible?: boolean
+  portal?: TeleportProps['to']
   /**
    * Width of Floater
    *
@@ -30,14 +36,13 @@ interface Props {
    * @defaultvalue `'auto'`
    */
   width?: 'auto' | 'reference' | 'min-reference' | number
-  portal?: TeleportProps['to']
 }
 
 type Model = boolean
 
 interface Slots {
-  default?: (props: { isOpen: Model }) => VNodeChild
   content: (props: { isOpen: Model }) => VNodeChild
+  default?: (props: { isOpen: Model }) => VNodeChild
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -55,19 +60,8 @@ const floating = ref<HTMLElement | null>(null)
 
 let closeTimeout: ReturnType<typeof setTimeout> | undefined = undefined
 
-const transition = computed(() => {
-  // split for cases like bottom-start
-  switch (placement.value.split('-')[0]) {
-    case 'left':
-      return { autoAlpha: 0, x: -8 }
-    case 'right':
-      return { autoAlpha: 0, x: 8 }
-    case 'top':
-      return { autoAlpha: 0, y: -8 }
-    default:
-      return { autoAlpha: 0, y: 8 }
-  }
-})
+//                                                        .split for cases like bottom-start
+const transitionPlacement = computed(() => placement.value.split('-')[0])
 
 const { floatingStyles, placement } = useFloating(reference, floating, {
   placement: props.placement,
@@ -82,7 +76,7 @@ const { floatingStyles, placement } = useFloating(reference, floating, {
       apply({ elements, availableHeight }) {
         Object.assign(elements.floating.style, {
           ...floatingWidth.value,
-          height: `${availableHeight}px`,
+          maxHeight: `${availableHeight}px`,
         })
       },
     }),
@@ -155,10 +149,7 @@ export type { Props as FloaterProps, Slots as FloaterSlots, Model as FloaterMode
       :disabled="!portal"
       :to="portal"
     >
-      <GSAPTransition
-        :duration=".2"
-        :hidden="transition"
-      >
+      <Transition :name="`floater__transition-content--${transitionPlacement}`">
         <div
           v-if="model"
           ref="floating"
@@ -172,12 +163,14 @@ export type { Props as FloaterProps, Slots as FloaterSlots, Model as FloaterMode
             name="content"
           />
         </div>
-      </GSAPTransition>
+      </Transition>
     </Teleport>
   </div>
 </template>
 
 <style lang="scss">
+@use 'sass:map';
+
 .floater {
   $this: &;
 
@@ -185,6 +178,30 @@ export type { Props as FloaterProps, Slots as FloaterSlots, Model as FloaterMode
 
   &__trigger {
     display: inline-block;
+  }
+
+  &__transition {
+    &-content {
+      $placements: (
+        bottom: (enter: 'fadeInUpGentle', leave: 'fadeOutUpGentle'),
+        top: (enter: 'fadeInDownGentle', leave: 'fadeOutDownGentle'),
+        left: (enter: 'fadeInLeftGentle', leave: 'fadeOutLeftGentle'),
+        right: (enter: 'fadeInRightGentle', leave: 'fadeOutRightGentle'),
+      );
+
+      @each $placement, $anims in $placements {
+        &--#{$placement} {
+          &-enter-active {
+            opacity: 0;
+            animation: map.get($anims, enter) $show-duration-sm ease-out forwards
+          }
+
+          &-leave-active {
+            animation: map.get($anims, leave) $hide-duration-sm ease-out forwards
+          }
+        }
+      }
+    }
   }
 }
 </style>
