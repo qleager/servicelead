@@ -3,19 +3,19 @@ import type { AnchorHTMLAttributes } from 'vue'
 import type { IconProps } from './Icon.vue'
 
 interface Props {
-  variant?: 'filled' | 'lined' | 'nofilled'
-  icon?: IconProps['name']
-  size?: 'xs' | 'sm' | 'md' | 'lg'
-  color?: | 'white' | 'neutral' | 'primary'
-  type?: 'button' | 'submit' | 'reset'
-  to?: RouteTo<true>
-  target?: AnchorHTMLAttributes['target']
-  value?: string | number
-  trailingIcon?: boolean
-  disabled?: boolean
-  rounded?: boolean
   active?: boolean
+  color?: | 'white' | 'neutral' | 'primary'
+  disabled?: boolean
+  icon?: IconProps['name']
   loading?: boolean
+  rounded?: boolean
+  size?: 'xs' | 'sm' | 'md' | 'lg'
+  target?: AnchorHTMLAttributes['target']
+  to?: RouteTo<true>
+  trailingIcon?: boolean
+  type?: 'button' | 'submit' | 'reset'
+  value?: string | number
+  variant?: 'filled' | 'lined' | 'nofilled'
 }
 
 const slots = useSlots()
@@ -46,7 +46,6 @@ const classname = computed(() => [
   `button-color-${props.color}`,
   `button-size-${props.size}`,
   { 'button-trailing-icon': props.trailingIcon },
-  { 'button-disabled': props.disabled },
   { 'button-active': props.active },
   { 'button-rounded': props.rounded },
   { 'button-loading': props.loading },
@@ -59,12 +58,12 @@ export type { Props as ButtonProps }
 <template>
   <component
     :is="tag"
-    :href="to"
     :class="classname"
-    :type
+    :disabled="disabled || loading"
+    :href="to"
     :to
+    :type
     :value
-    :disabled
   >
     <AppIcon
       v-if="isIconVisible"
@@ -80,10 +79,10 @@ export type { Props as ButtonProps }
 </template>
 
 <style lang="scss">
+@use 'sass:color';
+
 .button {
   $this: &;
-  $hover: & + ':hover';
-  $active: '&.button:active, &.button-active';
 
   ///
   $variant-filled: $this + '-variant-filled';
@@ -209,12 +208,24 @@ export type { Props as ButtonProps }
       border-color: $color-primary-600;
     }
 
-    #{$active} {
+    &:active {
       --variant-nofilled-text-color: #{$color-primary-700};
       --variant-filled-background-color: #{$color-primary-700};
       --variant-lined-background-color: #{$color-primary-700};
 
       border-color: #{$color-primary-700};
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+
+      --variant-nofilled-text-color: #{$color-primary-400};
+      --variant-filled-text-color: #{rgb(white, .8)};
+      --variant-filled-background-color: #{$color-primary-400};
+      --variant-lined-background-color: #{$color-primary-400};
+      --variant-lined-text-color: #{rgb(white, .8)};
+
+      border-color: #{$color-primary-400};
     }
   }
 
@@ -237,13 +248,24 @@ export type { Props as ButtonProps }
       color: #{$color-neutral-950};
     }
 
-    #{$active} {
+    &:active {
       --variant-filled-background-color: #{$color-neutral-150};
       --variant-nofilled-background-color: #{$color-neutral-100};
       --variant-lined-background-color: #{$color-neutral-100};
 
       border-color: #{$color-neutral-150};
       color: #{$color-neutral-950};
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+
+      --variant-nofilled-background-color: white;
+      --variant-filled-background-color: white;
+      --variant-lined-background-color: white;
+
+      border-color: white;
+      color: #{$color-neutral};
     }
   }
 
@@ -258,37 +280,33 @@ export type { Props as ButtonProps }
     &:hover {
       --variant-filled-background-color: #{$color-neutral-150};
       --variant-lined-background-color: white;
-      --variant-nofilled-text-color: #{$color-neutral-500};
+      --variant-nofilled-text-color: #{$color-neutral};
 
       border-color: white;
     }
 
-    #{$active} {
+    &:active {
       --variant-filled-background-color: #{$color-neutral-200};
       --variant-lined-background-color: #{$color-neutral-100};
       --variant-nofilled-text-color: #{$color-neutral-600};
 
       border-color: $color-neutral-100;
     }
+
+    &:disabled {
+      cursor: not-allowed;
+      border-color: #{$color-neutral-50};
+
+      --variant-nofilled-text-color: #{$color-neutral-300};
+      --variant-filled-text-color: #{$color-neutral-600};
+      --variant-lined-text-color: #{$color-neutral-600};
+      --variant-filled-background-color: #{$color-neutral-100};
+      --variant-lined-background-color: white;
+    }
   }
 
   &#{$trailing-icon} {
     flex-direction: row-reverse;
-  }
-
-  &#{$disabled} {
-    pointer-events: none;
-    cursor: not-allowed;
-    color: $color-neutral-300;
-  }
-
-  &#{$loading} {
-    pointer-events: none;
-    cursor: progress;
-
-    // &#{$this}__icon {
-    //   animation: rotate 1s linear infinite;
-    // }
   }
 
   &#{$without-slot} {
@@ -297,12 +315,7 @@ export type { Props as ButtonProps }
     padding: 0;
   }
 
-  // TODO(YURA)
   &__icon {
-    // если loading state => rotate animation из https://animate.style
-    // в app/assets/scss/design-system/animation.scss добавми
-    // как в leadsale
-
     #{$size-xs} & {
       width: 16px;
       height: 16px;
@@ -325,6 +338,10 @@ export type { Props as ButtonProps }
       width: 28px;
       height: 28px;
       margin-inline: -#{$space-3};
+    }
+
+    #{$loading} & {
+      animation: clockwiseRotate 1s linear infinite;
     }
   }
 

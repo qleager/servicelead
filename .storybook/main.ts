@@ -1,21 +1,13 @@
-import type { StorybookConfig } from '@storybook-vue/nuxt'
-import { svgSpritePlugin } from '../config/vite-svg-sprite'
+import type { StorybookConfig } from '@nuxtjs/storybook'
 
 const config: StorybookConfig = {
   stories: [
     '../stories/**/*.stories.ts',
   ],
+  addons: ['@storybook/addon-links', '@storybook/addon-docs'],
   framework: {
     name: '@storybook-vue/nuxt',
     options: {},
-  },
-
-  viteFinal(config) {
-    config.plugins = config.plugins ||= []
-
-    config.plugins.push(svgSpritePlugin())
-
-    return config
   },
 }
 
