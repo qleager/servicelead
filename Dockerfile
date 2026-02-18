@@ -37,6 +37,9 @@ FROM base AS build
 
 COPY . .
 
+# limit of memory to fix fatal error heap out of memory
+ENV NODE_OPTIONS="--max-old-space-size=3072"
+
 RUN pnpm build
 
 # Nuxt Production
