@@ -9,7 +9,6 @@ export const iconNames = [
   'arrow_left',
   'arrow_right',
   'arrow_up',
-  'avatar',
   'calculator_32',
   'change',
   'chart',
