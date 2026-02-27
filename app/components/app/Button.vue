@@ -1,14 +1,15 @@
 <script lang="ts" setup>
-import type { AnchorHTMLAttributes } from 'vue'
+import type { AnchorHTMLAttributes, VNodeChild } from 'vue'
 import type { IconProps } from './Icon.vue'
+import type { Colors, Sizes, Subset } from '~/types/ds'
 
 interface Props {
-  color?: | 'white' | 'neutral' | 'primary'
+  color?: Subset<Colors, 'neutral' | 'primary'> | 'white'
   disabled?: boolean
   icon?: IconProps['name']
   loading?: boolean
   rounded?: boolean
-  size?: 'xs' | 'sm' | 'md' | 'lg'
+  size?: Sizes
   target?: AnchorHTMLAttributes['target']
   to?: RouteTo<true>
   trailingIcon?: boolean
@@ -17,7 +18,9 @@ interface Props {
   variant?: 'filled' | 'lined' | 'nofilled'
 }
 
-const slots = useSlots()
+interface Slots {
+  default: () => VNodeChild
+}
 
 const props = withDefaults(defineProps<Props>(), {
   variant: 'filled',
@@ -26,6 +29,8 @@ const props = withDefaults(defineProps<Props>(), {
   color: 'primary',
   type: 'button',
 })
+
+const slots = defineSlots<Slots>()
 
 const tag = computed(() =>
   props.to ? 'a' : 'button',
