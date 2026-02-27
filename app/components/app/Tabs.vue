@@ -1,79 +1,150 @@
 <script lang="ts" setup>
+import type { VNodeChild } from 'vue'
 import type { ButtonProps } from './Button.vue'
 import type { IconProps } from './Icon.vue'
 
 interface Props {
-  items: Item[]
-  size?: ButtonProps['size']
-  variant?: ButtonProps['variant']
   color?: ButtonProps['color']
-}
-
-interface Item {
-  label: string
-  icon?: IconProps['name']
-  trailingIcon?: ButtonProps['trailingIcon']
-  value: ButtonProps['value']
-  disabled?: ButtonProps['disabled']
-  // slot: string // в дальнейшем привязка к слоту из вне
+  items: Item[]
+  /**
+   * Size of Buttons
+   *
+   * * @defaultvalue `'md'`
+   */
+  size?: ButtonProps['size']
 }
 
 type Model = Item['value']
 
+interface Slots {
+  /**
+   * As Item content
+   */
+  default: (props: { item: Item, index: number }) => VNodeChild
+  /**
+   * Before Item content, instead of Item icon
+   */
+  leading: (props: { item: Item, index: number }) => VNodeChild
+  /**
+   * Before list of Item's
+   */
+  listLeading: () => VNodeChild
+  /**
+   * After list of Item's
+   */
+  listTrailing: () => VNodeChild
+  /**
+   * After Item content
+   */
+  trailing: (props: { item: Item, index: number }) => VNodeChild
+}
+
+interface Item {
+  disabled?: ButtonProps['disabled']
+  icon?: IconProps['name']
+  label: string
+  trailingIcon?: ButtonProps['trailingIcon']
+  value?: ButtonProps['value']
+  // TODO: в дальнейшем привязка к слоту из вне
+  // slot: string
+  // Подразумевается передача данных Item наверх, через scoped-slots, по имени слота (slot: string)
+}
+
 const props = withDefaults(defineProps<Props>(), {
   size: 'md',
-  variant: 'filled',
 })
 
-const model = defineModel<Model>({ required: false })
+const model = defineModel<Model>()
+
+const slots = defineSlots<Slots>()
 
 const classname = computed(() => [
-  'tabs',
+  'items',
 ])
 
-onBeforeMount(() => {
-  if (!model.value) {
-    model.value = props.items[0]?.value
+onMounted(() => {
+  if (model.value === undefined) {
+    model.value = props.items[0]?.value || 0
   }
 })
 
-const onItemClick = (value: Item['value']) => {
-  model.value = value
+const getActiveItemBind = (value: Item['value']) => {
+  if (isActiveItem(value)) {
+    return {
+      variant: 'filled' as const,
+      color: props.color,
+      class: 'items__nav items__nav-item--active',
+    }
+  }
 }
 
-export type { Props as TabsProps, Item as TabsItem, Model as TabsModel }
+const getItemIcon = (icon: Item['icon']) => !slots.leading ? icon : undefined
+
+const isActiveItem = (value: Item['value']) => model.value == value
+
+const onItemClick = (event: MouseEvent) => {
+  model.value = (event.currentTarget as HTMLButtonElement).value
+}
+
+export type { Props as TabsProps, Model as TabsModel, Item as TabsItem }
 </script>
 
 <template>
   <div :class="classname">
-    <div class="tabs__nav">
+    <div class="items__nav">
+      <slot name="listLeading" />
       <AppButton
-        v-for="tab in items"
-        :key="tab.value"
-        class="tabs__nav-item"
+        v-for="(item, index) in items"
+        :key="item.label+index"
+        :active="model === item.value"
+        class="items__nav-item"
+        color="neutral"
+        :disabled="item.disabled"
+        :icon="getItemIcon(item.icon)"
         :size
-        :color
-        :variant
-        :icon="tab.icon"
-        :trailing-icon="tab.trailingIcon"
-        :disabled="tab.disabled"
-        :active="model === tab.value"
-        @click="onItemClick(tab.value)"
+        :trailing-icon="item.trailingIcon"
+        :value="item.value || index"
+        variant="lined"
+        v-bind="getActiveItemBind(item.value || index)"
+        @click="(e: MouseEvent) => onItemClick(e)"
       >
-        {{ tab.label }}
+        <slot
+          :index
+          :item
+          name="leading"
+        />
+        <slot
+          :index
+          :item
+          name="default"
+        >
+          {{ item.label }}
+        </slot>
+        <slot
+          :index
+          :item
+          name="trailing"
+        />
       </AppButton>
+      <slot name="listTrailing" />
     </div>
   </div>
 </template>
 
 <style lang="scss">
-.tabs {
+.items {
   $this: &;
 
   &__nav {
     display: inline-flex;
     flex-wrap: wrap;
     gap: $space-2;
+
+    &-item {
+      &--active {
+        pointer-events: none;
+      }
+    }
   }
 }
 </style>
