@@ -68,11 +68,7 @@ export type { Props as ButtonProps }
       class="button__icon"
       :name="iconName!"
     />
-    <span
-      class="button__slot"
-    >
-      <slot />
-    </span>
+    <slot />
   </component>
 </template>
 
