@@ -56,7 +56,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const model = defineModel<Model>()
 
-const slots = defineSlots<Slots>()
+defineSlots<Slots>()
 
 const classname = computed(() => [
   'items',
@@ -78,8 +78,6 @@ const getActiveItemBind = (value: Item['value']) => {
   }
 }
 
-const getItemIcon = (icon: Item['icon']) => !slots.leading ? icon : undefined
-
 const isActiveItem = (value: Item['value']) => model.value == value
 
 const onItemClick = (event: MouseEvent) => {
@@ -100,7 +98,7 @@ export type { Props as TabsProps, Model as TabsModel, Item as TabsItem }
         class="items__nav-item"
         color="neutral"
         :disabled="item.disabled"
-        :icon="getItemIcon(item.icon)"
+        :icon="item.icon"
         :size
         :trailing-icon="item.trailingIcon"
         :value="item.value || index"
