@@ -65,6 +65,7 @@ export default {
     leading: false,
     default: false,
     trailing: false,
+    modelValue: 1,
   },
 } satisfies Meta<typeof AppTabs>
 
