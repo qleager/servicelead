@@ -10,6 +10,7 @@ export default {
     layout: 'centered',
   },
   argTypes: {
+    // Props
     variant: {
       control: 'select',
       options: ['filled', 'lined', 'nofilled'],
@@ -22,19 +23,18 @@ export default {
       control: 'select',
       options: ['primary', 'neutral', 'white'],
     },
-    type: {
-      control: 'select',
-      options: ['button', 'submit', 'reset'],
-      table: { category: 'Behavioral props' },
-    },
-    active: {
-      table: { category: 'Behavioral props' },
-    },
     icon: {
       control: 'select',
       options: [null, ...iconNames],
     },
-    to: {
+    // Slots
+    default: {
+      control: 'text',
+    },
+    // Behavioral Props
+    type: {
+      control: 'select',
+      options: ['button', 'submit', 'reset'],
       table: { category: 'Behavioral props' },
     },
     target: {
@@ -42,11 +42,11 @@ export default {
       options: ['_self', '_blank', '_parent', '_top'],
       table: { category: 'Behavioral props' },
     },
-    value: {
+    to: {
       table: { category: 'Behavioral props' },
     },
-    default: {
-      control: 'text',
+    value: {
+      table: { category: 'Behavioral props' },
     },
   },
   args: {
@@ -55,9 +55,9 @@ export default {
     color: 'primary',
     type: 'button',
     rounded: true,
+    icon: 'domain',
     trailingIcon: false,
     disabled: false,
-    active: false,
     loading: false,
     default: 'Button Text',
   },
@@ -65,9 +65,4 @@ export default {
 
 type Story = StoryObj<typeof AppButton>
 
-export const Playground: Story = {
-  args: {
-    icon: 'domain',
-    default: 'Button Text',
-  },
-}
+export const Playground: Story = {}
