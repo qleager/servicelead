@@ -136,13 +136,27 @@ onMounted(() => {
   }
 })
 
-// Методы (обработчики событий)
+// Методы
+// 1. Возвращение/вычисления
+const getSomeData = () => []
+
+// 2. Проверки/предиетаты
+const isAccept = () => model.value === true
+const isReject = () => model.value === false
+
+// 3. Обработчики событий/действия
 const onAcceptClick = () => {
-  emits('close', 'accept')
+  if (!isReject()) {
+    emits('close', 'accept')
+    getSomeData()
+  }
 }
 
 const onRejectClick = () => {
-  emits('close', 'reject')
+  if (!isAccept()) {
+    emits('close', 'reject')
+    getSomeData()
+  }
 }
 </script>
 
