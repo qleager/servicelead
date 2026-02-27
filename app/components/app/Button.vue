@@ -3,7 +3,6 @@ import type { AnchorHTMLAttributes } from 'vue'
 import type { IconProps } from './Icon.vue'
 
 interface Props {
-  active?: boolean
   color?: | 'white' | 'neutral' | 'primary'
   disabled?: boolean
   icon?: IconProps['name']
@@ -46,7 +45,6 @@ const classname = computed(() => [
   `button-color-${props.color}`,
   `button-size-${props.size}`,
   { 'button-trailing-icon': props.trailingIcon },
-  { 'button-active': props.active },
   { 'button-rounded': props.rounded },
   { 'button-loading': props.loading },
   { 'button-without-slot': !slots.default },
@@ -169,7 +167,7 @@ export type { Props as ButtonProps }
     --variant-filled-text-color: inherit;
     --variant-filled-background-color: inherit;
 
-    border: none !important;
+    border: 1px solid transparent !important;
     color: var(--variant-filled-text-color);
     background-color: var(--variant-filled-background-color);
   }
