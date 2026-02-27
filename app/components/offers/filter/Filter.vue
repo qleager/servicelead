@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { TabsItem } from '~/components/app/Tabs.vue'
+import type { TabsItem } from '@components/app/Tabs.vue'
 
 interface Emits {
   update: []
@@ -14,11 +14,11 @@ const model = defineModel<Model>({
 })
 
 const tabsItems = ref<TabsItem[]>([
-  { label: 'Все', value: 1 },
-  { label: 'Действует акция', value: 2 },
-  { label: 'Топ офферы', value: 3 },
-  { label: 'Избранные', value: 4 },
-  { label: 'Новые', value: 5 },
+  { label: 'Все' },
+  { label: 'Действует акция' },
+  { label: 'Топ офферы' },
+  { label: 'Избранные' },
+  { label: 'Новые' },
 ])
 
 const resetItem = (item: unknown) => {
@@ -31,17 +31,25 @@ const resetItem = (item: unknown) => {
     <div class="offers-filter__row">
       <AppTabs
         class="offers-filter__tabs"
+        color="white"
         :items="tabsItems"
         variant="lined"
-        color="neutral"
-      />
+      >
+        <template #leading="{ index }">
+          <NuxtImg
+            v-if="index == 1"
+            class="offers-filter__tabs-item-image"
+            src="/images/top-fire.svg"
+          />
+        </template>
+      </AppTabs>
 
       <AppInput
         class="offers-filter__search"
         icon="search"
         placeholder="Начните поиск..."
-        rounded
         reset
+        rounded
       />
 
       <OffersFilterSlideover />
@@ -76,6 +84,14 @@ const resetItem = (item: unknown) => {
 
   &__tabs {
     margin-right: auto;
+
+    &-item {
+      &-image {
+        width: 24px;
+        height: 24px;
+        margin-inline: -$space-2;
+      }
+    }
   }
 
   &__search {
