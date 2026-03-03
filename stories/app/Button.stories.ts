@@ -5,7 +5,6 @@ import { iconNames } from '@app/types/components/app/icon'
 export default {
   title: 'App/Button',
   component: AppButton,
-  tags: ['autodocs'],
   parameters: {
     layout: 'centered',
   },
