@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { onBeforeUnmount, watch } from 'vue'
 import { useDocumentScrollLock } from '~/composables/useDocumentScrollLock'
 
 interface Props {

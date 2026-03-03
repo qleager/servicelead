@@ -137,10 +137,6 @@ export type { Props as SheetProps, Emits as SheetEmits, Model as SheetModel, Slo
       align-items: center;
       justify-content: space-between;
     }
-
-    &-content {
-      flex: 1;
-    }
   }
 
   &__transition {
