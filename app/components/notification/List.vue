@@ -3,7 +3,7 @@
 <template>
   <div class="notification-list">
     <NotificationEntry
-      v-for="i in 4"
+      v-for="i in 14"
       :key="i"
       minimal
     />
