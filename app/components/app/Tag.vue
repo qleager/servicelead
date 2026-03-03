@@ -1,20 +1,25 @@
 <script lang="ts" setup>
+import type { Colors, Sizes } from '~/types/ds'
 import type { IconProps } from './Icon.vue'
+import type { VNodeChild } from 'vue'
 
 interface Props {
-  variant?: 'filled' | 'soft' | 'lined' | 'nofilled'
-  // TODO: взять из ../types/ds/index.ts если уже создан
-  color?: 'white' | 'primary' | 'neutral' | 'gray' | 'red' | 'yellow' | 'green' | 'blue' | 'purple'
-  icon?: IconProps['name']
-  trailingIcon?: boolean
-  size?: 'sm' | 'md' | 'lg'
   actionable?: boolean
   closable?: boolean
+  color?: Colors | 'white'
+  icon?: IconProps['name']
   rounded?: boolean
+  size?: Sizes
+  trailingIcon?: boolean
+  variant?: 'filled' | 'soft' | 'lined' | 'nofilled'
 }
 
 interface Emits {
   close: []
+}
+
+interface Slots {
+  default: () => VNodeChild
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -25,6 +30,8 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const emits = defineEmits<Emits>()
+
+defineSlots<Slots>()
 
 const classname = computed(() => ([
   'tag',
@@ -44,12 +51,10 @@ const classname = computed(() => ([
   <span :class="classname">
     <AppIcon
       v-if="icon"
-      :name="icon"
       class="tag__icon"
+      :name="icon"
     />
-    <span class="tag__slot">
-      <slot />
-    </span>
+    <slot />
     <AppIcon
       v-if="closable"
       class="tag__close"
@@ -85,12 +90,9 @@ const classname = computed(() => ([
   $icon-trailing: $this + '-icon-trailing';
 
   cursor: default;
-
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
-  width: fit-content;
 
   &#{$rounded} {
     border-radius: 50px !important;
@@ -98,9 +100,10 @@ const classname = computed(() => ([
 
   &#{$variant-filled} {
     --variant-filled-text-color: inherit;
+    --variant-filled-background-color: transparent;
 
     color: var(--variant-filled-text-color);
-    background-color: transparent;
+    background-color: var(--variant-filled-background-color) !important;
   }
 
   &#{$variant-soft} {
@@ -113,10 +116,11 @@ const classname = computed(() => ([
 
   &#{$variant-lined} {
     --variant-lined-text-color: unset;
+    --variant-lined-background-color: transparent;
 
     border: 1px solid transparent;
     color: var(--variant-lined-text-color);
-    background-color: transparent !important;
+    background-color: var(--variant-lined-background-color) !important;
   }
 
   &#{$variant-nofilled} {
@@ -129,31 +133,42 @@ const classname = computed(() => ([
 
   &#{$actionable} {
     cursor: pointer;
+    background-color: inherit;
     transition: $blur-duration-sm;
-
-    &:hover {
-      filter: grayscale(.2);
-      transition: $hover-duration-sm;
-    }
-
-    &:active {
-      filter: grayscale(.3);
-      transition: $active-duration-sm;
-    }
   }
 
   &#{$white-color} {
+    --variant-filled-background-color: white;
     --variant-lined-text-color: white;
     --variant-filled-text-color: #{$color-neutral-950};
     --variant-nofilled-text-color: white;
     --variant-soft-text-color: #{$color-neutral-700};
-    --variant-soft-background-color: white;
+    --variant-soft-background-color: #{rgb(white, .05)};
 
     border-color: white;
     background-color: white;
+
+    &:is(#{$actionable}):hover {
+      --variant-lined-text-color: #{$color-neutral-950};
+      --variant-filled-background-color: #{$color-neutral-100};
+      --variant-lined-background-color: white;
+      --variant-soft-background-color: #{$color-neutral-50};
+
+      border-color: #{$color-neutral-50};
+    }
+
+    &:is(#{$actionable}):active {
+      --variant-lined-text-color: #{$color-neutral-950};
+      --variant-filled-background-color: #{$color-neutral-150};
+      --variant-lined-background-color: #{$color-neutral-100};
+      --variant-soft-background-color: #{$color-neutral-100};
+
+      border-color: #{$color-neutral-150};
+    }
   }
 
   &#{$primary-color} {
+    --variant-filled-background-color: #{$color-primary};
     --variant-filled-text-color: white;
     --variant-lined-text-color: #{$color-primary};
     --variant-nofilled-text-color: #{$color-primary};
@@ -162,29 +177,85 @@ const classname = computed(() => ([
 
     border-color: $color-primary;
     background-color: $color-primary;
+
+    &:is(#{$actionable}):hover {
+      --variant-lined-text-color: white;
+      --variant-filled-background-color: #{$color-primary-600};
+      --variant-nofilled-text-color: #{$color-primary-600};
+      --variant-lined-background-color: #{$color-primary};
+      --variant-soft-background-color: #{$color-primary-100};
+
+      border-color: $color-primary-600;
+    }
+
+    &:is(#{$actionable}):active {
+      --variant-nofilled-text-color: #{$color-primary-700};
+      --variant-filled-background-color: #{$color-primary-700};
+      --variant-lined-background-color: #{$color-primary-600};
+      --variant-soft-background-color: #{$color-primary-200};
+
+      border-color: #{$color-primary-700};
+    }
   }
 
   &#{$neutral-color} {
+    --variant-filled-background-color: #{$color-neutral-100};
     --variant-lined-text-color: #{$color-neutral-950};
     --variant-nofilled-text-color: #{$color-neutral-400};
     --variant-soft-text-color: #{$color-neutral-700};
     --variant-soft-background-color: #{$color-neutral-50};
 
     border-color: $color-neutral-300;
-    background-color: $color-neutral-100;
+
+    &:is(#{$actionable}):hover {
+      --variant-filled-background-color: #{$color-neutral-150};
+      --variant-nofilled-text-color: #{$color-neutral};
+      --variant-lined-background-color: white;
+      --variant-soft-background-color: #{$color-neutral-100};
+
+      border-color: white;
+    }
+
+    &:is(#{$actionable}):active {
+      --variant-nofilled-text-color: #{$color-neutral-600};
+      --variant-filled-background-color: #{$color-neutral-200};
+      --variant-lined-background-color: #{$color-neutral-100};
+      --variant-soft-background-color: #{$color-neutral-200};
+
+      border-color: #{$color-neutral-100};
+    }
   }
 
   &#{$gray-color} {
+    --variant-filled-background-color: #{$color-gray-100};
     --variant-lined-text-color: #{$color-gray-950};
     --variant-nofilled-text-color: #{$color-gray-400};
     --variant-soft-text-color: #{$color-gray-700};
     --variant-soft-background-color: #{$color-gray-50};
 
     border-color: $color-gray-300;
-    background-color: $color-gray-100;
+
+    &:is(#{$actionable}):hover {
+      --variant-filled-background-color: #{$color-gray-150};
+      --variant-nofilled-text-color: #{$color-gray};
+      --variant-lined-background-color: white;
+      --variant-soft-background-color: #{$color-gray-100};
+
+      border-color: white;
+    }
+
+    &:is(#{$actionable}):active {
+      --variant-nofilled-text-color: #{$color-gray-600};
+      --variant-filled-background-color: #{$color-gray-200};
+      --variant-lined-background-color: #{$color-gray-100};
+      --variant-soft-background-color: #{$color-gray-200};
+
+      border-color: #{$color-gray-100};
+    }
   }
 
   &#{$red-color} {
+    --variant-filled-background-color: #{$color-red};
     --variant-filled-text-color: white;
     --variant-lined-text-color: #{$color-red};
     --variant-nofilled-text-color: #{$color-red};
@@ -192,10 +263,29 @@ const classname = computed(() => ([
     --variant-soft-background-color: #{$color-red-50};
 
     border-color: $color-red;
-    background-color: $color-red;
+
+    &:is(#{$actionable}):hover {
+      --variant-lined-text-color: white;
+      --variant-filled-background-color: #{$color-red-600};
+      --variant-nofilled-text-color: #{$color-red-600};
+      --variant-lined-background-color: #{$color-red};
+      --variant-soft-background-color: #{$color-red-100};
+
+      border-color: $color-red;
+    }
+
+    &:is(#{$actionable}):active {
+      --variant-nofilled-text-color: #{$color-red-700};
+      --variant-filled-background-color: #{$color-red-700};
+      --variant-lined-background-color: #{$color-red-600};
+      --variant-soft-background-color: #{$color-red-200};
+
+      border-color: $color-red-600;
+    }
   }
 
   &#{$yellow-color} {
+    --variant-filled-background-color: #{$color-yellow};
     --variant-filled-text-color: white;
     --variant-lined-text-color: #{$color-yellow};
     --variant-nofilled-text-color: #{$color-yellow};
@@ -203,10 +293,29 @@ const classname = computed(() => ([
     --variant-soft-background-color: #{$color-yellow-50};
 
     border-color: $color-yellow;
-    background-color: $color-yellow;
+
+    &:is(#{$actionable}):hover {
+      --variant-lined-text-color: white;
+      --variant-filled-background-color: #{$color-yellow-600};
+      --variant-nofilled-text-color: #{$color-yellow-600};
+      --variant-lined-background-color: #{$color-yellow};
+      --variant-soft-background-color: #{$color-yellow-100};
+
+      border-color: $color-yellow;
+    }
+
+    &:is(#{$actionable}):active {
+      --variant-nofilled-text-color: #{$color-yellow-700};
+      --variant-filled-background-color: #{$color-yellow-700};
+      --variant-lined-background-color: #{$color-yellow-600};
+      --variant-soft-background-color: #{$color-yellow-200};
+
+      border-color: $color-yellow-600;
+    }
   }
 
   &#{$green-color} {
+    --variant-filled-background-color: #{$color-green};
     --variant-filled-text-color: white;
     --variant-lined-text-color: #{$color-green};
     --variant-nofilled-text-color: #{$color-green};
@@ -214,10 +323,29 @@ const classname = computed(() => ([
     --variant-soft-background-color: #{$color-green-50};
 
     border-color: $color-green;
-    background-color: $color-green;
+
+    &:is(#{$actionable}):hover {
+      --variant-lined-text-color: white;
+      --variant-filled-background-color: #{$color-green-600};
+      --variant-nofilled-text-color: #{$color-green-600};
+      --variant-lined-background-color: #{$color-green};
+      --variant-soft-background-color: #{$color-green-100};
+
+      border-color: $color-green;
+    }
+
+    &:is(#{$actionable}):active {
+      --variant-nofilled-text-color: #{$color-green-700};
+      --variant-filled-background-color: #{$color-green-700};
+      --variant-lined-background-color: #{$color-green-600};
+      --variant-soft-background-color: #{$color-green-200};
+
+      border-color: $color-green-600;
+    }
   }
 
   &#{$blue-color} {
+    --variant-filled-background-color: #{$color-blue};
     --variant-filled-text-color: white;
     --variant-lined-text-color: #{$color-blue};
     --variant-nofilled-text-color: #{$color-blue};
@@ -225,10 +353,29 @@ const classname = computed(() => ([
     --variant-soft-background-color: #{$color-blue-50};
 
     border-color: $color-blue;
-    background-color: $color-blue;
+
+    &:is(#{$actionable}):hover {
+      --variant-lined-text-color: white;
+      --variant-filled-background-color: #{$color-blue-600};
+      --variant-nofilled-text-color: #{$color-blue-600};
+      --variant-lined-background-color: #{$color-blue};
+      --variant-soft-background-color: #{$color-blue-100};
+
+      border-color: $color-blue;
+    }
+
+    &:is(#{$actionable}):active {
+      --variant-nofilled-text-color: #{$color-blue-700};
+      --variant-filled-background-color: #{$color-blue-700};
+      --variant-lined-background-color: #{$color-blue-600};
+      --variant-soft-background-color: #{$color-blue-200};
+
+      border-color: $color-blue-600;
+    }
   }
 
   &#{$purple-color} {
+    --variant-filled-background-color: #{$color-purple};
     --variant-filled-text-color: white;
     --variant-lined-text-color: #{$color-purple};
     --variant-nofilled-text-color: #{$color-purple};
@@ -236,11 +383,31 @@ const classname = computed(() => ([
     --variant-soft-background-color: #{$color-purple-50};
 
     border-color: $color-purple;
-    background-color: $color-purple;
+
+    &:is(#{$actionable}):hover {
+      --variant-lined-text-color: white;
+      --variant-filled-background-color: #{$color-purple-600};
+      --variant-nofilled-text-color: #{$color-purple-600};
+      --variant-lined-background-color: #{$color-purple};
+      --variant-soft-background-color: #{$color-purple-100};
+
+      border-color: $color-purple;
+    }
+
+    &:is(#{$actionable}):active {
+      --variant-nofilled-text-color: #{$color-purple-700};
+      --variant-filled-background-color: #{$color-purple-700};
+      --variant-lined-background-color: #{$color-purple-600};
+      --variant-soft-background-color: #{$color-purple-200};
+
+      border-color: $color-purple-600;
+    }
   }
 
   &#{$size-xs} {
     gap: $space-1;
+
+    min-width: 16px;
     height: 16px;
     padding-inline: $space-1;
     border-radius: $radius-1;
@@ -250,6 +417,8 @@ const classname = computed(() => ([
 
   &#{$size-sm} {
     gap: $space-1;
+
+    min-width: 24px;
     height: 24px;
     padding-inline: $space-2;
     border-radius: $radius-2;
@@ -259,6 +428,8 @@ const classname = computed(() => ([
 
   &#{$size-md} {
     gap: $space-2;
+
+    min-width: 32px;
     height: 32px;
     padding-inline: $space-3;
     border-radius: $radius-2;
@@ -268,6 +439,8 @@ const classname = computed(() => ([
 
   &#{$size-lg} {
     gap: $space-3;
+
+    min-width: 40px;
     height: 40px;
     padding-inline: $space-4;
     border-radius: $radius-2;
