@@ -14,13 +14,13 @@ interface Emits {
   'close': []
 }
 
+type Model = boolean
+
 interface Slots {
   content?: (props: { close: () => void }) => VNodeChild
   default?: (props: { isOpen: Model }) => VNodeChild
   footer?: (props: { close: () => void }) => VNodeChild
 }
-
-type Model = boolean
 
 defineProps<Props>()
 
@@ -56,6 +56,7 @@ export type { Props as SlideoverProps, Emits as SlideoverEmits, Model as Slideov
 
     <AppOverlay
       :backdrod="model"
+      :lock-scroll="model"
       @click:backdrop="close"
     >
       <Transition name="slideover__transition">
@@ -80,13 +81,19 @@ export type { Props as SlideoverProps, Emits as SlideoverEmits, Model as Slideov
             </div>
           </template>
 
-          <template #description>
+          <template
+            v-if="description"
+            #description
+          >
             <div class="slideover__card-description">
               {{ description }}
             </div>
           </template>
 
-          <template #content>
+          <template
+            v-if="$slots.content"
+            #content
+          >
             <div class="slideover__card-content">
               <slot
                 :close
@@ -95,7 +102,10 @@ export type { Props as SlideoverProps, Emits as SlideoverEmits, Model as Slideov
             </div>
           </template>
 
-          <template #footer>
+          <template
+            v-if="$slots.footer"
+            #footer
+          >
             <div class="slideover__card-footer">
               <slot
                 :close
@@ -124,11 +134,6 @@ export type { Props as SlideoverProps, Emits as SlideoverEmits, Model as Slideov
       display: flex;
       align-items: center;
       justify-content: space-between;
-    }
-
-    &-content {
-      overflow: auto;
-      flex: 1;
     }
   }
 
