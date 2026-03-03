@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import AppDropdown from '~/components/app/WidgetDropdown.vue'
+import AppWidgetDropdown from '~/components/app/WidgetDropdown.vue'
 import AppSheet from '~/components/app/Sheet.vue'
 import type { ButtonProps } from '~/components/app/Button.vue'
 
@@ -16,7 +16,7 @@ interface Props {
    * - `'dropdown'`     – show floater with active tickets
    * - `'sheet'`        – show AppSheet with active tickets
    *
-   * @defaultvalue `'page'`
+   * @defaultvalue `'dropdown'`
    */
   mode?: 'dropdown' | 'sheet'
   /**
@@ -34,7 +34,7 @@ const props = withDefaults(defineProps<Props>(), {
 const rootElement = computed(() => {
   switch (props.mode) {
     case 'dropdown':
-      return AppDropdown
+      return AppWidgetDropdown
     case 'sheet':
       return AppSheet
     default:
