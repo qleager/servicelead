@@ -22,8 +22,6 @@ interface Slots {
   footer?: (props: { close: () => void }) => VNodeChild
 }
 
-const { lock, unlock } = useDocumentScrollLock()
-
 defineProps<Props>()
 
 const emits = defineEmits<Emits>()
@@ -40,8 +38,6 @@ const close = () => {
   model.value = false
   emits('close')
 }
-
-watch(model, value => value ? lock() : unlock())
 
 export type { Props as SheetProps, Emits as SheetEmits, Model as SheetModel, Slots as SheetSlots }
 </script>
@@ -60,6 +56,7 @@ export type { Props as SheetProps, Emits as SheetEmits, Model as SheetModel, Slo
 
     <AppOverlay
       :backdrod="model"
+      :lock-scroll="model"
       @click:backdrop="close"
     >
       <Transition name="sheet__transition">
