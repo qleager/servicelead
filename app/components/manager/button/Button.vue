@@ -13,7 +13,7 @@ const props = withDefaults(defineProps<Props>(), {
    * - `'dropdown'`     – show floater with manager data
    * - `'sheet'`        – show AppSheet with manager data
    *
-   * @defaultvalue `'page'`
+   * @defaultvalue `'dropdown'`
    */
   mode: 'dropdown',
 })
