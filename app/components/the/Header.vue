@@ -10,16 +10,16 @@
       <NotificationButton
         class="header__notification"
         color="neutral"
-        mode="dropdown"
         variant="lined"
       />
       <TicketButton
         class="header__ticket"
         color="neutral"
-        mode="dropdown"
         variant="lined"
       />
-      <ManagerButton class="header__manager" />
+      <ManagerButton
+        class="header__manager"
+      />
       <NavigationActions placement="bottom" />
     </div>
   </header>
