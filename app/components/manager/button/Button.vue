@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import AppCardDropdown from '~/components/app/WidgetDropdown.vue'
+import AppWidgetDropdown from '~/components/app/WidgetDropdown.vue'
 import AppSheet from '~/components/app/Sheet.vue'
 
 interface Props {
@@ -21,7 +21,7 @@ const props = withDefaults(defineProps<Props>(), {
 const rootElement = computed(() => {
   switch (props.mode) {
     case 'dropdown':
-      return AppCardDropdown
+      return AppWidgetDropdown
     case 'sheet':
       return AppSheet
     default:
