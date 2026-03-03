@@ -1,10 +1,11 @@
 <script lang="ts" setup>
+import type { VNodeChild } from 'vue'
 import type { IconProps } from './Icon.vue'
 
 interface Props {
-  title?: string
+  description?: string
   icon?: IconProps['name']
-  overlay?: boolean
+  title?: string
 }
 
 interface Emits {
@@ -15,131 +16,152 @@ interface Emits {
 
 type Model = boolean
 
-withDefaults(defineProps<Props>(), {
-  overlay: true,
-})
+interface Slots {
+  content?: (props: { close: () => void }) => VNodeChild
+  default?: (props: { isOpen: Model }) => VNodeChild
+  footer?: (props: { close: () => void }) => VNodeChild
+}
+
+const { lock, unlock } = useDocumentScrollLock()
+
+defineProps<Props>()
 
 const emits = defineEmits<Emits>()
 
-const model = defineModel<Model>({ default: false })
+const model = defineModel<Model>({ default: true })
+
+defineSlots<Slots>()
+
+const toggle = () => {
+  model.value = !model.value
+}
 
 const close = () => {
   model.value = false
   emits('close')
 }
 
-export type { Props as SheetProps, Emits as SheetEmits, Model as SheetModel }
+watch(model, value => value ? lock() : unlock())
+
+export type { Props as SheetProps, Emits as SheetEmits, Model as SheetModel, Slots as SheetSlots }
 </script>
 
 <template>
-  <div @click="model = !model">
-    <slot />
-  </div>
-
-  <AppOverlay
-    v-model="model"
-    :transparent="!overlay"
-    @click:backdrop="close()"
+  <div
+    class="sheet"
   >
-    <!-- TODO: добавить анимацию (после систематизации анимаций) -->
-    <Transition
-      name="sheet"
-      appear
-      @after-enter="emits('after:enter')"
-      @after-leave="emits('after:leave')"
+    <div
+      v-if="$slots.default"
+      class="sheet__trigger"
+      @click="toggle"
     >
-      <div
-        v-if="model"
-        class="sheet"
-      >
-        <header class="sheet__header">
-          <div class="sheet__title">
-            <AppIcon
-              v-if="icon"
-              class="sheet__title-image"
-              :name="icon"
-            />
-            <div class="sheet__title-text">
-              {{ title }}
+      <slot :is-open="model" />
+    </div>
+
+    <AppOverlay
+      :backdrod="model"
+      @click:backdrop="close"
+    >
+      <Transition name="sheet__transition">
+        <AppCard
+          v-if="model"
+          class="sheet__card"
+        >
+          <template #title>
+            <div class="sheet__card-header">
+              <AppTitle
+                :icon
+                :title
+              />
+              <AppButton
+                class="sheet__close"
+                color="neutral"
+                icon="close"
+                size="sm"
+                variant="nofilled"
+                @click="close"
+              />
             </div>
-          </div>
-          <div
-            class="sheet__close"
-            @click="close()"
+          </template>
+
+          <template
+            v-if="description"
+            #description
           >
-            <AppIcon
-              class="sheet__close-image"
-              name="close"
-            />
-          </div>
-        </header>
-        <div class="sheet__main">
-          <div class="sheet__slot sheet__slot-content">
-            <slot
-              :close
-              name="content"
-            />
-          </div>
-        </div>
-        <footer class="sheet__footer">
-          <slot
-            name="footer"
-            :close
-          />
-        </footer>
-      </div>
-    </Transition>
-  </AppOverlay>
+            <div class="sheet__card-description">
+              {{ description }}
+            </div>
+          </template>
+
+          <template
+            v-if="$slots.content"
+            #content
+          >
+            <div class="sheet__card-content">
+              <slot
+                :close
+                name="content"
+              />
+            </div>
+          </template>
+
+          <template
+            v-if="$slots.footer"
+            #footer
+          >
+            <div class="sheet__card-footer">
+              <slot
+                :close
+                name="footer"
+              />
+            </div>
+          </template>
+        </AppCard>
+      </Transition>
+    </AppOverlay>
+  </div>
 </template>
 
 <style lang="scss">
 .sheet {
-  $this: &;
+  &__card {
+    position: fixed;
+    right: 0;
+    bottom: 0;
 
-  position: absolute;
-  bottom: 0;
-  left: 0;
+    width: 100dvw;
+    max-height: calc(100dvh - $space-12);
+    border-radius: unset;
+    border-top-left-radius: $radius-6;
+    border-top-right-radius: $radius-6;
 
-  display: flex;
-  flex-direction: column;
-  gap: $space-2;
+    &-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
 
-  width: 100%;
-  max-height: 90dvh;
-  margin-top: auto;
-  padding: $space-6;
-  border-radius: $space-6 $space-6 0 0;
-
-  background: white;
-  box-shadow: $shadow-md;
-
-  &__header {
-    display: flex;
-    gap: $space-4;
-    align-items: center;
-    justify-content: space-between;
-
-    padding: $space-2;
-  }
-
-  &__title {
-    display: flex;
-    gap: $space-2;
-    align-items: center;
-    font-weight: 500;
-
-    &-text {
-      :empty {
-        display: none;
-      }
+    &-content {
+      flex: 1;
     }
   }
 
-  &__close {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    margin-left: auto;
+  &__transition {
+    &-enter {
+      &-from {
+        visibility: hidden;
+      }
+
+      &-to {
+        animation: slideInUp $show-duration-lg ease-out forwards;
+      }
+    }
+
+    &-leave {
+      &-to {
+        animation: slideOutDown $hide-duration-lg ease-in forwards;
+      }
+    }
   }
 }
 </style>
