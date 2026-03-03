@@ -5,7 +5,6 @@ import AppTag from '@components/app/Tag.vue'
 export default {
   title: 'App/Tabs',
   component: AppTabs,
-  tags: ['autodocs'],
   parameters: {
     layout: 'centered',
   },
