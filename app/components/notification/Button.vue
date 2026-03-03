@@ -16,7 +16,7 @@ interface Props {
    * - `'dropdown'`     – show floater with active notifictaions
    * - `'sheet'`        – show AppSheet with active notifictaions
    *
-   * @defaultvalue `'page'`
+   * @defaultvalue `'dropdown'`
    */
   mode?: 'dropdown' | 'sheet'
   /**
