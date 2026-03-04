@@ -1,15 +1,15 @@
 <script lang="ts" setup>
 import type { SelectInjection } from './Select.vue'
 
-const { placeholder, placeholderMode, isSelected, size } = inject('selectState') as SelectInjection
+const { placeholder, isSelected, floatPlaceholder, size, counter } = inject('selectState') as SelectInjection
 
 const classname = computed(() => [
   'select-placeholder',
   `select-placeholder-size-${size}`,
   {
-    'select-placeholder-float': isSelected.value && placeholderMode === 'float',
-    'select-placeholder-static': isSelected.value && placeholderMode === 'static',
-    'select-placeholder-hidden': isSelected.value && !placeholderMode,
+    'select-placeholder-static': isSelected.value && counter == 'number',
+    'select-placeholder-hidden': isSelected.value && counter !== 'number' && !floatPlaceholder,
+    'select-placeholder-float': isSelected.value && floatPlaceholder,
   },
 ])
 </script>
@@ -31,20 +31,30 @@ const classname = computed(() => [
 
   margin-inline: -#{$space-1};
   padding-inline: $space-1;
+  font: inherit;
   color: $color-neutral-400;
-
-  &#{$size-xs} {
-    @include text(regular, xs);
-  }
 
   &#{$float} {
     position: absolute;
     top: 0;
     transform: translateY(-50%);
-
     color: $color-neutral-900;
 
-    backdrop-filter: blur(20px);
+    @include text(regular, xs);
+
+    &::after {
+      content: '';
+
+      position: absolute;
+      z-index: -1;
+      top: calc(50% - 1px);
+      left: 0;
+
+      width: 100%;
+      height: 1px;
+
+      background-color: white;
+    }
   }
 
   &#{$static} {

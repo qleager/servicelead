@@ -145,7 +145,7 @@ const classname = computed(() => [
   }
 
   &#{$white-color} {
-    --variant-filled-text-color: $color-neutral-950;
+    --variant-filled-text-color: #{$color-neutral-950};
     --variant-lined-text-color: white;
 
     border-color: white;
@@ -173,7 +173,7 @@ const classname = computed(() => [
   }
 
   &#{$neutral-color} {
-    --variant-filled-text-color: $color-neutral-950;
+    --variant-filled-text-color: #{$color-neutral-950};
     --variant-lined-text-color: #{$color-neutral-950};
 
     transform: $blur-duration-sm;

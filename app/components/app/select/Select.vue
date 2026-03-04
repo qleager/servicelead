@@ -1,11 +1,10 @@
 <script lang="ts" setup>
+import type { Sizes, Subset, Colors } from '~/types/ds'
 import type { IconProps } from '../Icon.vue'
 import type { SelectOptionProps } from './_Option.vue'
 
 interface Props {
-  items: Item[]
-  multiple?: boolean
-  variant?: 'filled' | 'lined' | 'nofilled'
+  color?: Subset<Colors, 'neutral' | 'primary'> | 'white'
   /**
    * How to display selected items in multiple mode
    *
@@ -15,39 +14,37 @@ interface Props {
    * @defaultvalue `'number'`
    */
   counter?: 'number' | 'list'
+  disabled?: boolean
   /**
-   * Show search field in the dropdown
+   * Floats placeholder to the border when a value is selected
    *
-   * @defaultvalue false
+   * @defaultvalue `false`
    */
-  search?: boolean
-  size?: 'xs' | 'sm' | 'md' | 'lg'
-  color?: 'white' | 'neutral' | 'primary'
+  floatPlaceholder?: boolean
   icon?: IconProps['name']
+  items: Item[]
+  multiple?: boolean
   placeholder?: string
-  /**
-   * Controls how the placeholder behaves when a value is selected
-   *
-   * - `'static'` – Always visible inside the input
-   * - `'float'`  – Floats to the border when a value is selected
-   * - `false`    – Visible inside the input, hidden when a value is selected
-   *
-   * @defaultvalue false
-   */
-  placeholderMode?: 'static' | 'float'
-  /**
-   * Apply 50% border radius
-   *
-   * @defaultvalue false
-   */
-  rounded?: boolean
   /**
    * Show reset selected button
    *
-   * @defaultvalue false
+   * @defaultvalue `false`
    */
   reset?: boolean
-  disabled?: boolean
+  /**
+   * Apply 50% border radius
+   *
+   * @defaultvalue `false`
+   */
+  rounded?: boolean
+  /**
+   * Show search field in the dropdown
+   *
+   * @defaultvalue `false`
+   */
+  search?: boolean
+  size?: Sizes
+  variant?: 'filled' | 'lined' | 'nofilled'
 }
 
 type Value = string | number
@@ -64,17 +61,17 @@ type Model = GetModelValue<Item, typeof props.multiple>
 type MultipleModel = Array<GetItemValue<Item>>
 
 interface Injection {
-  isSelected: typeof isSelected
-  isCollapsed: typeof isCollapsed
-  counter: typeof props.counter
-  variant: typeof props.variant
-  multiple: typeof props.multiple
-  icon: typeof props.icon
-  size: typeof props.size
   color: typeof props.color
+  counter: typeof props.counter
+  floatPlaceholder: typeof props.floatPlaceholder
+  icon: typeof props.icon
+  isCollapsed: typeof isCollapsed
+  isSelected: typeof isSelected
+  multiple: typeof props.multiple
   placeholder: typeof props.placeholder
-  placeholderMode: typeof props.placeholderMode
   rounded: typeof props.rounded
+  size: typeof props.size
+  variant: typeof props.variant
 }
 
 // Type Guards
@@ -187,6 +184,7 @@ const updateModel = (value: Value) => {
 
   // Single Mode
   model.value = value
+  isCollapsed.value = false
 }
 
 const resetAll = () => {
@@ -203,7 +201,7 @@ provide<Injection>('selectState', {
   multiple: props.multiple,
   counter: props.counter,
   placeholder: props.placeholder,
-  placeholderMode: props.placeholderMode,
+  floatPlaceholder: props.floatPlaceholder,
   rounded: props.rounded,
 })
 
@@ -219,8 +217,11 @@ export type {
 
 <template>
   <div :class="classname">
-    <AppDropdown
+    <AppFloater
       v-model="isCollapsed"
+      :allowed-placements="['top', 'bottom']"
+      class="select__floater"
+      width="min-reference"
     >
       <AppSelectField>
         <AppSelectPlaceholder />
@@ -240,7 +241,7 @@ export type {
         />
       </AppSelectField>
       <template #content>
-        <div class="select__slot select__slot-content">
+        <div class="select__content">
           <AppSelectSearch
             v-if="search"
             v-model="searchQuery"
@@ -248,29 +249,32 @@ export type {
           <AppSelectOption
             v-for="option in options"
             :key="option.value"
+            :checkbox="props.multiple"
+            :is-selected="isOptionSelected(option)"
             :label="option.label"
             :value="option.value"
-            :is-selected="isOptionSelected(option)"
-            :checkbox="props.multiple"
             @click="onOptionClick(option)"
           />
 
-          <div class="select__nodata-text">
+          <div
+            v-if="nodataText"
+            class="select__nodata-text"
+          >
             {{ nodataText }}
           </div>
           <AppButton
             v-if="reset"
             class="select__reset-button"
-            variant="nofilled"
-            color="lighter"
+            color="neutral"
             size="sm"
+            variant="nofilled"
             @click="resetAll"
           >
             Очистить все
           </AppButton>
         </div>
       </template>
-    </AppDropdown>
+    </AppFloater>
   </div>
 </template>
 
@@ -278,20 +282,45 @@ export type {
 .select {
   $this: &;
   $disabled: $this + '-disabled';
-
-  width: 250px;
+  $size-xs: $this + '-size-xs';
+  $size-sm: $this + '-size-sm';
+  $size-md: $this + '-size-md';
+  $size-lg: $this + '-size-lg';
 
   &#{$disabled} {
     pointer-events: none;
     filter: brightness(1.2);
   }
 
-  &__slot {
-    &-content {
-      display: flex;
-      flex-direction: column;
-      gap: $space-1;
-    }
+  &#{$size-xs} {
+    @include text(regular, 2xs);
+  }
+
+  &#{$size-sm} {
+    @include text(regular, xs);
+  }
+
+  &#{$size-md} {
+    @include text(regular, sm);
+  }
+
+  &#{$size-lg} {
+    @include text(regular, md);
+  }
+
+  &__floater {
+    width: 100%;
+  }
+
+  &__content {
+    overflow: auto;
+
+    height: 100%;
+    padding: $space-4 $space-2;
+    border-radius: $radius-2;
+
+    background: white;
+    box-shadow: $shadow-md;
   }
 
   &__reset-button {
@@ -305,17 +334,6 @@ export type {
     padding-block: $space-3;
     color: $color-neutral-500;
     text-align: center;
-
-    &:empty {
-      display: none;
-    }
-  }
-
-  .dropdown,
-  .floater,
-  /* stylelint-disable-next-line selector-class-pattern */
-  .floater__slot-default {
-    width: 100%;
   }
 
 }

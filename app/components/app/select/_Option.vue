@@ -1,11 +1,13 @@
 <script lang="ts" setup>
-import type { SelectValue } from './Select.vue'
+import type { SelectValue, SelectInjection } from './Select.vue'
+
+const { size } = inject('selectState') as SelectInjection
 
 interface Props {
+  checkbox?: boolean
+  isSelected?: boolean
   label: string
   value: SelectValue
-  isSelected?: boolean
-  checkbox?: boolean
 }
 
 const props = defineProps<Props>()
@@ -16,51 +18,82 @@ export type { Props as SelectOptionProps }
 </script>
 
 <template>
-  <div
-    class="select-option"
+  <button
     aria-selected
+    class="select-option"
   >
     <AppCheckbox
       v-if="checkbox"
       class="select-option__checkbox"
       :model-value="isSelected"
+      :size
     />
     <div class="select-option__label">
       {{ label }}
     </div>
     <AppIcon
       v-if="isIndicatorVisible"
-      name="check_24"
       class="select-option__indicator"
+      name="check_24"
     />
-  </div>
+  </button>
 </template>
 
 <style lang="scss">
 .select-option {
+  $root: '.select';
+  $this: &;
+  $root-size-xs: $root + '-size-xs' ;
+  $root-size-sm: $root + '-size-sm';
+  $root-size-md: $root + '-size-md ' + $this;
+  $root-size-lg: $root + '-size-lg';
+
   cursor: pointer;
 
   display: flex;
   gap: $space-4;
   align-items: center;
 
-  height: 40px;
+  width: 100%;
   padding: $space-2;
   border-radius: $radius-2;
 
+  font: inherit;
+
   transition: $blur-duration-sm;
+
+  #{$root-size-xs} & {
+    gap: $space-2;
+    height: 32px;
+  }
+
+  #{$root-size-sm} & {
+    gap: $space-3;
+    height: 36px;
+  }
+
+   &#{$root-size-md} {
+    gap: $space-4;
+    height: 40px;
+  }
+
+  #{$root-size-md} & {
+    gap: $space-5;
+    height: 44px;
+  }
 
   &:hover {
     background-color: $color-neutral-50;
     transition: $hover-duration-sm;
   }
 
-  &__checkbox {
-    pointer-events: none;
+  &:focus {
+    background-color: $color-neutral-50;
+    transition: $hover-duration-sm;
   }
 
-  &__label {
-    @include text(regular, sm);
+  &__checkbox {
+    pointer-events: none;
   }
 
   &__indicator {

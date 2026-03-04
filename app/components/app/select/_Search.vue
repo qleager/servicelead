@@ -1,13 +1,19 @@
+<script lang="ts" setup>
+import type { SelectInjection } from './Select.vue'
+
+const { size } = inject('selectState') as SelectInjection
+</script>
+
 <template>
   <AppInput
-    variant="filled"
-    size="sm"
-    color="lighter"
-    icon="search"
     class="select-search"
-    trailing-icon
-    rounded
+    color="neutral"
+    icon="search"
     reset
+    rounded
+    :size
+    trailing-icon
+    variant="filled"
   />
 </template>
 
