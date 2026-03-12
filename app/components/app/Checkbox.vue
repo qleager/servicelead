@@ -31,6 +31,7 @@ const classname = computed(() => ([
   { 'checkbox-checked': model.value },
   { 'checkbox-disabled': props.disabled },
 ]))
+
 const isLabelVisible = computed(() => props.label || slots.label)
 
 export type { Props as CheckboxProps, Model as CheckboxModel }
@@ -63,14 +64,19 @@ export type { Props as CheckboxProps, Model as CheckboxModel }
       v-if="isLabelVisible"
       class="checkbox__label"
     >
-      <slot name="label">
-        <span
-          v-if="label"
-          class="checkbox__label-text"
+      <span
+        class="checkbox__label-text"
+      >
+        <slot
+          name="label"
         >
           {{ label }}
-        </span>
-      </slot>
+        </slot>
+        <span
+          v-if="required && !disabled"
+          class="checkbox__label-required"
+        >*</span>
+      </span>
     </div>
   </button>
 </template>
@@ -149,17 +155,18 @@ export type { Props as CheckboxProps, Model as CheckboxModel }
       transition: $active-duration-sm;
     }
 
-    #{$checked} & {
-      background-color: $color-primary !important
-    }
-
     #{$disabled} & {
       border: 1px solid $color-neutral-400;
       background-color: transparent;
     }
 
+    #{$checked} & {
+      background-color: $color-primary;
+    }
+
     #{$checked}#{$disabled} & {
-      background-color: $color-neutral-400;
+      border-color: $color-primary-300;
+      background-color: $color-primary-300;
     }
 
     #{$size-xs} & {
@@ -191,10 +198,6 @@ export type { Props as CheckboxProps, Model as CheckboxModel }
 
   &__label {
     &-text {
-      &:empty {
-        display: none;
-      }
-
       #{$size-xs} & {
         @include text(regular, 2xs);
       }
@@ -214,6 +217,10 @@ export type { Props as CheckboxProps, Model as CheckboxModel }
       #{$disabled} & {
         color: $color-neutral-400;
       }
+    }
+
+    &-required {
+      color: $color-red;
     }
   }
 }
