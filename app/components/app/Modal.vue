@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { ref, watch } from 'vue'
 import type { VNodeChild } from 'vue'
 import type { IconProps } from './Icon.vue'
 
