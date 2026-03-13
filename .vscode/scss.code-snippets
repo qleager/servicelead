@@ -109,6 +109,16 @@
     ],
     "description": "Include media query with max-width 639px"
   },
+  "@include is": {
+    "scope": "scss",
+    "prefix": "is",
+    "body": [
+      "@include is($1) {",
+      "  $2",
+      "}"
+    ],
+    "description": "Include class-state of the style system"
+  },
   "Duration Variable": {
     "scope": "scss",
     "prefix": "duration",

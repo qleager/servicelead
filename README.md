@@ -47,10 +47,15 @@ gap: $space-2;
 ```scss
 transition: $duration-blur-sm;
 ```
-
 #### `ixxl`, `ixl`, `ilg`, `imd`, `ism`, `ixs` – get media query @mixin
 ```scss
 @include xs {
+  display: none;
+}
+```
+#### `is` – get the class‑state @include from the style system
+```scss
+@include is($root-component-class-state) {
   display: none;
 }
 ```

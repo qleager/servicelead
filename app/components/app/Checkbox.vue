@@ -101,23 +101,23 @@ export type { Props as CheckboxProps, Model as CheckboxModel }
   width: auto;
   border-radius: 4px;
 
-  &-disabled {
+  @include is($disabled) {
     pointer-events: none;
   }
 
-  &#{$size-xs} {
+  @include is($size-xs) {
     gap: $space-1;
   }
 
-  &#{$size-sm}{
+  @include is($size-sm) {
     gap: $space-2;
   }
 
-  &#{$size-md}{
+  @include is($size-md) {
     gap: $space-3;
   }
 
-  &#{$size-lg}{
+  @include is($size-lg) {
     gap: $space-4;
   }
 
@@ -145,46 +145,46 @@ export type { Props as CheckboxProps, Model as CheckboxModel }
 
     transition: $blur-duration-sm;
 
-    #{$hover} & {
+    @include is($hover) {
       background-color: $color-neutral-400;
       transition: $hover-duration-sm;
     }
 
-    #{$active} & {
+    @include is($active) {
       background-color: $color-primary;
       transition: $active-duration-sm;
     }
 
-    #{$disabled} & {
+    @include is($disabled) {
       border: 1px solid $color-neutral-400;
       background-color: transparent;
     }
 
-    #{$checked} & {
+    @include is($checked) {
       background-color: $color-primary;
     }
 
-    #{$checked}#{$disabled} & {
+    @include is($checked + $disabled) {
       border-color: $color-primary-300;
       background-color: $color-primary-300;
     }
 
-    #{$size-xs} & {
+    @include is($size-xs) {
       width: 16px;
       height: 16px;
     }
 
-    #{$size-sm} & {
+    @include is($size-sm) {
       width: 20px;
       height: 20px;
     }
 
-    #{$size-md} & {
+    @include is($size-md) {
       width: 24px;
       height: 24px;
     }
 
-    #{$size-lg} & {
+    @include is($size-lg) {
       width: 28px;
       height: 28px;
     }
@@ -198,23 +198,23 @@ export type { Props as CheckboxProps, Model as CheckboxModel }
 
   &__label {
     &-text {
-      #{$size-xs} & {
+      @include is($size-xs) {
         @include text(regular, 2xs);
       }
 
-      #{$size-sm} & {
+      @include is($size-sm) {
         @include text(regular, xs);
       }
 
-      #{$size-md} & {
+      @include is($size-md) {
         @include text(regular, sm);
       }
 
-      #{$size-lg} & {
+      @include is($size-lg) {
         @include text(regular, md);
       }
 
-      #{$disabled} & {
+      @include is($disabled) {
         color: $color-neutral-400;
       }
     }

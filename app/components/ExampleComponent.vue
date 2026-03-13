@@ -182,7 +182,7 @@ const onRejectClick = () => {
           Scoped-slots: model = isOpen
           Для отрисовка DOM, типа v-if="$slots || title"
       -->
-      <!-- Классы именуем по методологии БЭМ. -->
+      <!-- Классы именуем исключительно по методологии БЭМ -->
       <AppButton
         class="confirm-dialog__reject"
         color="neutral"
@@ -205,7 +205,7 @@ const onRejectClick = () => {
 .confirm-dialog {
   $this: &;
 
-  // Состояния компонента, навешанные на корневой элемент
+  // Состояния компонента, навешанные на корневой элемент через computed classname
   $variant-card: $this + '-variant-card';
   $variant-full: $this + '-variant-full';
   $actionable: $this + '-actionable';
@@ -217,11 +217,13 @@ const onRejectClick = () => {
     pointer-events: all;
   }
 
-  // Потом состояния
-  &#{$variant-full} {
+  // Потом состояния компонента
+  @include is($varian-full) {
     width: 100%;
     height: 200%;
   }
+
+  // is – это вспомогательный миксин для подхода к стилизации на проекте
 
   // Потом элементы компонента
   &__reject {
@@ -236,22 +238,27 @@ const onRejectClick = () => {
     // ℹ️ Что тут происходит:
     //    кнопка отмены должна быть некликабельной, когда компонент в состоянии variant-full /
     //    кнопка отмены должна быть некликабельной, когда компоненту задан пропс variant как full
-    #{$variant-full} & {
+    @include is($varian-full) {
       pointer-events: none;
+    }
+
+    // И после всего уже дети элемента
+    &-text {
+      white-space: nowrap;
     }
   }
 
   &__accept {
     pointer-events: none;
 
-    #{$variant-full} & {
+    @include is($varian-full) {
       pointer-events: none;
     }
   }
 
   // ⛔️ Как не надо делать:
   // Вкладывать в состояние элементы
-  &#{$variant-full} & {
+  @include is($varian-full) {
     &__reject {
       pointer-events: none;
     }
@@ -261,37 +268,33 @@ const onRejectClick = () => {
     }
   }
 
-  // Объединять состояния
-  &#{$variant-full}#{$variant-card} {
-    display: none;
-  }
-
   &__title {
     display: block;
     width: 100%;
 
     // Если есть миксин, который добавляют правила - в порядке правил миксин должны быть там же где и его правила
+    // тут text добавляет font-правила(типография), согласно stylelint-order-config они должны после box-model-правил и до apperance-правил
+    // config: node_modules/stylelint-config-clean-order/src/config.js
     @include text(light, 2xs);
 
     text-align: center;
   }
 
-  // ❇️ Исключение:
-  // Могут возникать безвыходыне ситуации, при которых нельзя обойтись без объединения состояний
-  // В режиме теста можно использовать :псевдо :is и :not
-  // Читаем как: карточку при состоянии full красим в lightgrey EСЛИ(:is) состояние actionable
-  &#{$variant-full} {
-    &:is(#{$actionable}):hover {
-      background-color: lightgrey;
-    }
+  // Могут возникать безвыходыне ситуации, когда необходимо объеденение состоняий
+  // Это делаем явно, через плюс, а не вложением состояния в состояние
+  // В пороядке объявления после этих состояний (в текушем примере после is($varian-full) и is($actionable))
+  @include is($varian-full + $actionable) {
+    background-color: lightgrey;
+
+    // Объеденять состояниия просто для то чтобы код стал короче не стоит
   }
 
   // ℹ️ Важное по подходу к стилизации:
   // Скорее всего ты такое никогда не встречал
   // Такой подход был придуман, чтобы не использовать классы-стили, как в tw,
-  //   освободить от computed-генерации классов,
+  //   освободить от computed-генерации классов для элементов,
   //   не навешивать на детей вспомогалтельные класссы
-  // В целом показывает себя хорошо, но есть проблемы (как исключение выше)
+  // В целом показывает себя хорошо
   // Чтобы его начать воспринимать/читать, надо немного привыкануть
   // Так как он в режиме теста – всегда готов обсудить по его правилам и стилистике
 }

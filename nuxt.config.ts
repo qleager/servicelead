@@ -40,7 +40,10 @@ export default defineNuxtConfig({
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: '@use "@scss/design-system/index" as *;',
+          additionalData: `
+            @use "@scss/design-system/index" as *; 
+            @use "@scss/style-system/index" as *;
+          `,
         },
       },
     },
