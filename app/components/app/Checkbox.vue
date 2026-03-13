@@ -164,6 +164,10 @@ export type { Props as CheckboxProps, Model as CheckboxModel }
       background-color: $color-primary;
     }
 
+    @include is($checked + $hover) {
+      background-color: $color-primary-600;
+    }
+
     @include is($checked + $disabled) {
       border-color: $color-primary-300;
       background-color: $color-primary-300;
