@@ -5,6 +5,14 @@ import type { Preview } from '@storybook-vue/nuxt'
 // const mode = process.env.NODE_ENV
 
 const preview: Preview = {
+  decorators: [
+    () => ({
+      template: `
+        <div id="teleports"></div>
+        <story />
+      `,
+    }),
+  ],
   parameters: {
     layout: 'centered',
     controls: {
