@@ -157,6 +157,7 @@ export type { Props as ModalProps, Emits as ModalEmits, Model as ModalModel, Slo
   }
 
   &__card {
+    min-width: 256px;
     max-width: 560px;
     margin-inline: auto;
 
