@@ -1,34 +1,43 @@
 <script lang="ts" setup>
+import { ref, watch } from 'vue'
+import type { VNodeChild } from 'vue'
+import type { IconProps } from './Icon.vue'
+
 interface Props {
-  title?: string
   description?: string
-  overlay?: boolean
+  icon?: IconProps['name']
+  title?: string
 }
 
 interface Emits {
-  close: []
-}
-
-interface Slots {
-  default?: () => unknown
-  header?: () => unknown
-  title?: () => unknown
-  subtitle?: () => unknown
-  content?: (props: { close?: () => void }) => unknown
-  footer?: (props: { close?: () => void }) => unknown
+  'after:enter': []
+  'after:leave': []
+  'close': []
 }
 
 type Model = boolean
 
-defineSlots<Slots>()
+interface Slots {
+  content?: (props: { close: () => void }) => VNodeChild
+  default?: (props: { isOpen: Model }) => VNodeChild
+  footer?: (props: { close: () => void }) => VNodeChild
+}
 
-withDefaults(defineProps<Props>(), {
-  overlay: true,
-})
+defineProps<Props>()
 
 const emits = defineEmits<Emits>()
 
 const model = defineModel<Model>({ default: false })
+
+defineSlots<Slots>()
+
+const isGridVisible = ref(model.value)
+
+watch(model, (value) => {
+  if (value) {
+    isGridVisible.value = value
+  }
+})
 
 const toggle = () => {
   model.value = !model.value
@@ -39,147 +48,146 @@ const close = () => {
   emits('close')
 }
 
-export type { Props as ModalProps, Emits as ModalEmits, Model as ModalModel }
+export type { Props as ModalProps, Emits as ModalEmits, Model as ModalModel, Slots as ModalSlots }
 </script>
 
 <template>
   <div
-    v-if="$slots.default"
-    class="modal__slot modal__slot-default"
-    @click="toggle"
+    class="modal"
   >
-    <slot />
-  </div>
-
-  <AppOverlay
-    v-model="model"
-    class="modal__overlay"
-    :transparent="!overlay"
-    @click:backdrop="close"
-  >
-    <div class="modal">
-      <AppCard class="modal__content">
-        <template
-          v-if="$slots.header"
-          #header
-        >
-          <slot name="header" />
-        </template>
-        <template
-          v-else-if="title || description"
-          #header
-        >
-          <header class="modal__header">
-            <div
-              v-if="title"
-              class="modal__title"
-            >
-              {{ title }}
-            </div>
-            <div v-else>
-              else title
-            </div>
-
-            <div
-              v-if="description"
-              class="modal__description"
-            >
-              {{ description }}
-            </div>
-            <div v-else>
-              else description
-            </div>
-          </header>
-        </template>
-
-        <template
-          v-if="$slots.title"
-          #title
-        >
-          <slot name="title" />
-        </template>
-        <template
-          v-if="$slots.subtitle"
-          #subtitle
-        >
-          <slot name="subtitle" />
-        </template>
-
-        <template
-          v-if="$slots.content"
-          #content
-        >
-          <div class="modal__main">
-            <!-- IDEA: сделать компонент слота? мы везде используем такую конструкцию -->
-            <slot
-              :close
-              name="content"
-            />
-          </div>
-        </template>
-
-        <template
-          v-if="$slots.footer"
-          #footer
-        >
-          <footer class="modal__footer">
-            <slot
-              :close
-              name="footer"
-            />
-          </footer>
-        </template>
-      </AppCard>
-      <AppButton
-        class="modal__close"
-        color="white"
-        icon="close"
-        size="sm"
-        @click="close"
-      />
+    <div
+      v-if="$slots.default"
+      class="modal__trigger"
+      @click="toggle"
+    >
+      <slot :is-open="model" />
     </div>
-  </AppOverlay>
+
+    <AppOverlay
+      :backdrod="model"
+      :lock-scroll="model"
+      @click:backdrop="close"
+    >
+      <Transition
+        appear
+        name="modal__transition"
+        @after-enter="emits('after:enter')"
+        @after-leave="emits('after:leave')"
+      >
+        <div
+          v-if="model"
+          class="modal__grid"
+          @click="close"
+        >
+          <AppCard
+            class="modal__card"
+          >
+            <template #title>
+              <div class="modal__card-header">
+                <AppTitle
+                  :icon
+                  :title
+                />
+                <AppButton
+                  class="modal__close"
+                  color="neutral"
+                  icon="close"
+                  size="sm"
+                  variant="nofilled"
+                  @click="close"
+                />
+              </div>
+            </template>
+
+            <template
+              v-if="description"
+              #description
+            >
+              <div class="modal__card-description">
+                {{ description }}
+              </div>
+            </template>
+
+            <template
+              v-if="$slots.content"
+              #content
+            >
+              <div class="modal__card-content">
+                <slot
+                  :close
+                  name="content"
+                />
+              </div>
+            </template>
+
+            <template
+              v-if="$slots.footer"
+              #footer
+            >
+              <div class="modal__card-footer">
+                <slot
+                  :close
+                  name="footer"
+                />
+              </div>
+            </template>
+          </AppCard>
+        </div>
+      </Transition>
+    </AppOverlay>
+  </div>
 </template>
 
 <style lang="scss">
 .modal {
-  position: relative;
-
-  width: 100%;
-  max-width: 560px;
-  border-radius: $radius-6;
-
-  background-color: white;
-
-  &__overlay {
-    z-index: 10;
+  &__grid {
+    position: fixed;
+    top: 0;
+    left: 0;
 
     overflow: auto;
     display: grid;
     grid-template-columns: 1fr;
-    place-items: center;
+    align-items: center;
+    justify-content: center;
 
-    padding: $space-8 0;
+    width: 100dvw;
+    height: 100dvh;
+    padding-block: $space-30;
+    padding-inline: $space-6;
   }
 
-  &__title {
-    @include text(semibold, xl);
+  &__card {
+    max-width: 560px;
+    margin-inline: auto;
 
-    text-align: center;
-  }
-
-  &__description {
-    @include text(regular, md);
-
-    color: $color-neutral;
-    text-align: center;
+    &-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
   }
 
   &__close {
-    cursor: pointer;
-    position: absolute;
-    top: 0;
-    right: -$space-16;
+    margin-left: auto;
+  }
+
+  &__transition {
+    &-enter {
+      &-from {
+        visibility: hidden;
+      }
+
+      &-to {
+        animation: zoomInGentle $show-duration-lg ease-out forwards;
+      }
+    }
+
+    &-leave {
+      &-to {
+        animation: zoomOutGentle $hide-duration-lg ease-in forwards;
+      }
+    }
   }
 }
 </style>
