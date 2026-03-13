@@ -18,11 +18,11 @@ export default {
     icon: {
       control: 'select',
       options: [null, ...iconNames],
-      table: { category: 'slots' },
+      table: { category: 'slots ' },
     },
     title: {
       control: 'text',
-      table: { category: 'slots' },
+      table: { category: 'slots ' },
     },
   },
   args: {
