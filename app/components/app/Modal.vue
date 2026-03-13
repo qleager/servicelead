@@ -77,7 +77,7 @@ export type { Props as ModalProps, Emits as ModalEmits, Model as ModalModel, Slo
         <div
           v-if="model"
           class="modal__grid"
-          @click="close"
+          @click.self="close"
         >
           <AppCard
             class="modal__card"
