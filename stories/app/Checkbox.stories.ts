@@ -27,7 +27,7 @@ export default {
     // Behavioral Props
     modelValue: {
       control: 'boolean',
-      table: { category: 'behavioral' },
+      table: { category: 'behavioral props' },
     },
     id: {
       control: 'text',
