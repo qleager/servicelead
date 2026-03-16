@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { TabsItem, TabsModel } from '~/components/app/Tabs.vue'
-import OffersSingleInformation from '~/components/offers/single/Information.vue'
+import OffersSingleInformation from '~/components/offer/single/Information.vue'
 
 // IDEA: оправдано ли нахождение табов здесь? Или лучше понять их на страницу?
 // Табы одинаковы для все офферов? Одним методом получаем статистику/цены/географию?
