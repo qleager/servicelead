@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@nuxtjs/storybook'
-import AppCard from '@components/app/Card.vue'
+import AppCard from '@components/app/card/Card.vue'
 import AppTag from '@components/app/Tag.vue'
-import AppButton from '@components/app/Button.vue'
 
 export default {
   title: 'App/Card',
@@ -21,31 +20,26 @@ export default {
     // Slots
     top: {
       control: 'boolean',
-      name: 'Top',
     },
     header: {
       control: 'boolean',
-      name: 'Header',
     },
     titleSlot: {
       control: 'boolean',
-      name: 'Title Slot',
+      table: { category: 'slots' },
     },
     descriptionSlot: {
       control: 'boolean',
-      name: 'Description Slot',
+      table: { category: 'slots' },
     },
     content: {
-      control: 'boolean',
-      name: 'Content',
+      control: 'text',
     },
     footer: {
       control: 'boolean',
-      name: 'Footer',
     },
     bottom: {
       control: 'boolean',
-      name: 'Bottom',
     },
   },
   args: {
@@ -56,7 +50,7 @@ export default {
     header: false,
     titleSlot: false,
     descriptionSlot: false,
-    content: true,
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.1',
     footer: true,
     bottom: false,
   },
@@ -66,7 +60,7 @@ type Story = StoryObj<typeof AppCard>
 
 export const Playground: Story = {
   render: args => ({
-    components: { AppCard, AppTag, AppButton },
+    components: { AppCard, AppTag },
     setup: () => ({ args }),
     template: `
       <div style="width:320px;">
@@ -80,8 +74,7 @@ export const Playground: Story = {
 
           <template v-if="args.header" #header>
             <div style="display:flex;justify-content:space-between;align-items:center;">
-              <div>Custom Header</div>
-              <AppButton size="xs" variant="soft">Action</AppButton>
+              <AppTag size="sm" color="gray" variant="soft">Header Slot</AppTag>
             </div>
           </template>
 
@@ -95,15 +88,12 @@ export const Playground: Story = {
 
           <template v-if="args.content" #content>
             <div>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-              Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              {{ args.content }}
             </div>
           </template>
 
           <template v-if="args.footer" #footer>
-            <AppButton size="sm" variant="lined">
-              Footer action
-            </AppButton>
+            <AppTag size="sm" color="gray" variant="soft">Footer Slot</AppTag>
           </template>
 
           <template v-if="args.bottom" #bottom>
