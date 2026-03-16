@@ -11,26 +11,26 @@ export default {
   },
   argTypes: {
     // Props
-    title: {
-    control: 'text',
-    },
-    description: {
+    'title': {
       control: 'text',
     },
-    icon: {
+    'description': {
+      control: 'text',
+    },
+    'icon': {
       control: 'select',
       options: [null, ...iconNames],
     },
 
     // Slots
-    content: {
+    'content': {
       control: 'text',
     },
-    descriptionSlot: {
+    'descriptionSlot': {
       control: 'boolean',
       table: { category: 'slots' },
     },
-    footer: {
+    'footer': {
       control: 'boolean',
     },
 
@@ -55,28 +55,26 @@ export const Playground: Story = {
     components: { AppWidget, AppTag },
     setup: () => ({ args }),
     template: `
-  <div style="width:320px;">
-    <AppWidget
-      :title="args.title"
-      :description="args.description"
-      :icon="args.icon"
-      @click:button="args['click:button']"
-    >
-      <template v-if="args.descriptionSlot" #description>
-        <strong>Custom description slot</strong>
-      </template>
-
-      <template #content>
-        <div>{{ args.content }}</div>
-      </template>
-
-      <template v-if="args.footer" #footer>
-        <AppTag size="sm" color="gray" variant="soft">
-          Footer Slot
-        </AppTag>
-      </template>
-    </AppWidget>
-  </div>
+      <div style="width:320px;">
+        <AppWidget
+          :title="args.title"
+          :description="args.description"
+          :icon="args.icon"
+          @click:button="args['click:button']"
+        >
+          <template v-if="args.descriptionSlot" #description>
+            <strong>Custom description slot</strong>
+          </template>
+          <template #content>
+            <div>{{ args.content }}</div>
+          </template>
+          <template v-if="args.footer" #footer>
+            <AppTag size="sm" color="gray" variant="soft">
+              Footer Slot
+            </AppTag>
+          </template>
+        </AppWidget>
+      </div>
     `,
   }),
 }
