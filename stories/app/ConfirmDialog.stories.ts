@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@nuxtjs/storybook'
 import AppConfirmDialog from '@components/app/ConfirmDialog.vue'
 import AppTag from '@components/app/Tag.vue'
-import { iconNames } from '@app/types/components/app/icon'
 
 export default {
   title: 'App/ConfirmDialog',
