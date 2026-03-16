@@ -57,33 +57,33 @@ export const Playground: Story = {
     components: { WidgetDropdown, AppTag },
     setup: () => ({ args }),
     template: `
-        <WidgetDropdown
-            :title="args.title"
-            :description="args.description"
-            :icon="args.icon"
-        >
-            <template #default="{ isOpen }">
-                <AppTag
-                    v-if="args.default"
-                    size="sm"
-                    color="gray"
-                    variant="soft"
-                >
-                    {{ args.default }}
-                </AppTag>
-            </template>
-            <template v-if="args.descriptionSlot" #description>
-                <strong>Custom description slot</strong>
-            </template>
-            <template #content>
-                <div>{{ args.content }}</div>
-            </template>
-            <template v-if="args.footer" #footer>
-                <AppTag size="sm" color="gray" variant="soft">
-                Footer Slot
-                </AppTag>
-            </template>
-        </WidgetDropdown>
+      <WidgetDropdown
+        :title="args.title"
+        :description="args.description"
+        :icon="args.icon"
+      >
+        <template #default="{ isOpen }">
+          <AppTag
+            v-if="args.default"
+            size="sm"
+            color="gray"
+            variant="soft"
+          >
+            {{ args.default }}
+          </AppTag>
+        </template>
+        <template v-if="args.descriptionSlot" #description>
+          <strong>Custom description slot</strong>
+        </template>
+        <template #content>
+          <div>{{ args.content }}</div>
+        </template>
+        <template v-if="args.footer" #footer>
+          <AppTag size="sm" color="gray" variant="soft">
+            Footer Slot
+          </AppTag>
+        </template>
+      </WidgetDropdown>
     `,
   }),
 }
