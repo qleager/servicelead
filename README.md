@@ -1,7 +1,7 @@
-# 🚀 Get Started
 
-Проект использует **Docker + Dev Containers**.  
-После клонирования репозитория проекта, действия по установке и запуску выполняются **через VS Code**.
+# Servicelead
+
+Affiliate dashboard for a [CPA-Network](https://servicelead.ru)
 
 ## Stack
 `Docker` `Nuxt 4` `Typescript` `ESLint` `Stylelint` `SCSS` `pnpm` `Storybook`
@@ -10,8 +10,22 @@
 - **Consistent development environment**
 - **Linting, Formatter, and Auto-fix scripts** `VS Code only`
 - **Linting, Formatter, and Auto-fix styles** `VS Code only`
+- **Linting, Formatter, and Auto-fix template** `VS Code only`
 - **SCSS snippets** `VS Code only`
 - **Docker-based isolation**
+
+# 🚀 Get Started
+
+## Before You Start
+
+Please check the following before starting work on the project:
+
+1. Read [ExampleComponent.vue](app/components/ExampleComponent.vue)
+2. Review the [design system](app/assets/design-system) SCSS variables
+3. Read about [SCSS snippets](#scss-snippets)
+4. Check available [Composables](#use-composables)
+5. Check available [Utils](app/utils)
+6. Read about [Conventional Commits](#use-conventional-commits)
 
 ## Use Snippets
 > [!Note]
