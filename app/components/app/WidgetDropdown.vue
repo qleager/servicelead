@@ -1,16 +1,18 @@
 <script lang="ts" setup>
-import type { VNodeChild } from 'vue'
-import type { FloaterModel } from './Floater.vue'
-import type { WidgetSlots, WidgetProps } from './Widget.vue'
+// import type { VNodeChild } from 'vue'
+// import type { FloaterModel } from './Floater.vue'
+// import type { WidgetSlots, WidgetProps } from './Widget.vue'
 
-type Props = WidgetProps
+// type Props = WidgetProps
 
-interface Slots extends WidgetSlots {
-  default?: (props: { isOpen: FloaterModel }) => VNodeChild
-}
+// interface Slots extends WidgetSlots {
+//   default?: (props: { isOpen: FloaterModel }) => VNodeChild
+// }
 
-defineProps<Props>()
-defineSlots<Slots>()
+// defineProps<Props>()
+defineProps()
+// defineSlots<Slots>()
+defineSlots()
 </script>
 
 <template>
@@ -19,7 +21,7 @@ defineSlots<Slots>()
     placement="bottom"
   >
     <template #default="{ isOpen }">
-      <slot :is-open />
+      <slot :is-open="isOpen" />
     </template>
 
     <template #content>
