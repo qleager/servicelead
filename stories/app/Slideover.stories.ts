@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@nuxtjs/storybook'
 import AppSlideover from '@components/app/Slideover.vue'
 import AppTag from '@components/app/Tag.vue'
-import AppButton from '@components/app/Button.vue'
 import { iconNames } from '@app/types/components/app/icon'
 
 export default {
@@ -24,22 +23,17 @@ export default {
     },
     // Slots
     content: {
-      control: 'boolean',
-      name: 'Content',
+      control: 'text',
     },
     default: {
       control: 'boolean',
-      name: 'Default',
     },
     footer: {
       control: 'boolean',
-      name: 'Footer',
     },
     // Behavioral Props
     modelValue: {
-      table: { category: 'Behavioral props' },
-      control: { min: 0, max: 4, type: 'number' },
-      description: 'Value or index of Item',
+      control: 'boolean',
     },
   },
   args: {
@@ -57,7 +51,7 @@ type Story = StoryObj<typeof AppSlideover>
 
 export const Playground: Story = {
   render: args => ({
-    components: { AppSlideover, AppTag, AppButton },
+    components: { AppSlideover, AppTag },
     setup: () => ({ args }),
     template: `
       <AppSlideover
@@ -72,13 +66,9 @@ export const Playground: Story = {
           </div>
         </template>
         <template v-if="args.default" #default="{ isOpen }">
-          <AppButton
-            size="sm"
-            color="neutral"
-            variant="lined"
-          >
-            Open Slideover ({{ isOpen ? 'Open' : 'Closed' }})
-          </AppButton>
+          <AppTag size="sm" color="gray" variant="soft" :rounded="false">
+            Default Slot: нажми чтобы открыть
+          </AppTag>
         </template>
         <template v-if="args.footer" #footer>
           <AppTag size="sm" color="gray" variant="soft" :rounded="false">Footer Slot</AppTag>
