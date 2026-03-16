@@ -26,7 +26,7 @@ export default {
       control: 'text',
     },
     default: {
-      control: 'boolean',
+      control: 'text',
     },
     footer: {
       control: 'boolean',
@@ -34,16 +34,17 @@ export default {
     // Behavioral Props
     modelValue: {
       control: 'boolean',
+      table: { category: 'Behavioral props' },
     },
   },
   args: {
     description: 'Description',
     icon: 'domain',
     title: 'Title',
-    content: true,
-    default: true,
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+    default: 'Default Slot: нажми чтобы открыть',
     footer: true,
-    modelValue: false,
+    modelValue: true,
   },
 } satisfies Meta<typeof AppSlideover>
 
@@ -62,12 +63,12 @@ export const Playground: Story = {
       >
         <template v-if="args.content" #content>
           <div>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            {{ args.content }}
           </div>
         </template>
         <template v-if="args.default" #default="{ isOpen }">
           <AppTag size="sm" color="gray" variant="soft" :rounded="false">
-            Default Slot: нажми чтобы открыть
+            {{ args.default }}
           </AppTag>
         </template>
         <template v-if="args.footer" #footer>
