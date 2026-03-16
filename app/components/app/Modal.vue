@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { ref, watch } from 'vue'
 import type { VNodeChild } from 'vue'
 import type { IconProps } from './Icon.vue'
 
@@ -158,6 +157,7 @@ export type { Props as ModalProps, Emits as ModalEmits, Model as ModalModel, Slo
   }
 
   &__card {
+    min-width: 256px;
     max-width: 560px;
     margin-inline: auto;
 
