@@ -48,7 +48,7 @@ export type { Props as SlideoverProps, Emits as SlideoverEmits, Model as Slideov
   >
     <div
       v-if="$slots.default"
-      class="slideover__triggetr"
+      class="slideover__trigger"
       @click="toggle"
     >
       <slot :is-open="model" />
