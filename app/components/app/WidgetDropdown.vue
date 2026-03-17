@@ -19,7 +19,7 @@ defineSlots<Slots>()
     placement="bottom"
   >
     <template #default="{ isOpen }">
-      <slot :is-open="isOpen" />
+      <slot :is-open />
     </template>
 
     <template #content>

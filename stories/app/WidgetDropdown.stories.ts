@@ -15,9 +15,6 @@ export default {
     title: {
       control: 'text',
     },
-    description: {
-      control: 'text',
-    },
     icon: {
       control: 'select',
       options: [null, ...iconNames],
@@ -30,8 +27,8 @@ export default {
     content: {
       control: 'text',
     },
-    descriptionSlot: {
-      control: 'boolean',
+    description: {
+      control: 'text',
       table: { category: 'slots' },
     },
     footer: {
