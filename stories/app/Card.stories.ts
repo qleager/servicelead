@@ -54,10 +54,7 @@ export const Playground: Story = {
     setup: () => ({ args }),
     template: `
       <div style="width:320px;">
-        <AppCard
-          :title="args.title"
-          :description="args.description"
-        >
+        <AppCard>
           <template v-if="args.top" #top>
             <AppTag size="sm" color="gray" variant="soft">Top Slot</AppTag>
           </template>
@@ -68,12 +65,12 @@ export const Playground: Story = {
             </div>
           </template>
 
-          <template v-if="args.titleSlot" #title>
-            Custom Title Slot
+          <template v-if="args.title" #title>
+            {{ args.title }}
           </template>
 
-          <template v-if="args.descriptionSlot" #description>
-            Custom Description Slot
+          <template v-if="args.description" #description>
+            {{ args.description }}
           </template>
 
           <template v-if="args.content" #content>
