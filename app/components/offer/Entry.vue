@@ -1,14 +1,25 @@
 <script lang="ts" setup>
-// TODO: Добавить тип offerItem
-interface Props {
-  offer: any
-}
+const mockCities = ref([
+  'Москва',
+  'Санкт-Петербург',
+  'Казань',
+  'Екатеринбург',
+  'Новосибирск',
+  'Нижний Новгород',
+  'Самара',
+  'Омск',
+  'Челябинск',
+])
 
-const props = defineProps<Props>()
+const mockTags = ref([
+  { value: 'higher_conversion', label: 'Фильтр' },
+  { value: 'seasonal_demand', label: 'Сезонное' },
+  { value: 'geo_radar', label: 'Погодное' },
+])
 
-const favoritesText = computed(() => props.offer.isFavorite ? 'Удалить из избранного' : 'Добавить в избранное')
+const favoritesText = computed(() => Math.random() < 0.5 ? 'Удалить из избранного' : 'Добавить в избранное')
 
-const favoritesColor = computed(() => props.offer.isFavorite ? 'primary' : 'white')
+const favoritesColor = computed(() => Math.random() < 0.5 ? 'primary' : 'white')
 </script>
 
 <template>
@@ -19,15 +30,14 @@ const favoritesColor = computed(() => props.offer.isFavorite ? 'primary' : 'whit
     <div class="offers-entry__header">
       <div class="offers-entry__header-media">
         <img
-          v-if="offer.image"
           alt=""
-          :src="offer.image"
+          :src="'https://picsum.photos/600/300'"
         >
       </div>
       <div class="offers-entry__header-overlay">
         <div class="offers-entry__header-tags">
           <AppTooltip
-            v-for="tag in offer.tags"
+            v-for="tag in mockTags"
             :key="tag.value"
             :text="tag.label"
           >
@@ -61,7 +71,7 @@ const favoritesColor = computed(() => props.offer.isFavorite ? 'primary' : 'whit
               size="sm"
               variant="soft"
             >
-              {{ offer.tag }}
+              Мастер на час
             </AppTag>
           </div>
           <AppDropdown mode="hover">
@@ -71,13 +81,13 @@ const favoritesColor = computed(() => props.offer.isFavorite ? 'primary' : 'whit
                 :size="16"
               />
               <div>
-                {{ offer.cities.length }}
+                {{ mockCities.length }}
               </div>
             </div>
             <template #content>
               <div>
                 <div
-                  v-for="city in offer.cities"
+                  v-for="city in mockCities"
                   :key="city"
                 >
                   {{ city }}
@@ -88,12 +98,12 @@ const favoritesColor = computed(() => props.offer.isFavorite ? 'primary' : 'whit
         </div>
         <div class="offers-entry__title">
           <NuxtImg
-            v-if="offer.isHot"
+            v-if="true"
             class="offers-entry__title-icon"
             :src="'/images/top-fire.png'"
           />
           <div class="offers-entry__title-text">
-            {{ offer.title }}
+            Ремонт холодильниковРемонт холодильников
           </div>
         </div>
       </div>
@@ -104,19 +114,19 @@ const favoritesColor = computed(() => props.offer.isFavorite ? 'primary' : 'whit
           Ставка
         </div>
         <div class="offers-entry__price-value">
-          До {{ offer.maxPrice }} <span class="offers-entry__price-value--currency">₽</span>
+          До 50000 <span class="offers-entry__price-value--currency">₽</span>
         </div>
       </div>
       <div class="offers-entry__actions">
         <AppIcon
-          v-if="offer.isLocked"
+          v-if="true"
           name="lock"
         />
         <AppButton
           color="neutral"
           icon="arrow_right"
           size="xs"
-          :to="{ name: 'offers-id', params: { id: offer.id } }"
+          :to="{ name: 'offers-id', params: { id: 1 } }"
           variant="lined"
         />
       </div>
