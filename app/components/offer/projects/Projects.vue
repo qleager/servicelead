@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="offers-projects__entries">
-      <OffersProjectsEntry
+      <OfferProjectsEntry
         v-for="i in 3"
         :key="i"
       />

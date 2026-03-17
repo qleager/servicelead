@@ -102,7 +102,7 @@ const mockOffers: any[] = [
 
 <template>
   <div class="offers-list">
-    <OffersEntry
+    <OfferEntry
       v-for="offer in mockOffers"
       :key="offer.id"
       :offer="offer"

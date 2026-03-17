@@ -18,7 +18,7 @@
       />
     </template>
     <template #content>
-      <OffersList />
+      <OfferList />
     </template>
   </AppSection>
 </template>

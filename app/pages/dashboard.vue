@@ -11,7 +11,7 @@
     <NewsWidget class="page-dashboard__news" />
     <FinanceIncomeWidget class="page-dashboard__income" />
     <StatisticsTrafficWidget class="page-dashboard__traffic" />
-    <OffersWidget class="page-dashboard__offers" />
+    <OfferWidget class="page-dashboard__offers" />
     <DashboardAddWidgetInformer class="page-dashboard__informer" />
   </section>
 </template>
