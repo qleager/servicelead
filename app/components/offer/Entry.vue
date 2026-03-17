@@ -20,8 +20,8 @@ const favoritesColor = computed(() => props.offer.isFavorite ? 'primary' : 'whit
       <div class="offers-entry__header-media">
         <img
           v-if="offer.image"
-          :src="offer.image"
           alt=""
+          :src="offer.image"
         >
       </div>
       <div class="offers-entry__header-overlay">
@@ -32,8 +32,8 @@ const favoritesColor = computed(() => props.offer.isFavorite ? 'primary' : 'whit
             :text="tag.label"
           >
             <AppIcon
-              :size="20"
               :name="tag.value"
+              :size="20"
             />
           </AppTooltip>
         </div>
@@ -41,9 +41,9 @@ const favoritesColor = computed(() => props.offer.isFavorite ? 'primary' : 'whit
           :text="favoritesText"
         >
           <AppButton
-            variant="nofilled"
-            size="xs"
             :color="favoritesColor"
+            size="xs"
+            variant="nofilled"
           >
             <AppIcon
               name="favorites"
@@ -113,11 +113,11 @@ const favoritesColor = computed(() => props.offer.isFavorite ? 'primary' : 'whit
           name="lock"
         />
         <AppButton
-          icon="arrow_right"
-          variant="lined"
-          size="xs"
           color="neutral"
+          icon="arrow_right"
+          size="xs"
           :to="{ name: 'offers-id', params: { id: offer.id } }"
+          variant="lined"
         />
       </div>
     </div>
