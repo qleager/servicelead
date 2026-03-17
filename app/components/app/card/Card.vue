@@ -112,7 +112,7 @@ export type { Slots as CardSlots }
   }
 
   &__content {
-    overflow: scroll;
+    overflow: auto;
     flex: 1;
     padding: $space-2 $space-4;
 
