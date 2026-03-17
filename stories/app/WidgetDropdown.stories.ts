@@ -42,7 +42,6 @@ export default {
 
     default: 'Default Slot: нажми чтобы открыть',
     content: 'Dropdown widget content',
-    descriptionSlot: false,
     footer: true,
   },
 } satisfies Meta<typeof WidgetDropdown>
@@ -56,7 +55,6 @@ export const Playground: Story = {
     template: `
       <WidgetDropdown
         :title="args.title"
-        :description="args.description"
         :icon="args.icon"
       >
         <template #default="{ isOpen }">
@@ -69,8 +67,8 @@ export const Playground: Story = {
             {{ args.default }}
           </AppTag>
         </template>
-        <template v-if="args.descriptionSlot" #description>
-          <strong>Custom description slot</strong>
+        <template v-if="args.description" #description>
+          <strong>{{ args.description }}</strong>
         </template>
         <template #content>
           <div>{{ args.content }}</div>
