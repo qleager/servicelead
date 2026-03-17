@@ -40,7 +40,6 @@ export default {
     icon: 'domain',
 
     content: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt aperiam molestias at nisi veniam dicta quaerat, excepturi eligendi ratione rerum amet earum cumque enim culpa neque! Voluptatem aperiam cupiditate vero.',
-    descriptionSlot: false,
     footer: true,
   },
 } satisfies Meta<typeof AppWidget>
@@ -55,12 +54,11 @@ export const Playground: Story = {
       <div style="width:320px;">
         <AppWidget
           :title="args.title"
-          :description="args.description"
           :icon="args.icon"
           @click:button="args['click:button']"
         >
-          <template v-if="args.descriptionSlot" #description>
-            <strong>Custom description slot</strong>
+          <template v-if="args.description" #description>
+            <strong>{{ args.description }}</strong>
           </template>
           <template #content>
             <div>{{ args.content }}</div>
