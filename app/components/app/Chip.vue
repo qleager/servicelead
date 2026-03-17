@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import type { Colors, Sizes } from '~/types/ds'
+import type { Color, Size } from '~/types/ds'
 
 interface Props {
   variant?: 'filled' | 'soft'
-  color?: Colors
-  size?: Sizes
+  color?: Color
+  size?: Size
   position?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
   text?: string
   inset?: boolean

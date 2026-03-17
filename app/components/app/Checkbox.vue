@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { Sizes } from '~/types/ds'
+import type { Size } from '~/types/ds'
 
 interface Props {
   disabled?: boolean
@@ -7,7 +7,7 @@ interface Props {
   label?: string
   name?: string
   required?: boolean
-  size?: Sizes
+  size?: Size
   value?: null | string | number | bigint
 }
 

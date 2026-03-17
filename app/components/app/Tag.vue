@@ -1,15 +1,15 @@
 <script lang="ts" setup>
-import type { Colors, Sizes } from '~/types/ds'
+import type { Color, Size } from '~/types/ds'
 import type { IconProps } from './Icon.vue'
 import type { VNodeChild } from 'vue'
 
 interface Props {
   actionable?: boolean
   closable?: boolean
-  color?: Colors | 'white'
+  color?: Color | 'white'
   icon?: IconProps['name']
   rounded?: boolean
-  size?: Sizes
+  size?: Size
   trailingIcon?: boolean
   variant?: 'filled' | 'soft' | 'lined' | 'nofilled'
 }

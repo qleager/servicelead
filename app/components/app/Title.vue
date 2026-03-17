@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import type { VNodeChild } from 'vue'
 import type { IconProps } from '../app/Icon.vue'
-import type { Sizes } from '~/types/ds'
+import type { Size } from '~/types/ds'
 
 interface Props {
   icon?: IconProps['name']
-  size?: Extract<Sizes, 'md'>
+  size?: Extract<Size, 'md'>
   title?: string
 }
 

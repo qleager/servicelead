@@ -1,15 +1,15 @@
 <script lang="ts" setup>
 import type { AnchorHTMLAttributes, VNodeChild } from 'vue'
 import type { IconProps } from './Icon.vue'
-import type { Colors, Sizes, Subset } from '~/types/ds'
+import type { Color, Size, Subset } from '~/types/ds'
 
 interface Props {
-  color?: Subset<Colors, 'neutral' | 'primary'> | 'white'
+  color?: Subset<Color, 'neutral' | 'primary'> | 'white'
   disabled?: boolean
   icon?: IconProps['name']
   loading?: boolean
   rounded?: boolean
-  size?: Sizes
+  size?: Size
   target?: AnchorHTMLAttributes['target']
   to?: RouteTo<true>
   trailingIcon?: boolean
