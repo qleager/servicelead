@@ -23,115 +23,120 @@ const favoritesColor = computed(() => Math.random() < 0.5 ? 'primary' : 'white')
 </script>
 
 <template>
-  <div
+  <AppCard
     class="offers-entry"
     @click="navigateTo('/offers/1')"
   >
-    <div class="offers-entry__header">
-      <div class="offers-entry__header-media">
-        <img
-          alt=""
-          :src="'https://picsum.photos/600/300'"
-        >
-      </div>
-      <div class="offers-entry__header-overlay">
-        <div class="offers-entry__header-tags">
-          <AppTooltip
-            v-for="tag in mockTags"
-            :key="tag.value"
-            :text="tag.label"
-          >
-            <AppIcon
-              :name="tag.value"
-              :size="20"
-            />
-          </AppTooltip>
-        </div>
-        <AppTooltip
-          :text="favoritesText"
-        >
-          <AppButton
-            :color="favoritesColor"
-            size="xs"
-            variant="nofilled"
-          >
-            <AppIcon
-              name="favorites"
-              :size="32"
-            />
-          </AppButton>
-        </AppTooltip>
-      </div>
-    </div>
-    <div class="offers-entry__body">
-      <div class="offers-entry__content">
-        <div class="offers-entry__info">
-          <div class="offers-entry__info-category">
-            <AppTag
-              size="sm"
-              variant="soft"
+    <template #content>
+      <div class="offers-entry__wrapper">
+        <div class="offers-entry__header">
+          <div class="offers-entry__header-media">
+            <img
+              alt=""
+              :src="'https://picsum.photos/600/300'"
             >
-              Мастер на час
-            </AppTag>
           </div>
-          <AppDropdown mode="hover">
-            <div class="offers-entry__info-location">
-              <AppIcon
-                name="geo_16"
-                :size="16"
+          <div class="offers-entry__header-overlay">
+            <div class="offers-entry__header-tags">
+              <AppTooltip
+                v-for="tag in mockTags"
+                :key="tag.value"
+                :text="tag.label"
+              >
+                <AppIcon
+                  :name="tag.value"
+                  :size="20"
+                />
+              </AppTooltip>
+            </div>
+            <AppTooltip
+              :text="favoritesText"
+            >
+              <AppButton
+                :color="favoritesColor"
+                size="xs"
+                variant="nofilled"
+              >
+                <AppIcon
+                  name="favorites"
+                  :size="32"
+                />
+              </AppButton>
+            </AppTooltip>
+          </div>
+        </div>
+        <div class="offers-entry__body">
+          <div class="offers-entry__content">
+            <div class="offers-entry__info">
+              <div class="offers-entry__info-category">
+                <AppTag
+                  size="sm"
+                  variant="soft"
+                >
+                  Мастер на час
+                </AppTag>
+              </div>
+              <AppDropdown mode="hover">
+                <div class="offers-entry__info-location">
+                  <AppIcon
+                    name="geo_16"
+                    :size="16"
+                  />
+                  <div>
+                    {{ mockCities.length }}
+                  </div>
+                </div>
+                <template #content>
+                  <div>
+                    <div
+                      v-for="city in mockCities"
+                      :key="city"
+                    >
+                      {{ city }}
+                    </div>
+                  </div>
+                </template>
+              </AppDropdown>
+            </div>
+            <div class="offers-entry__title">
+              <NuxtImg
+                class="offers-entry__title-icon"
+                :src="'/images/top-fire.svg'"
               />
-              <div>
-                {{ mockCities.length }}
+              <div class="offers-entry__title-text">
+                Ремонт холодильниковРемонт холодильников
               </div>
             </div>
-            <template #content>
-              <div>
-                <div
-                  v-for="city in mockCities"
-                  :key="city"
-                >
-                  {{ city }}
-                </div>
-              </div>
-            </template>
-          </AppDropdown>
-        </div>
-        <div class="offers-entry__title">
-          <NuxtImg
-            v-if="true"
-            class="offers-entry__title-icon"
-            :src="'/images/top-fire.png'"
-          />
-          <div class="offers-entry__title-text">
-            Ремонт холодильниковРемонт холодильников
           </div>
         </div>
       </div>
-    </div>
-    <div class="offers-entry__footer">
-      <div class="offers-entry__price">
-        <div class="offers-entry__price-header">
-          Ставка
+    </template>
+    <template #footer>
+      <div class="offers-entry__footer">
+        <div class="offers-entry__price">
+          <div class="offers-entry__price-header">
+            Ставка
+          </div>
+          <div class="offers-entry__price-value">
+            До 50000 <span class="offers-entry__price-value--currency">₽</span>
+          </div>
         </div>
-        <div class="offers-entry__price-value">
-          До 50000 <span class="offers-entry__price-value--currency">₽</span>
+        <div class="offers-entry__actions">
+          <AppIcon
+            v-if="true"
+            name="lock"
+          />
+          <AppButton
+            color="neutral"
+            icon="arrow_right"
+            size="xs"
+            :to="{ name: 'offers-id', params: { id: 1 } }"
+            variant="lined"
+          />
         </div>
       </div>
-      <div class="offers-entry__actions">
-        <AppIcon
-          v-if="true"
-          name="lock"
-        />
-        <AppButton
-          color="neutral"
-          icon="arrow_right"
-          size="xs"
-          :to="{ name: 'offers-id', params: { id: 1 } }"
-          variant="lined"
-        />
-      </div>
-    </div>
-  </div>
+    </template>
+  </AppCard>
 </template>
 
 <style lang="scss">
@@ -141,13 +146,17 @@ const favoritesColor = computed(() => Math.random() < 0.5 ? 'primary' : 'white')
   display: flex;
   flex: 1 1 0;
   flex-direction: column;
-  gap: $space-3;
 
   min-width: 240px;
-  padding: $space-2;
   border-radius: $radius-6;
 
   background: white;
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: $space-3;
+  }
 
   &__header {
     position: relative;
@@ -193,7 +202,6 @@ const favoritesColor = computed(() => Math.random() < 0.5 ? 'primary' : 'white')
     display: flex;
     flex-direction: column;
     gap: $space-6;
-    padding: 0 $space-2 $space-2;
   }
 
   &__content {
@@ -232,9 +240,7 @@ const favoritesColor = computed(() => Math.random() < 0.5 ? 'primary' : 'white')
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-
     margin-top: auto;
-    padding: $space-2;
   }
 
   &__price {
