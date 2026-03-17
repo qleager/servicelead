@@ -9,14 +9,6 @@ export default {
     layout: 'centered',
   },
   argTypes: {
-    // Props
-    title: {
-      control: 'text',
-    },
-    description: {
-      control: 'text',
-    },
-
     // Slots
     top: {
       control: 'boolean',
@@ -24,12 +16,12 @@ export default {
     header: {
       control: 'boolean',
     },
-    titleSlot: {
-      control: 'boolean',
+    title: {
+      control: 'text',
       table: { category: 'slots' },
     },
-    descriptionSlot: {
-      control: 'boolean',
+    description: {
+      control: 'text',
       table: { category: 'slots' },
     },
     content: {
@@ -48,8 +40,6 @@ export default {
 
     top: false,
     header: false,
-    titleSlot: false,
-    descriptionSlot: false,
     content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.1',
     footer: true,
     bottom: false,
