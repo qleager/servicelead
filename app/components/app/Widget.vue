@@ -1,8 +1,10 @@
 <script lang="ts" setup>
 import type { VNodeChild } from 'vue'
 import type { IconProps } from './Icon.vue'
+import type { Color, Subset } from '~/types/ds'
 
 interface Props {
+  color?: Subset<Color, 'neutral'> | 'white'
   description?: string
   icon?: IconProps['name']
   title?: string
@@ -30,7 +32,10 @@ export type { Props as WidgetProps, Slots as WidgetSlots }
 </script>
 
 <template>
-  <AppCard class="widget">
+  <AppCard
+    class="widget"
+    :color="color"
+  >
     <template
       v-if="title"
       #title
