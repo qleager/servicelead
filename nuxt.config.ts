@@ -6,11 +6,12 @@ import { svgSpritePlugin } from './config/vite-svg-sprite'
 
 export default defineNuxtConfig({
   modules: [
-    '@nuxt/eslint',
-    '@nuxt/image',
-    '@chettapong/nuxt-lodash',
-    '@nuxtjs/storybook',
-    'nuxt-typed-router',
+   '@nuxt/eslint',
+   '@nuxt/image',
+   '@chettapong/nuxt-lodash',
+   '@nuxtjs/storybook',
+   'nuxt-typed-router',
+   'nuxt-echarts',
   ],
 
   devtools: { enabled: true },
