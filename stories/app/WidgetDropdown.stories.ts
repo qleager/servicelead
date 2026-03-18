@@ -6,7 +6,6 @@ import { iconNames } from '@app/types/components/app/icon'
 export default {
   title: 'App/WidgetDropdown',
   component: WidgetDropdown,
-  tags: ['!autodocs'],
   parameters: {
     layout: 'centered',
   },
@@ -70,7 +69,7 @@ export const Playground: Story = {
         <template v-if="args.description" #description>
           <strong>{{ args.description }}</strong>
         </template>
-        <template #content>
+        <template v-if="args.content" #content>
           <div>{{ args.content }}</div>
         </template>
         <template v-if="args.footer" #footer>
