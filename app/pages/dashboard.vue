@@ -5,9 +5,9 @@
   <section class="page-dashboard">
     <AppCarousel class="page-dashboard__carousel" />
     <FinanceBalanceWidget class="page-dashboard__balance" />
+    <StatisticsDashboard class="page-dashboard__statistics" />
     <StatisticsLeadsWidget class="page-dashboard__leads" />
     <StatisticsOrdersWidget class="page-dashboard__orders" />
-    <StatisticsWidget class="page-dashboard__statistics" />
     <NewsWidget class="page-dashboard__news" />
     <FinanceIncomeWidget class="page-dashboard__income" />
     <StatisticsTrafficWidget class="page-dashboard__traffic" />
@@ -24,7 +24,8 @@
   grid-template:
     'carousel carousel carousel balance balance leads'
     'carousel carousel carousel balance balance orders'
-    'statistics statistics statistics statistics news news'
+    'statistics statistics statistics statistics statistics statistics'
+    'news news news news news news'
     'income income income traffic traffic traffic'
     'offers offers offers offers offers offers'
     'help help help help help help'
