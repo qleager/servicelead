@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { VNodeChild } from 'vue'
-import type { FloaterModel } from './Floater.vue'
-import type { WidgetSlots, WidgetProps } from './Widget.vue'
+import type { FloaterModel } from '@app/components/app/Floater.vue'
+import type { WidgetSlots, WidgetProps } from '@app/components/app/Widget.vue'
 
 type Props = WidgetProps
 
