@@ -1,18 +1,46 @@
 <script lang="ts" setup>
+import type { VNodeChild } from 'vue'
+import type { IconProps } from '~/components/app/Icon.vue'
 
+interface Props {
+  icon?: IconProps['name']
+  title?: string
+}
+
+interface Slots {
+  chart?: VNodeChild
+  value?: VNodeChild
+}
+
+defineProps<Props>()
+
+defineSlots<Slots>()
 </script>
 
 <template>
-  <AppWidget class="statistics-widget">
+  <AppWidget
+    class="statistics-widget"
+    color="neutral"
+    :icon="icon"
+    :title="title"
+  >
     <template #content>
       <div class="statistics-widget__content">
-        <!-- <slot name="value">тут где значения</slot> -->
-        <!-- <slot name="chart">тут где графики</slot> -->
+        <slot name="value" />
+        <slot name="chart" />
       </div>
     </template>
   </AppWidget>
 </template>
 
-<style>
-/* // только сетку, для внктрянки стили не делаем */
+<style lang="scss">
+.statistics-widget {
+  $this: &;
+
+  &__content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $space-6;
+  }
+}
 </style>
