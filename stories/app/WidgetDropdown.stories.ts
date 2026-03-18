@@ -13,10 +13,12 @@ export default {
     // Props
     title: {
       control: 'text',
+      table: { category: 'props' },
     },
     icon: {
       control: 'select',
       options: [null, ...iconNames],
+      table: { category: 'props' },
     },
 
     // Slots
