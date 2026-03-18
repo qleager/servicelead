@@ -11,28 +11,25 @@ export default {
   },
   argTypes: {
     // Props
-    'title': {
+    title: {
       control: 'text',
     },
-    'icon': {
+    icon: {
       control: 'select',
       options: [null, ...iconNames],
     },
 
     // Slots
-    'content': {
+    content: {
       control: 'text',
     },
-    'description': {
+    description: {
       control: 'text',
       table: { category: 'slots' },
     },
-    'footer': {
+    footer: {
       control: 'boolean',
     },
-
-    // Events
-    'click:button': { action: 'click:button' },
   },
   args: {
     title: 'Widget title',
