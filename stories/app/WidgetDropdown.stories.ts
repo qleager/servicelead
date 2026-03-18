@@ -42,7 +42,7 @@ export default {
     icon: 'domain',
 
     default: 'Default Slot: нажми чтобы открыть',
-    content: 'Dropdown widget content',
+    content: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt aperiam molestias at nisi veniam dicta quaerat, excepturi eligendi ratione rerum amet earum cumque enim culpa neque! Voluptatem aperiam cupiditate vero.',
     footer: true,
   },
 } satisfies Meta<typeof WidgetDropdown>
@@ -69,10 +69,10 @@ export const Playground: Story = {
           </AppTag>
         </template>
         <template v-if="args.description" #description>
-          <strong>{{ args.description }}</strong>
+          {{ args.description }}
         </template>
         <template v-if="args.content" #content>
-          <div>{{ args.content }}</div>
+          <div style="width:320px;">{{ args.content }}</div>
         </template>
         <template v-if="args.footer" #footer>
           <AppTag size="sm" color="gray" variant="soft">
