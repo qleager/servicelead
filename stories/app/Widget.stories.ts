@@ -52,10 +52,10 @@ export const Playground: Story = {
         <AppWidget
           :title="args.title"
           :icon="args.icon"
-          @click:button="args['click:button']"
+          @click:button="console.log('пупупу')"
         >
           <template v-if="args.description" #description>
-            <strong>{{ args.description }}</strong>
+            {{ args.description }}
           </template>
           <template #content>
             <div>{{ args.content }}</div>
