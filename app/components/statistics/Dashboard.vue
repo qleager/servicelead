@@ -39,8 +39,5 @@ const tabs: TabsItem[] = [
   display: flex;
   flex-direction: column;
   gap: $space-6;
-    display: flex;
-    flex-direction: column;
-    gap: $space-6;
 }
 </style>
