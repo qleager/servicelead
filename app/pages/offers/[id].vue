@@ -4,8 +4,8 @@
 
 <template>
   <section class="page-offer">
-    <OffersSingleHeader />
-    <OffersSingleTabs />
+    <OfferSingleHeader />
+    <OfferSingleTabs />
   </section>
 </template>
 
