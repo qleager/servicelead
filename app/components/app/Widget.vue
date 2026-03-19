@@ -34,7 +34,7 @@ export type { Props as WidgetProps, Slots as WidgetSlots }
 <template>
   <AppCard
     class="widget"
-    :color="color"
+    :color
   >
     <template
       v-if="title"
