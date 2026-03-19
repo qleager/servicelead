@@ -66,6 +66,7 @@ export const iconNames = [
   'question_24',
   'refrigerator',
   'result',
+  'rocket',
   'search',
   'seasonal_demand',
   'stack',
