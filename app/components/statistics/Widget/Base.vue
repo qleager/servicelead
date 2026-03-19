@@ -21,8 +21,8 @@ defineSlots<Slots>()
   <AppWidget
     class="statistics-widget"
     color="neutral"
-    :icon="icon"
-    :title="title"
+    :icon
+    :title
   >
     <template #content>
       <div class="statistics-widget__content">
