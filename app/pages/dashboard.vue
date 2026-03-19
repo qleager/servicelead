@@ -4,13 +4,7 @@
 <template>
   <section class="page-dashboard">
     <AppCarousel class="page-dashboard__carousel" />
-    <FinanceBalanceWidget class="page-dashboard__balance" />
-    <StatisticsLeadsWidget class="page-dashboard__leads" />
-    <StatisticsOrdersWidget class="page-dashboard__orders" />
-    <StatisticsWidget class="page-dashboard__statistics" />
-    <NewsWidget class="page-dashboard__news" />
-    <FinanceIncomeWidget class="page-dashboard__income" />
-    <StatisticsTrafficWidget class="page-dashboard__traffic" />
+    <StatisticsDashboard class="page-dashboard__statistics" />
     <OfferWidget class="page-dashboard__offers" />
     <DashboardAddWidgetInformer class="page-dashboard__informer" />
   </section>
@@ -22,48 +16,24 @@
 
   display: grid;
   grid-template:
-    'carousel carousel carousel balance balance leads'
-    'carousel carousel carousel balance balance orders'
-    'statistics statistics statistics statistics news news'
-    'income income income traffic traffic traffic'
-    'offers offers offers offers offers offers'
-    'help help help help help help'
+    'carousel   carousel   carousel   news'
+    'statistics statistics statistics statistics'
+    'offers     offers     offers     offers'
+    'informer   informer   informer   informer'
   ;
-  grid-template-columns: minmax(0, 1.4fr) repeat(4, minmax(0, 1fr)) minmax(0, 1.4fr);
-  grid-template-rows: repeat(5, minmax(132px, auto));
+  grid-template-columns: repeat(4, 1fr);
   gap: $space-6;
 
   &__carousel {
     grid-area: carousel;
   }
 
-  &__balance {
-    grid-area: balance;
-  }
-
-  &__leads {
-    grid-area: leads;
-  }
-
-  &__orders {
-    grid-area: orders;
+  &__news {
+    grid-area: news;
   }
 
   &__statistics {
     grid-area: statistics;
-  }
-
-  &__news {
-    grid-area: news;
-    max-height: 440px;
-  }
-
-  &__income {
-    grid-area: income;
-  }
-
-  &__traffic {
-    grid-area: traffic;
   }
 
   &__offers {
@@ -71,9 +41,8 @@
   }
 
   &__informer {
-    grid-area: help;
-    margin-bottom: -#{$space-6};
-    padding-top: $space-10;
+    grid-area: informer;
+    margin-top: $space-10;
   }
 }
 </style>

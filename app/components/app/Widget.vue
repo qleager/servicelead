@@ -26,7 +26,7 @@ defineSlots<Slots>()
 
 const isShowMoreListener = computed(() => getCurrentInstance()?.vnode?.props?.['onClick:button'])
 
-export type { Props as WidgetProps, Slots as WidgetSlots }
+export type { Props as WidgetProps, Emits as WidgetEmits, Slots as WidgetSlots }
 </script>
 
 <template>

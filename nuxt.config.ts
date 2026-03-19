@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     '@chettapong/nuxt-lodash',
     '@nuxtjs/storybook',
     'nuxt-typed-router',
+    'nuxt-echarts',
   ],
 
   devtools: { enabled: true },
@@ -50,6 +51,11 @@ export default defineNuxtConfig({
     plugins: [
       svgSpritePlugin(),
     ],
+  },
+
+  echarts: {
+    charts: ['BarChart', 'PieChart'],
+    components: ['DatasetComponent', 'GridComponent', 'TooltipComponent'],
   },
 
   eslint: {

@@ -210,16 +210,15 @@ export type { Props as FloaterProps, Slots as FloaterSlots, Model as FloaterMode
   &__transition {
     &-content {
       $placements: (
-        bottom: (enter: 'fadeInUpGentle', leave: 'fadeOutUpGentle'),
-        top: (enter: 'fadeInDownGentle', leave: 'fadeOutDownGentle'),
-        left: (enter: 'fadeInLeftGentle', leave: 'fadeOutLeftGentle'),
-        right: (enter: 'fadeInRightGentle', leave: 'fadeOutRightGentle'),
+        bottom: (enter: 'zoomInGentle', leave: 'fadeOutUpGentle'),
+        top: (enter: 'zoomInGentle', leave: 'fadeOutDownGentle'),
+        left: (enter: 'zoomInGentle', leave: 'fadeOutLeftGentle'),
+        right: (enter: 'zoomInGentle', leave: 'fadeOutRightGentle'),
       );
 
       @each $placement, $anims in $placements {
         &--#{$placement} {
           &-enter-active {
-            opacity: 0;
             animation: map.get($anims, enter) $show-duration-sm ease-out forwards
           }
 

@@ -1,9 +1,14 @@
 <script lang="ts" setup>
 import type { VNodeChild } from 'vue'
-import type { FloaterModel } from './Floater.vue'
-import type { WidgetSlots, WidgetProps } from './Widget.vue'
+import type { FloaterModel } from '@components/app/Floater.vue'
+import type { WidgetSlots, WidgetProps } from '@components/app/Widget.vue'
 
-type Props = WidgetProps
+interface Props {
+  // type Props = WidgetProps или extends будет ломать run build
+  description: WidgetProps['description']
+  icon?: WidgetProps['icon']
+  title?: WidgetProps['title']
+}
 
 interface Slots extends WidgetSlots {
   default?: (props: { isOpen: FloaterModel }) => VNodeChild
