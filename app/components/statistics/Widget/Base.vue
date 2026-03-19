@@ -8,8 +8,8 @@ interface Props {
 }
 
 interface Slots {
-  chart?: VNodeChild
-  value?: VNodeChild
+  chart?: () => VNodeChild
+  value?: () => VNodeChild
 }
 
 defineProps<Props>()
