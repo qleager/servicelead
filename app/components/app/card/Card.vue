@@ -1,7 +1,9 @@
 <script lang="ts" setup>
 import type { VNodeChild } from 'vue'
+import type { Color, Subset } from '~/types/ds'
 
 interface Props {
+  color?: Subset<Color, 'neutral'> | 'white'
   description?: string
   title?: string
 }
@@ -16,15 +18,22 @@ interface Slots {
   top?: () => VNodeChild
 }
 
-defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  color: 'white',
+})
 
 defineSlots<Slots>()
+
+const classname = computed(() => [
+  'card',
+  `card-color-${props.color}`,
+])
 
 export type { Slots as CardSlots }
 </script>
 
 <template>
-  <div class="card">
+  <div :class="classname">
     <div
       v-if="$slots.top"
       class="card__top"
@@ -84,10 +93,21 @@ export type { Slots as CardSlots }
 .card {
   $this: &;
 
+  ///
+  $white-color: $this + '-color-white';
+  $neutral-color: $this + '-color-neutral';
+
   display: flex;
   flex-direction: column;
   border-radius: $space-8;
-  background-color: #fff;
+
+  @include is($white-color) {
+    background-color: #fff;
+  }
+
+  @include is($neutral-color) {
+    background-color: $color-neutral-50;
+  }
 
   &__header {
     padding: $space-4;
