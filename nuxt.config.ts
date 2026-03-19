@@ -53,6 +53,11 @@ export default defineNuxtConfig({
     ],
   },
 
+  echarts: {
+    charts: ['BarChart', 'PieChart'],
+    components: ['DatasetComponent', 'GridComponent', 'TooltipComponent'],
+  },
+
   eslint: {
     config: {
       stylistic: true,
