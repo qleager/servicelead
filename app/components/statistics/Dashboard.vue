@@ -14,7 +14,6 @@ const tabs: TabsItem[] = [
     <AppTabs
       color="white"
       :items="tabs"
-      variant="lined"
     >
       <template #trailing="{ item }">
         <AppTag
@@ -28,7 +27,13 @@ const tabs: TabsItem[] = [
     </AppTabs>
     <AppCard>
       <template #content>
-        HELLO123
+        <div class="statistics-dashboard__widgets">
+          <StatisticsWidgetLead />
+          <StatisticsWidgetLead />
+          <StatisticsWidgetLead />
+          <!-- <StatisticsWidgetConversion /> -->
+          <!-- <StatisticsWidgetTraffic /> -->
+        </div>
       </template>
     </AppCard>
   </div>
@@ -39,8 +44,12 @@ const tabs: TabsItem[] = [
   display: flex;
   flex-direction: column;
   gap: $space-6;
+
+  &__widgets {
     display: flex;
-    flex-direction: column;
-    gap: $space-6;
+    gap: $space-4;
+    justify-content: space-between;
+    width: 100%;
+  }
 }
 </style>
