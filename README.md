@@ -24,7 +24,7 @@ Please check the following before starting work on the project:
 2. Review the [design system](app/assets/design-system) SCSS variables
 3. Read about [SCSS snippets](#scss-snippets)
 4. Check available [Composables](#use-composables)
-5. Check available [Utils](app/utils)
+5. Check available [Utils](#use-utils)
 6. Read about [Conventional Commits](#use-conventional-commits)
 
 ## Use Snippets
@@ -189,6 +189,9 @@ docs(AppButton): add jsondoc to props
 - [useOverlay](docs/composables/use-overlay.md) — shared overlay manager
 - [useBreakpoints](docs/composables/use-breakpoints.md) — responsive breakpoint helpers
 - [useDocumentScrollLock](docs/composables/use-document-scroll-lock.md) — document scroll lock helper
+
+## Use Utils
+- [search](docs/utils/search.md) — Fuse.js search wrapper
 
 ## 📦 Требования
 
