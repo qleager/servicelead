@@ -188,6 +188,7 @@ docs(AppButton): add jsondoc to props
 - [useConfirmDialog](docs/composables/use-confirm-dialog.md) — confirm dialog helper
 - [useOverlay](docs/composables/use-overlay.md) — shared overlay manager
 - [useBreakpoints](docs/composables/use-breakpoints.md) — responsive breakpoint helpers
+- [useDocumentScrollLock](docs/composables/use-document-scroll-lock.md) — document scroll lock helper
 
 ## 📦 Требования
 
