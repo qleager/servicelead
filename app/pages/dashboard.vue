@@ -42,6 +42,7 @@
 
   &__informer {
     grid-area: informer;
+    margin-top: $space-10;
   }
 }
 </style>
