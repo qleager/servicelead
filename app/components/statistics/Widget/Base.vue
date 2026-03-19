@@ -39,7 +39,7 @@ defineSlots<Slots>()
 
   &__content {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, auto);
     gap: $space-6;
   }
 }
