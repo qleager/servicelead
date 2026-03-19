@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { TabsItem, TabsModel } from '~/components/app/Tabs.vue'
+import type { TabsItem } from '~/components/app/Tabs.vue'
 
 const tabs: TabsItem[] = [
   { label: 'Все проекты', value: 'all' },
@@ -7,15 +7,11 @@ const tabs: TabsItem[] = [
   { label: 'Бытовой ремонт', value: 'byt_rem' },
   { label: 'Универсальный', value: 'universal' },
 ]
-
-const currentTab = ref<TabsModel>(tabs[0]?.value || '')
 </script>
 
 <template>
   <div class="statistics-dashboard">
     <AppTabs
-      v-model="currentTab"
-      class="offers-single-tabs-item"
       color="white"
       :items="tabs"
       variant="lined"
@@ -24,6 +20,7 @@ const currentTab = ref<TabsModel>(tabs[0]?.value || '')
         <AppTag
           v-if="item.value !== 'all'"
           color="neutral"
+          size="sm"
         >
           32%
         </AppTag>
@@ -39,6 +36,9 @@ const currentTab = ref<TabsModel>(tabs[0]?.value || '')
 
 <style lang="scss">
 .statistics-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
     display: flex;
     flex-direction: column;
     gap: $space-6;
