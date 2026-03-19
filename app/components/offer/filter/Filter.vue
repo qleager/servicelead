@@ -52,7 +52,7 @@ const resetItem = (item: unknown) => {
         rounded
       />
 
-      <OffersFilterSlideover />
+      <OfferFilterSlideover />
     </div>
 
     <div

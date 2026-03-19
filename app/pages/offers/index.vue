@@ -16,19 +16,19 @@ onMounted(() => {
 
 <template>
   <div class="offers">
-    <OffersProjects />
+    <OfferProjects />
     <div class="offers__header">
       <div class="offers__title">
         Офферы
       </div>
-      <OffersFilter
+      <OfferFilter
         v-model="filter"
         class="offers__filter"
         @update="() => {}"
       />
     </div>
     <div class="offers__list">
-      <OffersList />
+      <OfferList />
     </div>
   </div>
 </template>
