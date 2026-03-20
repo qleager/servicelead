@@ -60,6 +60,7 @@ export const iconNames = [
   'notice',
   'offers',
   'phone_24',
+  'pie_chart',
   'plus',
   'price',
   'question',
