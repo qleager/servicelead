@@ -46,10 +46,9 @@ const tabs: TabsItem[] = [
   gap: $space-6;
 
   &__widgets {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: $space-4;
-    justify-content: space-between;
-    width: 100%;
   }
 }
 </style>

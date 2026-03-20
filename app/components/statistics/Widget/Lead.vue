@@ -33,6 +33,7 @@ const encode = ref<BarEncode<ApiStatisticsLeadItem>>({ x: 'label', y: 'value' })
         <AppTag
           color="green"
           icon="arrow_up"
+          size="sm"
           trailing-icon
           variant="soft"
         >
@@ -42,11 +43,16 @@ const encode = ref<BarEncode<ApiStatisticsLeadItem>>({ x: 'label', y: 'value' })
     </template>
     <template #chart>
       <ChartBar
+        class="statistics-widget-lead__chart"
         :data
         :encode
       >
         <template #tooltip="{ value }">
-          {{ value }}
+          <div class="statistics-widget-lead__tooltip">
+            <div>{{ value?.label }}</div>
+            <div class="statistics-widget-lead__tooltip-divider" />
+            <div>{{ value?.value }}</div>
+          </div>
         </template>
       </ChartBar>
     </template>
@@ -62,6 +68,27 @@ const encode = ref<BarEncode<ApiStatisticsLeadItem>>({ x: 'label', y: 'value' })
     line-height: 1 !important;
 
     @include text(medium, 5xl);
+  }
+
+  &__chart {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    min-height: 120px;
+  }
+
+  &__tooltip {
+    display: flex;
+
+    @include text(medium, xs);
+
+    line-height: 1;
+    color: $color-neutral-950;
+
+    &-divider {
+      min-width: 60px;
+      border-bottom: 1px dashed $color-neutral-200;
+    }
   }
 }
 </style>
