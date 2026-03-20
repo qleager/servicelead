@@ -41,6 +41,8 @@ defineSlots<Slots>()
     display: grid;
     grid-template-columns: repeat(2, auto);
     gap: $space-6;
+    align-items: flex-end;
+    justify-content: space-between;
   }
 }
 </style>
