@@ -3,10 +3,6 @@
 <template>
   <AppSection class="offer-widget">
     <template #header>
-        <NuxtImg
-          src="/images/top-fire.svg"
-          width="24"
-        />
       <div class="offer-widget__title">
         Топ офферы
       </div>
