@@ -1,13 +1,13 @@
 <script lang="ts" setup></script>
 
 <template>
-  <AppSection class="offers-widget">
+  <AppSection class="offer-widget">
     <template #header>
-      <div class="offers-widget__title">
         <NuxtImg
           src="/images/top-fire.svg"
           width="24"
         />
+      <div class="offer-widget__title">
         Топ офферы
       </div>
       <AppButton
@@ -24,7 +24,7 @@
 </template>
 
 <style lang="scss">
-.offers-widget {
+.offer-widget {
   &__title {
     display: flex;
     gap: $space-3;

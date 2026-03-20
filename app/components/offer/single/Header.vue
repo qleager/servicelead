@@ -4,19 +4,19 @@
 // 1) нету возможности раскрасить иконки
 // 2) нету hover цветом Purple_100 как в макете
 
-// Button (.offers-single-header__rate-action)
+// Button (.offer-single-header__rate-action)
 // 1) нет цвета иконки как в макете $color-neutral-light-300.  ( &#{$neutral-color} ставит цвет текста $color-neutral-950 )
 </script>
 
 <template>
-  <div class="offers-single-header">
+  <div class="offer-single-header">
     <div
-      class="offers-single-header__tags"
+      class="offer-single-header__tags"
     >
       <AppTag
         v-for="i in 5"
         :key="i"
-        class="offers-single-header__tags-item"
+        class="offer-single-header__tags-item"
         icon="geo_radar"
         size="sm"
         color="neutral"
@@ -25,31 +25,31 @@
       </AppTag>
     </div>
 
-    <div class="offers-single-header__title">
-      <span class="offers-single-header__title-text">
+    <div class="offer-single-header__title">
+      <span class="offer-single-header__title-text">
         Lorem ipsum dolor sit amet consectetur.
       </span>
 
       <AppChip
         standalone
         color="green"
-        class="offers-single-header__indicator"
+        class="offer-single-header__indicator"
       >
-        <span class="offers-single-header__indicator-text">
+        <span class="offer-single-header__indicator-text">
           Подключен
         </span>
       </AppChip>
     </div>
 
-    <div class="offers-single-header__group">
-      <div class="offers-single-header__rate">
-        <div class="offers-single-header__rate-label">
+    <div class="offer-single-header__group">
+      <div class="offer-single-header__rate">
+        <div class="offer-single-header__rate-label">
           Ставка
         </div>
-        <div class="offers-single-header__rate-value">
-          до <span class="offers-single-header__rate-value-number">15 000</span> ₽
+        <div class="offer-single-header__rate-value">
+          до <span class="offer-single-header__rate-value-number">15 000</span> ₽
           <AppButton
-            class="offers-single-header__rate-action"
+            class="offer-single-header__rate-action"
             icon="arrow_right"
             size="xs"
             variant="lined"
@@ -59,7 +59,7 @@
       </div>
 
       <AppButton
-        class="offers-single-header__button"
+        class="offer-single-header__button"
       >
         Создать поток
       </AppButton>
@@ -68,7 +68,7 @@
 </template>
 
 <style lang="scss">
-.offers-single-header {
+.offer-single-header {
   $this: &;
 
   position: relative;
