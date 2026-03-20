@@ -10,41 +10,41 @@ const tabs: TabsItem[] = [
 </script>
 
 <template>
-  <div class="statistics-dashboard">
-    <AppTabs
-      color="white"
-      :items="tabs"
-    >
-      <template #trailing="{ item }">
-        <AppTag
-          v-if="item.value !== 'all'"
-          color="neutral"
-          size="sm"
-        >
-          32%
-        </AppTag>
-      </template>
-    </AppTabs>
-    <AppCard>
-      <template #content>
-        <div class="statistics-dashboard__widgets">
-          <StatisticsWidgetLead />
-          <StatisticsWidgetLead />
-          <StatisticsWidgetLead />
+  <AppSection class="statistics-dashboard">
+    <template #header>
+      <AppTabs
+        color="white"
+        :items="tabs"
+      >
+        <template #trailing="{ item }">
+          <AppTag
+            v-if="item.value !== 'all'"
+            color="neutral"
+            size="sm"
+          >
+            32%
+          </AppTag>
+        </template>
+      </AppTabs>
+    </template>
+    <template #content>
+      <AppCard>
+        <template #content>
+          <div class="statistics-dashboard__widgets">
+            <StatisticsWidgetLead />
+            <StatisticsWidgetLead />
+            <StatisticsWidgetLead />
           <!-- <StatisticsWidgetConversion /> -->
           <!-- <StatisticsWidgetTraffic /> -->
-        </div>
-      </template>
-    </AppCard>
-  </div>
+          </div>
+        </template>
+      </AppCard>
+    </template>
+  </AppSection>
 </template>
 
 <style lang="scss">
 .statistics-dashboard {
-  display: flex;
-  flex-direction: column;
-  gap: $space-6;
-
   &__widgets {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
