@@ -21,8 +21,8 @@ defineSlots<Slots>()
   <AppWidget
     class="statistics-widget"
     color="neutral"
-    :icon="icon"
-    :title="title"
+    :icon
+    :title
   >
     <template #content>
       <div class="statistics-widget__content">
@@ -39,7 +39,7 @@ defineSlots<Slots>()
 
   &__content {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, auto);
     gap: $space-6;
   }
 }
