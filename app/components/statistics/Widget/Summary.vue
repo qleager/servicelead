@@ -3,7 +3,15 @@
 </script>
 
 <template>
-  <AppWidget></AppWidget>
+  <AppWidget
+    color="neutral"
+    icon="statistic"
+    title="Сводка"
+  >
+    <template #content>
+      table
+    </template>
+  </AppWidget>
 </template>
 
 <style></style>
