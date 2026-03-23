@@ -42,7 +42,6 @@ const tabs: TabsItem[] = [
   .news-widget {
     &__head {
       display: flex;
-      align-items: center;
     }
 
     &__list {
