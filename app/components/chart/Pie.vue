@@ -59,21 +59,22 @@ const option = computed<EChartsOption>(() => {
     title: {
       show: Boolean(props.title || props.caption),
       text: `{value|${props.title ?? ''}}\n{label|${props.caption ?? ''}}`,
-      left: 'center',
-      top: 'center',
-      textAlign: 'center',
+      top: 'middle',
       textStyle: {
         rich: {
           value: {
-            fontSize: 15,
-            fontWeight: 700,
-            color: '#222',
-            lineHeight: 34,
+            fontSize: 18,
+            fontWeight: 500,
+            fontFamily: 'Manrope',
+            color: '#121522',
+            lineHeight: 24,
           },
           label: {
-            fontSize: 12,
-            color: '#888',
-            lineHeight: 20,
+            fontSize: 10,
+            fontWeight: 400,
+            fontFamily: 'Manrope',
+            color: '#9EA6C8',
+            lineHeight: 14,
           },
         },
       },
@@ -105,40 +106,12 @@ export type { Props as PieProps, Slots as PieSlots, Data as PieData }
   .chart-pie {
     $this: &;
 
-    position: relative;
     width: 117px;
     height: 117px;
 
     &__canvas {
       width: 100%;
       height: 100%;
-    }
-
-    &__center {
-      pointer-events: none;
-
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    &__value {
-      @include text(medium, lg);
-
-      line-height: 1.4;
-      color: $color-neutral-950;
-    }
-
-    &__percent {
-      @include text(regular, 2xs);
-
-      line-height: 1.4;
-      color: $color-neutral-400;
     }
   }
 </style>

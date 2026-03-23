@@ -65,9 +65,9 @@ const data = ref<PieData<ApiStatisticsConversionItem>>([
 
     <template #chart>
       <ChartPie
-        caption="Процент"
+        caption="100%"
         :data
-        title="Сумма"
+        title="10"
       >
         <template #tooltip="params">
           {{ params.name }}: {{ (params.data as ApiStatisticsConversionItem).value }}
