@@ -29,30 +29,13 @@ const resetItem = (item: unknown) => {
 <template>
   <div class="offers-filter">
     <div class="offers-filter__row">
+      <OfferFilterSlideover />
       <AppTabs
         class="offers-filter__tabs"
         color="white"
         :items="tabsItems"
         variant="lined"
-      >
-        <template #leading="{ index }">
-          <NuxtImg
-            v-if="index == 1"
-            class="offers-filter__tabs-item-image"
-            src="/images/top-fire.svg"
-          />
-        </template>
-      </AppTabs>
-
-      <AppInput
-        class="offers-filter__search"
-        icon="search"
-        placeholder="Начните поиск..."
-        reset
-        rounded
       />
-
-      <OfferFilterSlideover />
     </div>
 
     <div

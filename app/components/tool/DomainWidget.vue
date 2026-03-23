@@ -6,10 +6,10 @@
     class="domain-widget"
     icon="domain"
     title="Домены"
-    @click:button="navigateTo('/domains')"
+    @click:button="undefined"
   >
     <template #content>
-      <div class="domain-widget__content">
+      <div class="domain-widget__amount">
         3
       </div>
     </template>
@@ -18,7 +18,7 @@
 
 <style lang="scss">
 .domain-widget {
-  &__content {
+  &__amount {
     @include text(medium, 3xl);
   }
 }
