@@ -16,4 +16,10 @@
   </AppWidget>
 </template>
 
-<style lang="scss"></style>
+<style lang="scss">
+.domain-widget {
+  &__amount {
+    @include text(medium, 3xl);
+  }
+}
+</style>
