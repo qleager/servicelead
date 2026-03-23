@@ -16,12 +16,4 @@
   </AppWidget>
 </template>
 
-<style lang="scss">
-.domain-widget {
-  &__amount {
-    @include text(medium, 3xl);
-
-    line-height: 1.36;
-  }
-}
-</style>
+<style lang="scss"></style>
