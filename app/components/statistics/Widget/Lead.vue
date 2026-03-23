@@ -65,15 +65,13 @@ const encode = ref<BarEncode<ApiStatisticsLeadItem>>({ x: 'label', y: 'value' })
     display: flex;
     gap: $space-1;
     align-items: flex-end;
-    line-height: 1 !important;
 
     @include text(medium, 5xl);
+
+    line-height: 1 !important;
   }
 
   &__chart {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-end;
     min-height: 120px;
   }
 
