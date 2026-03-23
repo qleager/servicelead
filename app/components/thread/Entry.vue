@@ -38,15 +38,15 @@
         Лендинги
       </AppTag>
     </div>
-    <div class="thread-entry__conversions">
-      <div class="thread-entry__conversions-text">
+    <div class="thread-entry__metric">
+      <div class="thread-entry__metric-label">
         Конверсии
       </div>
-      <div class="thread-entry__conversions-amount">
-        <div class="thread-entry__conversions-value">
+      <div class="thread-entry__metric-data">
+        <div class="thread-entry__metric-value">
           75
         </div>
-        <div class="thread-entry__conversions-period">
+        <div class="thread-entry__metric-meta">
           /мес
         </div>
       </div>
@@ -128,12 +128,12 @@
     }
   }
 
-  &__conversions {
+  &__metric {
     display: flex;
     flex-direction: column;
     gap: $space-2;
 
-    &-amount {
+    &-data {
       display: flex;
       align-items: flex-end;
     }
@@ -144,13 +144,13 @@
       line-height: 1;
     }
 
-    &-period {
+    &-meta {
       @include text(regular, sm);
 
       line-height: 1;
     }
 
-    &-text {
+    &-label {
       @include text(regular, xs);
 
       color: $color-neutral-400;
