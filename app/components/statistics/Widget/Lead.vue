@@ -49,9 +49,9 @@ const encode = ref<BarEncode<ApiStatisticsLeadItem>>({ x: 'label', y: 'value' })
       >
         <template #tooltip="{ value }">
           <div class="statistics-widget-lead__tooltip">
-            <div>{{ value?.label }}</div>
+            <div>{{ (value as ApiStatisticsLeadItem).label }}</div>
             <div class="statistics-widget-lead__tooltip-divider" />
-            <div>{{ value?.value }}</div>
+            <div>{{ (value as ApiStatisticsLeadItem).value }}</div>
           </div>
         </template>
       </ChartBar>
