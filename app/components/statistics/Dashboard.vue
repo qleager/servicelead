@@ -29,6 +29,7 @@ const tabs: TabsItem[] = [
     <AppCard>
       <template #content>
         HELLO123
+        <StatisticsWidgetSummary />
       </template>
     </AppCard>
   </div>

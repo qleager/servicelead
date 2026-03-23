@@ -73,6 +73,7 @@ export const iconNames = [
   'statistic',
   'stock',
   'sun_32',
+  'target',
   'tg_line_24',
   'tool',
   'tools',
