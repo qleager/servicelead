@@ -5,7 +5,7 @@ import type { Subset, Size, Color } from '~/types/ds'
 // Ориентир nuxt ui -> USwitch
 
 interface Props {
-  color: Subset<Color, 'primary'>
+  color?: Subset<Color, 'primary'>
   description?: string
   disabled?: boolean // диза нет, сделать filter обесцечивающий какой нибудь(не opacity) и pointer-event
   id?: string
@@ -25,15 +25,36 @@ interface Slots {
   label: () => VNodeChild
 }
 
+const props = withDefaults(defineProps<Props>(), {
+  color: 'primary',
+  size: 'md',
+})
+
+defineSlots<Slots>()
+
+const model = defineModel<Model>({ default: false })
+
 const classname = computed(() => [
   'switch',
+  `switch-color-${props.color}`,
+  { 'switch-on': model.value },
+  { 'switch-disabled': props.disabled },
+  { 'switch-loading': props.loading },
+  { 'switch-trailing': props.trailing },
+
 ])
+
+export type { Props as SwitchProps, Model as SwitchModel, Slots as SwitchSlots }
 </script>
 
 <template>
-  <!-- оставть имеено кнопку, для доступности -->
-  <button :class="classname">
-    <!-- тут свитч -->
+  <button
+    :class="classname"
+    @click="model = !model"
+  >
+    <div class="switch__control">
+      <span class="switch__thumb" />
+    </div>
     <div class="switch__content">
       <slot name="label">
         {{ label }}
@@ -49,9 +70,55 @@ const classname = computed(() => [
 
 <style lang="scss">
 .switch {
-  $root: &;
+  $this: &;
+  $primary-color: & + '-color-primary';
+  $disabled: & + '-disabled';
+  $loading: & + '-loading';
+  $trailing: & + '-trailing';
+  $on: & + '-on';
 
-  display: initial;
+  display: flex;
+  gap: $space-2;
+
+  @include is($trailing) {
+    flex-direction: row-reverse;
+  }
+
+  @include is($primary-color) {
+    --background-color: #{$color-primary};
+  }
+
+  &__control {
+    display: flex;
+
+    width: 44px;
+    height: 24px;
+    padding: $space-05;
+    border-radius: $radius-9;
+
+    background-color: $color-neutral-50;
+
+    transition: $active-duration-sm;
+
+    @include is($on) {
+      justify-content: flex-end;
+      background-color: var(--background-color);
+    }
+  }
+
+  &__thumb {
+    display: block;
+
+    width: 20px;
+    height: 20px;
+    border-radius: $radius-6;
+
+    background-color: $color-neutral-300;
+
+    @include is($on) {
+      background-color: white;
+    }
+  }
 
   &__description {
     @include text(regular, НА один размер меньше чем label);
