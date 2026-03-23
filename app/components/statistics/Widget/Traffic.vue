@@ -69,8 +69,20 @@ const data = ref<PieData<ApiStatisticsConversionItem>>([
         :data
         title="10"
       >
-        <template #tooltip="params">
-          {{ params.name }}: {{ (params.data as ApiStatisticsConversionItem).value }}
+        <template #tooltip="{ value }">
+          <div
+            v-for="item in data"
+            :key="item.value + item.label"
+            :class="{
+              'statistics-widget-traffic__tooltip-item': true,
+              'statistics-widget-traffic__tooltip-item-active': item.value === value, // чтобы подкрасить нужный item
+            }"
+          >
+            {{ item.label }}
+            <!-- divider -->
+            {{ item.value }}
+            <!-- есть в ../Lead.vue верстка -->
+          </div>
         </template>
       </ChartPie>
     </template>
