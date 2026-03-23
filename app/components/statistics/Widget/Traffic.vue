@@ -1,23 +1,14 @@
 <script lang="ts" setup>
-import type { PieData, PieEncode } from '~/components/chart/Pie.vue'
+import type { PieData } from '~/components/chart/Pie.vue'
 
 // типа апи модель
 type ApiStatisticsConversionItem = { label: string, value: number, data?: number[], huemae?: { text: string } }
 
 // типа данные из апи
-const data = ref<PieData<ApiStatisticsConversionItem>>({
-  total: 10,
-  percent: '100%',
-  items: [
-    { label: 'Calls', value: 4, data: [1, 2, 4] },
-    { label: 'Forms', value: 6, huemae: { text: 'Accepted ' } },
-  ],
-})
-
-const encode = ref<PieEncode<ApiStatisticsConversionItem>>({
-  itemName: 'label',
-  value: 'value',
-})
+const data = ref<PieData<ApiStatisticsConversionItem>>([
+  { label: 'Calls', value: 4, data: [1, 2, 4] },
+  { label: 'Forms', value: 6, huemae: { text: 'Accepted ' } },
+])
 </script>
 
 <template>
@@ -74,8 +65,9 @@ const encode = ref<PieEncode<ApiStatisticsConversionItem>>({
 
     <template #chart>
       <ChartPie
+        caption="Процент"
         :data
-        :encode
+        title="Сумма"
       >
         <template #tooltip="params">
           {{ params.name }}: {{ (params.data as ApiStatisticsConversionItem).value }}

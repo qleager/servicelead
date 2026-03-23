@@ -92,7 +92,7 @@ export type { Props as BarProps, Slots as BarSlots, Data as BarData, Encode as B
     <template #tooltip="params">
       <slot
         name="tooltip"
-        v-bind="params as CallbackDataParams"
+        v-bind="(params as CallbackDataParams)"
       />
     </template>
   </VChart>

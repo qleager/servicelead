@@ -1,75 +1,87 @@
 <script lang="ts" setup>
 import type { EChartsOption } from 'echarts'
 import type { CallbackDataParams } from 'echarts/types/dist/shared'
-import type { OptionEncode } from 'echarts/types/src/util/types.js'
 import type { VNodeChild } from 'vue'
 
 interface Props {
+  caption?: string
   /**
    * Pie data including items and optional center values
    */
   data: Data<DataItem>
-  /**
-   * Field mapping for pie item name and value in the Data
-   */
-  encode: Encode<DataItem>
+  title?: string
 }
 
 interface Slots {
+  // TODO: а может ли тултип вернуть не CallbackDataParams? (когда возвращает массив: чекнуть тип TopLevelFormatterParams)
   tooltip: (props: CallbackDataParams) => VNodeChild
 }
 
+// IDEA: а как насчет просто массива значений? имеет смысл или заеб
 type DataItem = Record<string, unknown>
-
-interface Data<T extends DataItem> {
-  items: T[]
-  percent?: number | string
-  total?: number | string
-}
-
-type EncodeKey<T extends DataItem> = Extract<keyof T, string | number>
-
-interface Encode<T extends DataItem> extends OptionEncode {
-  itemName: EncodeKey<T>
-  value: EncodeKey<T>
-}
+type Data<T extends DataItem> = T[]
 
 const props = defineProps<Props>()
 
 defineSlots<Slots>()
 
-const option = computed<EChartsOption>(() => ({
-  tooltip: {
-    trigger: 'item',
-  },
-  dataset: {
-    source: props.data.items,
-  },
-  series: [
-    {
-      type: 'pie',
-      encode: props.encode,
-      radius: ['55.6%', '100%'],
-      itemStyle: {
-        color: '#E9EEFB',
-        borderRadius: 8,
-        borderColor: '#F3F6FE',
-        borderWidth: 2,
-      },
-      emphasis: {
-        scale: false,
+const option = computed<EChartsOption>(() => {
+  const data = props.data ?? []
+
+  return {
+    tooltip: {
+      trigger: 'item',
+    },
+    dataset: {
+      source: data,
+    },
+    series: [
+      {
+        type: 'pie',
+        radius: ['55.6%', '100%'],
         itemStyle: {
-          color: '#0861EE',
+          color: '#E9EEFB',
+          borderRadius: 8,
+          borderColor: '#F3F6FE',
+          borderWidth: 2,
+        },
+        emphasis: {
+          scale: false,
+          itemStyle: {
+            color: '#0861EE',
+          },
+        },
+        label: {
+          show: false,
         },
       },
-      label: {
-        show: false,
+    ],
+    title: {
+      show: Boolean(props.title || props.caption),
+      text: `{value|${props.title ?? ''}}}\n{label|${props.caption ?? ''}`,
+      left: 'center',
+      top: 'center',
+      textAlign: 'center',
+      textStyle: {
+        rich: {
+          value: {
+            fontSize: 28,
+            fontWeight: 700,
+            color: '#222',
+            lineHeight: 34,
+          },
+          label: {
+            fontSize: 14,
+            color: '#888',
+            lineHeight: 20,
+          },
+        },
       },
     },
-  ],
-}))
+  }
+})
 
-export type { Props as PieProps, Slots as PieSlots, Data as PieData, Encode as PieEncode }
+export type { Props as PieProps, Slots as PieSlots, Data as PieData }
 </script>
 
 <template>
@@ -82,27 +94,10 @@ export type { Props as PieProps, Slots as PieSlots, Data as PieData, Encode as P
       <template #tooltip="params">
         <slot
           name="tooltip"
-          v-bind="params as CallbackDataParams"
+          v-bind="(params as CallbackDataParams)"
         />
       </template>
     </VChart>
-    <div
-      v-if="data.total || data.percent"
-      class="chart-pie__center"
-    >
-      <div
-        v-if="data.total"
-        class="chart-pie__value"
-      >
-        {{ data.total }}
-      </div>
-      <div
-        v-if="data.percent"
-        class="chart-pie__percent"
-      >
-        {{ data.percent }}
-      </div>
-    </div>
   </div>
 </template>
 
