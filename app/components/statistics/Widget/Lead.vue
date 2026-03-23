@@ -23,8 +23,17 @@ const encode = ref<BarEncode<ApiStatisticsLeadItem>>({ x: 'label', y: 'value' })
     class="statistics-widget-lead"
     icon="rocket"
     title="Лиды"
-    @click:button="navigateTo('/leads')"
   >
+    <template #trailingHeader>
+      <AppButton
+        class="widget__button"
+        color="neutral"
+        icon="arrow_right"
+        size="xs"
+        variant="lined"
+        @click="navigateTo('/leads')"
+      />
+    </template>
     <template #value>
       <div class="statistics-widget-lead__value">
         <div>
@@ -65,13 +74,15 @@ const encode = ref<BarEncode<ApiStatisticsLeadItem>>({ x: 'label', y: 'value' })
     display: flex;
     gap: $space-1;
     align-items: flex-end;
+    line-height: 1 !important;
 
     @include text(medium, 5xl);
-
-    line-height: 1 !important;
   }
 
   &__chart {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
     min-height: 120px;
   }
 

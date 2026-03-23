@@ -5,8 +5,17 @@
   <AppWidget
     icon="news"
     title="Новости"
-    @click:button="undefined"
   >
+    <template #trailingHeader>
+      <AppButton
+        color="neutral"
+        size="sm"
+        variant="nofilled"
+        @click="navigateTo('/news')"
+      >
+        Смотреть все
+      </AppButton>
+    </template>
     <template #content>
       <div class="news-widget__list">
         <NewsEntry
