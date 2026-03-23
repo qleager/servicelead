@@ -58,20 +58,20 @@ const option = computed<EChartsOption>(() => {
     ],
     title: {
       show: Boolean(props.title || props.caption),
-      text: `{value|${props.title ?? ''}}}\n{label|${props.caption ?? ''}`,
+      text: `{value|${props.title ?? ''}}\n{label|${props.caption ?? ''}}`,
       left: 'center',
       top: 'center',
       textAlign: 'center',
       textStyle: {
         rich: {
           value: {
-            fontSize: 28,
+            fontSize: 15,
             fontWeight: 700,
             color: '#222',
             lineHeight: 34,
           },
           label: {
-            fontSize: 14,
+            fontSize: 12,
             color: '#888',
             lineHeight: 20,
           },
