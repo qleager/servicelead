@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@nuxtjs/storybook'
 import AppChip from '@components/app/Chip.vue'
 import AppButton from '@components/app/Button.vue'
-import type { Color, Size } from '~/types/ds'
 
 export default {
   title: 'App/Chip',
@@ -17,7 +16,7 @@ export default {
     },
     size: {
       control: 'select',
-      options: Size,
+      options: ['xs', 'sm', 'md', 'lg'],
     },
     color: {
       control: 'select',
