@@ -2,12 +2,12 @@
 import type { PieData } from '~/components/chart/Pie.vue'
 
 // типа апи модель
-type ApiStatisticsConversionItem = { label: string, value: number, data?: number[], huemae?: { text: string } }
+type ApiStatisticsTrafficItem = { label: string, value: number, data?: number[], huemae?: { text: string } }
 
 // типа данные из апи
-const data = ref<PieData<ApiStatisticsConversionItem>>([
-  { label: 'Calls', value: 4, data: [1, 2, 4] },
-  { label: 'Forms', value: 6, huemae: { text: 'Accepted ' } },
+const data = ref<PieData<ApiStatisticsTrafficItem>>([
+  { label: 'Звонки', value: 4, data: [1, 2, 4] },
+  { label: 'Формы', value: 6, huemae: { text: 'Accepted ' } },
 ])
 </script>
 
@@ -69,19 +69,18 @@ const data = ref<PieData<ApiStatisticsConversionItem>>([
         :data
         title="10"
       >
-        <template #tooltip="{ value }">
+        <template #tooltip="{ dataIndex }">
           <div
-            v-for="item in data"
+            v-for="(item, index) in data"
             :key="item.value + item.label"
             :class="{
               'statistics-widget-traffic__tooltip-item': true,
-              'statistics-widget-traffic__tooltip-item-active': item.value === value, // чтобы подкрасить нужный item
+              'statistics-widget-traffic__tooltip-item-active': index === dataIndex,
             }"
           >
-            {{ item.label }}
-            <!-- divider -->
-            {{ item.value }}
-            <!-- есть в ../Lead.vue верстка -->
+            <div>{{ (item as ApiStatisticsTrafficItem).label }}</div>
+            <div class="statistics-widget-traffic__tooltip-divider" />
+            <div>{{ (item as ApiStatisticsTrafficItem).value }}</div>
           </div>
         </template>
       </ChartPie>
@@ -127,6 +126,34 @@ const data = ref<PieData<ApiStatisticsConversionItem>>([
 
     margin-bottom: $space-05;
     line-height: 1.35;
+  }
+
+  &__tooltip {
+    &-item {
+      display: flex;
+      align-items: center;
+
+      line-height: 1.33;
+      color: $color-neutral-950;
+
+      opacity: .33;
+
+      @include text(medium, xs);
+
+      &:not(:first-child) {
+        margin-top: $space-2;
+      }
+
+      &-active {
+        opacity: 1;
+      }
+    }
+
+    &-divider {
+      min-width: 60px;
+      height: 10px;
+      border-bottom: 1px dashed $color-neutral-200;
+    }
   }
 }
 </style>
