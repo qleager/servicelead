@@ -16,18 +16,26 @@ onMounted(() => {
 
 <template>
   <div class="offers">
-    <OfferProjects />
     <div class="offers__header">
       <div class="offers__title">
         Офферы
       </div>
+
+      <AppInput
+        class="offers-filter__search"
+        icon="search"
+        placeholder="Начните поиск..."
+        reset
+        rounded
+      />
+
       <OfferFilter
         v-model="filter"
         class="offers__filter"
         @update="() => {}"
       />
     </div>
-    <div class="offers__list">
+    <div class="offers__main">
       <OfferList />
     </div>
   </div>
