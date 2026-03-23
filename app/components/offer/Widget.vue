@@ -1,17 +1,19 @@
 <script lang="ts" setup></script>
 
 <template>
-  <AppSection class="offer-widget">
+  <AppSection
+    class="offer-widget"
+    title="Топ офферы"
+  >
     <template #header>
-      <div class="offer-widget__title">
-        Топ офферы
-      </div>
       <AppButton
         color="neutral"
-        icon="arrow_right"
-        size="xs"
-        variant="lined"
-      />
+        size="sm"
+        variant="nofilled"
+        @click="navigateTo('/offers')"
+      >
+        Смотреть все
+      </AppButton>
     </template>
     <template #content>
       <OfferList />
