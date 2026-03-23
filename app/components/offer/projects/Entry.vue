@@ -80,16 +80,16 @@ const mockTags = ref<string[]>([
         </template>
       </div>
     </div>
-    <div class="offers-projects-entry__progress">
-      <div class="offers-projects-entry__progress-amount">
-        <div class="offers-projects-entry__progress-value">
+    <div class="offers-projects-entry__metric">
+      <div class="offers-projects-entry__metric-data">
+        <div class="offers-projects-entry__metric-value">
           75
         </div>
-        <div class="offers-projects-entry__progress-procent">
+        <div class="offers-projects-entry__metric-meta">
           %
         </div>
       </div>
-      <div class="offers-projects-entry__progress-text">
+      <div class="offers-projects-entry__metric-label">
         Прогресс
       </div>
     </div>
@@ -208,12 +208,12 @@ const mockTags = ref<string[]>([
     }
   }
 
-  &__progress {
+  &__metric {
     display: flex;
     gap: $space-4;
     align-items: flex-end;
 
-    &-amount {
+    &-data {
       display: flex;
       align-items: flex-end;
     }
@@ -224,13 +224,13 @@ const mockTags = ref<string[]>([
       line-height: 1;
     }
 
-    &-procent {
+    &-meta {
       @include text(regular, 2xl);
 
       line-height: 1;
     }
 
-    &-text {
+    &-label {
       @include text(regular, xs);
 
       color: $color-neutral-400;
