@@ -28,7 +28,13 @@
 <style lang="scss">
 .telephony-widget {
   &__content {
+    display: flex;
+    align-items: end;
+    height: 100%;
+
     @include text(medium, 3xl);
+
+    line-height: 1;
   }
 }
 </style>
