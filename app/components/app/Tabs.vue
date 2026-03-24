@@ -73,7 +73,7 @@ const getActiveItemBind = (value: Item['value']) => {
     return {
       variant: 'filled' as const,
       color: props.color,
-      class: 'items__nav items__nav-item--active',
+      class: 'items__nav-item items__nav-item--active',
     }
   }
 }
@@ -134,7 +134,7 @@ export type { Props as TabsProps, Model as TabsModel, Item as TabsItem }
   $this: &;
 
   &__nav {
-    display: inline-flex;
+    display: flex;
     flex-wrap: wrap;
     gap: $space-2;
 
