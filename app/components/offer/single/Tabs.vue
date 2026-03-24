@@ -24,26 +24,26 @@ const activePanel = computed(() => {
 </script>
 
 <template>
-  <div class="offers-single-tabs">
+  <div class="offer-single-tabs">
     <AppTabs
       v-if="tabs?.length"
       v-model="currentTab"
       :items="tabs"
       variant="lined"
       color="neutral"
-      class="offers-single-tabs-item"
+      class="offer-single-tabs-item"
     />
     <Component
       :is="activePanel.component"
       v-if="activePanel"
       v-bind="activePanel.data"
-      class="offers-single-tabs__panel"
+      class="offer-single-tabs__panel"
     />
   </div>
 </template>
 
 <style lang="scss">
-.offers-single-tabs {
+.offer-single-tabs {
   $this: &;
 
   display: flex;

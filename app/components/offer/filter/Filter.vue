@@ -27,20 +27,35 @@ const resetItem = (item: unknown) => {
 </script>
 
 <template>
-  <div class="offers-filter">
-    <div class="offers-filter__row">
-      <OfferFilterSlideover />
+  <div class="offer-filter">
+    <div class="offer-filter__row">
       <AppTabs
-        class="offers-filter__tabs"
+        class="offer-filter__tabs"
         color="white"
         :items="tabsItems"
         variant="lined"
+      >
+        <template #leading="{ index }">
+          <NuxtImg
+            v-if="index == 1"
+            class="offer-filter__tabs-item-image"
+            src="/images/top-fire.svg"
+          />
+        </template>
+      </AppTabs>
+
+      <AppInput
+        class="offer-filter__search"
+        icon="search"
+        placeholder="Начните поиск..."
+        reset
+        rounded
       />
     </div>
 
     <div
       v-if="true"
-      class="offers-filter__selected"
+      class="offer-filter__selected"
     >
       <AppTag
         v-for="(value, index) in 5"
@@ -56,7 +71,7 @@ const resetItem = (item: unknown) => {
 </template>
 
 <style lang="scss">
-.offers-filter {
+.offer-filter {
   width: 100%;
 
   &__row {

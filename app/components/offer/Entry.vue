@@ -24,20 +24,20 @@ const favoritesColor = computed(() => Math.random() < 0.5 ? 'primary' : 'white')
 
 <template>
   <AppCard
-    class="offers-entry"
+    class="offer-entry"
     @click="navigateTo('/offers/1')"
   >
     <template #content>
-      <div class="offers-entry__wrapper">
-        <div class="offers-entry__header">
-          <div class="offers-entry__header-media">
+      <div class="offer-entry__wrapper">
+        <div class="offer-entry__header">
+          <div class="offer-entry__header-media">
             <img
               alt=""
               :src="'https://picsum.photos/600/300'"
             >
           </div>
-          <div class="offers-entry__header-overlay">
-            <div class="offers-entry__header-tags">
+          <div class="offer-entry__header-overlay">
+            <div class="offer-entry__header-tags">
               <AppTooltip
                 v-for="tag in mockTags"
                 :key="tag.value"
@@ -65,10 +65,10 @@ const favoritesColor = computed(() => Math.random() < 0.5 ? 'primary' : 'white')
             </AppTooltip>
           </div>
         </div>
-        <div class="offers-entry__body">
-          <div class="offers-entry__content">
-            <div class="offers-entry__info">
-              <div class="offers-entry__info-category">
+        <div class="offer-entry__body">
+          <div class="offer-entry__content">
+            <div class="offer-entry__info">
+              <div class="offer-entry__info-category">
                 <AppTag
                   size="sm"
                   variant="soft"
@@ -77,7 +77,7 @@ const favoritesColor = computed(() => Math.random() < 0.5 ? 'primary' : 'white')
                 </AppTag>
               </div>
               <AppDropdown mode="hover">
-                <div class="offers-entry__info-location">
+                <div class="offer-entry__info-location">
                   <AppIcon
                     name="geo_16"
                     :size="16"
@@ -98,12 +98,12 @@ const favoritesColor = computed(() => Math.random() < 0.5 ? 'primary' : 'white')
                 </template>
               </AppDropdown>
             </div>
-            <div class="offers-entry__title">
+            <div class="offer-entry__title">
               <NuxtImg
-                class="offers-entry__title-icon"
+                class="offer-entry__title-icon"
                 :src="'/images/top-fire.svg'"
               />
-              <div class="offers-entry__title-text">
+              <div class="offer-entry__title-text">
                 Ремонт холодильниковРемонт холодильников
               </div>
             </div>
@@ -112,16 +112,16 @@ const favoritesColor = computed(() => Math.random() < 0.5 ? 'primary' : 'white')
       </div>
     </template>
     <template #footer>
-      <div class="offers-entry__footer">
-        <div class="offers-entry__price">
-          <div class="offers-entry__price-header">
+      <div class="offer-entry__footer">
+        <div class="offer-entry__price">
+          <div class="offer-entry__price-header">
             Ставка
           </div>
-          <div class="offers-entry__price-value">
-            До 50000 <span class="offers-entry__price-value--currency">₽</span>
+          <div class="offer-entry__price-value">
+            До 50000 <span class="offer-entry__price-value--currency">₽</span>
           </div>
         </div>
-        <div class="offers-entry__actions">
+        <div class="offer-entry__actions">
           <AppIcon
             v-if="true"
             name="lock"
@@ -140,7 +140,7 @@ const favoritesColor = computed(() => Math.random() < 0.5 ? 'primary' : 'white')
 </template>
 
 <style lang="scss">
-.offers-entry{
+.offer-entry{
   $this: &;
 
   display: flex;
