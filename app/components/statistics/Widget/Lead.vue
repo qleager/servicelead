@@ -30,7 +30,7 @@ const asix = ref<BarAsix<ApiStatisticsLeadItem>>({ x: 'label', y: 'value' })
         color="neutral"
         icon="arrow_right"
         size="xs"
-        variant="lined"
+        variant="outline"
         @click="navigateTo('/leads')"
       />
     </template>

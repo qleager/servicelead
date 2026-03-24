@@ -11,7 +11,7 @@
       color="neutral"
       icon="arrow_right"
       size="xs"
-      variant="lined"
+      variant="outline"
     />
     <div class="thread-entry__corner">
       <svg

@@ -92,7 +92,7 @@ export type { Props as ModalProps, Emits as ModalEmits, Model as ModalModel, Slo
                   color="neutral"
                   icon="close"
                   size="sm"
-                  variant="nofilled"
+                  variant="link"
                   @click="close"
                 />
               </div>

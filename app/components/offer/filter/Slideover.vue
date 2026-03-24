@@ -11,7 +11,7 @@
     <AppButton
       color="neutral"
       icon="filter"
-      variant="lined"
+      variant="outline"
     >
       <AppTag
         color="primary"
@@ -36,7 +36,7 @@
       <div class="offer-filter-slideover__footer">
         <AppButton
           color="neutral"
-          variant="nofilled"
+          variant="link"
         >
           Сбросить все
         </AppButton>

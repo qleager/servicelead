@@ -55,7 +55,7 @@ const favoritesColor = computed(() => Math.random() < 0.5 ? 'primary' : 'white')
               <AppButton
                 :color="favoritesColor"
                 size="xs"
-                variant="nofilled"
+                variant="link"
               >
                 <AppIcon
                   name="favorites"
@@ -131,7 +131,7 @@ const favoritesColor = computed(() => Math.random() < 0.5 ? 'primary' : 'white')
             icon="arrow_right"
             size="xs"
             :to="{ name: 'offers-id', params: { id: 1 } }"
-            variant="lined"
+            variant="outline"
           />
         </div>
       </div>

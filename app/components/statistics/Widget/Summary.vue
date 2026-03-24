@@ -12,7 +12,7 @@
       <AppButton
         color="neutral"
         size="sm"
-        variant="nofilled"
+        variant="link"
         @click="navigateTo('/summary')"
       >
         Подробнее

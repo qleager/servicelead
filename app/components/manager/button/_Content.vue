@@ -47,7 +47,7 @@
       class="manager-button__content-feedback"
       color="neutral"
       size="sm"
-      variant="nofilled"
+      variant="link"
     >
       Проблема с менеджером?
     </AppButton>

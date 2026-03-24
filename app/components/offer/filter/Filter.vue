@@ -33,7 +33,7 @@ const resetItem = (item: unknown) => {
         class="offer-filter__tabs"
         color="white"
         :items="tabsItems"
-        variant="lined"
+        variant="outline"
       >
         <template #leading="{ index }">
           <NuxtImg

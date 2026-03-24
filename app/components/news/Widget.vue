@@ -14,14 +14,14 @@ const tabs: TabsItem[] = [
         color="primary"
         :items="tabs"
         size="xs"
-        variant="lined"
+        variant="outline"
       />
       <AppButton
         class="widget__button"
         color="neutral"
         icon="arrow_right"
         size="xs"
-        variant="lined"
+        variant="outline"
       />
     </template>
     <template #content>

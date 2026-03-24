@@ -2,7 +2,8 @@
 import type { TableColumn } from '~/components/app/Table.vue'
 
 const initSettings = {
-  variant: 'filled',
+  buttonVariant: 'solid',
+  tagVariant: 'filled',
   size: 'sm',
   color: 'neutral',
   rounded: true,
@@ -60,11 +61,11 @@ const addRow = () => {
     </AppButton>
 
     <div
-      :keys="[settings.size, settings.color, settings.variant]"
+      :keys="[settings.size, settings.color, settings.buttonVariant, settings.tagVariant]"
       class="elements"
     >
       <AppButton
-        :variant="settings.variant"
+        :variant="settings.buttonVariant"
         :size="settings.size"
         :color="settings.color"
         :rounded="settings.rounded"
@@ -73,7 +74,7 @@ const addRow = () => {
         Button
       </AppButton>
       <AppTag
-        :variant="settings.variant"
+        :variant="settings.tagVariant"
         :size="settings.size"
         :color="settings.color"
         :rounded="settings.rounded"
@@ -116,7 +117,17 @@ const addRow = () => {
         caption="Вариант компонентов"
       >
         <AppSelect
-          v-model="settings.variant"
+          v-model="settings.buttonVariant"
+          size="sm"
+          :items="['solid', 'outline', 'link']"
+        />
+      </AppLabel>
+      <AppLabel
+        title="Tag Variant"
+        caption="Вариант AppTag"
+      >
+        <AppSelect
+          v-model="settings.tagVariant"
           size="sm"
           :items="['filled', 'lined', 'nofilled']"
         />

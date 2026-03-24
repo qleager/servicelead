@@ -71,7 +71,7 @@ onMounted(() => {
 const getActiveItemBind = (value: Item['value']) => {
   if (isActiveItem(value)) {
     return {
-      variant: 'filled' as const,
+      variant: 'solid' as const,
       color: props.color,
       class: 'items__nav-item--active',
     }
@@ -102,7 +102,7 @@ export type { Props as TabsProps, Model as TabsModel, Item as TabsItem }
         :size
         :trailing-icon="item.trailingIcon"
         :value="item.value || index"
-        variant="lined"
+        variant="outline"
         v-bind="getActiveItemBind(item.value || index)"
         @click="(e: MouseEvent) => onItemClick(e)"
       >
