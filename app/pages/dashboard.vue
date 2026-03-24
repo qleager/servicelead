@@ -4,6 +4,7 @@
 <template>
   <section class="page-dashboard">
     <AppCarousel class="page-dashboard__carousel" />
+    <NewsWidget class="page-dashboard__news" />
     <StatisticsDashboard class="page-dashboard__statistics" />
     <DashboardControlPanel class="page-dashboard__controls" />
     <OfferWidget class="page-dashboard__offers" />
@@ -24,6 +25,7 @@
     'informer   informer   informer   informer'
   ;
   grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 242px repeat(4, auto);
   gap: $space-6;
 
   &__carousel {
