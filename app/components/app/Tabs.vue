@@ -73,7 +73,7 @@ const getActiveItemBind = (value: Item['value']) => {
     return {
       variant: 'filled' as const,
       color: props.color,
-      class: 'items__nav-item items__nav-item--active',
+      class: 'items__nav-item--active',
     }
   }
 }
