@@ -74,6 +74,7 @@ export const iconNames = [
   'stairs_corner',
   'statistic',
   'stock',
+  'sun',
   'sun_32',
   'target',
   'tg_line_24',
