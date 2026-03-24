@@ -35,15 +35,15 @@ const mockTags = ref<string[]>([
 </script>
 
 <template>
-  <div class="offers-projects-entry">
+  <div class="offer-projects-entry">
     <AppButton
-      class="offers-projects-entry__arrow"
+      class="offer-projects-entry__arrow"
       variant="lined"
       color="neutral"
       icon="arrow_right"
       size="xs"
     />
-    <div class="offers-projects-entry__corner">
+    <div class="offer-projects-entry__corner">
       <svg
         width="60"
         height="61"
@@ -57,21 +57,21 @@ const mockTags = ref<string[]>([
         />
       </svg>
     </div>
-    <div class="offers-projects-entry__info">
-      <div class="offers-projects-entry__info-title">
+    <div class="offer-projects-entry__info">
+      <div class="offer-projects-entry__info-title">
         Мастер на час
       </div>
-      <div class="offers-projects-entry__info-list">
+      <div class="offer-projects-entry__info-list">
         {{ mockTags.slice(0, TAGS_LIMIT).join(', ') }}
         <template v-if="mockTags.slice(TAGS_LIMIT).length">
-          <span class="offers-projects-entry__info-more-wrapper">
+          <span class="offer-projects-entry__info-more-wrapper">
             <AppDropdown mode="hover">
-              <span class="offers-projects-entry__info-more">
+              <span class="offer-projects-entry__info-more">
                 +{{ mockTags.slice(TAGS_LIMIT).length }}
               </span>
 
               <template #content>
-                <div class="offers-projects-entry__tags-dropdown">
+                <div class="offer-projects-entry__tags-dropdown">
                   {{ mockTags.slice(TAGS_LIMIT).join('\r\n') }}
                 </div>
               </template>
@@ -80,16 +80,16 @@ const mockTags = ref<string[]>([
         </template>
       </div>
     </div>
-    <div class="offers-projects-entry__metric">
-      <div class="offers-projects-entry__metric-data">
-        <div class="offers-projects-entry__metric-value">
+    <div class="offer-projects-entry__progress">
+      <div class="offer-projects-entry__progress-amount">
+        <div class="offer-projects-entry__progress-value">
           75
         </div>
-        <div class="offers-projects-entry__metric-meta">
+        <div class="offer-projects-entry__progress-procent">
           %
         </div>
       </div>
-      <div class="offers-projects-entry__metric-label">
+      <div class="offer-projects-entry__progress-text">
         Прогресс
       </div>
     </div>
@@ -97,7 +97,7 @@ const mockTags = ref<string[]>([
 </template>
 
 <style lang="scss">
-.offers-projects-entry {
+.offer-projects-entry {
   $this: &;
 
   cursor: pointer;
