@@ -2,9 +2,9 @@
 import type { IconProps } from '@/components/app/Icon.vue'
 
 interface MenuItem {
+  icon: IconProps['name']
   label?: string
   to: RouteTo<true>
-  icon: IconProps['name']
 }
 
 const menuItems: MenuItem[] = [
@@ -20,10 +20,10 @@ const menuItems: MenuItem[] = [
       <NuxtLink
         v-for="(item, index) in menuItems"
         :key="index"
-        :to="item.to"
         class="footer__menu-item"
-        target="_blank"
         rel="noreferrer"
+        target="_blank"
+        :to="item.to"
       >
         <span
           class="footer__menu-label"
@@ -48,7 +48,7 @@ const menuItems: MenuItem[] = [
   gap: $space-2;
   align-items: stretch;
 
-  padding: 0 $space-5;
+  padding: 0 $space-7 0 $space-5;
 
   &__menu {
     display: flex;
@@ -82,6 +82,8 @@ const menuItems: MenuItem[] = [
 
     &-label {
       @include text(regular, sm);
+
+      letter-spacing: -.03em;
 
       &:empty {
         display: none;
