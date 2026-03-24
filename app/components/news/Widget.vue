@@ -11,6 +11,16 @@ const tabs: TabsItem[] = [
   <AppWidget
     @click:button="undefined"
   >
+    <template #trailingHeader>
+      <AppButton
+        color="neutral"
+        size="sm"
+        variant="nofilled"
+        @click="navigateTo('/news')"
+      >
+        Смотреть все
+      </AppButton>
+    </template>
     <template #content>
       <div class="news-widget__head">
         <AppTabs

@@ -10,25 +10,18 @@ interface Props {
   title?: string
 }
 
-interface Emits {
-  'click:button': []
-}
-
 interface Slots {
   content: () => VNodeChild
   description?: () => VNodeChild
   footer?: () => VNodeChild
+  trailingHeader?: () => VNodeChild
 }
 
 defineProps<Props>()
 
-defineEmits<Emits>()
-
 defineSlots<Slots>()
 
-const isShowMoreListener = computed(() => getCurrentInstance()?.vnode?.props?.['onClick:button'])
-
-export type { Props as WidgetProps, Emits as WidgetEmits, Slots as WidgetSlots }
+export type { Props as WidgetProps, Slots as WidgetSlots }
 </script>
 
 <template>
@@ -46,15 +39,9 @@ export type { Props as WidgetProps, Emits as WidgetEmits, Slots as WidgetSlots }
           :title
         />
 
-        <AppButton
-          v-if="isShowMoreListener"
-          class="widget__button"
-          color="neutral"
-          icon="arrow_right"
-          size="xs"
-          variant="lined"
-          @click="$emit('click:button')"
-        />
+        <template v-if="$slots.trailingHeader">
+          <slot name="trailingHeader" />
+        </template>
       </div>
     </template>
 
@@ -86,10 +73,8 @@ export type { Props as WidgetProps, Emits as WidgetEmits, Slots as WidgetSlots }
 
   &__header {
     display: flex;
-  }
-
-  &__button {
-    margin-left: auto;
+    gap: $space-4;
+    justify-content: space-between;
   }
 }
 </style>

@@ -6,8 +6,17 @@
     class="telephony-widget"
     icon="phone_24"
     title="Телефония"
-    @click:button="navigateTo('/telephony')"
   >
+    <template #trailingHeader>
+      <AppButton
+        class="widget__button"
+        color="neutral"
+        icon="arrow_right"
+        size="xs"
+        variant="lined"
+        @click="navigateTo('/telephony')"
+      />
+    </template>
     <template #content>
       <div class="telephony-widget__content">
         31
