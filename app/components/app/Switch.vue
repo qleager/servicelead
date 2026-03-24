@@ -161,9 +161,11 @@ export type { Props as SwitchProps, Model as SwitchModel, Slots as SwitchSlots }
   }
 
   &__content {
-    @include text(regular, sm);
-
     text-align: left;
+
+    @include is($size-md) {
+      @include text(regular, sm);
+    }
 
     @include is($trailing) {
       text-align: right;
@@ -179,9 +181,11 @@ export type { Props as SwitchProps, Model as SwitchModel, Slots as SwitchSlots }
   }
 
   &__description {
-    @include text(regular, xs);
-
     color: $color-neutral;
+
+    @include is($size-md) {
+      @include text(regular, xs);
+    }
   }
 }
 </style>
