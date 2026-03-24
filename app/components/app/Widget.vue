@@ -30,11 +30,12 @@ export type { Props as WidgetProps, Slots as WidgetSlots }
     :color
   >
     <template
-      v-if="title"
+      v-if="title || $slots.trailingHeader"
       #title
     >
       <div class="widget__header">
         <AppTitle
+          v-if="icon || title"
           :icon
           :title
         />
