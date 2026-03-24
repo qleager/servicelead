@@ -1,41 +1,24 @@
 <script lang="ts" setup>
-import type { EChartsOption } from 'echarts'
-import type { CallbackDataParams } from 'echarts/types/dist/shared'
-import type { OptionEncode } from 'echarts/types/src/util/types.js'
 import type { VNodeChild } from 'vue'
+import type { ChartAsix, ChartData, ChartTooltipSlotProps } from '~/types/components/chart'
 
 interface Props {
   /**
-   * Data items for the bar
-   */
-  data: Data<DataItem>
-  /**
    * Field mapping for x/y axes in the Data
    */
-  encode: Encode<DataItem>
+  asix: ChartAsix
+  data: ChartData
 }
 
 interface Slots {
-  // TODO: а может ли тултип вернуть не CallbackDataParams? (когда возвращает массив: чекнуть тип TopLevelFormatterParams)
-  tooltip: (props: CallbackDataParams) => VNodeChild
-}
-
-// IDEA: а как насчет просто массива значений? имеет смысл или заеб
-type DataItem = Record<string, unknown>
-type Data<T extends DataItem> = T[]
-
-// TODO: Првореить на потенциальные проблемы
-type EncodeAsixKey<T extends DataItem> = Extract<keyof T, string | number>
-interface Encode<T extends DataItem> extends OptionEncode {
-  x: EncodeAsixKey<T>
-  y: EncodeAsixKey<T>
+  tooltip: (props: ChartTooltipSlotProps) => VNodeChild
 }
 
 const props = defineProps<Props>()
 
 defineSlots<Slots>()
 
-const option = computed<EChartsOption>(() => {
+const option = computed(() => {
   const data = props.data ?? []
 
   return {
@@ -78,21 +61,23 @@ const option = computed<EChartsOption>(() => {
             color: '#0861EE',
           },
         },
-        encode: props.encode,
+        encode: props.asix,
       },
     ],
   }
 })
 
-export type { Props as BarProps, Slots as BarSlots, Data as BarData, Encode as BarEncode }
+export type { Props as BarProps, Slots as BarSlots, ChartData as BarData, ChartAsix as BarAsix }
 </script>
 
 <template>
   <VChart :option>
-    <template #tooltip="params">
+    <!-- @vue-expect-error: dataIndex и data на 100% обеспечены -->
+    <template #tooltip="{ dataIndex, data: scopedData }">
       <slot
+        :index="dataIndex"
+        :item="scopedData"
         name="tooltip"
-        v-bind="(params as CallbackDataParams)"
       />
     </template>
   </VChart>

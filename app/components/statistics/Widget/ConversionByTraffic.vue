@@ -1,13 +1,22 @@
 <script lang="ts" setup>
 import type { PieData } from '~/components/chart/Pie.vue'
 
-// типа апи модель
-type ApiStatisticsTrafficItem = { label: string, value: number, data?: number[], huemae?: { text: string } }
-
-// типа данные из апи
-const data = ref<PieData<ApiStatisticsTrafficItem>>([
-  { label: 'Звонки', value: 4, data: [1, 2, 4] },
-  { label: 'Формы', value: 6, huemae: { text: 'Accepted ' } },
+const data = ref<PieData>([
+  {
+    label: 'Звонки',
+    value: 6,
+    color: {
+      initial: '#83B0F6',
+      emphasis: '#0861EE',
+    },
+  }, {
+    label: 'Формы',
+    value: 4,
+    color: {
+      initial: '#E2E9FC',
+      emphasis: '#8289b1',
+    },
+  },
 ])
 </script>
 
@@ -66,21 +75,22 @@ const data = ref<PieData<ApiStatisticsTrafficItem>>([
     <template #chart>
       <ChartPie
         caption="100%"
+        class="statistics-widget-traffic__chart"
         :data
         title="10"
       >
-        <template #tooltip="{ value }">
+        <template #tooltip="{ item: scopedItem }">
           <div
             v-for="item in data"
             :key="item.value + item.label"
             :class="{
-              'statistics-widget-traffic__tooltip-item': true,
-              'statistics-widget-traffic__tooltip-item-active': item.label === (value as ApiStatisticsTrafficItem).label,
+              'statistics-widget-traffic__chart-tooltip-item': true,
+              'statistics-widget-traffic__chart-tooltip-item-active': item.label === scopedItem.label,
             }"
           >
-            <div>{{ (item as ApiStatisticsTrafficItem).label }}</div>
-            <div class="statistics-widget-traffic__tooltip-divider" />
-            <div>{{ (item as ApiStatisticsTrafficItem).value }}</div>
+            <div>{{ item.label }}</div>
+            <div class="statistics-widget-traffic__chart-tooltip-divider" />
+            <div>{{ item.value }}</div>
           </div>
         </template>
       </ChartPie>
@@ -118,7 +128,7 @@ const data = ref<PieData<ApiStatisticsTrafficItem>>([
   &__number {
     @include text(medium, 5xl);
 
-    line-height: 1.075;
+    line-height: 1;
   }
 
   &__unit {
@@ -128,31 +138,36 @@ const data = ref<PieData<ApiStatisticsTrafficItem>>([
     line-height: 1.35;
   }
 
-  &__tooltip {
-    &-item {
-      display: flex;
-      align-items: center;
+  &__chart {
+    max-width: 117px;
+    margin-left: auto;
 
-      line-height: 1.33;
-      color: $color-neutral-950;
+    &-tooltip {
+      &-item {
+        display: flex;
+        align-items: center;
 
-      opacity: .33;
+        line-height: 1.33;
+        color: $color-neutral-950;
 
-      @include text(medium, xs);
+        opacity: .33;
 
-      &:not(:first-child) {
-        margin-top: $space-2;
+        @include text(medium, xs);
+
+        &:not(:first-child) {
+          margin-top: $space-2;
+        }
+
+        &-active {
+          opacity: 1;
+        }
       }
 
-      &-active {
-        opacity: 1;
+      &-divider {
+        min-width: 60px;
+        height: 10px;
+        border-bottom: 1px dashed $color-neutral-200;
       }
-    }
-
-    &-divider {
-      min-width: 60px;
-      height: 10px;
-      border-bottom: 1px dashed $color-neutral-200;
     }
   }
 }
