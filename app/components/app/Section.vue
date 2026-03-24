@@ -3,12 +3,12 @@ import type { VNodeChild } from 'vue'
 import type { IconProps } from './Icon.vue'
 
 interface Props {
-  title?: string
   icon?: IconProps['name']
+  title?: string
 }
 interface Slots {
-  header?: VNodeChild
   content: VNodeChild
+  trailingHeader?: VNodeChild
 }
 
 defineSlots<Slots>()
@@ -36,7 +36,7 @@ export type { Props as SectionProps, Slots as SectionSlots }
           {{ title }}
         </div>
       </div>
-      <slot name="header" />
+      <slot name="trailingHeader" />
     </div>
     <div class="section__main">
       <slot name="content" />

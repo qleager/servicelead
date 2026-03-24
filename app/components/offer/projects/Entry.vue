@@ -208,12 +208,12 @@ const mockTags = ref<string[]>([
     }
   }
 
-  &__progress {
+  &__metric {
     display: flex;
     gap: $space-4;
     align-items: flex-end;
 
-    &-amount {
+    &-data {
       display: flex;
       align-items: flex-end;
     }
@@ -224,13 +224,13 @@ const mockTags = ref<string[]>([
       line-height: 1;
     }
 
-    &-procent {
+    &-meta {
       @include text(regular, 2xl);
 
       line-height: 1;
     }
 
-    &-text {
+    &-label {
       @include text(regular, xs);
 
       color: $color-neutral-400;

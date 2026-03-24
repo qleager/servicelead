@@ -51,8 +51,6 @@ const resetItem = (item: unknown) => {
         reset
         rounded
       />
-
-      <OfferFilterSlideover />
     </div>
 
     <div
