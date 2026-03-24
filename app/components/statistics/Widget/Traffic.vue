@@ -69,13 +69,13 @@ const data = ref<PieData<ApiStatisticsTrafficItem>>([
         :data
         title="10"
       >
-        <template #tooltip="{ dataIndex }">
+        <template #tooltip="{ value }">
           <div
-            v-for="(item, index) in data"
+            v-for="item in data"
             :key="item.value + item.label"
             :class="{
               'statistics-widget-traffic__tooltip-item': true,
-              'statistics-widget-traffic__tooltip-item-active': index === dataIndex,
+              'statistics-widget-traffic__tooltip-item-active': item.label === (value as ApiStatisticsTrafficItem).label,
             }"
           >
             <div>{{ (item as ApiStatisticsTrafficItem).label }}</div>
