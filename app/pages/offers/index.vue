@@ -48,10 +48,10 @@ onMounted(() => {
   gap: $space-9;
 
   &__header {
-    display: flex;
-    gap: $space-10;
-    align-items: start;
-    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: $space-4 0;
+    align-items: center;
   }
 
   &__title {
@@ -59,7 +59,7 @@ onMounted(() => {
   }
 
   &__filter {
-    margin-top: $space-1;
+    grid-column: 1 / -1;
   }
 }
 </style>
