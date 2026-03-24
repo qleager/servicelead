@@ -39,9 +39,7 @@ export type { Props as WidgetProps, Slots as WidgetSlots }
           :title
         />
 
-        <template v-if="$slots.trailingHeader">
-          <slot name="trailingHeader" />
-        </template>
+        <slot name="trailingHeader" />
       </div>
     </template>
 
