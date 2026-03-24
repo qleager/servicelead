@@ -1,8 +1,13 @@
 <script lang="ts" setup>
 import type { BarAsix, BarData } from '~/components/chart/Bar.vue'
 
+interface Props {
+  isFilterVisible?: boolean
+}
 // типа апи модель
 type ApiStatisticsLeadItem = { label: string, value: number, data?: number[], huemae?: { text: string } }
+
+defineProps<Props>()
 
 // типа данные из апи
 const data = ref<BarData<ApiStatisticsLeadItem>>([
@@ -21,9 +26,27 @@ const asix = ref<BarAsix<ApiStatisticsLeadItem>>({ x: 'label', y: 'value' })
 <template>
   <StatisticsWidgetBase
     class="statistics-widget-conversion"
-    icon="target"
+    icon="higher_conversion"
     title="Конверсии"
   >
+    <template #trailingHeader>
+      <AppSelect
+        v-if="isFilterVisible"
+        class="statistics-widget-conversion__select"
+        :items="['День', 'Неделя', 'Месяц', 'Год']"
+        rounded
+        size="sm"
+      />
+      <AppButton
+        v-else
+        class="widget__button"
+        color="neutral"
+        icon="arrow_right"
+        size="xs"
+        variant="lined"
+        @click="navigateTo('/conversions')"
+      />
+    </template>
     <template #value>
       <div class="statistics-widget-conversion__values">
         <div class="statistics-widget-conversion__number">
@@ -91,6 +114,10 @@ const asix = ref<BarAsix<ApiStatisticsLeadItem>>({ x: 'label', y: 'value' })
     @include text(medium, 5xl);
 
     line-height: 1;
+  }
+
+  &__select {
+    width: fit-content;
   }
 }
 </style>
