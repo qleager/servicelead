@@ -3,7 +3,7 @@
 
 <template>
   <AppSlideover
-    class="offers-filter-slideover"
+    class="offer-filter-slideover"
     description="Чтобы отфильтровать офферы"
     icon="filter"
     title="Фильтры"
@@ -22,7 +22,7 @@
     </AppButton>
 
     <template #content>
-      <div class="offers-filter-slideover__content">
+      <div class="offer-filter-slideover__content">
         <AppSelect
           v-for="i in 20"
           :key="i"
@@ -33,7 +33,7 @@
     </template>
 
     <template #footer="{ close }">
-      <div class="offers-filter-slideover__footer">
+      <div class="offer-filter-slideover__footer">
         <AppButton
           color="neutral"
           variant="nofilled"
@@ -49,7 +49,7 @@
 </template>
 
 <style lang="scss">
-.offers-filter-slideover {
+.offer-filter-slideover {
   &__content {
     display: flex;
     flex-direction: column;

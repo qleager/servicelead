@@ -5,7 +5,7 @@ import type { WidgetSlots, WidgetProps } from '@components/app/Widget.vue'
 
 interface Props {
   // type Props = WidgetProps или extends будет ломать run build
-  description: WidgetProps['description']
+  description?: WidgetProps['description']
   icon?: WidgetProps['icon']
   title?: WidgetProps['title']
 }

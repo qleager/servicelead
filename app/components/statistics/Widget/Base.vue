@@ -9,6 +9,7 @@ interface Props {
 
 interface Slots {
   chart?: () => VNodeChild
+  trailingHeader?: () => VNodeChild
   value?: () => VNodeChild
 }
 
@@ -24,6 +25,9 @@ defineSlots<Slots>()
     :icon
     :title
   >
+    <template #trailingHeader>
+      <slot name="trailingHeader" />
+    </template>
     <template #content>
       <div class="statistics-widget__content">
         <slot name="value" />
@@ -39,8 +43,10 @@ defineSlots<Slots>()
 
   &__content {
     display: grid;
-    grid-template-columns: repeat(2, auto);
+    grid-template-columns: auto 1fr;
     gap: $space-6;
+    align-items: flex-end;
+    justify-content: space-between;
   }
 }
 </style>

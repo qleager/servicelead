@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <div class="offers-list">
+  <div class="offer-list">
     <OfferEntry
       v-for="i in 4"
       :key="i"
@@ -11,7 +11,7 @@
 </template>
 
 <style lang="scss">
-.offers-list {
+.offer-list {
   $this: &;
 
   display: flex;
