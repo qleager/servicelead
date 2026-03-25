@@ -44,7 +44,7 @@ const classname = computed(() => [
         color="neutral"
         icon="arrow_right"
         size="xs"
-        variant="lined"
+        variant="outline"
       />
     </footer>
   </article>

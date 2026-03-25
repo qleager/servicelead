@@ -38,7 +38,7 @@ const mockTags = ref<string[]>([
   <div class="offer-projects-entry">
     <AppButton
       class="offer-projects-entry__arrow"
-      variant="lined"
+      variant="outline"
       color="neutral"
       icon="arrow_right"
       size="xs"

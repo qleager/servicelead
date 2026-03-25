@@ -1,5 +1,4 @@
-<script lang="ts" setup>
-</script>
+<script lang="ts" setup></script>
 
 <template>
   <AppCard class="statistics-dashboard">
@@ -7,8 +6,9 @@
       <div class="statistics-dashboard__content">
         <AppTabs
           class="statistics-dashboard__tabs"
-          :items="[{ label: 'День' }, { label: 'Неделя' }, { label: 'Месяц' }]"
-          size="xs"
+          color="neutral"
+          :items="['День', 'Неделя', 'Месяц']"
+          variant="link"
         >
           <template #listTrailing>
             <div class="statistics-dashboard__tabs-header-trailing">
@@ -43,7 +43,7 @@
   &__tabs {
     grid-column: span 3;
     width: 100%;
-    margin-bottom: -$space-2;
+    margin-left: $space-4;
 
     &-header-trailing {
       display: flex;

@@ -22,7 +22,7 @@ interface Props {
   /**
    * Variant of trigger button (AppButton)
    *
-   * @defaultvalue `'filled'`
+   * @defaultvalue `'solid'`
    */
   variant?: ButtonProps['variant']
 }
