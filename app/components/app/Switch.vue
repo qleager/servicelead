@@ -64,6 +64,7 @@ export type { Props as SwitchProps, Model as SwitchModel, Slots as SwitchSlots }
       <span class="switch__thumb">
         <AppIcon
           v-if="loading"
+          class="switch__loading"
           name="load_32"
           :size="16"
         />
@@ -104,6 +105,7 @@ export type { Props as SwitchProps, Model as SwitchModel, Slots as SwitchSlots }
   $trailing: & + '-trailing';
   $on: & + '-on';
 
+  cursor: pointer;
   display: flex;
   gap: $space-2;
 
@@ -111,13 +113,8 @@ export type { Props as SwitchProps, Model as SwitchModel, Slots as SwitchSlots }
     flex-direction: row-reverse;
   }
 
-  @include is($disabled) {
-    cursor: not-allowed;
-    filter: brightness(0.75);
-  }
-
   @include is($loading) {
-    cursor: not-allowed;
+    cursor: progress;
   }
 
   &__control {
@@ -134,11 +131,15 @@ export type { Props as SwitchProps, Model as SwitchModel, Slots as SwitchSlots }
     @include is($on + $primary-color) {
       background-color: $color-primary;
     }
+
+    @include is($on + $disabled + $primary-color) {
+      background-color: $color-primary-300;
+    }
   }
 
   &__thumb {
     position: absolute;
-    left: 0;
+    left: 2px;
 
     display: flex;
     align-items: center;
@@ -148,34 +149,36 @@ export type { Props as SwitchProps, Model as SwitchModel, Slots as SwitchSlots }
 
     background-color: $color-neutral-300;
 
-    transition: $active-duration-sm;
+    transition: $blur-duration-sm linear;
 
-    @include is($on + $size-md) {
-      left: 20px;
-      width: 20px;
-      height: 20px;
-      background-color: white;
+    @include is($disabled) {
+      background-color: $color-neutral-100;
     }
 
-    @include is($loading) {
-      transform-origin: 50% 50%;
-      animation: clockwiseRotate 1s linear infinite;
+    @include is($on + $disabled) {
+      background-color: $color-neutral-50;
+    }
+
+    @include is($on) {
+      background-color: white;
+      transition: $hover-duration-sm;
+    }
+
+    @include is($size-md) {
+      width: 20px;
+      height: 20px;
+    }
+
+    @include is($on + $size-md) {
+      left: 22px;
     }
   }
 
   &__content {
     text-align: left;
 
-    @include is($size-md) {
-      @include text(regular, sm);
-    }
-
     @include is($trailing) {
       text-align: right;
-    }
-
-    @include is($loading) {
-      color: $color-neutral-700;
     }
   }
 
@@ -183,11 +186,33 @@ export type { Props as SwitchProps, Model as SwitchModel, Slots as SwitchSlots }
     color: $color-red;
   }
 
+  &__loading {
+    width: 60%;
+    color: $color-neutral-800;
+    animation: clockwiseRotate 1s linear infinite;
+  }
+
+  &__label {
+    color: inherit;
+
+    @include is($size-md) {
+      @include text(regular, sm);
+    }
+
+    @include is($disabled) {
+      color: $color-neutral-400;
+    }
+  }
+
   &__description {
     color: $color-neutral;
 
     @include is($size-md) {
       @include text(regular, xs);
+    }
+
+    @include is($disabled) {
+      color: $color-neutral-300;
     }
   }
 }

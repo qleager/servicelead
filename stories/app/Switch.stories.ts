@@ -44,6 +44,9 @@ export default {
       control: 'boolean',
       table: { category: 'behavioral props' },
     },
+    name: {
+      table: { category: 'behavioral props' },
+    },
     id: {
       control: 'text',
       table: { category: 'behavioral props' },
