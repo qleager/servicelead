@@ -21,6 +21,7 @@
     'summary    summary summary'
     'cities     cities  cities';
   grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 199px repeat(2, auto);
   gap: $space-6 $space-4;
 
   &__conversion {

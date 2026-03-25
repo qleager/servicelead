@@ -32,7 +32,7 @@ const asix = ref<BarAsix<ApiStatisticsLeadItem>>({ x: 'label', y: 'value' })
   >
     <template #trailingHeader>
       <AppSelect
-        v-if="!isFilterVisible"
+        v-if="isFilterVisible"
         v-model="filterPeriod"
         class="statistics-widget-conversion__select"
         :items="['День', 'Неделя', 'Месяц', 'Год']"

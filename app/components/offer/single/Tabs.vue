@@ -34,7 +34,7 @@ const activePanel = computed(() => {
       class="offer-single-tabs-item"
       color="neutral"
       :items="tabs"
-      variant="outline"
+      variant="pill"
     />
     <Component
       :is="activePanel.component"

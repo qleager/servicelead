@@ -64,7 +64,7 @@
             color="white"
             icon="arrow_right"
             size="xs"
-            variant="lined"
+            variant="outline"
           />
         </div>
       </div>
