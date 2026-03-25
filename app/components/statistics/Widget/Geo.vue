@@ -48,9 +48,9 @@
 
   &__icon {
     position: absolute;
-    right: 16px;
-    bottom: 24px;
-    min-height: 129px;
+    bottom: $space-4;
+    left: 30%;
+    width: 286px;
   }
 
   &__number {
