@@ -1,10 +1,17 @@
 <script lang="ts" setup>
+interface Props {
+  size?: number
+}
+
+withDefaults(defineProps<Props>(), {
+  size: 4
+})
 </script>
 
 <template>
   <div class="offer-list">
     <OfferEntry
-      v-for="i in 4"
+      v-for="i in size"
       :key="i"
     />
   </div>
@@ -14,9 +21,8 @@
 .offer-list {
   $this: &;
 
-  display: flex;
-  gap: $space-4;
-  justify-content: space-between;
-  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $space-8 $space-4;
 }
 </style>

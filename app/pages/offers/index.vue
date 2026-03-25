@@ -22,7 +22,7 @@ onMounted(() => {
       </div>
 
       <AppInput
-        class="offers-filter__search"
+        class="offers__search"
         icon="search"
         placeholder="Начните поиск..."
         reset
@@ -36,7 +36,7 @@ onMounted(() => {
       />
     </div>
     <div class="offers__main">
-      <OfferList />
+      <OfferList :size="11" />
     </div>
   </div>
 </template>
@@ -48,10 +48,10 @@ onMounted(() => {
   gap: $space-9;
 
   &__header {
-    display: flex;
-    gap: $space-10;
-    align-items: start;
-    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: $space-4 0;
+    align-items: center;
   }
 
   &__title {
@@ -59,7 +59,20 @@ onMounted(() => {
   }
 
   &__filter {
-    margin-top: $space-1;
+    grid-column: 1 / -1;
+  }
+
+  &__search {
+    overflow: hidden;
+    width: 48px;
+
+    // реализация-исключение, хук, так как input не root элемент (выгляит хуево, это да)
+    // фокус
+    &:focus-within,
+    // в input что то введнено
+    &:not(:has(:placeholder-shown)) {
+      width: 250px;
+    }
   }
 }
 </style>
