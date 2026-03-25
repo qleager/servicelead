@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { BarData, BarEncode } from '~/components/chart/Bar.vue'
+import type { BarAsix, BarData } from '~/components/chart/Bar.vue'
 
 // типа апи модель
 type ApiStatisticsLeadItem = { label: string, value: number, data?: number[], huemae?: { text: string } }
@@ -15,7 +15,7 @@ const data = ref<BarData<ApiStatisticsLeadItem>>([
   { label: 'Sun', value: 20 },
 ])
 
-const encode = ref<BarEncode<ApiStatisticsLeadItem>>({ x: 'label', y: 'value' })
+const asix = ref<BarAsix<ApiStatisticsLeadItem>>({ x: 'label', y: 'value' })
 </script>
 
 <template>
@@ -42,11 +42,16 @@ const encode = ref<BarEncode<ApiStatisticsLeadItem>>({ x: 'label', y: 'value' })
     </template>
     <template #chart>
       <ChartBar
+        :asix
+        class="statistics-widget-conversion__chart"
         :data
-        :encode
       >
-        <template #tooltip="{ value }">
-          {{ value }}
+        <template #tooltip="{ item }">
+          <div class="statistics-widget-conversion__chart-tooltip">
+            <div>{{ item.label }}</div>
+            <div class="statistics-widget-conversion__chart-tooltip-divider" />
+            <div>{{ item.value }}</div>
+          </div>
         </template>
       </ChartBar>
     </template>
@@ -61,6 +66,25 @@ const encode = ref<BarEncode<ApiStatisticsLeadItem>>({ x: 'label', y: 'value' })
     display: flex;
     gap: $space-1;
     align-items: flex-end;
+  }
+
+  &__chart {
+    max-width: 210px;
+    margin-left: auto;
+
+    &-tooltip {
+      display: flex;
+
+      @include text(medium, xs);
+
+      line-height: 1;
+      color: $color-neutral-950;
+
+      &-divider {
+        min-width: 60px;
+        border-bottom: 1px dashed $color-neutral-200;
+      }
+    }
   }
 
   &__number {

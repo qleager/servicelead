@@ -5,7 +5,7 @@ import type { Size } from '~/types/ds'
 
 interface Props {
   icon?: IconProps['name']
-  size?: Extract<Size, 'md'>
+  size?: Size
   title?: string
 }
 
@@ -46,7 +46,10 @@ const classname = computed(() => ([
 <style lang="scss">
 .icon-title {
   $this: &;
+  $size-xs: $this + '-size-xs';
+  $size-sm: $this + '-size-sm';
   $size-md: $this + '-size-md';
+  $size-lg: $this + '-size-lg';
 
   display: flex;
   gap: $space-2;
@@ -54,11 +57,39 @@ const classname = computed(() => ([
 
   &__icon {
     color: $color-neutral;
+
+    @include is($size-xs) {
+      width: 16px;
+    }
+
+    @include is($size-sm) {
+      width: 20px;
+    }
+
+    @include is($size-md) {
+      width: 24px;
+    }
+
+    @include is($size-lg) {
+      width: 28px;
+    }
   }
 
   &__title {
-    #{$size-md} & {
+    @include is($size-xs) {
+      @include text(semibold, md);
+    }
+
+    @include is($size-sm) {
+      @include text(semibold, lg);
+    }
+
+    @include is($size-md) {
       @include text(semibold, xl);
+    }
+
+    @include is($size-lg) {
+      @include text(semibold, 2xl);
     }
   }
 }

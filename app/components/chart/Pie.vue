@@ -1,61 +1,58 @@
 <script lang="ts" setup>
-import type { EChartsOption } from 'echarts'
-import type { CallbackDataParams } from 'echarts/types/dist/shared'
 import type { VNodeChild } from 'vue'
+import type { ChartData, ChartTooltipSlotProps } from '~/types/components/chart'
 
 interface Props {
-  caption?: string
   /**
-   * Pie data including items and optional center values
+   * Caption on the center of Pie
    */
-  data: Data<DataItem>
+  caption?: string
+  data: ChartData
+  /**
+   * Title on the center of Pie
+   */
   title?: string
 }
 
 interface Slots {
-  // TODO: а может ли тултип вернуть не CallbackDataParams? (когда возвращает массив: чекнуть тип TopLevelFormatterParams)
-  tooltip: (props: CallbackDataParams) => VNodeChild
+  tooltip: (props: ChartTooltipSlotProps) => VNodeChild
 }
-
-// IDEA: а как насчет просто массива значений? имеет смысл или заеб
-type DataItem = Record<string, unknown>
-type Data<T extends DataItem> = T[]
 
 const props = defineProps<Props>()
 
 defineSlots<Slots>()
 
-const option = computed<EChartsOption>(() => {
-  const data = props.data ?? []
+const option = computed(() => {
+  const items = props.data ?? []
 
   return {
     tooltip: {
       trigger: 'item',
     },
-    dataset: {
-      source: data,
-    },
-    series: [
-      {
-        type: 'pie',
-        radius: ['55.6%', '100%'],
+    series: [{
+      type: 'pie',
+      radius: ['55.6%', '100%'],
+      padAngle: 2,
+      emphasis: {
+        scale: false,
+      },
+      label: {
+        show: false,
+      },
+      data: items.map(item => ({
+        ...item,
         itemStyle: {
-          color: '#E9EEFB',
+          color: item.color?.initial ?? '#E2E9FC',
           borderRadius: 8,
-          borderColor: '#F3F6FE',
-          borderWidth: 2,
         },
         emphasis: {
-          scale: false,
           itemStyle: {
-            color: '#0861EE',
+            color: item.color?.emphasis ?? '#0861EE',
+            borderRadius: 8,
           },
         },
-        label: {
-          show: false,
-        },
-      },
-    ],
+      })),
+    }],
     title: {
       show: Boolean(props.title || props.caption),
       text: `{value|${props.title ?? ''}}\n{label|${props.caption ?? ''}}`,
@@ -82,7 +79,7 @@ const option = computed<EChartsOption>(() => {
   }
 })
 
-export type { Props as PieProps, Slots as PieSlots, Data as PieData }
+export type { Props as PieProps, Slots as PieSlots, ChartData as PieData }
 </script>
 
 <template>
@@ -92,10 +89,12 @@ export type { Props as PieProps, Slots as PieSlots, Data as PieData }
       class="chart-pie__canvas"
       :option
     >
-      <template #tooltip="params">
+      <!-- @vue-expect-error: dataIndex и data на 100% обеспечены -->
+      <template #tooltip="{ dataIndex, data: scopedData }">
         <slot
+          :index="dataIndex"
+          :item="scopedData"
           name="tooltip"
-          v-bind="(params as CallbackDataParams)"
         />
       </template>
     </VChart>

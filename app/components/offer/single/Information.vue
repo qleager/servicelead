@@ -3,8 +3,8 @@
 // AppTag:
 // 1) нету варианта тега как в макете с backgraund = $color-neutral-light-50 и цветом текста $color-neutral-light-700
 // AppButton:
-// 1) Нету подходящего сочетания внешнего вида кнопки и ховера. Либо ставим variant="lined" color="neutral" и тогда нет синего ховера,
-// либо ставим variant="filled" color="white" и тогда не хватает видимого border , как в макете
+// 1) Нету подходящего сочетания внешнего вида кнопки и ховера. Либо ставим variant="outline" color="neutral" и тогда нет синего ховера,
+// либо ставим variant="solid" color="white" и тогда не хватает видимого border , как в макете
 // 2) в Макете используется Tabs , но у нас нет вертикального Tabs, и он все равно основан на внешке AppButton, первый пункт остается актуальным
 // + это всего лишь ссылки на заголовки, нам не нужно выделять активную кнопку.
 //
@@ -113,7 +113,7 @@ const isCardsOpen = ref(false)
             <AppTag
               v-for="i in 5"
               :key="i"
-              variant="filled"
+              variant="solid"
               color="neutral"
               class="offer-single-information__tags-tag offer-single-information__outline"
             >
@@ -256,7 +256,7 @@ const isCardsOpen = ref(false)
 
           <AppButton
             class="offer-single-information__worktypes-toggle"
-            variant="filled"
+            variant="solid"
             color="neutral"
             size="md"
             info__block
@@ -309,7 +309,7 @@ const isCardsOpen = ref(false)
           v-for="i in 5"
           :key="i"
           class="offer-single-information__nav-item offer-single-information__outline"
-          variant="filled"
+          variant="solid"
           color="white"
           size="md"
           :to="`#`"
@@ -330,7 +330,7 @@ const isCardsOpen = ref(false)
 
         <div class="offer-single-information__help-actions">
           <AppButton
-            variant="filled"
+            variant="solid"
             color="white"
             size="sm"
             type="button"
@@ -340,7 +340,7 @@ const isCardsOpen = ref(false)
           </AppButton>
 
           <AppButton
-            variant="filled"
+            variant="solid"
             color="white"
             size="sm"
             type="button"

@@ -47,6 +47,8 @@ defineSlots<Slots>()
     gap: $space-6;
     align-items: flex-end;
     justify-content: space-between;
+
+    height: 100%;
   }
 }
 </style>

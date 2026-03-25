@@ -11,7 +11,7 @@
       color="neutral"
       icon="arrow_right"
       size="xs"
-      variant="lined"
+      variant="outline"
     />
     <div class="thread-entry__corner">
       <svg
@@ -28,9 +28,11 @@
       </svg>
     </div>
     <div class="thread-entry__info">
-      <div class="thread-entry__info-title">
-        Название потока
-      </div>
+      <AppTitle
+        class="thread-entry__info-title"
+        size="xs"
+        title="Название потока"
+      />
       <AppTag
         color="neutral"
         size="sm"

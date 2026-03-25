@@ -8,35 +8,23 @@ const tabs: TabsItem[] = [
 </script>
 
 <template>
-  <AppWidget
-    @click:button="undefined"
-  >
+  <AppWidget>
     <template #trailingHeader>
+      <AppTabs
+        color="primary"
+        :items="tabs"
+        size="xs"
+        variant="outline"
+      />
       <AppButton
+        class="widget__button"
         color="neutral"
-        size="sm"
-        variant="nofilled"
-        @click="navigateTo('/news')"
-      >
-        Смотреть все
-      </AppButton>
+        icon="arrow_right"
+        size="xs"
+        variant="outline"
+      />
     </template>
     <template #content>
-      <div class="news-widget__head">
-        <AppTabs
-          color="primary"
-          :items="tabs"
-          size="xs"
-          variant="lined"
-        />
-        <AppButton
-          class="widget__button"
-          color="neutral"
-          icon="arrow_right"
-          size="xs"
-          variant="lined"
-        />
-      </div>
       <div class="news-widget__list">
         <NewsEntry
           v-for="i in 6"

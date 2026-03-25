@@ -9,7 +9,7 @@
     @click:button="undefined"
   >
     <template #content>
-      <div class="domain-widget__amount">
+      <div class="domain-widget__content">
         3
       </div>
     </template>
@@ -18,8 +18,14 @@
 
 <style lang="scss">
 .domain-widget {
-  &__amount {
+  &__content {
+    display: flex;
+    align-items: end;
+    height: 100%;
+
     @include text(medium, 3xl);
+
+    line-height: 1;
   }
 }
 </style>
