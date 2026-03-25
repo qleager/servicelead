@@ -6,6 +6,7 @@
   <section class="page-offer">
     <OfferSingleHeader />
     <OfferSingleTabs />
+    <OfferNews />
   </section>
 </template>
 
