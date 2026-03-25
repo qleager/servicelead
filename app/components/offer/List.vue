@@ -1,10 +1,17 @@
 <script lang="ts" setup>
+interface Props {
+  size?: number
+}
+
+withDefaults(defineProps<Props>(), {
+  size: 4
+})
 </script>
 
 <template>
   <div class="offer-list">
     <OfferEntry
-      v-for="i in 11"
+      v-for="i in size"
       :key="i"
     />
   </div>
