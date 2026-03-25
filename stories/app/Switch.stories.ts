@@ -44,6 +44,14 @@ export default {
       control: 'boolean',
       table: { category: 'behavioral props' },
     },
+    id: {
+      control: 'text',
+      table: { category: 'behavioral props' },
+    },
+    value: {
+      control: 'text',
+      table: { category: 'behavioral props' },
+    },
   },
   args: {
     color: 'primary',
@@ -55,6 +63,8 @@ export default {
     loading: false,
     required: false,
     modelValue: false,
+    id: 'id',
+    value: 'value',
   },
 } satisfies Meta<typeof AppSwitch>
 

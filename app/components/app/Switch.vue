@@ -37,28 +37,28 @@ const classname = computed(() => [
   `switch-color-${props.color}`,
   `switch-size-${props.size}`,
   { 'switch-on': model.value },
-  { 'switch-disabled': props.disabled },
   { 'switch-loading': props.loading },
   { 'switch-trailing': props.trailing },
 
 ])
-
-const onClick = () => {
-  if (props.loading || props.disabled) {
-    return
-  }
-  else {
-    model.value = !model.value
-  }
-}
-
 export type { Props as SwitchProps, Model as SwitchModel, Slots as SwitchSlots }
 </script>
 
 <template>
+  <input
+    v-if="name"
+    :checked="model"
+    class="switch__input"
+    hidden
+    :name
+    readonly
+    type="checkbox"
+    :value
+  >
   <button
     :class="classname"
-    @click="onClick"
+    :disabled="loading || disabled"
+    @click="model = !model"
   >
     <div class="switch__control">
       <span class="switch__thumb">
@@ -82,7 +82,10 @@ export type { Props as SwitchProps, Model as SwitchModel, Slots as SwitchSlots }
           class="switch__required"
         > *</span>
       </div>
-      <div class="switch__description">
+      <div
+        v-if="slots.description || props.description"
+        class="switch__description"
+      >
         <slot name="description">
           {{ description }}
         </slot>
@@ -96,7 +99,7 @@ export type { Props as SwitchProps, Model as SwitchModel, Slots as SwitchSlots }
   $this: &;
   $primary-color: & + '-color-primary';
   $size-md: & + '-size-md';
-  $disabled: & + '-disabled';
+  $disabled: & + ':disabled';
   $loading: & + '-loading';
   $trailing: & + '-trailing';
   $on: & + '-on';
@@ -117,14 +120,9 @@ export type { Props as SwitchProps, Model as SwitchModel, Slots as SwitchSlots }
     cursor: not-allowed;
   }
 
-  @include is($primary-color) {
-    --background-color: #{$color-primary};
-  }
-
   &__control {
-    display: flex;
+    position: relative;
     background-color: $color-neutral-50;
-    transition: $active-duration-sm;
 
     @include is($size-md) {
       width: 44px;
@@ -133,24 +131,29 @@ export type { Props as SwitchProps, Model as SwitchModel, Slots as SwitchSlots }
       border-radius: $radius-9;
     }
 
-    @include is($on) {
-      justify-content: flex-end;
-      background-color: var(--background-color);
+    @include is($on + $primary-color) {
+      background-color: $color-primary;
     }
   }
 
   &__thumb {
+    position: absolute;
+    left: 0;
+
     display: flex;
     align-items: center;
     justify-content: center;
 
-    width: 20px;
-    height: 20px;
     border-radius: $radius-6;
 
     background-color: $color-neutral-300;
 
-    @include is($on) {
+    transition: $active-duration-sm;
+
+    @include is($on + $size-md) {
+      left: 20px;
+      width: 20px;
+      height: 20px;
       background-color: white;
     }
 
