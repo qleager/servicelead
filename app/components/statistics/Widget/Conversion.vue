@@ -9,6 +9,7 @@ type ApiStatisticsLeadItem = { label: string, value: number, data?: number[], hu
 
 defineProps<Props>()
 
+const filterPeriod = ref('День')
 // типа данные из апи
 const data = ref<BarData<ApiStatisticsLeadItem>>([
   { label: 'Mon', value: 12, data: [1, 2, 4] },
@@ -31,20 +32,12 @@ const asix = ref<BarAsix<ApiStatisticsLeadItem>>({ x: 'label', y: 'value' })
   >
     <template #trailingHeader>
       <AppSelect
-        v-if="isFilterVisible"
+        v-if="!isFilterVisible"
+        v-model="filterPeriod"
         class="statistics-widget-conversion__select"
         :items="['День', 'Неделя', 'Месяц', 'Год']"
         rounded
         size="sm"
-      />
-      <AppButton
-        v-else
-        class="widget__button"
-        color="neutral"
-        icon="arrow_right"
-        size="xs"
-        variant="lined"
-        @click="navigateTo('/conversions')"
       />
     </template>
     <template #value>
