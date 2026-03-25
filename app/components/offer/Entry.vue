@@ -6,124 +6,122 @@
     class="offer-entry"
     @click="navigateTo('/offers/1')"
   >
-    <template #content>
-      <div class="offer-entry__wrapper">
-        <div class="offer-entry__header">
-          <div class="offer-entry__header-media">
-            <NuxtImg :src="'/images/offer-head-img.png'" />
-          </div>
-          <div class="offer-entry__header-overlay">
-            <AppTooltip>
-              <div class="offer-entry__header-tags">
-                <AppIcon
-                  class="offer-entry__header-tag"
-                  name="higher_conversion"
-                  :size="20"
-                />
-                <AppIcon
-                  class="offer-entry__header-tag"
-                  name="sun"
-                  :size="20"
-                />
-                <AppIcon
-                  class="offer-entry__header-tag"
-                  name="geo_radar"
-                  :size="20"
-                />
-                <AppIcon
-                  class="offer-entry__header-tag"
-                  name="geo_radar"
-                  :size="20"
-                />
-              </div>
-              <template #content>
-                <div class="offer-entry__tooltip-item">
-                  <AppIcon
-                    class="offer-entry__tooltip-icon"
-                    name="higher_conversion"
-                    :size="16"
-                  />
-                  Высокая конверсия
-                </div>
-                <div class="offer-entry__tooltip-item">
-                  <AppIcon
-                    class="offer-entry__tooltip-icon"
-                    name="sun"
-                    :size="16"
-                  />
-                  Высокая конверсия
-                </div>
-                <div class="offer-entry__tooltip-item">
-                  <AppIcon
-                    class="offer-entry__tooltip-icon"
-                    name="geo_radar"
-                    :size="16"
-                  />
-                  Топ ГЕО
-                </div>
-                <div class="offer-entry__tooltip-item">
-                  <AppIcon
-                    class="offer-entry__tooltip-icon"
-                    name="geo_radar"
-                    :size="16"
-                  />
-                  Топ ГЕО
-                </div>
-              </template>
-            </AppTooltip>
-            <AppTooltip
-              content="Добавить в избранное"
-            >
-              <AppButton
-                color="white"
-                size="xs"
-                variant="nofilled"
-              >
-                <AppIcon
-                  name="favorites"
-                  :size="32"
-                />
-              </AppButton>
-            </AppTooltip>
-          </div>
-        </div>
-        <div class="offer-entry__body">
-          <div class="offer-entry__content">
-            <div class="offer-entry__info">
-              <div class="offer-entry__info-category">
-                <AppTag
-                  size="sm"
-                  variant="soft"
-                >
-                  Бытовой ремонт
-                </AppTag>
-              </div>
-              <AppDropdown mode="hover">
-                <div class="offer-entry__info-location">
-                  <AppIcon
-                    name="geo_16"
-                    :size="16"
-                  />
-                  <div>
-                    23 +
-                  </div>
-                </div>
-                <template #content>
-                  <div>
-                    location tooltip
-                  </div>
-                </template>
-              </AppDropdown>
-            </div>
-            <div class="offer-entry__title">
-              <NuxtImg
-                class="offer-entry__title-icon"
-                :src="'/images/top-fire.svg'"
+    <template #top>
+      <div class="offer-entry__top">
+        <div class="offer-entry__media" />
+
+        <div class="offer-entry__overlay">
+          <AppTooltip>
+            <div class="offer-entry__tags">
+              <AppIcon
+                class="offer-entry__tag"
+                name="higher_conversion"
+                :size="20"
               />
-              <div class="offer-entry__title-text">
-                Ремонт ванной под ключ
+              <AppIcon
+                class="offer-entry__tag"
+                name="sun"
+                :size="20"
+              />
+              <AppIcon
+                class="offer-entry__tag"
+                name="geo_radar"
+                :size="20"
+              />
+              <AppIcon
+                class="offer-entry__tag"
+                name="geo_radar"
+                :size="20"
+              />
+            </div>
+            <template #content>
+              <div class="offer-entry__tooltip-item">
+                <AppIcon
+                  class="offer-entry__tooltip-icon"
+                  name="higher_conversion"
+                  :size="16"
+                />
+                Высокая конверсия
+              </div>
+              <div class="offer-entry__tooltip-item">
+                <AppIcon
+                  class="offer-entry__tooltip-icon"
+                  name="sun"
+                  :size="16"
+                />
+                Высокая конверсия
+              </div>
+              <div class="offer-entry__tooltip-item">
+                <AppIcon
+                  class="offer-entry__tooltip-icon"
+                  name="geo_radar"
+                  :size="16"
+                />
+                Топ ГЕО
+              </div>
+              <div class="offer-entry__tooltip-item">
+                <AppIcon
+                  class="offer-entry__tooltip-icon"
+                  name="geo_radar"
+                  :size="16"
+                />
+                Топ ГЕО
+              </div>
+            </template>
+          </AppTooltip>
+
+          <AppTooltip
+            content="Добавить в избранное"
+          >
+            <AppButton
+              color="white"
+              size="xs"
+              variant="nofilled"
+            >
+              <AppIcon
+                name="favorites"
+                :size="32"
+              />
+            </AppButton>
+          </AppTooltip>
+        </div>
+      </div>
+    </template>
+    <template #content>
+      <div class="offer-entry__content">
+        <div class="offer-entry__info">
+          <div class="offer-entry__info-category">
+            <AppTag
+              size="sm"
+              variant="soft"
+            >
+              Бытовой ремонт
+            </AppTag>
+          </div>
+          <AppDropdown mode="hover">
+            <div class="offer-entry__info-location">
+              <AppIcon
+                name="geo_16"
+                :size="16"
+              />
+              <div>
+                23 +
               </div>
             </div>
+            <template #content>
+              <div>
+                location tooltip
+              </div>
+            </template>
+          </AppDropdown>
+        </div>
+        <div class="offer-entry__title">
+          <NuxtImg
+            class="offer-entry__title-icon"
+            :src="'/images/top-fire.svg'"
+          />
+          <div class="offer-entry__title-text">
+            Ремонт ванной под ключ
           </div>
         </div>
       </div>
@@ -156,68 +154,40 @@
 .offer-entry{
   $this: &;
 
-  display: flex;
   flex: 1 1 0;
-  flex-direction: column;
-
   min-width: 240px;
-  border-radius: $radius-6;
 
-  background: white;
-
-  &__wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: $space-3;
-  }
-
-  &__header {
+  &__top {
     position: relative;
 
-    overflow: hidden;
+    box-sizing: content-box;
+    min-height: 150px;
+    padding: $space-2 $space-2 $space-1 $space-2;
 
-    aspect-ratio: 2 / 1;
-    margin: -$space-2 (-$space-2) 0;
-    border-radius: $radius-6;
-
-    background: $color-blue-350;
-
-    &-media {
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-    }
-
-    &-overlay {
-      position: absolute;
-      z-index: 1;
-      top: 12px;
-      right: 12px;
-      left: 12px;
-
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-
-      color: white;
-    }
-
-    &-tags {
-      display: flex;
-      gap: $space-05;
-    }
-
-    &-tag {
-      padding: $space-05;
-    }
+    color: white;
   }
 
-  &__body {
+  &__media {
+    position: absolute;
+    inset: $space-2 $space-2 $space-1 $space-2;
+    border-radius: $space-6;
+    background: url("/images/offer-head-img.png") no-repeat center/cover;
+  }
+
+  &__overlay {
     display: flex;
-    flex-direction: column;
-    gap: $space-6;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: $space-3;
+  }
+
+  &__tags {
+    display: flex;
+    gap: $space-05;
+  }
+
+  &__tag {
+    padding: $space-05;
   }
 
   &__content {
