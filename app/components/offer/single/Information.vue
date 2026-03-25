@@ -319,37 +319,7 @@ const isCardsOpen = ref(false)
       </nav>
 
       <!-- TODO: Заменить на AppHelp когда доделают -->
-      <div class="offer-single-information__help offer-single-information__outline">
-        <div class="offer-single-information__help-title">
-          Нужна помощь?
-        </div>
-
-        <div class="offer-single-information__help-text">
-          Создайте тикет или задайте его напрямую своему менеджеру
-        </div>
-
-        <div class="offer-single-information__help-actions">
-          <AppButton
-            variant="solid"
-            color="white"
-            size="sm"
-            type="button"
-            class="offer-single-information__help-action"
-          >
-            Менеджер
-          </AppButton>
-
-          <AppButton
-            variant="solid"
-            color="white"
-            size="sm"
-            type="button"
-            class="offer-single-information__help-action"
-          >
-            Тикет
-          </AppButton>
-        </div>
-      </div>
+      <OfferHelpWidget />
     </aside>
   </div>
 </template>
@@ -514,37 +484,6 @@ const isCardsOpen = ref(false)
 
     &-item {
       text-decoration: none;
-    }
-  }
-
-  &__help {
-    display: flex;
-    flex-direction: column;
-    gap: $space-4;
-
-    padding: $space-6;
-    border-radius: $radius-4;
-
-    background: $color-neutral-50;
-
-    &-title {
-      @include text(regular, xl);
-    }
-
-    &-text {
-      @include text(regular, md);
-
-      color: $color-neutral-300;
-    }
-
-    &-actions {
-      display: flex;
-      gap: $space-4;
-    }
-
-    &-action {
-      justify-content: center;
-      width: 100%;
     }
   }
 
