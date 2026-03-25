@@ -37,7 +37,7 @@ const asix = ref<BarAsix<ApiStatisticsLeadItem>>({ x: 'label', y: 'value' })
         class="statistics-widget-conversion__select"
         :items="['День', 'Неделя', 'Месяц', 'Год']"
         rounded
-        size="sm"
+        size="xs"
       />
     </template>
     <template #value>
