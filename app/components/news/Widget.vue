@@ -1,10 +1,4 @@
 <script lang="ts" setup>
-import type { TabsItem } from '~/components/app/Tabs.vue'
-
-const tabs: TabsItem[] = [
-  { label: 'Важное', value: 'important' },
-  { label: 'Новости', value: 'news' },
-]
 </script>
 
 <template>
@@ -12,9 +6,8 @@ const tabs: TabsItem[] = [
     <template #trailingHeader>
       <AppTabs
         color="primary"
-        :items="tabs"
-        size="xs"
-        variant="outline"
+        :items="['Важное', 'Новости']"
+        variant="link"
       />
       <AppButton
         class="widget__button"
