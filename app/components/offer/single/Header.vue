@@ -10,35 +10,54 @@
 
 <template>
   <div class="offer-single-header">
+    <div class="offer-single-header__media">
+      <NuxtImg :src="'/images/offer-single-header.png'" />
+    </div>
     <div
       class="offer-single-header__tags"
     >
       <AppTag
-        v-for="i in 5"
-        :key="i"
         class="offer-single-header__tags-item"
+        color="white"
+        size="sm"
+        variant="lined"
+      >
+        Мастер на час
+      </AppTag>
+      <AppTag
+        class="offer-single-header__tags-item"
+        color="white"
         icon="geo_radar"
         size="sm"
-        color="neutral"
+        variant="lined"
       >
-        Lorem ipsum
+        Топ гео
+      </AppTag>
+      <AppTag
+        class="offer-single-header__tags-item"
+        color="white"
+        icon="seasonal_demand"
+        size="sm"
+        variant="lined"
+      >
+        Высокий спрос
+      </AppTag>
+      <AppTag
+        class="offer-single-header__tags-item"
+        color="white"
+        size="sm"
+        variant="lined"
+      >
+        <NuxtImg
+          class="offer-single-header__tags-icon"
+          :src="'/images/top-fire.svg'"
+        />
+        Действует акция
       </AppTag>
     </div>
 
     <div class="offer-single-header__title">
-      <span class="offer-single-header__title-text">
-        Lorem ipsum dolor sit amet consectetur.
-      </span>
-
-      <AppChip
-        standalone
-        color="green"
-        class="offer-single-header__indicator"
-      >
-        <span class="offer-single-header__indicator-text">
-          Подключен
-        </span>
-      </AppChip>
+      Lorem ipsum dolor sit amet consectetur.
     </div>
 
     <div class="offer-single-header__group">
@@ -47,23 +66,34 @@
           Ставка
         </div>
         <div class="offer-single-header__rate-value">
-          до <span class="offer-single-header__rate-value-number">15 000</span> ₽
+          до <span class="offer-single-header__rate-value-number">1 200</span> ₽
           <AppButton
             class="offer-single-header__rate-action"
+            color="white"
             icon="arrow_right"
             size="xs"
             variant="lined"
-            color="neutral"
           />
         </div>
       </div>
 
       <AppButton
         class="offer-single-header__button"
+        color="white"
       >
         Создать поток
       </AppButton>
     </div>
+
+    <AppChip
+      class="offer-single-header__indicator"
+      color="green"
+      standalone
+    >
+      <span class="offer-single-header__indicator-text">
+        Подключен
+      </span>
+    </AppChip>
   </div>
 </template>
 
@@ -73,37 +103,56 @@
 
   position: relative;
   overflow: visible;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  padding: $space-6 $space-6 $space-8 $space-8;
+
+  &__media {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+
+    overflow: hidden;
+
+    border-radius: $space-8;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
 
   &__tags {
     display: flex;
     flex-wrap: wrap;
     gap: $space-2;
 
-    &-item {
-      outline: 1px dashed $color-primary
+    &-icon {
+      width: 16px;
+      height: 16px;
     }
   }
 
   &__title {
-    display: flex;
-    gap: $space-4;
-    align-items: center;
-    margin-top: $space-1;
+    margin-top: $space-3;
 
-    &-text {
-      @include text(bold, 5xl);
-    }
+    @include text(bold, 5xl);
+
+    line-height: 1.375;
+    color: white;
   }
 
   &__indicator {
-    margin-top: $space-2;
+    position: absolute;
+    top: 24px;
+    right: 24px;
 
     &-text {
-      color: $color-neutral-400;
+      @include text(medium, sm);
 
-      @include text(regular, xs);
+      line-height: 1.4;
+      color: white;
+      text-transform: uppercase;
     }
   }
 
@@ -111,7 +160,7 @@
     display: flex;
     gap: $space-8;
     align-items: flex-end;
-    margin-top: $space-6;
+    margin-top: $space-20;
   }
 
   &__rate {
@@ -121,24 +170,29 @@
     &-label {
       @include text(regular, sm);
 
-      text-transform: uppercase;
+      line-height: 1.4;
+      color: white;
+      text-transform: uppercase
     }
 
     &-value {
-      transform: translateY($space-2);
       display: inline-flex;
       gap: $space-2;
       align-items: baseline;
 
       @include text(medium, 2xl);
 
+      color: white;
+
       &-number {
         @include text(medium, 5xl);
+
+        line-height: 1.375;
       }
     }
 
     &-action {
-      outline: 1px dashed $color-primary;
+      transform: translateY(-$space-1);
     }
   }
 }
