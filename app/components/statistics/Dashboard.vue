@@ -1,54 +1,69 @@
-<script lang="ts" setup>
-import type { TabsItem } from '~/components/app/Tabs.vue'
-
-const tabs: TabsItem[] = [
-  { label: 'Все проекты', value: 'all' },
-  { label: 'Мастер на час', value: 'master' },
-  { label: 'Бытовой ремонт', value: 'byt_rem' },
-  { label: 'Универсальный', value: 'universal' },
-]
-</script>
+<script lang="ts" setup></script>
 
 <template>
-  <AppSection class="statistics-dashboard">
-    <template #header>
-      <AppTabs
-        color="white"
-        :items="tabs"
-      >
-        <template #trailing="{ item }">
-          <AppTag
-            v-if="item.value !== 'all'"
-            color="neutral"
-            size="sm"
-          >
-            32%
-          </AppTag>
-        </template>
-      </AppTabs>
-    </template>
+  <AppCard class="statistics-dashboard">
     <template #content>
-      <AppCard>
-        <template #content>
-          <div class="statistics-dashboard__widgets">
-            <StatisticsWidgetLead />
-            <StatisticsWidgetLead />
-            <StatisticsWidgetLead />
-          <!-- <StatisticsWidgetConversion /> -->
-          <!-- <StatisticsWidgetTraffic /> -->
-          </div>
-        </template>
-      </AppCard>
+      <div class="statistics-dashboard__content">
+        <AppTabs
+          class="statistics-dashboard__tabs"
+          color="neutral"
+          :items="['День', 'Неделя', 'Месяц']"
+          variant="link"
+        >
+          <template #listTrailing>
+            <div class="statistics-dashboard__tabs-header-trailing">
+              <div class="statistics-dashboard__tabs-caption">
+                <b class="statistics-dashboard__tabs-caption-key">Вчера</b>
+                <span class="statistics-dashboard__tabs-caption-value">12.03.2026</span>
+              </div>
+            </div>
+          </template>
+        </AppTabs>
+        <StatisticsWidgetLead />
+        <StatisticsWidgetConversion />
+        <StatisticsWidgetConversionByTraffic />
+        <StatisticsWidgetSummary class="statistics-dashboard__summary" />
+      </div>
     </template>
-  </AppSection>
+  </AppCard>
 </template>
 
 <style lang="scss">
 .statistics-dashboard {
-  &__widgets {
+  &__content {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: $space-4;
+    gap: $space-6 $space-4;
+  }
+
+  &__summary {
+    grid-column: span 3;
+  }
+
+  &__tabs {
+    grid-column: span 3;
+    width: 100%;
+    margin-left: $space-4;
+
+    &-header-trailing {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+      padding-right: $space-4;
+    }
+
+    &-caption {
+      display: flex;
+      gap: $space-2;
+
+      &-key {
+        @include text(semibold, xs);
+      }
+
+      &-value {
+        @include text(regular, xs);
+      }
+    }
   }
 }
 </style>

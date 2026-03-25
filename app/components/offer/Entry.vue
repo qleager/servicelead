@@ -142,7 +142,7 @@
             icon="arrow_right"
             size="xs"
             :to="{ name: 'offers-id', params: { id: 1 } }"
-            variant="lined"
+            variant="outline"
           />
         </div>
       </div>

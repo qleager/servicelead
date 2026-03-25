@@ -38,6 +38,7 @@ export const iconNames = [
   'jobs',
   'like_filled',
   'like_lined',
+  'load_32',
   'lock',
   'mail_24',
   'main_menu_account',

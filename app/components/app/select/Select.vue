@@ -261,7 +261,7 @@ export type {
           <AppButton
             v-if="reset"
             class="select__reset-button"
-            variant="nofilled"
+            variant="link"
             color="lighter"
             size="sm"
             @click="resetAll"

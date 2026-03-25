@@ -96,7 +96,7 @@ export type { Props as InputProps, Emits as InputEmits, Model as InputModel }
         color="neutral"
         icon="close"
         size="xs"
-        variant="nofilled"
+        variant="link"
         @click="onReset"
       />
     </Transition>

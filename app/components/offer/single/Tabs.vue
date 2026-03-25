@@ -29,7 +29,7 @@ const activePanel = computed(() => {
       v-if="tabs?.length"
       v-model="currentTab"
       :items="tabs"
-      variant="lined"
+      variant="outline"
       color="neutral"
       class="offer-single-tabs-item"
     />

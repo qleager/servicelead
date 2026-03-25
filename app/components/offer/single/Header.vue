@@ -52,7 +52,7 @@
             class="offer-single-header__rate-action"
             icon="arrow_right"
             size="xs"
-            variant="lined"
+            variant="outline"
             color="neutral"
           />
         </div>

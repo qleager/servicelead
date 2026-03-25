@@ -75,7 +75,7 @@ export type { Props as SheetProps, Emits as SheetEmits, Model as SheetModel, Slo
                 color="neutral"
                 icon="close"
                 size="sm"
-                variant="nofilled"
+                variant="link"
                 @click="close"
               />
             </div>
