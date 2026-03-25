@@ -24,7 +24,7 @@
     <template #content>
       <div class="offer-filter-slideover__content">
         <div class="offer-filter-slideover__switchers">
-          <div class="offer-filter-slideover__switchers-row">
+          <label class="offer-filter-slideover__switchers-row">
             <div class="offer-filter-slideover__switchers-left">
               <NuxtImg
                 class="offer-filter-slideover__switchers-row-icon"
@@ -35,23 +35,23 @@
               </div>
             </div>
             <AppSwitch />
-          </div>
-          <div class="offer-filter-slideover__switchers-row">
+          </label>
+          <label class="offer-filter-slideover__switchers-row">
             <div class="offer-filter-slideover__switchers-left">
               <div class="offer-filter-slideover__switchers-title">
                 Топ офферы
               </div>
             </div>
             <AppSwitch />
-          </div>
-          <div class="offer-filter-slideover__switchers-row">
+          </label>
+          <label class="offer-filter-slideover__switchers-row">
             <div class="offer-filter-slideover__switchers-left">
               <div class="offer-filter-slideover__switchers-title">
                 Действует акция
               </div>
             </div>
             <AppSwitch />
-          </div>
+          </label>
         </div>
         <div class="offer-filter-slideover__selects">
           <AppSelect
