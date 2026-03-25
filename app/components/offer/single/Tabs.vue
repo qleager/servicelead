@@ -1,11 +1,12 @@
 <script lang="ts" setup>
 import type { TabsItem, TabsModel } from '~/components/app/Tabs.vue'
 import OffersSingleInformation from '~/components/offer/single/Information.vue'
+import OffersSingleStatistics from '~/components/offer/single/Statistics.vue'
 
 // IDEA: оправдано ли нахождение табов здесь? Или лучше понять их на страницу?
 // Табы одинаковы для все офферов? Одним методом получаем статистику/цены/географию?
 const tabs: TabsItem[] = [
-  { label: 'Статистика', value: 'stats' },
+  { label: 'Статистика', value: 'statistics' },
   { label: 'Информация', value: 'info' },
   { label: 'География', value: 'geo' },
   { label: 'Прайс', value: 'price' },
@@ -17,6 +18,8 @@ const activePanel = computed(() => {
   switch (currentTab.value) {
     case 'info':
       return { component: OffersSingleInformation, data: { infoData: 'infoData' } }
+    case 'statistics':
+      return { component: OffersSingleStatistics, data: { infoData: 'infoData' } }
     default:
       return null
   }
@@ -28,10 +31,10 @@ const activePanel = computed(() => {
     <AppTabs
       v-if="tabs?.length"
       v-model="currentTab"
+      class="offer-single-tabs-item"
+      color="neutral"
       :items="tabs"
       variant="outline"
-      color="neutral"
-      class="offer-single-tabs-item"
     />
     <Component
       :is="activePanel.component"
@@ -51,8 +54,8 @@ const activePanel = computed(() => {
   gap: $space-4;
 
   &__panel {
-    padding: $space-6;
-    border-radius: $radius-6;
+    padding: $space-4;
+    border-radius: $radius-10;
     background: white;
   }
 }
