@@ -33,8 +33,7 @@ const resetItem = (item: unknown) => {
       <AppTabs
         class="offer-filter__tabs"
         color="white"
-        :items="tabsItems"
-        variant="lined"
+        :items="['Все проекты', 'Мастер на час', 'Бытовой ремонт', 'Универсальный']"
       />
     </div>
 
@@ -50,7 +49,7 @@ const resetItem = (item: unknown) => {
         variant="soft"
         @close="() => resetItem(value)"
       >
-        {{ value }}
+        Селект {{ value }}
       </AppTag>
     </div>
   </div>
