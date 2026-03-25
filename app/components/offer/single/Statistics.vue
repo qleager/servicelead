@@ -3,7 +3,10 @@
 
 <template>
   <div class="offer-single-statistics">
-    <StatisticsWidgetConversion class="offer-single-statistics__conversion" />
+    <StatisticsWidgetConversion
+      class="offer-single-statistics__conversion"
+      is-filter-visible
+    />
     <StatisticsWidgetGeo class="offer-single-statistics__geo" />
     <StatisticsWidgetProductivity class="offer-single-statistics__productivity" />
     <StatisticsWidgetSummary class="offer-single-statistics__summary" />
