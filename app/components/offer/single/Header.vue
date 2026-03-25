@@ -1,12 +1,4 @@
-<script lang="ts" setup>
-// нужные доработки в других компонентах
-// Tag:
-// 1) нету возможности раскрасить иконки
-// 2) нету hover цветом Purple_100 как в макете
-
-// Button (.offer-single-header__rate-action)
-// 1) нет цвета иконки как в макете $color-neutral-light-300.  ( &#{$neutral-color} ставит цвет текста $color-neutral-950 )
-</script>
+<script lang="ts" setup></script>
 
 <template>
   <div class="offer-single-header">
@@ -57,7 +49,7 @@
     </div>
 
     <div class="offer-single-header__title">
-      Lorem ipsum dolor sit amet consectetur.
+      Ремонт электрики
     </div>
 
     <div class="offer-single-header__group">
