@@ -26,7 +26,7 @@
 </template>
 
 <style lang="scss">
-.statistics-widget-conversion {
+.statistics-widget-conversion-by-cities {
   $this: &;
 }
 </style>
