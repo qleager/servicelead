@@ -319,7 +319,7 @@ const isCardsOpen = ref(false)
       </nav>
 
       <!-- TODO: Заменить на AppHelp когда доделают -->
-      <OfferHelpWidget />
+      <HelpWidget />
     </aside>
   </div>
 </template>
