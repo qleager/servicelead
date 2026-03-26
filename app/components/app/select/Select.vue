@@ -3,9 +3,7 @@ import type { IconProps } from '../Icon.vue'
 import type { SelectOptionProps } from './_Option.vue'
 
 interface Props {
-  items: Item[]
-  multiple?: boolean
-  variant?: 'filled' | 'lined' | 'nofilled'
+  color?: 'white' | 'neutral' | 'primary'
   /**
    * How to display selected items in multiple mode
    *
@@ -15,15 +13,10 @@ interface Props {
    * @defaultvalue `'number'`
    */
   counter?: 'number' | 'list'
-  /**
-   * Show search field in the dropdown
-   *
-   * @defaultvalue false
-   */
-  search?: boolean
-  size?: 'xs' | 'sm' | 'md' | 'lg'
-  color?: 'white' | 'neutral' | 'primary'
+  disabled?: boolean
   icon?: IconProps['name']
+  items: Item[]
+  multiple?: boolean
   placeholder?: string
   /**
    * Controls how the placeholder behaves when a value is selected
@@ -36,18 +29,25 @@ interface Props {
    */
   placeholderMode?: 'static' | 'float'
   /**
+   * Show reset selected button
+   *
+   * @defaultvalue false
+   */
+  reset?: boolean
+  /**
    * Apply 50% border radius
    *
    * @defaultvalue false
    */
   rounded?: boolean
   /**
-   * Show reset selected button
+   * Show search field in the dropdown
    *
    * @defaultvalue false
    */
-  reset?: boolean
-  disabled?: boolean
+  search?: boolean
+  size?: 'xs' | 'sm' | 'md' | 'lg'
+  variant?: 'solid' | 'outline' | 'nofilled'
 }
 
 type Value = string | number
@@ -64,17 +64,17 @@ type Model = GetModelValue<Item, typeof props.multiple>
 type MultipleModel = Array<GetItemValue<Item>>
 
 interface Injection {
-  isSelected: typeof isSelected
-  isCollapsed: typeof isCollapsed
-  counter: typeof props.counter
-  variant: typeof props.variant
-  multiple: typeof props.multiple
-  icon: typeof props.icon
-  size: typeof props.size
   color: typeof props.color
+  counter: typeof props.counter
+  icon: typeof props.icon
+  isCollapsed: typeof isCollapsed
+  isSelected: typeof isSelected
+  multiple: typeof props.multiple
   placeholder: typeof props.placeholder
   placeholderMode: typeof props.placeholderMode
   rounded: typeof props.rounded
+  size: typeof props.size
+  variant: typeof props.variant
 }
 
 // Type Guards
@@ -83,7 +83,7 @@ const isOptionObject = (option: Option | Value): option is Option => {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  variant: 'lined',
+  variant: 'outline',
   multiple: false,
   counter: 'number',
   placeholder: 'Выберите...',
@@ -248,10 +248,10 @@ export type {
           <AppSelectOption
             v-for="option in options"
             :key="option.value"
+            :checkbox="props.multiple"
+            :is-selected="isOptionSelected(option)"
             :label="option.label"
             :value="option.value"
-            :is-selected="isOptionSelected(option)"
-            :checkbox="props.multiple"
             @click="onOptionClick(option)"
           />
 
@@ -261,9 +261,9 @@ export type {
           <AppButton
             v-if="reset"
             class="select__reset-button"
-            variant="link"
             color="lighter"
             size="sm"
+            variant="link"
             @click="resetAll"
           >
             Очистить все

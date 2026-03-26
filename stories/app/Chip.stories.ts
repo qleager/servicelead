@@ -12,7 +12,7 @@ export default {
     // Props
     variant: {
       control: 'select',
-      options: ['filled', 'soft'],
+      options: ['solid', 'soft'],
     },
     size: {
       control: 'select',
@@ -46,7 +46,7 @@ export default {
     },
   },
   args: {
-    variant: 'filled',
+    variant: 'solid',
     size: 'md',
     color: 'primary',
     position: 'top-right',

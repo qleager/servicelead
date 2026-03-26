@@ -12,7 +12,7 @@
         class="offer-single-header__tags-item"
         color="white"
         size="sm"
-        variant="lined"
+        variant="outline"
       >
         Мастер на час
       </AppTag>
@@ -21,7 +21,7 @@
         color="white"
         icon="geo_radar"
         size="sm"
-        variant="lined"
+        variant="outline"
       >
         Топ гео
       </AppTag>
@@ -30,7 +30,7 @@
         color="white"
         icon="seasonal_demand"
         size="sm"
-        variant="lined"
+        variant="outline"
       >
         Высокий спрос
       </AppTag>
@@ -38,7 +38,7 @@
         class="offer-single-header__tags-item"
         color="white"
         size="sm"
-        variant="lined"
+        variant="outline"
       >
         <NuxtImg
           class="offer-single-header__tags-icon"
