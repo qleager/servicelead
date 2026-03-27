@@ -27,7 +27,7 @@
         <div class="offer-single-geo__top-column">
           <AppTabs
             class="offer-single-geo__tabs"
-            color="primary"
+            color="neutral"
             :items="[
               {
                 label: 'Все',
@@ -48,6 +48,7 @@
                 trailingIcon: true,
               },
             ]"
+            size="xs"
           />
         </div>
         <div class="offer-single-geo__top-column">

@@ -35,7 +35,6 @@ const activePanel = computed(() => {
       v-if="tabs?.length"
       v-model="currentTab"
       class="offer-single-tabs-item"
-      color="neutral"
       :items="tabs"
       variant="pill"
     />
