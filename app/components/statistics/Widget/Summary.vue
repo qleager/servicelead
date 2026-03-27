@@ -1,5 +1,11 @@
 <script lang="ts" setup>
+interface Props {
+  isFilterVisible?: boolean
+}
 
+defineProps<Props>()
+
+const filterPeriod = ref('День')
 </script>
 
 <template>
@@ -9,6 +15,15 @@
     title="Сводка"
   >
     <template #trailingHeader>
+      <AppSelect
+        v-if="isFilterVisible"
+        v-model="filterPeriod"
+        class="statistics-widget-summary__select"
+        :items="['День', 'Неделя', 'Месяц', 'Год']"
+        rounded
+        size="xs"
+      />
+
       <AppButton
         color="neutral"
         size="sm"
@@ -24,4 +39,13 @@
   </AppWidget>
 </template>
 
-<style></style>
+<style lang="scss">
+.statistics-widget-summary {
+  $this: &;
+
+  &__select {
+    width: fit-content;
+    margin-right: auto;
+  }
+}
+</style>

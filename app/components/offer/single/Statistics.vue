@@ -9,7 +9,10 @@
     />
     <StatisticsWidgetGeo class="offer-single-statistics__geo" />
     <StatisticsWidgetProductivity class="offer-single-statistics__productivity" />
-    <StatisticsWidgetSummary class="offer-single-statistics__summary" />
+    <StatisticsWidgetSummary
+      class="offer-single-statistics__summary"
+      is-filter-visible
+    />
     <StatisticsWidgetConversionByCities class="offer-single-statistics__cities" />
   </div>
 </template>
