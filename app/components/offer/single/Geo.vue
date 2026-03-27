@@ -35,17 +35,14 @@
               {
                 icon: 'city_triangle',
                 label: 'Название',
-                trailingIcon: true,
               },
               {
                 icon: 'city_square',
                 label: 'Название',
-                trailingIcon: true,
               },
               {
                 icon: 'city_circle',
                 label: 'Название',
-                trailingIcon: true,
               },
             ]"
             size="xs"
@@ -95,6 +92,7 @@
 
   &__top {
     display: flex;
+    gap: $space-4;
     justify-content: space-between;
     padding: $space-2 $space-4;
 
