@@ -2,18 +2,18 @@
 </script>
 
 <template>
-  <div class="offer-help-widget">
-    <div class="offer-help-widget__title">
+  <div class="help-widget">
+    <div class="help-widget__title">
       Нужна помощь?
     </div>
 
-    <div class="offer-help-widget__text">
+    <div class="help-widget__text">
       Создайте тикет или задайте его напрямую своему менеджеру
     </div>
 
-    <div class="offer-help-widget__actions">
+    <div class="help-widget__actions">
       <AppButton
-        class="offer-help-widget__action"
+        class="help-widget__action"
         color="white"
         size="sm"
         type="button"
@@ -23,7 +23,7 @@
       </AppButton>
 
       <AppButton
-        class="offer-help-widget__action"
+        class="help-widget__action"
         color="white"
         size="sm"
         type="button"
@@ -36,7 +36,7 @@
 </template>
 
 <style lang="scss">
-.offer-help-widget {
+.help-widget {
   display: flex;
   flex-direction: column;
   gap: $space-4;
