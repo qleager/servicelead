@@ -10,9 +10,13 @@ export default {
   },
   argTypes: {
     // Props
+    color: {
+      control: 'select',
+      options: ['white', 'neutral'],
+    },
     size: {
       control: 'select',
-      options: ['md'],
+      options: ['xs', 'sm', 'md'],
     },
     variant: {
       control: 'select',
@@ -51,6 +55,7 @@ export default {
     },
   },
   args: {
+    color: 'white',
     size: 'md',
     variant: 'pill',
     items: [
