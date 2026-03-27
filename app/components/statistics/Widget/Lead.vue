@@ -80,10 +80,6 @@ const asix = ref<BarAsix<ApiStatisticsLeadItem>>({ x: 'label', y: 'value' })
   }
 
   &__chart {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-end;
-
     max-width: 210px;
     margin-left: auto;
 
