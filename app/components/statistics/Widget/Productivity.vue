@@ -3,11 +3,18 @@
 </script>
 
 <template>
-  <div>
-    
-  </div>
+  <StatisticsWidgetBase
+    class="statistics-widget-conversion"
+    icon="result"
+    title="Продуктивность"
+  >
+    <template #value />
+    <template #chart />
+  </StatisticsWidgetBase>
 </template>
 
-<style>
-
+<style lang="scss">
+.statistics-widget-conversion {
+  $this: &;
+}
 </style>
