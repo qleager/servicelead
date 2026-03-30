@@ -12,7 +12,7 @@ export default {
     // Props
     size: {
       control: 'select',
-      options: ['md'],
+      options: ['xs', 'sm', 'md', 'lg'],
     },
     // Slots
     icon: {

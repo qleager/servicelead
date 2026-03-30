@@ -19,7 +19,7 @@
     </div>
 
     <AppButton
-      variant="filled"
+      variant="solid"
       color="neutral"
       class="widget-informer__button"
     >

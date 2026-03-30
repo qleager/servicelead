@@ -1,13 +1,13 @@
 <template>
   <AppInput
-    variant="filled"
-    size="sm"
+    class="select-search"
     color="lighter"
     icon="search"
-    class="select-search"
-    trailing-icon
-    rounded
     reset
+    rounded
+    size="sm"
+    trailing-icon
+    variant="solid"
   />
 </template>
 

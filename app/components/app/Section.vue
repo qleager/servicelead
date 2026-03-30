@@ -11,11 +11,7 @@ interface Slots {
   trailingHeader?: VNodeChild
 }
 
-defineSlots<Slots>()
-
-const props = defineProps<Props>()
-
-const isHeaderGroupVisible = computed(() => props.icon || props.title)
+defineProps<Props>()
 
 export type { Props as SectionProps, Slots as SectionSlots }
 </script>
@@ -23,19 +19,11 @@ export type { Props as SectionProps, Slots as SectionSlots }
 <template>
   <div class="section">
     <div class="section__header">
-      <div
-        v-if="isHeaderGroupVisible"
-        class="section__header-group"
-      >
-        <AppIcon
-          v-if="icon"
-          class="section__icon"
-          :name="icon"
-        />
-        <div class="section__title">
-          {{ title }}
-        </div>
-      </div>
+      <AppTitle
+        :icon
+        size="lg"
+        :title
+      />
       <slot name="trailingHeader" />
     </div>
     <div class="section__main">
@@ -48,14 +36,14 @@ export type { Props as SectionProps, Slots as SectionSlots }
 .section {
   display: flex;
   flex-direction: column;
-  gap: $space-6;
+  gap: $space-4;
 
   &__header {
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    @include text(semibold, xl);
+    @include text(semibold, 2xl);
 
     &-group {
       display: flex;

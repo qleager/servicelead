@@ -3,67 +3,67 @@
 // AppTag:
 // 1) нету варианта тега как в макете с backgraund = $color-neutral-light-50 и цветом текста $color-neutral-light-700
 // AppButton:
-// 1) Нету подходящего сочетания внешнего вида кнопки и ховера. Либо ставим variant="lined" color="neutral" и тогда нет синего ховера,
-// либо ставим variant="filled" color="white" и тогда не хватает видимого border , как в макете
+// 1) Нету подходящего сочетания внешнего вида кнопки и ховера. Либо ставим variant="outline" color="neutral" и тогда нет синего ховера,
+// либо ставим variant="solid" color="white" и тогда не хватает видимого border , как в макете
 // 2) в Макете используется Tabs , но у нас нет вертикального Tabs, и он все равно основан на внешке AppButton, первый пункт остается актуальным
 // + это всего лишь ссылки на заголовки, нам не нужно выделять активную кнопку.
 //
 // Переделать позже:
-// 1) Заменить offers-single-information__help на AppHelp, когда будет сделан
+// 1) Заменить offer-single-information__help на AppHelp, когда будет сделан
 
 const isCardsOpen = ref(false)
 </script>
 
 <template>
-  <div class="offers-single-information">
+  <div class="offer-single-information">
     <!-- IDEA: компонент обертка с content и aside слотами?  -->
-    <div class="offers-single-information__content">
+    <div class="offer-single-information__content">
       <div
         id="descriptionid"
-        class="offers-single-information__block offers-single-information__description"
+        class="offer-single-information__block offer-single-information__description"
       >
-        <div class="offers-single-information__description-header">
-          <div class="offers-single-information__title-row">
+        <div class="offer-single-information__description-header">
+          <div class="offer-single-information__title-row">
             <AppIcon
-              class="offers-single-information__title-icon"
+              class="offer-single-information__title-icon"
               name="description"
             />
-            <div class="offers-single-information__title-label">
+            <div class="offer-single-information__title-label">
               lorem impsum
             </div>
           </div>
 
-          <div class="offers-single-information__text">
+          <div class="offer-single-information__text">
             lorem impsum
           </div>
         </div>
-        <div class="offers-single-information__cols">
-          <div class="offers-single-information__col">
-            <div class="offers-single-information__subtitle">
+        <div class="offer-single-information__cols">
+          <div class="offer-single-information__col">
+            <div class="offer-single-information__subtitle">
               lorem impsum
             </div>
 
-            <ul class="offers-single-information__list">
+            <ul class="offer-single-information__list">
               <li
                 v-for="i in 5"
                 :key="i"
-                class="offers-single-information__list-item"
+                class="offer-single-information__list-item"
               >
                 lorem impsum
               </li>
             </ul>
           </div>
 
-          <div class="offers-single-information__col">
-            <div class="offers-single-information__subtitle">
+          <div class="offer-single-information__col">
+            <div class="offer-single-information__subtitle">
               lorem impsum
             </div>
 
-            <ul class="offers-single-information__list">
+            <ul class="offer-single-information__list">
               <li
                 v-for="i in 5"
                 :key="i"
-                class="offers-single-information__list-item"
+                class="offer-single-information__list-item"
               >
                 lorem impsum
               </li>
@@ -71,16 +71,16 @@ const isCardsOpen = ref(false)
           </div>
         </div>
 
-        <div class="offers-single-information__col offers-single-information__col-card offers-single-information__col-neutral">
-          <div class="offers-single-information__subtitle">
+        <div class="offer-single-information__col offer-single-information__col-card offer-single-information__col-neutral">
+          <div class="offer-single-information__subtitle">
             lorem impsum
           </div>
 
-          <ul class="offers-single-information__list">
+          <ul class="offer-single-information__list">
             <li
               v-for="i in 5"
               :key="i"
-              class="offers-single-information__list-item"
+              class="offer-single-information__list-item"
             >
               lorem impsum
             </li>
@@ -90,65 +90,65 @@ const isCardsOpen = ref(false)
 
       <div
         id="techid"
-        class="offers-single-information__block offers-single-information__block-tech"
+        class="offer-single-information__block offer-single-information__block-tech"
       >
-        <div class="offers-single-information__title-row">
+        <div class="offer-single-information__title-row">
           <AppIcon
-            class="offers-single-information__title-icon"
+            class="offer-single-information__title-icon"
             name="gear"
           />
-          <div class="offers-single-information__title-label">
+          <div class="offer-single-information__title-label">
             lorem impsum
           </div>
         </div>
 
-        <div class="offers-single-information__stack">
-          <div class="offers-single-information__subtitle">
+        <div class="offer-single-information__stack">
+          <div class="offer-single-information__subtitle">
             lorem impsum
           </div>
 
           <div
-            class="offers-single-information__tags"
+            class="offer-single-information__tags"
           >
             <AppTag
               v-for="i in 5"
               :key="i"
-              variant="filled"
+              variant="solid"
               color="neutral"
-              class="offers-single-information__tags-tag offers-single-information__outline"
+              class="offer-single-information__tags-tag offer-single-information__outline"
             >
               lorem impsum
             </AppTag>
           </div>
         </div>
 
-        <div class="offers-single-information__cols offers-single-information__cols-cards">
-          <div class="offers-single-information__col offers-single-information__col-card offers-single-information__col-neutral">
-            <div class="offers-single-information__subtitle">
+        <div class="offer-single-information__cols offer-single-information__cols-cards">
+          <div class="offer-single-information__col offer-single-information__col-card offer-single-information__col-neutral">
+            <div class="offer-single-information__subtitle">
               lorem impsum
             </div>
 
-            <ul class="offers-single-information__list">
+            <ul class="offer-single-information__list">
               <li
                 v-for="i in 5"
                 :key="i"
-                class="offers-single-information__list-item"
+                class="offer-single-information__list-item"
               >
                 lorem impsum
               </li>
             </ul>
           </div>
 
-          <div class="offers-single-information__col offers-single-information__col-card offers-single-information__col-danger">
-            <div class="offers-single-information__subtitle">
+          <div class="offer-single-information__col offer-single-information__col-card offer-single-information__col-danger">
+            <div class="offer-single-information__subtitle">
               lorem impsum
             </div>
 
-            <ul class="offers-single-information__list">
+            <ul class="offer-single-information__list">
               <li
                 v-for="i in 5"
                 :key="i"
-                class="offers-single-information__list-item"
+                class="offer-single-information__list-item"
               >
                 lorem impsum
               </li>
@@ -156,32 +156,32 @@ const isCardsOpen = ref(false)
           </div>
         </div>
 
-        <div class="offers-single-information__col">
-          <div class="offers-single-information__subtitle">
+        <div class="offer-single-information__col">
+          <div class="offer-single-information__subtitle">
             lorem impsum
           </div>
 
-          <ul class="offers-single-information__list">
+          <ul class="offer-single-information__list">
             <li
               v-for="i in 5"
               :key="i"
-              class="offers-single-information__list-item"
+              class="offer-single-information__list-item"
             >
               lorem impsum
             </li>
           </ul>
         </div>
 
-        <div class="offers-single-information__col">
-          <div class="offers-single-information__subtitle">
+        <div class="offer-single-information__col">
+          <div class="offer-single-information__subtitle">
             lorem impsum
           </div>
 
-          <ul class="offers-single-information__list">
+          <ul class="offer-single-information__list">
             <li
               v-for="i in 5"
               :key="i"
-              class="offers-single-information__list-item"
+              class="offer-single-information__list-item"
             >
               lorem impsum
             </li>
@@ -191,36 +191,36 @@ const isCardsOpen = ref(false)
 
       <div
         id="workTypesid"
-        class="offers-single-information__block offers-single-information__block-worktypes"
+        class="offer-single-information__block offer-single-information__block-worktypes"
       >
-        <div class="offers-single-information__title-row">
+        <div class="offer-single-information__title-row">
           <AppIcon
-            class="offers-single-information__title-icon"
+            class="offer-single-information__title-icon"
             name="jobs"
           />
-          <div class="offers-single-information__title-label">
+          <div class="offer-single-information__title-label">
             lorem impsum
           </div>
         </div>
 
-        <div class="offers-single-information__stack">
-          <div class="offers-single-information__cols offers-single-information__cols-cards">
-            <div class="offers-single-information__col offers-single-information__col-card offers-single-information__col-neutral">
+        <div class="offer-single-information__stack">
+          <div class="offer-single-information__cols offer-single-information__cols-cards">
+            <div class="offer-single-information__col offer-single-information__col-card offer-single-information__col-neutral">
               <AppCollapse
                 v-model="isCardsOpen"
-                class="offers-single-information__col-dropdown"
+                class="offer-single-information__col-dropdown"
                 :init-height="147"
               >
-                <div class="offers-single-information__subtitle offers-single-information__subtitle-dropdown">
+                <div class="offer-single-information__subtitle offer-single-information__subtitle-dropdown">
                   lorem impsum
                   <AppIcon name="dropdown" />
                 </div>
                 <template #content>
-                  <ul class="offers-single-information__list">
+                  <ul class="offer-single-information__list">
                     <li
                       v-for="i in 15"
                       :key="i"
-                      class="offers-single-information__list-item"
+                      class="offer-single-information__list-item"
                     >
                       lorem impsum
                     </li>
@@ -229,22 +229,22 @@ const isCardsOpen = ref(false)
               </AppCollapse>
             </div>
 
-            <div class="offers-single-information__col offers-single-information__col-card offers-single-information__col-danger">
+            <div class="offer-single-information__col offer-single-information__col-card offer-single-information__col-danger">
               <AppCollapse
                 v-model="isCardsOpen"
-                class="offers-single-information__col-dropdown"
+                class="offer-single-information__col-dropdown"
                 :init-height="147"
               >
-                <div class="offers-single-information__subtitle offers-single-information__subtitle-dropdown">
+                <div class="offer-single-information__subtitle offer-single-information__subtitle-dropdown">
                   lorem impsum
                   <AppIcon name="dropdown" />
                 </div>
                 <template #content>
-                  <ul class="offers-single-information__list">
+                  <ul class="offer-single-information__list">
                     <li
                       v-for="i in 15"
                       :key="i"
-                      class="offers-single-information__list-item"
+                      class="offer-single-information__list-item"
                     >
                       lorem impsum
                     </li>
@@ -255,8 +255,8 @@ const isCardsOpen = ref(false)
           </div>
 
           <AppButton
-            class="offers-single-information__worktypes-toggle"
-            variant="filled"
+            class="offer-single-information__worktypes-toggle"
+            variant="solid"
             color="neutral"
             size="md"
             info__block
@@ -270,29 +270,29 @@ const isCardsOpen = ref(false)
 
       <div
         id="propschangesid"
-        class="offers-single-information__block offers-single-information__block-changes"
+        class="offer-single-information__block offer-single-information__block-changes"
       >
-        <div class="offers-single-information__title-row">
+        <div class="offer-single-information__title-row">
           <AppIcon
-            class="offers-single-information__title-icon"
+            class="offer-single-information__title-icon"
             name="change"
           />
-          <div class="offers-single-information__title-label">
+          <div class="offer-single-information__title-label">
             lorem impsum
           </div>
         </div>
 
-        <div class="offers-single-information__changes">
+        <div class="offer-single-information__changes">
           <div
             v-for="i in 5"
             :key="i"
-            class="offers-single-information__change"
+            class="offer-single-information__change"
           >
-            <div class="offers-single-information__change-date">
+            <div class="offer-single-information__change-date">
               с lorem impsum
             </div>
 
-            <div class="offers-single-information__change-text">
+            <div class="offer-single-information__change-text">
               lorem impsum
             </div>
           </div>
@@ -300,16 +300,16 @@ const isCardsOpen = ref(false)
       </div>
     </div>
 
-    <aside class="offers-single-information__right">
+    <aside class="offer-single-information__right">
       <nav
-        class="offers-single-information__nav"
+        class="offer-single-information__nav"
         aria-label="Навигация по информации"
       >
         <AppButton
           v-for="i in 5"
           :key="i"
-          class="offers-single-information__nav-item offers-single-information__outline"
-          variant="filled"
+          class="offer-single-information__nav-item offer-single-information__outline"
+          variant="solid"
           color="white"
           size="md"
           :to="`#`"
@@ -319,32 +319,32 @@ const isCardsOpen = ref(false)
       </nav>
 
       <!-- TODO: Заменить на AppHelp когда доделают -->
-      <div class="offers-single-information__help offers-single-information__outline">
-        <div class="offers-single-information__help-title">
+      <div class="offer-single-information__help offer-single-information__outline">
+        <div class="offer-single-information__help-title">
           Нужна помощь?
         </div>
 
-        <div class="offers-single-information__help-text">
+        <div class="offer-single-information__help-text">
           Создайте тикет или задайте его напрямую своему менеджеру
         </div>
 
-        <div class="offers-single-information__help-actions">
+        <div class="offer-single-information__help-actions">
           <AppButton
-            variant="filled"
+            variant="solid"
             color="white"
             size="sm"
             type="button"
-            class="offers-single-information__help-action"
+            class="offer-single-information__help-action"
           >
             Менеджер
           </AppButton>
 
           <AppButton
-            variant="filled"
+            variant="solid"
             color="white"
             size="sm"
             type="button"
-            class="offers-single-information__help-action"
+            class="offer-single-information__help-action"
           >
             Тикет
           </AppButton>
@@ -355,7 +355,7 @@ const isCardsOpen = ref(false)
 </template>
 
 <style lang="scss">
-.offers-single-information {
+.offer-single-information {
   $this: &;
 
   display: flex;

@@ -14,11 +14,10 @@ const model = defineModel<Model>({
 })
 
 const tabsItems = ref<TabsItem[]>([
-  { label: 'Все' },
-  { label: 'Действует акция' },
-  { label: 'Топ офферы' },
-  { label: 'Избранные' },
-  { label: 'Новые' },
+  { label: 'Все проекты' },
+  { label: 'Мастер на час' },
+  { label: 'Бытовой ремонт' },
+  { label: 'Универсальный' },
 ])
 
 const resetItem = (item: unknown) => {
@@ -27,42 +26,50 @@ const resetItem = (item: unknown) => {
 </script>
 
 <template>
-  <div class="offers-filter">
-    <div class="offers-filter__row">
+  <div class="offer-filter">
+    <div class="offer-filter__row">
       <OfferFilterSlideover />
+      <div class="offer-filter__divider" />
       <AppTabs
-        class="offers-filter__tabs"
+        class="offer-filter__tabs"
         color="white"
-        :items="tabsItems"
-        variant="lined"
+        :items="['Все проекты', 'Мастер на час', 'Бытовой ремонт', 'Универсальный']"
       />
     </div>
 
     <div
       v-if="true"
-      class="offers-filter__selected"
+      class="offer-filter__selected"
     >
       <AppTag
         v-for="(value, index) in 5"
         :key="index"
         closable
-        color="white"
+        color="primary"
+        variant="soft"
         @close="() => resetItem(value)"
       >
-        {{ value }}
+        Селект {{ value }}
       </AppTag>
     </div>
   </div>
 </template>
 
 <style lang="scss">
-.offers-filter {
+.offer-filter {
   width: 100%;
+
+  &__divider {
+    height: 28px;
+    margin: auto 0;
+    border-left: 1px solid $color-neutral-300;
+  }
 
   &__row {
     display: flex;
-    gap: $space-2;
-    margin-bottom: $space-3;
+    gap: $space-4;
+    align-items: center;
+    margin-bottom: $space-4;
   }
 
   &__tabs {
@@ -77,24 +84,10 @@ const resetItem = (item: unknown) => {
     }
   }
 
-  &__search {
-    overflow: hidden;
-    width: 48px;
-
-    // реализация-исключение, хук, так как input не root элемент (выгляит хуево, это да)
-    // фокус
-    &:focus-within,
-    // в input что то введнено
-    &:not(:has(:placeholder-shown)) {
-      width: 250px;
-    }
-  }
-
   &__selected {
     display: flex;
     gap: $space-2;
     order: 1;
-    width: 100px;
   }
 }
 </style>

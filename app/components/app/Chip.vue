@@ -2,17 +2,17 @@
 import type { Color, Size } from '~/types/ds'
 
 interface Props {
-  variant?: 'filled' | 'soft'
   color?: Color
-  size?: Size
-  position?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
-  text?: string
   inset?: boolean
+  position?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
+  size?: Size
   standalone?: boolean
+  text?: string
+  variant?: 'solid' | 'soft'
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  variant: 'filled',
+  variant: 'solid',
   color: 'primary',
   size: 'md',
   position: 'top-right',
@@ -52,7 +52,7 @@ export type { Props as ChipProps }
 <style lang="scss">
 .chip {
   $this: &;
-  $variant-filled: $this + '-variant-filled';
+  $variant-solid: $this + '-variant-solid';
   $variant-soft: $this + '-variant-soft';
   $inset: $this + '-inset';
   $standalone: $this + '-standalone';

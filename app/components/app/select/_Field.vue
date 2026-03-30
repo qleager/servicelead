@@ -38,8 +38,8 @@ const classname = computed(() => [
 <style lang="scss">
 .select-field {
   $this: &;
-  $variant-filled: $this + '-variant-filled';
-  $variant-lined: $this + '-variant-lined';
+  $variant-solid: $this + '-variant-solid';
+  $variant-outline: $this + '-variant-outline';
   $variant-nofilled: $this + '-variant-nofilled';
   $size-xs: $this + '-size-xs';
   $size-sm: $this + '-size-sm';
@@ -83,22 +83,22 @@ const classname = computed(() => [
     border-radius: 50px !important;
   }
 
-  &#{$variant-filled} {
-    --variant-filled-text-color: transparent;
+  &#{$variant-solid} {
+    --variant-solid-text-color: transparent;
 
     border: none !important;
-    color: var(--variant-filled-text-color) !important;
+    color: var(--variant-solid-text-color) !important;
     background-color: transparent;
     outline: none !important;
   }
 
-  &#{$variant-lined} {
-    --variant-lined-background-color: transparent;
-    --variant-lined-text-color: unset;
+  &#{$variant-outline} {
+    --variant-outline-background-color: transparent;
+    --variant-outline-text-color: unset;
 
     border: 1px solid;
-    color: var(--variant-lined-text-color) !important;
-    background-color: var(--variant-lined-background-color) !important;
+    color: var(--variant-outline-text-color) !important;
+    background-color: var(--variant-outline-background-color) !important;
   }
 
   &#{$variant-nofilled} {
@@ -145,17 +145,17 @@ const classname = computed(() => [
   }
 
   &#{$white-color} {
-    --variant-filled-text-color: $color-neutral-950;
-    --variant-lined-text-color: white;
+    --variant-solid-text-color: $color-neutral-950;
+    --variant-outline-text-color: white;
 
     border-color: white;
     color: white;
     background-color: white;
 
     &:hover {
-      --variant-lined-background-color: white;
+      --variant-outline-background-color: white;
       --variant-nofilled-background-color: white;
-      --variant-lined-text-color: #{$color-neutral-950};
+      --variant-outline-text-color: #{$color-neutral-950};
 
       border-color: #{$color-neutral-50};
       color:  #{$color-neutral-950};
@@ -164,7 +164,7 @@ const classname = computed(() => [
 
     &:active {
       --variant-nofilled-background-color: #{$color-neutral-100};
-      --variant-lined-background-color: #{$color-neutral-100};
+      --variant-outline-background-color: #{$color-neutral-100};
 
       border-color: #{$color-neutral-150};
       color: #{$color-neutral-950};
@@ -173,8 +173,8 @@ const classname = computed(() => [
   }
 
   &#{$neutral-color} {
-    --variant-filled-text-color: $color-neutral-950;
-    --variant-lined-text-color: #{$color-neutral-950};
+    --variant-solid-text-color: $color-neutral-950;
+    --variant-outline-text-color: #{$color-neutral-950};
 
     transform: $blur-duration-sm;
     border-color: $color-neutral-300;
@@ -183,7 +183,7 @@ const classname = computed(() => [
 
     &:hover {
       --variant-nofilled-background-color: #{$color-neutral-100};
-      --variant-lined-background-color: #{$color-neutral-100};
+      --variant-outline-background-color: #{$color-neutral-100};
 
       transform: $hover-duration-sm;
       border-color: $color-neutral-400;
@@ -192,7 +192,7 @@ const classname = computed(() => [
 
     &:focus-within {
       --variant-nofilled-background-color: #{$color-neutral-100};
-      --variant-lined-background-color: #{$color-neutral-100};
+      --variant-outline-background-color: #{$color-neutral-100};
 
       transform: $active-duration-sm;
       background-color: $color-neutral-150;
@@ -200,9 +200,9 @@ const classname = computed(() => [
   }
 
   &#{$primary-color} {
-    --variant-filled-text-color: white;
+    --variant-solid-text-color: white;
     --variant-nofilled-background-color: transparent;
-    --variant-lined-text-color: #{$color-primary};
+    --variant-outline-text-color: #{$color-primary};
 
     border-color: $color-primary;
     color: $color-primary;
@@ -210,7 +210,7 @@ const classname = computed(() => [
 
     &:hover {
       --variant-nofilled-background-color: #{$color-primary-100};
-      --variant-lined-background-color: #{$color-primary-100};
+      --variant-outline-background-color: #{$color-primary-100};
 
       border-color: $color-primary-600;
       background-color: $color-primary-600;
@@ -222,7 +222,7 @@ const classname = computed(() => [
     }
 
     &:disabled {
-      --variant-filled-text-color: #{$color-neutral-400};
+      --variant-solid-text-color: #{$color-neutral-400};
 
       border-color: #{$color-neutral-100};
       background-color: #{$color-neutral-100};

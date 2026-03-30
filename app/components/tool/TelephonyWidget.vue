@@ -6,8 +6,17 @@
     class="telephony-widget"
     icon="phone_24"
     title="Телефония"
-    @click:button="navigateTo('/telephony')"
   >
+    <template #trailingHeader>
+      <AppButton
+        class="widget__button"
+        color="neutral"
+        icon="arrow_right"
+        size="xs"
+        variant="outline"
+        @click="navigateTo('/telephony')"
+      />
+    </template>
     <template #content>
       <div class="telephony-widget__content">
         31
@@ -19,7 +28,13 @@
 <style lang="scss">
 .telephony-widget {
   &__content {
+    display: flex;
+    align-items: end;
+    height: 100%;
+
     @include text(medium, 3xl);
+
+    line-height: 1;
   }
 }
 </style>

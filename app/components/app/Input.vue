@@ -16,7 +16,7 @@ interface Props {
   trailingIcon?: boolean
   // TODO: взять логику с nuxt ui
   type?: 'text' | 'number' | 'password' | 'search'
-  variant?: 'filled' | 'lined'
+  variant?: 'solid' | 'outline'
 }
 
 interface Emits {
@@ -28,7 +28,7 @@ interface Emits {
 type Model = null | string | number
 
 const props = withDefaults(defineProps<Props>(), {
-  variant: 'lined',
+  variant: 'outline',
   size: 'md',
   placeholder: 'Введите...',
   color: 'neutral',
@@ -96,7 +96,7 @@ export type { Props as InputProps, Emits as InputEmits, Model as InputModel }
         color="neutral"
         icon="close"
         size="xs"
-        variant="nofilled"
+        variant="link"
         @click="onReset"
       />
     </Transition>
@@ -109,8 +109,8 @@ export type { Props as InputProps, Emits as InputEmits, Model as InputModel }
 .input {
   // Состояния комопонента
   $this: &;
-  $variant-lined: $this + '-variant-lined';
-  $variant-filled: $this + '-variant-filled';
+  $variant-outline: $this + '-variant-outline';
+  $variant-solid: $this + '-variant-solid';
   $variant-nofilled: $this + '-variant-nofilled';
   $white-color: $this + '-color-white';
   $neutral-color: $this + '-color-neutral';
@@ -171,20 +171,20 @@ export type { Props as InputProps, Emits as InputEmits, Model as InputModel }
     justify-content: flex-end;
   }
 
-  &#{$variant-lined} {
-    --variant-lined-background-color: transparent;
-    --variant-lined-text-color: unset;
+  &#{$variant-outline} {
+    --variant-outline-background-color: transparent;
+    --variant-outline-text-color: unset;
 
     border: 1px solid;
-    color: var(--variant-lined-text-color) !important;
-    background-color: var(--variant-lined-background-color) !important;
+    color: var(--variant-outline-text-color) !important;
+    background-color: var(--variant-outline-background-color) !important;
   }
 
-  &#{$variant-filled} {
-    --variant-filled-text-color: inherit;
+  &#{$variant-solid} {
+    --variant-solid-text-color: inherit;
 
     border: none !important;
-    color: var(--variant-filled-text-color) !important;
+    color: var(--variant-solid-text-color) !important;
     background-color: transparent;
     outline: none !important
   }
@@ -241,16 +241,16 @@ export type { Props as InputProps, Emits as InputEmits, Model as InputModel }
   }
 
   &#{$white-color} {
-    --variant-lined-text-color: white;
+    --variant-outline-text-color: white;
 
     border-color: white;
     color: white;
     background-color: white;
 
     &:hover {
-      --variant-lined-background-color: white;
+      --variant-outline-background-color: white;
       --variant-nofilled-background-color: white;
-      --variant-lined-text-color: white;
+      --variant-outline-text-color: white;
 
       border-color: #{$color-neutral-50};
       color:  #{$color-neutral-950};
@@ -259,7 +259,7 @@ export type { Props as InputProps, Emits as InputEmits, Model as InputModel }
 
     &:active {
       --variant-nofilled-background-color: #{$color-neutral-100};
-      --variant-lined-background-color: #{$color-neutral-100};
+      --variant-outline-background-color: #{$color-neutral-100};
 
       border-color: #{$color-neutral-150};
       color: #{$color-neutral-950};
@@ -268,7 +268,7 @@ export type { Props as InputProps, Emits as InputEmits, Model as InputModel }
 
     &:focus-within {
       --variant-nofilled-text-color: #{$color-neutral-500};
-      --variant-lined-background-color: white;
+      --variant-outline-background-color: white;
 
       transform: $active-duration-sm;
       border-color: white;
@@ -287,7 +287,7 @@ export type { Props as InputProps, Emits as InputEmits, Model as InputModel }
 
     &:hover {
       --variant-nofilled-text-color: #{$color-neutral-500};
-      --variant-lined-background-color: transparent;
+      --variant-outline-background-color: transparent;
 
       transform: $hover-duration-sm;
       border-color: $color-neutral-300;
@@ -296,7 +296,7 @@ export type { Props as InputProps, Emits as InputEmits, Model as InputModel }
 
     &:focus-within {
       --variant-nofilled-text-color: #{$color-neutral-500};
-      --variant-lined-background-color: transparent;
+      --variant-outline-background-color: transparent;
 
       transform: $active-duration-sm;
       border-color: $color-neutral-300;
@@ -305,9 +305,9 @@ export type { Props as InputProps, Emits as InputEmits, Model as InputModel }
   }
 
   &#{$primary-color} {
-    --variant-filled-text-color: white;
+    --variant-solid-text-color: white;
     --variant-nofilled-background-color: transparent;
-    --variant-lined-text-color: #{$color-primary};
+    --variant-outline-text-color: #{$color-primary};
 
     border-color: $color-primary;
     color: $color-primary;
@@ -315,7 +315,7 @@ export type { Props as InputProps, Emits as InputEmits, Model as InputModel }
 
     &:hover {
       --variant-nofilled-background-color: #{$color-primary-100};
-      --variant-lined-background-color: #{$color-primary-100};
+      --variant-outline-background-color: #{$color-primary-100};
 
       border-color: $color-primary-600;
       background-color: $color-primary-600;

@@ -1,44 +1,69 @@
-<script lang="ts" setup>
-import type { TabsItem } from '~/components/app/Tabs.vue'
-
-const tabs: TabsItem[] = [
-  { label: 'Все проекты', value: 'all' },
-  { label: 'Мастер на час', value: 'master' },
-  { label: 'Бытовой ремонт', value: 'byt_rem' },
-  { label: 'Универсальный', value: 'universal' },
-]
-</script>
+<script lang="ts" setup></script>
 
 <template>
-  <div class="statistics-dashboard">
-    <AppTabs
-      color="white"
-      :items="tabs"
-      variant="lined"
-    >
-      <template #trailing="{ item }">
-        <AppTag
-          v-if="item.value !== 'all'"
+  <AppCard class="statistics-dashboard">
+    <template #content>
+      <div class="statistics-dashboard__content">
+        <AppTabs
+          class="statistics-dashboard__tabs"
           color="neutral"
-          size="sm"
+          :items="['День', 'Неделя', 'Месяц']"
+          variant="link"
         >
-          32%
-        </AppTag>
-      </template>
-    </AppTabs>
-    <AppCard>
-      <template #content>
-        HELLO123
-        <StatisticsWidgetSummary />
-      </template>
-    </AppCard>
-  </div>
+          <template #listTrailing>
+            <div class="statistics-dashboard__tabs-header-trailing">
+              <div class="statistics-dashboard__tabs-caption">
+                <b class="statistics-dashboard__tabs-caption-key">Вчера</b>
+                <span class="statistics-dashboard__tabs-caption-value">12.03.2026</span>
+              </div>
+            </div>
+          </template>
+        </AppTabs>
+        <StatisticsWidgetLead />
+        <StatisticsWidgetConversion />
+        <StatisticsWidgetConversionByTraffic />
+        <StatisticsWidgetSummary class="statistics-dashboard__summary" />
+      </div>
+    </template>
+  </AppCard>
 </template>
 
 <style lang="scss">
 .statistics-dashboard {
-  display: flex;
-  flex-direction: column;
-  gap: $space-6;
+  &__content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: $space-6 $space-4;
+  }
+
+  &__summary {
+    grid-column: span 3;
+  }
+
+  &__tabs {
+    grid-column: span 3;
+    width: 100%;
+    margin-left: $space-4;
+
+    &-header-trailing {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+      padding-right: $space-4;
+    }
+
+    &-caption {
+      display: flex;
+      gap: $space-2;
+
+      &-key {
+        @include text(semibold, xs);
+      }
+
+      &-value {
+        @include text(regular, xs);
+      }
+    }
+  }
 }
 </style>

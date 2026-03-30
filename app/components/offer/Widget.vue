@@ -1,21 +1,19 @@
 <script lang="ts" setup></script>
 
 <template>
-  <AppSection class="offers-widget">
+  <AppSection
+    class="offer-widget"
+    title="Топ офферы"
+  >
     <template #header>
-      <div class="offers-widget__title">
-        <NuxtImg
-          src="/images/top-fire.svg"
-          width="24"
-        />
-        Топ офферы
-      </div>
       <AppButton
         color="neutral"
-        icon="arrow_right"
-        size="xs"
-        variant="lined"
-      />
+        size="sm"
+        variant="link"
+        @click="navigateTo('/offers')"
+      >
+        Смотреть все
+      </AppButton>
     </template>
     <template #content>
       <OfferList />
@@ -24,7 +22,7 @@
 </template>
 
 <style lang="scss">
-.offers-widget {
+.offer-widget {
   &__title {
     display: flex;
     gap: $space-3;

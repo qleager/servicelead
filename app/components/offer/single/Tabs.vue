@@ -1,11 +1,12 @@
 <script lang="ts" setup>
 import type { TabsItem, TabsModel } from '~/components/app/Tabs.vue'
 import OffersSingleInformation from '~/components/offer/single/Information.vue'
+import OffersSingleStatistics from '~/components/offer/single/Statistics.vue'
 
 // IDEA: оправдано ли нахождение табов здесь? Или лучше понять их на страницу?
 // Табы одинаковы для все офферов? Одним методом получаем статистику/цены/географию?
 const tabs: TabsItem[] = [
-  { label: 'Статистика', value: 'stats' },
+  { label: 'Статистика', value: 'statistics' },
   { label: 'Информация', value: 'info' },
   { label: 'География', value: 'geo' },
   { label: 'Прайс', value: 'price' },
@@ -17,6 +18,8 @@ const activePanel = computed(() => {
   switch (currentTab.value) {
     case 'info':
       return { component: OffersSingleInformation, data: { infoData: 'infoData' } }
+    case 'statistics':
+      return { component: OffersSingleStatistics, data: { infoData: 'infoData' } }
     default:
       return null
   }
@@ -24,26 +27,26 @@ const activePanel = computed(() => {
 </script>
 
 <template>
-  <div class="offers-single-tabs">
+  <div class="offer-single-tabs">
     <AppTabs
       v-if="tabs?.length"
       v-model="currentTab"
-      :items="tabs"
-      variant="lined"
+      class="offer-single-tabs-item"
       color="neutral"
-      class="offers-single-tabs-item"
+      :items="tabs"
+      variant="pill"
     />
     <Component
       :is="activePanel.component"
       v-if="activePanel"
       v-bind="activePanel.data"
-      class="offers-single-tabs__panel"
+      class="offer-single-tabs__panel"
     />
   </div>
 </template>
 
 <style lang="scss">
-.offers-single-tabs {
+.offer-single-tabs {
   $this: &;
 
   display: flex;
@@ -51,8 +54,8 @@ const activePanel = computed(() => {
   gap: $space-4;
 
   &__panel {
-    padding: $space-6;
-    border-radius: $radius-6;
+    padding: $space-4;
+    border-radius: $radius-10;
     background: white;
   }
 }

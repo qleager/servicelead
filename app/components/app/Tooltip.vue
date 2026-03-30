@@ -1,9 +1,18 @@
 <script lang="ts" setup>
+import type { VNodeChild } from 'vue'
+
 interface Props {
-  text: string
+  content?: string
+}
+
+interface Slots {
+  content?: () => VNodeChild
+  default: () => VNodeChild
 }
 
 defineProps<Props>()
+
+defineSlots<Slots>()
 
 export type { Props as TooltipProps }
 </script>
@@ -20,7 +29,9 @@ export type { Props as TooltipProps }
       </div>
       <template #content>
         <div class="tooltip__content">
-          {{ text }}
+          <slot name="content">
+            {{ content }}
+          </slot>
         </div>
       </template>
     </AppFloater>
