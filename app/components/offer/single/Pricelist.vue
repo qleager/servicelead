@@ -3,49 +3,45 @@
 </script>
 
 <template>
-  <AppCard
+  <div
     class="offer-single-pricelist"
   >
-    <template #top>
-      <div class="offer-single-pricelist__top">
-        <div class="offer-single-pricelist__top-column">
-          <AppTitle
-            icon="price"
-            title="Прайс - лист"
-          />
+    <div class="offer-single-pricelist__top">
+      <div class="offer-single-pricelist__top-column">
+        <AppTitle
+          icon="price"
+          title="Прайс - лист"
+        />
 
-          <AppButton
-            color="neutral"
-            icon="arrow_down"
-            size="sm"
-            trailing-icon
-            variant="link"
-            @click="console.log('download')"
-          >
-            Скачать
-          </AppButton>
-        </div>
+        <AppButton
+          color="neutral"
+          icon="arrow_down"
+          size="sm"
+          trailing-icon
+          variant="link"
+          @click="console.log('download')"
+        >
+          Скачать
+        </AppButton>
+      </div>
 
-        <div class="offer-single-pricelist__top-column">
-          <AppInput
-            class="offer-single-pricelist__search"
-            icon="search"
-            placeholder="Начните поиск..."
-            reset
-            rounded
-          />
-        </div>
+      <div class="offer-single-pricelist__top-column">
+        <AppInput
+          class="offer-single-pricelist__search"
+          icon="search"
+          placeholder="Начните поиск..."
+          reset
+          rounded
+        />
       </div>
-    </template>
-    <template #content>
-      <div class="offer-single-pricelist__content">
-        <div class="offer-single-pricelist__table">
-          table
-        </div>
-        <HelpWidget class="offer-single-pricelist__help" />
+    </div>
+    <div class="offer-single-pricelist__content">
+      <div class="offer-single-pricelist__table">
+        table
       </div>
-    </template>
-  </AppCard>
+      <HelpWidget class="offer-single-pricelist__help" />
+    </div>
+  </div>
 </template>
 
 <style lang="scss">
@@ -56,7 +52,6 @@
     display: flex;
     gap: $space-4;
     justify-content: space-between;
-    padding: $space-2 $space-4;
 
     &-column {
       display: flex;
