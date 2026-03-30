@@ -29,6 +29,9 @@ FROM base AS storybook-build
 
 COPY . .
 
+# limit of memory to fix fatal error heap out of memory
+ENV NODE_OPTIONS="--max-old-space-size=3072"
+
 RUN pnpm storybook:build
 
 # Nuxt Build
