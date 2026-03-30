@@ -35,7 +35,7 @@ const asix = ref<BarAsix<ApiStatisticsLeadItem>>({ x: 'label', y: 'value' })
         v-if="isFilterVisible"
         v-model="filterPeriod"
         class="statistics-widget-conversion__select"
-        :items="['День', 'Неделя', 'Месяц', 'Год']"
+        :items="['День', 'Неделя', 'Месяц']"
         rounded
         size="xs"
       />

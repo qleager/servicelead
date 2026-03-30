@@ -19,7 +19,7 @@ const filterPeriod = ref('День')
         v-if="isFilterVisible"
         v-model="filterPeriod"
         class="statistics-widget-summary__select"
-        :items="['День', 'Неделя', 'Месяц', 'Год']"
+        :items="['День', 'Неделя', 'Месяц']"
         rounded
         size="xs"
       />
