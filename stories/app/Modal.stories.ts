@@ -9,7 +9,6 @@ export default {
   parameters: {
     layout: 'centered',
   },
-  tags: ['autodocs'],
   argTypes: {
     // Props
     title: {
