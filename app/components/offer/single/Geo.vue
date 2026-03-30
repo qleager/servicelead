@@ -64,23 +64,7 @@
         <div class="offer-single-geo__table">
           table
         </div>
-        <AppCard
-          class="offer-single-geo__help"
-          color="neutral"
-          description="Создайте тикет или задайте его напрямую своему менеджеру"
-          title="Нужна помощь?"
-        >
-          <template #footer>
-            <div class="offer-single-geo__help-footer">
-              <AppButton color="white">
-                Менеджер
-              </AppButton>
-              <AppButton color="white">
-                Тикет
-              </AppButton>
-            </div>
-          </template>
-        </AppCard>
+        <HelpWidget class="offer-single-pricelist__help" />
       </div>
     </template>
   </AppCard>
@@ -118,11 +102,6 @@
 
   &__help {
     max-width: 290px;
-
-    &-footer {
-      display: flex;
-      gap: $space-5;
-    }
   }
 }
 </style>
