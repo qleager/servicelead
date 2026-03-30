@@ -121,7 +121,7 @@ const onItemClick = (item: Item) => {
   model.value = item.value
 }
 
-export type { Props as TabsProps, Model as TabsModel, Item as TabsItem }
+export type { Props as TabsProps, Model as TabsModel, Item as TabsItem, Slots as TabsSlots }
 </script>
 
 <template>
@@ -217,35 +217,20 @@ export type { Props as TabsProps, Model as TabsModel, Item as TabsItem }
 
     @include is($size-xs) {
       gap: $space-2;
-      height: 32px;
 
       @include text(regular, xs);
     }
 
     @include is($size-sm) {
       gap: $space-3;
-      height: 40px;
 
       @include text(regular, sm);
     }
 
     @include is($size-md) {
       gap: $space-4;
-      height: 48px;
 
       @include text(regular, md);
-    }
-
-    @include is($size-xs + $variant-pill) {
-      padding-inline: $space-3;
-    }
-
-    @include is($size-sm + $variant-pill) {
-      padding-inline: $space-4;
-    }
-
-    @include is($size-md + $variant-pill) {
-      padding-inline: $space-5;
     }
 
     @include is($variant-pill) {
@@ -308,6 +293,36 @@ export type { Props as TabsProps, Model as TabsModel, Item as TabsItem }
       }
     }
 
+    @include is($size-xs + $variant-link) {
+      height: 24px;
+      padding-bottom: $space-05;
+    }
+
+    @include is($size-sm + $variant-link) {
+      height: 28px;
+      padding-bottom: $space-1;
+    }
+
+    @include is($size-md + $variant-link) {
+      height: 32px;
+      padding-bottom: $space-2;
+    }
+
+    @include is($size-xs + $variant-pill) {
+      height: 32px;
+      padding-inline: $space-3;
+    }
+
+    @include is($size-sm + $variant-pill) {
+      height: 40px;
+      padding-inline: $space-4;
+    }
+
+    @include is($size-md + $variant-pill) {
+      height: 48px;
+      padding-inline: $space-5;
+    }
+
     &-active {
       @include is($variant-link) {
         color: inherit;
@@ -338,19 +353,19 @@ export type { Props as TabsProps, Model as TabsModel, Item as TabsItem }
       @include is($size-xs) {
         width: 16px;
         height: 16px;
-        margin-inline: -#{$space-05};
+        margin-inline: -$space-05;
       }
 
       @include is($size-sm) {
         width: 20px;
         height: 20px;
-        margin-inline: -#{$space-1};
+        margin-inline: -$space-1;
       }
 
       @include is($size-md) {
         width: 24px;
         height: 24px;
-        margin-inline: -#{$space-2};
+        margin-inline: -$space-2;
       }
     }
   }
@@ -369,6 +384,11 @@ export type { Props as TabsProps, Model as TabsModel, Item as TabsItem }
       border-radius: 50px;
     }
 
+    @include is($variant-link) {
+      height: 1px;
+      background-color: $color-neutral-900;
+    }
+
     @include is($neutral-color + $variant-pill) {
       background-color: $color-neutral-100;
     }
@@ -376,12 +396,6 @@ export type { Props as TabsProps, Model as TabsModel, Item as TabsItem }
     @include is($white-color + $variant-pill) {
       background-color: white;
     }
-
-    @include is($variant-link) {
-      height: 1px;
-      background-color: $color-neutral-900;
-    }
-
   }
 }
 </style>
