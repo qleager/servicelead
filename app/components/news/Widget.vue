@@ -6,7 +6,6 @@
     <template #trailingHeader>
       <AppTabs
         :items="['Важное', 'Новости']"
-        size="xs"
         variant="link"
       />
       <AppButton

@@ -7,7 +7,6 @@
         <AppTabs
           class="statistics-dashboard__tabs"
           :items="['День', 'Неделя', 'Месяц']"
-          size="xs"
           variant="link"
         >
           <template #listTrailing>
