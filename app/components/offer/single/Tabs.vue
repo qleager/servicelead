@@ -2,6 +2,7 @@
 import type { TabsItem, TabsModel } from '~/components/app/Tabs.vue'
 import OffersSingleInformation from '~/components/offer/single/Information.vue'
 import OffersSingleStatistics from '~/components/offer/single/Statistics.vue'
+import OffersSinglePricelist from '~/components/offer/single/Pricelist.vue'
 
 // IDEA: оправдано ли нахождение табов здесь? Или лучше понять их на страницу?
 // Табы одинаковы для все офферов? Одним методом получаем статистику/цены/географию?
@@ -20,6 +21,8 @@ const activePanel = computed(() => {
       return { component: OffersSingleInformation, data: { infoData: 'infoData' } }
     case 'statistics':
       return { component: OffersSingleStatistics, data: { infoData: 'infoData' } }
+    case 'price':
+      return { component: OffersSinglePricelist, data: { infoData: 'infoData' } }
     default:
       return null
   }
