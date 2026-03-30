@@ -22,9 +22,10 @@ const classname = computed(() => [
       </div>
       <AppChip
         class="news-entry__indicator"
-        color="blue"
+        color="primary"
         size="xs"
         standalone
+        variant="soft"
       />
     </header>
     <div class="news-entry__text">
@@ -53,10 +54,12 @@ const classname = computed(() => [
 <style lang="scss">
 .news-entry {
   $this: &;
-  $minimal: & + '-minimal';
-  $read: & + '-read';
+  $minimal: $this + '-minimal';
+  $read: $this + '-read';
 
   cursor: pointer;
+
+  position: relative;
 
   display: flex;
   flex-direction: column;
@@ -67,7 +70,7 @@ const classname = computed(() => [
   padding: $space-6;
   border-radius: $radius-2;
 
-  &#{$minimal} {
+  @include is($minimal) {
     gap: $space-1;
     min-height: auto;
     padding: $space-2 $space-3;
@@ -75,14 +78,33 @@ const classname = computed(() => [
     &:hover {
       background-color: $color-neutral-50;
     }
+
+    &::after {
+      content: '';
+
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+
+      height: 1px;
+
+      background: $color-neutral-150;
+    }
+
+    &:last-child {
+      &::after {
+        background: transparent;
+      }
+    }
   }
 
   &__header {
     display: flex;
     flex-direction: column;
-    gap: $space-4;
+    gap: $space-6;
 
-    #{$minimal} & {
+    @include is($minimal) {
       flex-direction: row;
       gap: $space-4;
       justify-content: space-between;
@@ -91,7 +113,7 @@ const classname = computed(() => [
   }
 
   &__tag {
-    #{$minimal} & {
+    @include is($minimal) {
       display: none;
     }
   }
@@ -100,22 +122,28 @@ const classname = computed(() => [
     overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
 
     @include text(medium, md);
 
-    #{$minimal} & {
+    @include is($minimal) {
       @include text(regular, sm);
     }
   }
 
   &__indicator {
     display: none;
-    outline: 1px dashed $color-primary;
 
-    #{$minimal} & {
+    @include is($minimal) {
+      position: absolute;
+      top: 50%;
+      right: $space-2;
+      transform: translateY(-50%);
+
       display: flex;
+
+      height: fit-content;
     }
   }
 
@@ -130,7 +158,7 @@ const classname = computed(() => [
 
     color: $color-neutral;
 
-    #{$minimal} & {
+    @include is($minimal) {
       display: none;
     }
   }
@@ -149,7 +177,7 @@ const classname = computed(() => [
   }
 
   &__button {
-    #{$minimal} & {
+    @include is($minimal) {
       display: none;
     }
   }
