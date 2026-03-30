@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { VNodeChild } from 'vue'
 import type { FloaterModel } from '@components/app/Floater.vue'
-import type { WidgetSlots, WidgetProps } from '@components/app/Widget.vue'
+import type { WidgetSlots, WidgetProps } from './Widget.vue'
 
 interface Props {
   // type Props = WidgetProps или extends будет ломать run build
