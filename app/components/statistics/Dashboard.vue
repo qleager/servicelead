@@ -6,7 +6,6 @@
       <div class="statistics-dashboard__content">
         <AppTabs
           class="statistics-dashboard__tabs"
-          color="neutral"
           :items="['День', 'Неделя', 'Месяц']"
           variant="link"
         >

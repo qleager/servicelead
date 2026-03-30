@@ -102,16 +102,15 @@ export type { Props as ChipProps }
 
     white-space: nowrap;
 
-    #{$variant-soft} & {
+    @include is($variant-soft) {
       &::before {
         content: "";
 
         position: absolute;
-        top: -100%;
-        left: -100%;
 
-        width: 300%;
-        height: 300%;
+        width: 100%;
+        height: 100%;
+        padding: $space-2;
         border-radius: $radius-2;
 
         opacity: .1;
@@ -119,7 +118,31 @@ export type { Props as ChipProps }
       }
     }
 
-    #{$size-xs} & {
+    @include is($variant-soft + $size-xs) {
+      &::before {
+        padding: 8px;
+      }
+    }
+
+    @include is($variant-soft + $size-sm) {
+      &::before {
+        padding: 10px;
+      }
+    }
+
+    @include is($variant-soft + $size-md) {
+      &::before {
+        padding: 12px;
+      }
+    }
+
+    @include is($variant-soft + $size-lg) {
+      &::before {
+        padding: 14px;
+      }
+    }
+
+    @include is($size-xs) {
       @include text(regular, 2xs);
 
       size: 8px;
@@ -128,7 +151,7 @@ export type { Props as ChipProps }
       line-height: 8px;
     }
 
-    #{$size-sm} & {
+    @include is($size-sm) {
       @include text(regular, 2xs);
 
       min-width: 10px;
@@ -136,7 +159,7 @@ export type { Props as ChipProps }
       line-height: 10px;
     }
 
-    #{$size-md} & {
+    @include is($size-md) {
       @include text(regular, xs);
 
       min-width: 12px;
@@ -144,7 +167,7 @@ export type { Props as ChipProps }
       line-height: 12px;
     }
 
-    #{$size-lg} & {
+    @include is($size-lg) {
       @include text(regular, sm);
 
       min-width: 14px;
@@ -152,77 +175,77 @@ export type { Props as ChipProps }
       line-height: 14px;
     }
 
-   #{$primary-color} & {
+   @include is($primary-color) {
       color: $color-neutral-50;
       background-color: $color-primary;
     }
 
-    #{$neutral-color} & {
+    @include is($neutral-color) {
       color: $color-neutral-50;
       background-color: $color-neutral;
     }
 
-    #{$gray-color} & {
+    @include is($gray-color) {
       color: $color-neutral-50;
       background-color: $color-gray;
     }
 
-    #{$red-color} & {
+    @include is($red-color) {
       color: $color-neutral-50;
       background-color: $color-red;
     }
 
-    #{$yellow-color} & {
+    @include is($yellow-color) {
       color: $color-neutral-950;
       background-color: $color-yellow;
     }
 
-    #{$green-color} & {
+    @include is($green-color) {
       color: $color-neutral-950;
       background-color: $color-green;
     }
 
-    #{$blue-color} & {
+    @include is($blue-color) {
       color: $color-neutral-50;
       background-color: $color-blue;
     }
 
-    #{$purple-color} & {
+    @include is($purple-color) {
       color: $color-neutral-50;
       background-color: $color-purple;
     }
 
-    #{$position-top-right} & {
+    @include is($position-top-right) {
       top: 0;
       right: 0;
       transform: translate(50%, -50%);
     }
 
-    #{$position-top-left} & {
+    @include is($position-top-left) {
       top: 0;
       left: 0;
       transform: translate(-50%, -50%);
     }
 
-    #{$position-bottom-right} & {
+    @include is($position-bottom-right) {
       right: 0;
       bottom: 0;
       transform: translate(50%, 50%);
     }
 
-    #{$position-bottom-left} & {
+    @include is($position-bottom-left) {
       bottom: 0;
       left: 0;
       transform: translate(-50%, 50%);
     }
 
-    #{$standalone} & {
+    @include is($standalone) {
       position: unset;
       z-index: unset;
       transform: unset;
     }
 
-    #{$inset} & {
+    @include is($inset) {
       transform: unset;
     }
   }

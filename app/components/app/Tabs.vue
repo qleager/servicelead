@@ -1,16 +1,17 @@
 <script lang="ts" setup>
 import type { VNodeChild } from 'vue'
 import type { IconProps } from './Icon.vue'
-import type { Size, Subset } from '~/types/ds'
+import type { Color, Size, Subset } from '~/types/ds'
 
 interface Props {
+  color?: Subset<Color, 'neutral'> | 'white'
   items: Item[] | (string | number)[]
   /**
    * Size of Buttons
    *
    * * @defaultvalue `'md'`
    */
-  size?: Subset<Size, 'md'>
+  size?: Subset<Size, 'xs' | 'sm' | 'md'>
   /**
    * Variant of Buttons
    *
@@ -56,6 +57,7 @@ interface Item {
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  color: 'white',
   size: 'md',
   variant: 'pill',
 })
@@ -70,6 +72,8 @@ const navRef = ref<HTMLElement | null>(null)
 const classname = computed(() => [
   'tabs',
   `tabs-variant-${props.variant}`,
+  `tabs-size-${props.size}`,
+  `tabs-color-${props.color}`,
 ])
 
 const items = computed(() => (
@@ -117,7 +121,7 @@ const onItemClick = (item: Item) => {
   model.value = item.value
 }
 
-export type { Props as TabsProps, Model as TabsModel, Item as TabsItem }
+export type { Props as TabsProps, Model as TabsModel, Item as TabsItem, Slots as TabsSlots }
 </script>
 
 <template>
@@ -178,13 +182,16 @@ export type { Props as TabsProps, Model as TabsModel, Item as TabsItem }
 <style lang="scss">
 .tabs {
   $this: &;
-  $variant-link: & + '-variant-link';
-  $variant-pill: & + '-variant-pill';
+  $variant-link: $this + '-variant-link';
+  $variant-pill: $this + '-variant-pill';
+  $white-color: $this + '-color-white';
+  $neutral-color: $this + '-color-neutral';
+  $size-xs: $this + '-size-xs';
+  $size-sm: $this + '-size-sm';
+  $size-md: $this + '-size-md';
 
   overflow: auto;
   display: flex;
-
-  $this: &;
 
   &__nav {
     position: relative;
@@ -208,15 +215,28 @@ export type { Props as TabsProps, Model as TabsModel, Item as TabsItem }
     position: relative;
     flex-shrink: 0;
 
-    @include text(regular, md);
+    @include is($size-xs) {
+      gap: $space-2;
+
+      @include text(regular, xs);
+    }
+
+    @include is($size-sm) {
+      gap: $space-3;
+
+      @include text(regular, sm);
+    }
+
+    @include is($size-md) {
+      gap: $space-4;
+
+      @include text(regular, md);
+    }
 
     @include is($variant-pill) {
       display: flex;
-      gap: $space-2;
       align-items: center;
 
-      height: 48px;
-      padding-inline: $space-4;
       border: 1px solid transparent;
       border-radius: 50px;
 
@@ -273,6 +293,36 @@ export type { Props as TabsProps, Model as TabsModel, Item as TabsItem }
       }
     }
 
+    @include is($size-xs + $variant-link) {
+      height: 24px;
+      padding-bottom: $space-05;
+    }
+
+    @include is($size-sm + $variant-link) {
+      height: 28px;
+      padding-bottom: $space-1;
+    }
+
+    @include is($size-md + $variant-link) {
+      height: 32px;
+      padding-bottom: $space-2;
+    }
+
+    @include is($size-xs + $variant-pill) {
+      height: 32px;
+      padding-inline: $space-3;
+    }
+
+    @include is($size-sm + $variant-pill) {
+      height: 40px;
+      padding-inline: $space-4;
+    }
+
+    @include is($size-md + $variant-pill) {
+      height: 48px;
+      padding-inline: $space-5;
+    }
+
     &-active {
       @include is($variant-link) {
         color: inherit;
@@ -298,6 +348,26 @@ export type { Props as TabsProps, Model as TabsModel, Item as TabsItem }
         }
       }
     }
+
+    &-icon {
+      @include is($size-xs) {
+        width: 16px;
+        height: 16px;
+        margin-inline: -$space-05;
+      }
+
+      @include is($size-sm) {
+        width: 20px;
+        height: 20px;
+        margin-inline: -$space-1;
+      }
+
+      @include is($size-md) {
+        width: 24px;
+        height: 24px;
+        margin-inline: -$space-2;
+      }
+    }
   }
 
   &__indicator {
@@ -312,7 +382,6 @@ export type { Props as TabsProps, Model as TabsModel, Item as TabsItem }
     @include is($variant-pill) {
       height: 100%;
       border-radius: 50px;
-      background-color: white;
     }
 
     @include is($variant-link) {
@@ -320,6 +389,13 @@ export type { Props as TabsProps, Model as TabsModel, Item as TabsItem }
       background-color: $color-neutral-900;
     }
 
+    @include is($neutral-color + $variant-pill) {
+      background-color: $color-neutral-100;
+    }
+
+    @include is($white-color + $variant-pill) {
+      background-color: white;
+    }
   }
 }
 </style>

@@ -5,7 +5,6 @@
   <AppWidget>
     <template #trailingHeader>
       <AppTabs
-        color="primary"
         :items="['Важное', 'Новости']"
         variant="link"
       />
