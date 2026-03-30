@@ -44,6 +44,7 @@ const filterPeriod = ref('День')
   $this: &;
 
   &__select {
+    align-self: center;
     width: fit-content;
     margin-right: auto;
   }
