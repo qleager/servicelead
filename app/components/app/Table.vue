@@ -1,38 +1,28 @@
-<script lang="ts" setup generic="T">
-import type { ColumnDef } from '@tanstack/vue-table'
+<script lang="ts" setup generic="TData extends RowData">
+import type { ColumnDef, RowData } from '@tanstack/vue-table'
 import { FlexRender, getCoreRowModel, useVueTable } from '@tanstack/vue-table'
 
-export type TableColumn<TData> = ColumnDef<TData>
+export type TableColumn<TData extends RowData = RowData, TValue = unknown> = ColumnDef<TData, TValue>
 
-interface Props {
-  columns: TableColumn<T>[]
-  data: T[]
+export interface TableProps<TData extends RowData = RowData> {
+  columns: TableColumn<TData>[]
+  data: TData[]
 }
 
-const props = defineProps<Props>()
+const props = defineProps<TableProps<TData>>()
 
-const tableData = shallowRef<T[]>(props.data)
-
-const tableApi = useVueTable({
-  data: tableData,
+const table = useVueTable({
+  data: props.data,
   columns: props.columns,
   getCoreRowModel: getCoreRowModel(),
 })
-
-watch(
-  props.data,
-  (next) => {
-    tableData.value = [...next]
-  },
-  { deep: true },
-)
 </script>
 
 <template>
   <table class="table">
     <thead class="table__head">
       <tr
-        v-for="headerGroup in tableApi.getHeaderGroups()"
+        v-for="headerGroup in table.getHeaderGroups()"
         :key="headerGroup.id"
         class="table__row table__row-head"
       >
@@ -43,8 +33,8 @@ watch(
         >
           <FlexRender
             v-if="!header.isPlaceholder"
-            :render="header.column.columnDef.header"
             :props="header.getContext()"
+            :render="header.column.columnDef.header"
           />
         </th>
       </tr>
@@ -52,7 +42,7 @@ watch(
 
     <tbody class="table__body">
       <tr
-        v-for="row in tableApi.getRowModel().rows"
+        v-for="row in table.getRowModel().rows"
         :key="row.id"
         class="table__row table__row-body"
       >
@@ -62,8 +52,8 @@ watch(
           class="table__cell table__cell-body"
         >
           <FlexRender
-            :render="cell.column.columnDef.cell"
             :props="cell.getContext()"
+            :render="cell.column.columnDef.cell"
           />
         </td>
       </tr>
@@ -82,11 +72,8 @@ watch(
 
     position: sticky;
     top: 0;
-
     color: $color-neutral-400;
     text-align: left;
-
-    backdrop-filter: blur(20px) brightness(1.1);
   }
 
   &__body {
