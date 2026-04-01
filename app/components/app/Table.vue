@@ -5,6 +5,7 @@ import { FlexRender, getCoreRowModel, useVueTable } from '@tanstack/vue-table'
 export interface TableProps<TData extends RowData = RowData> {
   columns: TableColumn<TData>[]
   data: TData[]
+  verticalBorder?: boolean
 }
 
 export type TableSlots<TData extends RowData = RowData> = {
@@ -33,6 +34,11 @@ const props = defineProps<TableProps<TData>>()
 
 defineSlots<TableSlots<TData>>()
 
+const classname = computed(() => ([
+  'table',
+  { 'table-vertical-border': props.verticalBorder },
+]))
+
 const table = useVueTable({
   data: props.data,
   columns: props.columns,
@@ -41,17 +47,18 @@ const table = useVueTable({
 </script>
 
 <template>
-  <table class="table">
-    <thead class="table__head">
+  <table :class="classname">
+    <thead class="table__header">
       <tr
         v-for="headerGroup in table.getHeaderGroups()"
         :key="headerGroup.id"
-        class="table__row table__row-head"
+        :class="`table__row table__row-header table__row-header-${headerGroup.depth}`"
       >
         <th
           v-for="header in headerGroup.headers"
           :key="header.id"
           class="table__head"
+          :colspan="header.colSpan"
         >
           <template v-if="!header.isPlaceholder">
             <!-- Что тут происходит: сначала пробуем слот конкретной колонки, затем общий слот header, и только потом стандартный header из columnDef. -->
@@ -87,7 +94,7 @@ const table = useVueTable({
         <td
           v-for="cell in row.getVisibleCells()"
           :key="cell.id"
-          class="table__cell table__cell-body"
+          class="table__cell"
         >
           <slot
             :cell="cell"
@@ -118,28 +125,57 @@ const table = useVueTable({
 <style lang="scss">
 .table {
   $this: &;
+  $vertical-border: $this + '-vertical-border';
 
+  // overflow убрать после см. :148
+  overflow: hidden;
   border-spacing: 0;
   border-collapse: separate;
   text-indent: 0;
+
+  &__header {
+    position: sticky;
+    top: 0;
+  }
 
   &__body {
     @include text(regular, sm);
   }
 
   &__row {
+    &-header {
+      &-0 {
+        // Колхозное решение с покраской бордера первой колонки в группе
+        // Пересмотреть решение когда будут делаться стики колонки
+        // Смотреть в сторону данимических классов ячеек, так как это сможет заркрывать новые хотелки в будующем
+        th:not(:first-child) {
+          &::before {
+            content: '';
+
+            position: absolute;
+            transform: translateY(-$space-2) translateX(-$space-3);
+
+            width: 1px;
+            height: 500%;
+
+            background-color: $color-neutral-150;
+          }
+        }
+      }
+    }
+
     &-body {
       &:hover {
-        .table__cell-body {
+        .table__cell {
           background-color: $color-neutral-50;
         }
 
-        .table__cell-body:first-child {
+        .table__cell:first-child {
           border-top-left-radius: 8px;
           border-bottom-left-radius: 8px;
         }
 
-        .table__cell-body:last-child {
+        .table__cell:last-child {
           border-top-right-radius: 8px;
           border-bottom-right-radius: 8px;
         }
@@ -150,9 +186,6 @@ const table = useVueTable({
   &__head {
     @include label(regular, md);
 
-    position: sticky;
-    top: 0;
-
     padding: $space-2 $space-3;
 
     font-weight: inherit;
@@ -161,6 +194,7 @@ const table = useVueTable({
     vertical-align: middle;
   }
 
+  /* stylelint-disable-next-line no-descending-specificity */
   &__cell {
     padding: $space-3 $space-3;
     border: 1px solid transparent;
