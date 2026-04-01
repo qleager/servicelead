@@ -101,7 +101,7 @@ const getDeltaClasses = (baseClass: string, value: unknown) => {
             <template #city-header="{ column }">
               <div class="statistics-widget-conversion-by-cities__table-header-city">
                 <AppIcon
-                  name="triangle-solid"
+                  name="triangle"
                   :size="16"
                 />
                 {{ column.columnDef.header }}

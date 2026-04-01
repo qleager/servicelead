@@ -84,6 +84,7 @@ export const iconNames = [
   'top_fire',
   'traffic',
   'triangle-solid',
+  'triangle',
   'vk',
   'waves',
   'youtube',
