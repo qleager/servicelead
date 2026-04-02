@@ -20,6 +20,7 @@ import { FlexRender, getCoreRowModel, useVueTable } from '@tanstack/vue-table'
 export interface TableProps<TData extends RowData = RowData> {
   columns: TableColumn<TData>[]
   data: TData[]
+  sticky?: boolean | 'header' | 'footer'
   verticalBorder?: boolean
 }
 
@@ -67,6 +68,8 @@ const table = useVueTable({
 const classname = computed(() => ([
   'table',
   { 'table-vertical-border': props.verticalBorder },
+  { 'table-sticky-header': props.sticky === 'header' || props.sticky },
+  { 'table-sticky-footer': props.sticky === 'footer' || props.sticky },
 ]))
 
 const footerGroups = computed(() => {
@@ -262,16 +265,19 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
 .table {
   $this: &;
   $vertical-border: $this + '-vertical-border';
+  $sticky-header: $this + '-sticky-header';
+  $sticky-footer: $this + '-sticky-footer';
 
-  // Remove overflow after revisiting the note around line 148.
-  overflow: hidden;
   border-spacing: 0;
   border-collapse: separate;
   text-indent: 0;
 
   &__header {
-    position: sticky;
-    top: 0;
+    @include is($sticky-header) {
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(8px);
+    }
   }
 
   &__body {
@@ -280,6 +286,12 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
 
   &__footer {
     border-top: 1px solid $color-neutral-150;
+
+    @include is($sticky-footer) {
+      position: sticky;
+      bottom: 0;
+      backdrop-filter: blur(8px);
+    }
   }
 
   &__row {
