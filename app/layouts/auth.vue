@@ -1,6 +1,6 @@
 <template>
   <div class="layout-auth">
-    <div class="layout-auth__aside">
+    <aside class="layout-auth__aside">
       <div class="layout-auth__aside-content">
         <NuxtImg
           class="layout-auth__logo"
@@ -25,11 +25,11 @@
           </NuxtLink>
         </div>
       </div>
-    </div>
+    </aside>
 
-    <div class="layout-auth__main">
+    <main class="layout-auth__main">
       <slot />
-    </div>
+    </main>
   </div>
 </template>
 
@@ -75,7 +75,7 @@
     // IDEA: или просто NuxtImage с position: absolute?
     flex: 1;
     margin: -$space-12 (-$space-30) 0 0;
-    background: url("images/auth-image.png") no-repeat right/contain;
+    background: url("/images/auth-image.png") no-repeat right/contain;
   }
 
   &__bottom {
