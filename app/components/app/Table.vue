@@ -221,6 +221,10 @@ const getTdClasses = (cell: Cell<TData, unknown>) => {
     &-first-in-general-header {
       @include is($vertical-border) {
         border-left: 1px solid $color-neutral-150;
+
+        &:first-child {
+          border-color: transparent;
+        }
       }
     }
   }
@@ -234,6 +238,10 @@ const getTdClasses = (cell: Cell<TData, unknown>) => {
     &-first-in-general-header {
       @include is($vertical-border) {
         border-left: 1px solid $color-neutral-150;
+
+        &:first-child {
+          border-color: transparent;
+        }
       }
     }
   }
