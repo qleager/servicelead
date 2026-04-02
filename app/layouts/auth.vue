@@ -35,8 +35,6 @@
 
 <style lang="scss">
 .layout-auth {
-  $this: &;
-
   display: grid;
   grid-template-columns: repeat(2, 50%);
   min-height: 100dvh;
@@ -95,6 +93,12 @@
     @include text(medium, md);
 
     color: #fff;
+  }
+
+  &__main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 </style>
