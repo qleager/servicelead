@@ -123,10 +123,6 @@ const isGroupStartCell = (index: number) => {
   return topLevelGroupStartIndexes.value.includes(index)
 }
 
-// const isCellOrHeadPinned = (cell: Cell<TData, unknown>) => {
-//   const pinned = table.getState().columnPinning
-// }
-
 const getHeadClasses = (head: Header<TData, unknown>) => {
   const index = head.getLeafHeaders()[0]?.column.getIndex() ?? head.column.getIndex()
   const stickyPosition = head.column.getIsPinned()
@@ -296,8 +292,9 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
   &__header {
     @include is($sticky-header) {
       position: sticky;
+      z-index: 1;
       top: 0;
-      backdrop-filter: blur(8px);
+      background-color: white;
     }
   }
 
@@ -311,7 +308,7 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
     @include is($sticky-footer) {
       position: sticky;
       bottom: 0;
-      backdrop-filter: blur(8px);
+      background-color: white;
     }
   }
 
@@ -354,7 +351,7 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
     &#{$sticky-left} {
       position: sticky;
       left: 0;
-      backdrop-filter: blur(8px);
+      background-color: white;
     }
 
     &#{$sticky-right} {
@@ -388,13 +385,13 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
     &#{$sticky-left} {
       position: sticky;
       left: 0;
-      backdrop-filter: blur(8px);
+      background-color: white;
     }
 
     &#{$sticky-right} {
       position: sticky;
       right: 0;
-      backdrop-filter: blur(8px);
+      background-color: white;
     }
 
     &-first-in-general-header {
@@ -423,13 +420,13 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
     &#{$sticky-left} {
       position: sticky;
       left: 0;
-      backdrop-filter: blur(8px);
+      background-color: white;
     }
 
     &#{$sticky-right} {
       position: sticky;
       right: 0;
-      backdrop-filter: blur(8px);
+      background-color: white;
     }
 
     &-first-in-general-header {
