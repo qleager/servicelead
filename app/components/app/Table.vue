@@ -34,16 +34,60 @@ const props = defineProps<TableProps<TData>>()
 
 defineSlots<TableSlots<TData>>()
 
-const classname = computed(() => ([
-  'table',
-  { 'table-vertical-border': props.verticalBorder },
-]))
-
 const table = useVueTable({
   data: props.data,
   columns: props.columns,
   getCoreRowModel: getCoreRowModel(),
 })
+
+const classname = computed(() => ([
+  'table',
+  { 'table-vertical-border': props.verticalBorder },
+]))
+
+/**
+ * Start indexes of top-level header groups.
+ */
+const topLevelGroupStartIndexes = computed(() => {
+  let offset = 0
+
+  return table.getHeaderGroups()[0]?.headers.map((header) => {
+    const startIndex = offset
+    offset += header.colSpan
+    return startIndex
+  }) ?? []
+})
+
+/**
+ * Checks whether a cell is the first one in a top-level header group.
+ */
+const isGroupStartCell = (index: number) => {
+  return topLevelGroupStartIndexes.value.includes(index)
+}
+
+const getThClasses = (head: Header<TData, unknown>) => {
+  const index = head.getLeafHeaders()[0]?.column.getIndex() ?? head.column.getIndex()
+
+  return [
+    'table__head',
+    `table__head-index-${index}`,
+    { 'table__head-first-in-general-header': isGroupStartCell(index) },
+  ]
+}
+
+const getTdClasses = (cell: Cell<TData, unknown>) => {
+  const index = cell.column.getIndex()
+  const rowIndex = cell.row.index
+
+  console.log(cell)
+
+  return [
+    'table__cell',
+    `table__cell-index-${index}`,
+    `table__cell-row-${rowIndex}`,
+    { 'table__cell-first-in-general-header': isGroupStartCell(index) },
+  ]
+}
 </script>
 
 <template>
@@ -57,11 +101,12 @@ const table = useVueTable({
         <th
           v-for="header in headerGroup.headers"
           :key="header.id"
-          class="table__head"
+          :class="getThClasses(header)"
           :colspan="header.colSpan"
         >
-          <template v-if="!header.isPlaceholder">
-            <!-- Что тут происходит: сначала пробуем слот конкретной колонки, затем общий слот header, и только потом стандартный header из columnDef. -->
+          <template
+            v-if="!header.isPlaceholder"
+          >
             <slot
               :column="header.column"
               :header="header"
@@ -94,7 +139,7 @@ const table = useVueTable({
         <td
           v-for="cell in row.getVisibleCells()"
           :key="cell.id"
-          class="table__cell"
+          :class="getTdClasses(cell)"
         >
           <slot
             :cell="cell"
@@ -127,7 +172,7 @@ const table = useVueTable({
   $this: &;
   $vertical-border: $this + '-vertical-border';
 
-  // overflow убрать после см. :148
+  // Remove overflow after revisiting the note around line 148.
   overflow: hidden;
   border-spacing: 0;
   border-collapse: separate;
@@ -143,28 +188,8 @@ const table = useVueTable({
   }
 
   &__row {
-    &-header {
-      &-0 {
-        // Колхозное решение с покраской бордера первой колонки в группе
-        // Пересмотреть решение когда будут делаться стики колонки
-        // Смотреть в сторону данимических классов ячеек, так как это сможет заркрывать новые хотелки в будующем
-        th:not(:first-child) {
-          &::before {
-            content: '';
-
-            position: absolute;
-            transform: translateY(-$space-2) translateX(-$space-3);
-
-            width: 1px;
-            height: 500%;
-
-            background-color: $color-neutral-150;
-          }
-        }
-      }
-    }
-
     &-body {
+      // Add rounded corners to the hovered row.
       &:hover {
         .table__cell {
           background-color: $color-neutral-50;
@@ -192,6 +217,12 @@ const table = useVueTable({
     color: $color-neutral-400;
     text-align: left;
     vertical-align: middle;
+
+    &-first-in-general-header {
+      @include is($vertical-border) {
+        border-left: 1px solid $color-neutral-150;
+      }
+    }
   }
 
   /* stylelint-disable-next-line no-descending-specificity */
@@ -199,6 +230,12 @@ const table = useVueTable({
     padding: $space-3 $space-3;
     border: 1px solid transparent;
     vertical-align: middle;
+
+    &-first-in-general-header {
+      @include is($vertical-border) {
+        border-left: 1px solid $color-neutral-150;
+      }
+    }
   }
 }
 </style>
