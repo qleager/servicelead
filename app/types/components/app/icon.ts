@@ -26,6 +26,7 @@ export const iconNames = [
   'domain',
   'dropdown',
   'dropdown_right',
+  'eye',
   'favorites',
   'filter',
   'gear',
