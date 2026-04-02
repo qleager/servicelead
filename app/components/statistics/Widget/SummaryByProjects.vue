@@ -200,17 +200,6 @@ const getSumCellsOfColumn = (table: Table<SummaryRow>, columnKey: string) => {
     return sum + Number(row.getValue(columnKey) ?? 0)
   }, 0)
 }
-
-// const formatMoney = (value: unknown) => {
-//   if (typeof value !== 'number') {
-//     return '0₽'
-//   }
-
-//   return `${new Intl.NumberFormat('ru-RU').format(value)}₽`
-// }
-
-// const isTotalRow = (value: unknown): value is SummaryRow =>
-//   typeof value === 'object' && value !== null && 'isTotal' in value && Boolean(value.isTotal)
 </script>
 
 <template>
