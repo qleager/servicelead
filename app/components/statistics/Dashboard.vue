@@ -21,7 +21,7 @@
         <StatisticsWidgetLead />
         <StatisticsWidgetConversion />
         <StatisticsWidgetConversionByTraffic />
-        <StatisticsWidgetSummary class="statistics-dashboard__summary" />
+        <StatisticsWidgetSummaryByProjects class="statistics-dashboard__summary" />
       </div>
     </template>
   </AppCard>
