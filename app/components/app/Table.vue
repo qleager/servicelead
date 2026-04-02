@@ -1,3 +1,16 @@
+<!-- TODO: Documentation
+  комплнент сложный, требуется документации
+
+  Именования:
+  head - ячека в header
+  cell - ячека в body
+  foot - ячейка в footer
+
+  Показать примеры, очень короткие, читсо то, чтобы донести принцип
+  1. Об общем слоте header и cell
+  2. Об именованох слотах &{name}-header и &{name}-сell
+  3. О рендер функции в columns и data (Это некая замена слотам отметить)
+-->
 <script lang="ts" setup generic="TData extends RowData">
 import type { Cell, Column, ColumnDef, Header, Row, RowData, Table } from '@tanstack/vue-table'
 import { FlexRender, getCoreRowModel, useVueTable } from '@tanstack/vue-table'
@@ -10,7 +23,9 @@ export interface TableProps<TData extends RowData = RowData> {
 
 export type TableSlots<TData extends RowData = RowData> = {
   cell?: (props: TableCellSlotProps<TData>) => unknown
+  footer?: (props: TableFooterSlotProps<TData>) => unknown
   header?: (props: TableHeaderSlotProps<TData>) => unknown
+  [key: `${string}-footer`]: ((props: TableFooterSlotProps<TData>) => unknown) | undefined
   [key: `${string}-header`]: ((props: TableHeaderSlotProps<TData>) => unknown) | undefined
   [key: `${string}-cell`]: ((props: TableCellSlotProps<TData>) => unknown) | undefined
 }
@@ -30,9 +45,16 @@ export interface TableCellSlotProps<TData extends RowData = RowData> {
   table: Table<TData>
 }
 
+export interface TableFooterSlotProps<TData extends RowData = RowData> {
+  column: Column<TData>
+  footer: Header<TData, unknown>
+  table: Table<TData>
+}
+
 const props = defineProps<TableProps<TData>>()
 
 defineSlots<TableSlots<TData>>()
+const slots = useSlots()
 
 const table = useVueTable({
   data: props.data,
@@ -45,8 +67,28 @@ const classname = computed(() => ([
   { 'table-vertical-border': props.verticalBorder },
 ]))
 
+const footerGroups = computed(() => {
+  // Filter rows with empty th
+  return table.getFooterGroups().filter((footerGroup) => {
+    return footerGroup.headers.some((footer) => {
+      if (footer.isPlaceholder) {
+        return false
+      }
+
+      if (footer.column.columnDef.footer != null) {
+        return true
+      }
+
+      return Boolean(
+        slots[`${footer.column.id}-footer`]
+        || slots.footer,
+      )
+    })
+  })
+})
+
 /**
- * Start indexes of top-level header groups.
+ * Start indexes of top-level header groups
  */
 const topLevelGroupStartIndexes = computed(() => {
   let offset = 0
@@ -65,7 +107,7 @@ const isGroupStartCell = (index: number) => {
   return topLevelGroupStartIndexes.value.includes(index)
 }
 
-const getThClasses = (head: Header<TData, unknown>) => {
+const getHeadClasses = (head: Header<TData, unknown>) => {
   const index = head.getLeafHeaders()[0]?.column.getIndex() ?? head.column.getIndex()
 
   return [
@@ -75,17 +117,26 @@ const getThClasses = (head: Header<TData, unknown>) => {
   ]
 }
 
-const getTdClasses = (cell: Cell<TData, unknown>) => {
+const getCellClasses = (cell: Cell<TData, unknown>) => {
   const index = cell.column.getIndex()
   const rowIndex = cell.row.index
-
-  console.log(cell)
 
   return [
     'table__cell',
     `table__cell-index-${index}`,
     `table__cell-row-${rowIndex}`,
     { 'table__cell-first-in-general-header': isGroupStartCell(index) },
+  ]
+}
+
+const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
+  const index = foot.getLeafHeaders()[0]?.column.getIndex() ?? foot.column.getIndex()
+
+  return [
+    'table__foot',
+    `table__foot-index-${index}`,
+    `table__foot-row-${rowIndex}`,
+    { 'table__foot-first-in-general-header': isGroupStartCell(index) },
   ]
 }
 </script>
@@ -101,7 +152,7 @@ const getTdClasses = (cell: Cell<TData, unknown>) => {
         <th
           v-for="header in headerGroup.headers"
           :key="header.id"
-          :class="getThClasses(header)"
+          :class="getHeadClasses(header)"
           :colspan="header.colSpan"
         >
           <template
@@ -139,7 +190,7 @@ const getTdClasses = (cell: Cell<TData, unknown>) => {
         <td
           v-for="cell in row.getVisibleCells()"
           :key="cell.id"
-          :class="getTdClasses(cell)"
+          :class="getCellClasses(cell)"
         >
           <slot
             :cell="cell"
@@ -164,6 +215,44 @@ const getTdClasses = (cell: Cell<TData, unknown>) => {
         </td>
       </tr>
     </tbody>
+
+    <tfoot class="table__footer">
+      <tr
+        v-for="(footerGroup, rowIndex) in footerGroups"
+        :key="footerGroup.id"
+        class="table__row table__row-footer"
+      >
+        <th
+          v-for="footer in footerGroup.headers"
+          :key="footer.id"
+          :class="getFootClasses(footer, rowIndex)"
+          :colspan="footer.colSpan"
+        >
+          <template
+            v-if="!footer.isPlaceholder"
+          >
+            <slot
+              :column="footer.column"
+              :footer="footer"
+              :name="`${footer.column.id}-footer`"
+              :table="table"
+            >
+              <slot
+                :column="footer.column"
+                :footer="footer"
+                name="footer"
+                :table="table"
+              >
+                <FlexRender
+                  :props="footer.getContext()"
+                  :render="footer.column.columnDef.footer"
+                />
+              </slot>
+            </slot>
+          </template>
+        </th>
+      </tr>
+    </tfoot>
   </table>
 </template>
 
@@ -185,6 +274,10 @@ const getTdClasses = (cell: Cell<TData, unknown>) => {
 
   &__body {
     @include text(regular, sm);
+  }
+
+  &__footer {
+    border-top: 1px solid $color-neutral-150;
   }
 
   &__row {
@@ -242,6 +335,30 @@ const getTdClasses = (cell: Cell<TData, unknown>) => {
         &:first-child {
           border-color: transparent;
         }
+      }
+    }
+  }
+
+  &__foot {
+    @include text(semibold, sm);
+
+    padding: $space-3 $space-3;
+    text-align: left;
+    vertical-align: middle;
+
+    &-first-in-general-header {
+      @include is($vertical-border) {
+        border-left: 1px solid $color-neutral-150;
+
+        &:first-child {
+          border-left-color: transparent;
+        }
+      }
+    }
+
+    &-row {
+      &-0 {
+        border-top: 1px solid $color-neutral-150;
       }
     }
   }
