@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { Table } from '@tanstack/vue-table'
-import type { TableColumn } from '~/components/app/Table.vue'
+import type { TableColumn, TableColumnPinningModel } from '~/components/app/Table.vue'
 
 interface Props {
   isFilterVisible?: boolean
@@ -132,7 +132,7 @@ const columns = ref<TableColumn<SummaryRow>[]>([
           h(AppTooltip, {
             content: 'Подтверждено',
           },
-          [
+          () => [
             h(AppIcon, {
               name: 'check_24',
               size: 16,
@@ -148,7 +148,7 @@ const columns = ref<TableColumn<SummaryRow>[]>([
           h(AppTooltip, {
             content: 'Холд',
           },
-          [
+          () => [
             h(AppIcon, {
               name: 'hold',
               size: 16,
@@ -164,7 +164,7 @@ const columns = ref<TableColumn<SummaryRow>[]>([
           h(AppTooltip, {
             content: 'Треш',
           },
-          [
+          () => [
             h(AppIcon, {
               name: 'Trash',
               size: 16,
@@ -202,6 +202,10 @@ const columns = ref<TableColumn<SummaryRow>[]>([
     ],
   },
 ])
+
+const columnPinning = ref<TableColumnPinningModel>({
+  left: ['project'],
+})
 
 const getSumCellsOfColumn = (table: Table<SummaryRow>, columnKey: string) => {
   return table.getRowModel().rows.reduce((sum, row) => {
@@ -250,9 +254,10 @@ const getSumCellsOfColumn = (table: Table<SummaryRow>, columnKey: string) => {
 
     <template #content>
       <div class="statistics-widget-summary__table-wrap">
-        <AppCard>
+        <AppCard style="width: 500px">
           <template #content>
             <AppTable
+              v-model:column-pinning="columnPinning"
               class="statistics-widget-summary__table"
               :columns
               :data

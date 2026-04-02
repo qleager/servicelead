@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { Table } from '@tanstack/vue-table'
-import type { TableColumn } from '~/components/app/Table.vue'
+import type { TableColumn, TableColumnPinningModel } from '~/components/app/Table.vue'
 
 interface Props {
   isFilterVisible?: boolean
@@ -191,6 +191,10 @@ const columns = ref<TableColumn<SummaryRow>[]>([
   },
 ])
 
+const columnPinning = ref<TableColumnPinningModel>({
+  left: ['project'],
+})
+
 const getSumCellsOfColumn = (table: Table<SummaryRow>, columnKey: string) => {
   return table.getRowModel().rows.reduce((sum, row) => {
     return sum + Number(row.getValue(columnKey) ?? 0)
@@ -241,6 +245,7 @@ const getSumCellsOfColumn = (table: Table<SummaryRow>, columnKey: string) => {
         <AppCard>
           <template #content>
             <AppTable
+              v-model:column-pinning="columnPinning"
               class="statistics-widget-summary__table"
               :columns
               :data

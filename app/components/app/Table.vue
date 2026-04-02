@@ -24,6 +24,11 @@ export interface TableProps<TData extends RowData = RowData> {
   verticalBorder?: boolean
 }
 
+export interface TableColumnPinningModel {
+  left?: string[]
+  right?: string[]
+}
+
 export type TableSlots<TData extends RowData = RowData> = {
   cell?: (props: TableCellSlotProps<TData>) => unknown
   footer?: (props: TableFooterSlotProps<TData>) => unknown
@@ -56,13 +61,19 @@ export interface TableFooterSlotProps<TData extends RowData = RowData> {
 
 const props = defineProps<TableProps<TData>>()
 
-defineSlots<TableSlots<TData>>()
-const slots = useSlots()
+const modelColumnPinning = defineModel<TableColumnPinningModel>('columnPinning')
+
+const slots = defineSlots<TableSlots<TData>>()
 
 const table = useVueTable({
   data: props.data,
   columns: props.columns,
   getCoreRowModel: getCoreRowModel(),
+  state: {
+    get columnPinning() {
+      return modelColumnPinning.value
+    },
+  },
 })
 
 const classname = computed(() => ([
@@ -112,12 +123,18 @@ const isGroupStartCell = (index: number) => {
   return topLevelGroupStartIndexes.value.includes(index)
 }
 
+// const isCellOrHeadPinned = (cell: Cell<TData, unknown>) => {
+//   const pinned = table.getState().columnPinning
+// }
+
 const getHeadClasses = (head: Header<TData, unknown>) => {
   const index = head.getLeafHeaders()[0]?.column.getIndex() ?? head.column.getIndex()
+  const stickyPosition = head.column.getIsPinned()
 
   return [
     'table__head',
     `table__head-index-${index}`,
+    stickyPosition ? `table__head-sticky-${stickyPosition}` : null,
     { 'table__head-first-in-general-header': isGroupStartCell(index) },
   ]
 }
@@ -125,22 +142,26 @@ const getHeadClasses = (head: Header<TData, unknown>) => {
 const getCellClasses = (cell: Cell<TData, unknown>) => {
   const index = cell.column.getIndex()
   const rowIndex = cell.row.index
+  const stickyPosition = cell.column.getIsPinned()
 
   return [
     'table__cell',
     `table__cell-index-${index}`,
     `table__cell-row-${rowIndex}`,
+    stickyPosition ? `table__cell-sticky-${stickyPosition}` : null,
     { 'table__cell-first-in-general-header': isGroupStartCell(index) },
   ]
 }
 
 const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
   const index = foot.getLeafHeaders()[0]?.column.getIndex() ?? foot.column.getIndex()
+  const stickyPosition = foot.column.getIsPinned()
 
   return [
     'table__foot',
     `table__foot-index-${index}`,
     `table__foot-row-${rowIndex}`,
+    stickyPosition ? `table__foot-sticky-${stickyPosition}` : null,
     { 'table__foot-first-in-general-header': isGroupStartCell(index) },
   ]
 }
@@ -316,6 +337,10 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
   }
 
   &__head {
+    $this: &;
+    $sticky-left: $this + '-sticky-left';
+    $sticky-right: $this + '-sticky-right';
+
     @include label(regular, md);
 
     padding: $space-2 $space-3;
@@ -323,7 +348,20 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
     font-weight: inherit;
     color: $color-neutral-400;
     text-align: left;
+    white-space: nowrap;
     vertical-align: middle;
+
+    &#{$sticky-left} {
+      position: sticky;
+      left: 0;
+      backdrop-filter: blur(8px);
+    }
+
+    &#{$sticky-right} {
+      position: sticky;
+      right: 0;
+      backdrop-filter: blur(8px);
+    }
 
     &-first-in-general-header {
       @include is($vertical-border) {
@@ -338,9 +376,26 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
 
   /* stylelint-disable-next-line no-descending-specificity */
   &__cell {
+    $this: &;
+    $sticky-left: $this + '-sticky-left';
+    $sticky-right: $this + '-sticky-right';
+
     padding: $space-3 $space-3;
     border: 1px solid transparent;
+    white-space: nowrap;
     vertical-align: middle;
+
+    &#{$sticky-left} {
+      position: sticky;
+      left: 0;
+      backdrop-filter: blur(8px);
+    }
+
+    &#{$sticky-right} {
+      position: sticky;
+      right: 0;
+      backdrop-filter: blur(8px);
+    }
 
     &-first-in-general-header {
       @include is($vertical-border) {
@@ -354,11 +409,28 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
   }
 
   &__foot {
+    $this: &;
+    $sticky-left: $this + '-sticky-left';
+    $sticky-right: $this + '-sticky-right';
+
     @include text(semibold, sm);
 
     padding: $space-3 $space-3;
     text-align: left;
+    white-space: nowrap;
     vertical-align: middle;
+
+    &#{$sticky-left} {
+      position: sticky;
+      left: 0;
+      backdrop-filter: blur(8px);
+    }
+
+    &#{$sticky-right} {
+      position: sticky;
+      right: 0;
+      backdrop-filter: blur(8px);
+    }
 
     &-first-in-general-header {
       @include is($vertical-border) {
