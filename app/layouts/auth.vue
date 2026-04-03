@@ -11,7 +11,10 @@
           Прямой рекламодатель — сами закрываем заявки
         </div>
 
-        <div class="layout-auth__image" />
+        <NuxtImg
+          class="layout-auth__image"
+          src="/images/auth-image.png"
+        />
 
         <div class="layout-auth__bottom">
           <div class="layout-auth__copy">
@@ -42,8 +45,6 @@
   &__aside {
     padding: $space-30 $space-30 $space-12 $space-30;
     border-radius: 0 $radius-9 $radius-9 0;
-
-    // IDEA: добавить в ds gradients.scss?
     background: linear-gradient(150.23deg, rgb(146 179 220 / 50%) 1.69%, rgb(0 106 255 / 50%) 96.51%);
 
     &-content {
@@ -72,15 +73,16 @@
   }
 
   &__image {
-    // IDEA: или просто NuxtImage с position: absolute?
-    flex: 1;
+    height: 45vh;
     margin: -$space-12 (-$space-30) 0 0;
-    background: url("/images/auth-image.png") no-repeat right/contain;
+    object-fit: contain;
+    object-position: right;
   }
 
   &__bottom {
     display: flex;
     justify-content: space-between;
+    margin-top: auto;
   }
 
   &__copy {
@@ -99,6 +101,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    padding-block: $space-30 $space-12;
   }
 }
 </style>
