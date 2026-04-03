@@ -169,7 +169,7 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
       <tr
         v-for="headerGroup in table.getHeaderGroups()"
         :key="headerGroup.id"
-        :class="`table__row table__row-header table__row-header-${headerGroup.depth}`"
+        class="table__row table__row-header"
       >
         <th
           v-for="header in headerGroup.headers"
@@ -177,28 +177,30 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
           :class="getHeadClasses(header)"
           :colspan="header.colSpan"
         >
-          <template
-            v-if="!header.isPlaceholder"
-          >
-            <slot
-              :column="header.column"
-              :header="header"
-              :name="`${header.column.id}-header`"
-              :table="table"
+          <div class="table__head-content">
+            <template
+              v-if="!header.isPlaceholder"
             >
               <slot
                 :column="header.column"
                 :header="header"
-                name="header"
+                :name="`${header.column.id}-header`"
                 :table="table"
               >
-                <FlexRender
-                  :props="header.getContext()"
-                  :render="header.column.columnDef.header"
-                />
+                <slot
+                  :column="header.column"
+                  :header="header"
+                  name="header"
+                  :table="table"
+                >
+                  <FlexRender
+                    :props="header.getContext()"
+                    :render="header.column.columnDef.header"
+                  />
+                </slot>
               </slot>
-            </slot>
-          </template>
+            </template>
+          </div>
         </th>
       </tr>
     </thead>
@@ -214,26 +216,28 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
           :key="cell.id"
           :class="getCellClasses(cell)"
         >
-          <slot
-            :cell="cell"
-            :column="cell.column"
-            :name="`${cell.column.id}-cell`"
-            :row="row"
-            :table="table"
-          >
+          <div class="table__cell-content">
             <slot
               :cell="cell"
               :column="cell.column"
-              name="cell"
+              :name="`${cell.column.id}-cell`"
               :row="row"
               :table="table"
             >
-              <FlexRender
-                :props="cell.getContext()"
-                :render="cell.column.columnDef.cell"
-              />
+              <slot
+                :cell="cell"
+                :column="cell.column"
+                name="cell"
+                :row="row"
+                :table="table"
+              >
+                <FlexRender
+                  :props="cell.getContext()"
+                  :render="cell.column.columnDef.cell"
+                />
+              </slot>
             </slot>
-          </slot>
+          </div>
         </td>
       </tr>
     </tbody>
@@ -250,28 +254,30 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
           :class="getFootClasses(footer, rowIndex)"
           :colspan="footer.colSpan"
         >
-          <template
-            v-if="!footer.isPlaceholder"
-          >
-            <slot
-              :column="footer.column"
-              :footer="footer"
-              :name="`${footer.column.id}-footer`"
-              :table="table"
+          <div class="table__foot-content">
+            <template
+              v-if="!footer.isPlaceholder"
             >
               <slot
                 :column="footer.column"
                 :footer="footer"
-                name="footer"
+                :name="`${footer.column.id}-footer`"
                 :table="table"
               >
-                <FlexRender
-                  :props="footer.getContext()"
-                  :render="footer.column.columnDef.footer"
-                />
+                <slot
+                  :column="footer.column"
+                  :footer="footer"
+                  name="footer"
+                  :table="table"
+                >
+                  <FlexRender
+                    :props="footer.getContext()"
+                    :render="footer.column.columnDef.footer"
+                  />
+                </slot>
               </slot>
-            </slot>
-          </template>
+            </template>
+          </div>
         </th>
       </tr>
     </tfoot>
@@ -294,6 +300,9 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
       position: sticky;
       z-index: 1;
       top: 0;
+
+      container-type: scroll-state;
+
       background-color: white;
     }
   }
@@ -308,6 +317,7 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
     @include is($sticky-footer) {
       position: sticky;
       bottom: 0;
+      container-type: scroll-state;
       background-color: white;
     }
   }
@@ -340,7 +350,7 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
 
     @include label(regular, md);
 
-    padding: $space-2 $space-3;
+    padding: 0;
 
     font-weight: inherit;
     color: $color-neutral-400;
@@ -350,13 +360,21 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
 
     &#{$sticky-left} {
       position: sticky;
+      z-index: 2;
       left: 0;
+
+      container-type: scroll-state;
+
       background-color: white;
     }
 
     &#{$sticky-right} {
       position: sticky;
+      z-index: 2;
       right: 0;
+
+      container-type: scroll-state;
+
       backdrop-filter: blur(8px);
     }
 
@@ -369,6 +387,10 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
         }
       }
     }
+
+    &-content {
+      padding: $space-2 $space-3;
+    }
   }
 
   /* stylelint-disable-next-line no-descending-specificity */
@@ -377,20 +399,22 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
     $sticky-left: $this + '-sticky-left';
     $sticky-right: $this + '-sticky-right';
 
-    padding: $space-3 $space-3;
-    border: 1px solid transparent;
+    padding: 0;
+    border: 0;
     white-space: nowrap;
     vertical-align: middle;
 
     &#{$sticky-left} {
       position: sticky;
       left: 0;
+      container-type: scroll-state;
       background-color: white;
     }
 
     &#{$sticky-right} {
       position: sticky;
       right: 0;
+      container-type: scroll-state;
       background-color: white;
     }
 
@@ -403,6 +427,10 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
         }
       }
     }
+
+    &-content {
+      padding: $space-3 $space-3;
+    }
   }
 
   &__foot {
@@ -412,20 +440,28 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
 
     @include text(semibold, sm);
 
-    padding: $space-3 $space-3;
+    padding: 0;
     text-align: left;
     white-space: nowrap;
     vertical-align: middle;
 
     &#{$sticky-left} {
       position: sticky;
+      z-index: 2;
       left: 0;
+
+      container-type: scroll-state;
+
       background-color: white;
     }
 
     &#{$sticky-right} {
       position: sticky;
+      z-index: 2;
       right: 0;
+
+      container-type: scroll-state;
+
       background-color: white;
     }
 
@@ -439,10 +475,37 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
       }
     }
 
+    &-content {
+      padding: $space-3 $space-3;
+    }
+
     &-row {
       &-0 {
         border-top: 1px solid $color-neutral-150;
       }
+    }
+  }
+
+  // Функциональность 2026 года
+  // DOCS: https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Conditional_rules/Container_scroll-state_queries
+  // Добавлять стили когда sticky-элемент "прилип"
+  // Не будет рабоать на старых браузерах
+  // К релизу уже будет приемлимое время поддержки браузерами
+  @container scroll-state(stuck: top) {
+    &__row:last-child &__head {
+      border-bottom: 1px solid $color-neutral-150;
+    }
+  }
+
+  @container scroll-state(stuck: bottom) {
+    &__row:last-child &__foot {
+      border-top: 1px solid $color-neutral-150;
+    }
+  }
+
+  @container scroll-state(stuck: left) {
+    * {
+      border-right: 1px solid $color-neutral-150;
     }
   }
 }
