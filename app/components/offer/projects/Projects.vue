@@ -2,17 +2,17 @@
 </script>
 
 <template>
-  <div class="offers-projects">
-    <div class="offers-projects__info">
-      <div class="offers-projects__info-title">
+  <div class="offer-projects">
+    <div class="offer-projects__info">
+      <div class="offer-projects__info-title">
         Проекты
       </div>
-      <div class="offers-projects__info-description">
+      <div class="offer-projects__info-description">
         <div>Все наши офферы сгруппированы в&nbsp;проекты</div>
         <div>Ознакомтесь подробнее с&nbsp;возможностями дашборда проекта,&nbsp;изучите&nbsp;как </div>
       </div>
     </div>
-    <div class="offers-projects__entries">
+    <div class="offer-projects__entries">
       <OfferProjectsEntry
         v-for="i in 3"
         :key="i"
@@ -22,7 +22,7 @@
 </template>
 
 <style lang="scss">
-.offers-projects {
+.offer-projects {
   display: flex;
   gap: $space-4;
   justify-content: space-between;

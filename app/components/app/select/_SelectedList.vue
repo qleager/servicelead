@@ -42,11 +42,11 @@ const tagSize = computed(() => {
     <AppTag
       v-for="(item, index) in items"
       :key="index"
-      variant="lined"
-      color="neutral"
-      :size="tagSize"
-      icon="mail_24"
       closable
+      color="neutral"
+      icon="mail_24"
+      :size="tagSize"
+      variant="outline"
       @close="emits('close', index)"
     >
       {{ item }}

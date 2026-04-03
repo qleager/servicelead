@@ -10,12 +10,12 @@
       <NotificationButton
         class="header__notification"
         color="neutral"
-        variant="lined"
+        variant="outline"
       />
       <TicketButton
         class="header__ticket"
         color="neutral"
-        variant="lined"
+        variant="outline"
       />
       <ManagerButton
         class="header__manager"
