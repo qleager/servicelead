@@ -16,22 +16,22 @@ definePageMeta({
     </div>
 
     <div class="auth-form__fields">
-      <div class="auth-form__field">
-        <AppLabel
-          title="E-mail"
-        />
+      <AppLabel
+        class="auth-form__field"
+        title="E-mail"
+      >
         <AppInput
           class="auth-form__input"
           name="email"
           placeholder="Введите e-mail"
           type="text"
         />
-      </div>
+      </AppLabel>
 
-      <div class="auth-form__field">
-        <AppLabel
-          title="Пароль"
-        />
+      <AppLabel
+        class="auth-form__field"
+        title="Пароль"
+      >
         <AppInput
           class="auth-form__input"
           icon="eye"
@@ -40,7 +40,7 @@ definePageMeta({
           trailing-icon
           type="password"
         />
-      </div>
+      </AppLabel>
 
       <div class="auth-form__actions">
         <AppCheckbox
@@ -89,7 +89,6 @@ definePageMeta({
   &__title {
     @include text(semibold, 3xl);
 
-    line-height: 1.4;
     color: $color-neutral-950;
   }
 
@@ -105,6 +104,10 @@ definePageMeta({
     display: flex;
     flex-direction: column;
     gap: $space-4;
+  }
+
+  &__field {
+    width: 100%;
   }
 
   &__actions {
