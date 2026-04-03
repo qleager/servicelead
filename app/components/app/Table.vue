@@ -504,8 +504,22 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
   }
 
   @container scroll-state(stuck: left) {
-    * {
-      border-right: 1px solid $color-neutral-150;
+    &__head,
+    &__cell,
+    &__foot {
+      &-content {
+        border-right: 1px solid $color-neutral-150;
+      }
+    }
+  }
+
+  @container scroll-state(stuck: right) {
+    &__head,
+    &__cell,
+    &__foot {
+      &-content {
+        border-left: 1px solid $color-neutral-150;
+      }
     }
   }
 }
