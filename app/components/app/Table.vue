@@ -79,8 +79,8 @@ const table = useVueTable({
 const classname = computed(() => ([
   'table',
   { 'table-vertical-border': props.verticalBorder },
-  { 'table-sticky-header': props.sticky === 'header' || props.sticky },
-  { 'table-sticky-footer': props.sticky === 'footer' || props.sticky },
+  { 'table-sticky-header': props.sticky === 'header' || props.sticky === true },
+  { 'table-sticky-footer': props.sticky === 'footer' || props.sticky === true },
 ]))
 
 const footerGroups = computed(() => {
