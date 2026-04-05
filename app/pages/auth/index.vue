@@ -50,7 +50,7 @@ definePageMeta({
 
         <NuxtLink
           class="auth-form__link"
-          to="#"
+          to="/auth/recovery"
         >
           Забыли пароль?
         </NuxtLink>
@@ -69,7 +69,7 @@ definePageMeta({
 
       <NuxtLink
         class="auth-form__link auth-form__link-cta"
-        to="#"
+        to="/auth/signup"
       >
         Зарегистрироваться
       </NuxtLink>

@@ -10,6 +10,7 @@ definePageMeta({
       color="neutral"
       icon="arrow_left"
       size="sm"
+      to="/auth"
       variant="link"
     >
       Вернуться к входу

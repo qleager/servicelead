@@ -10,6 +10,7 @@ definePageMeta({
       color="neutral"
       icon="arrow_left"
       size="sm"
+      to="/auth"
       variant="link"
     >
       Вернуться к входу
@@ -27,7 +28,7 @@ definePageMeta({
     <div class="auth-form__methods">
       <NuxtLink
         class="auth-form__method"
-        to="#"
+        to="/auth/recovery/email"
       >
         <div class="auth-form__method-inner">
           <div class="auth-form__method-title">

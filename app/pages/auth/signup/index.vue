@@ -71,7 +71,7 @@ definePageMeta({
         <AppSelect
           class="auth-form__input"
           counter="list"
-          :items="['Источник 1', 'Источник 2', 'Источник 3']"
+          :items="['Доски объявлений', 'Яндекс Директ', 'SEO трафик', 'Тизерные сети']"
           multiple
           placeholder="Выберите источники трафика"
           size="md"
@@ -96,7 +96,7 @@ definePageMeta({
 
       <NuxtLink
         class="auth-form__link auth-form__link-cta"
-        to="#"
+        to="/auth"
       >
         Войти
       </NuxtLink>
