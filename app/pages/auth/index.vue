@@ -68,7 +68,7 @@ definePageMeta({
       Нет аккаунта?
 
       <NuxtLink
-        class="auth-form__link"
+        class="auth-form__link auth-form__link-cta"
         to="#"
       >
         Зарегистрироваться
@@ -131,6 +131,10 @@ definePageMeta({
 
     color: $color-primary;
     text-decoration: none;
+
+    &-cta {
+      @include text(regular, md);
+    }
   }
 
   &__button {
