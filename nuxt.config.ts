@@ -50,7 +50,7 @@ export default defineNuxtConfig({
     },
     plugins: [
       VitePluginSvgSpritemap('./assets/icons/*.svg', {
-        types: '/types/app/components/icon.d.ts',
+        types: './types/app/components/icon.d.ts',
         svgo: {
           plugins: [
             {
