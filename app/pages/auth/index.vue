@@ -34,7 +34,6 @@ definePageMeta({
       >
         <AppInput
           class="auth-form__input"
-          icon="eye"
           name="password"
           placeholder="Введите пароль"
           trailing-icon
@@ -113,7 +112,9 @@ definePageMeta({
   &__actions {
     display: flex;
     gap: $space-3;
+    align-items: center;
     justify-content: initial;
+
     color: $color-neutral-950;
 
     &:has(button) {
