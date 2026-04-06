@@ -289,11 +289,26 @@ export type {
     overflow: auto;
 
     height: 100%;
-    padding: $space-4 $space-2;
     border-radius: $radius-2;
 
     background: white;
     box-shadow: $shadow-md;
+
+    @include is($size-xs) {
+      padding: $space-2 $space-1;
+    }
+
+    @include is($size-sm) {
+      padding: $space-3 $space-1;
+    }
+
+    @include is($size-md) {
+      padding: $space-4 $space-2;
+    }
+
+    @include is($size-lg) {
+      padding: $space-5 $space-3;
+    }
   }
 
   &__reset-button {

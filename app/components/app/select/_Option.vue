@@ -14,7 +14,7 @@ const props = defineProps<Props>()
 
 const classname = computed(() => [
   'select-option',
-  `select-option-${size}`,
+  `select-option-size-${size}`,
 ])
 
 const isIndicatorVisible = computed(() => props.isSelected && !props.checkbox)
@@ -49,7 +49,7 @@ export type { Props as SelectOptionProps }
   $this: &;
   $size-xs: $this + '-size-xs' ;
   $size-sm: $this + '-size-sm';
-  $size-md: $this + '-size-md ' + $this;
+  $size-md: $this + '-size-md';
   $size-lg: $this + '-size-lg';
 
   cursor: pointer;
@@ -69,21 +69,29 @@ export type { Props as SelectOptionProps }
   @include is($size-xs) {
     gap: $space-2;
     height: 32px;
+
+    @include text(regular, xs);
   }
 
   @include is($size-sm) {
     gap: $space-3;
     height: 36px;
+
+    @include text(regular, sm);
   }
 
    @include is($size-md) {
     gap: $space-4;
     height: 40px;
+
+    @include text(regular, md);
   }
 
-  @include is($size-md) {
+  @include is($size-lg) {
     gap: $space-5;
     height: 44px;
+
+    @include text(regular, lg);
   }
 
   &:hover {
@@ -102,6 +110,34 @@ export type { Props as SelectOptionProps }
 
   &__indicator {
     margin-left: auto;
+
+    @include is($size-xs) {
+      $size: 16px;
+
+      width: $size;
+      height: $size;
+    }
+
+    @include is($size-sm) {
+      $size: 20px;
+
+      width: $size;
+      height: $size;
+    }
+
+    @include is($size-md) {
+      $size: 24px;
+
+      width: $size;
+      height: $size;
+    }
+
+    @include is($size-lg) {
+      $size: 28px;
+
+      width: $size;
+      height: $size;
+    }
   }
 }
 </style>
