@@ -2,6 +2,23 @@
 import type { SelectInjection } from './Select.vue'
 
 const { size } = inject('selectState') as SelectInjection
+
+const inputSize = computed(() => {
+  switch (size) {
+    case 'xs':
+      return 'xs'
+      break
+    case 'sm':
+      return 'xs'
+      break
+    case 'md':
+      return 'sm'
+      break
+    default:
+      return 'md'
+      break
+  }
+})
 </script>
 
 <template>
@@ -11,9 +28,9 @@ const { size } = inject('selectState') as SelectInjection
     icon="search"
     reset
     rounded
-    :size
+    :size="inputSize"
     trailing-icon
-    variant="filled"
+    variant="solid"
   />
 </template>
 

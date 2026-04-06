@@ -1,13 +1,12 @@
 <script lang="ts" setup>
 import type { SelectInjection } from './Select.vue'
 
-const { size, color, variant, icon, isCollapsed, rounded } = inject('selectState') as SelectInjection
+const { size, color, icon, isCollapsed, rounded } = inject('selectState') as SelectInjection
 
 const classname = computed(() => [
   'select-field',
   `select-field-size-${size}`,
   `select-field-color-${color}`,
-  `select-field-variant-${variant}`,
   { 'select-field-active': isCollapsed.value },
   { 'select-field-rounded': rounded },
 ])
@@ -38,9 +37,6 @@ const classname = computed(() => [
 <style lang="scss">
 .select-field {
   $this: &;
-  $variant-filled: $this + '-variant-filled';
-  $variant-lined: $this + '-variant-lined';
-  $variant-nofilled: $this + '-variant-nofilled';
   $size-xs: $this + '-size-xs';
   $size-sm: $this + '-size-sm';
   $size-md: $this + '-size-md';
@@ -59,56 +55,10 @@ const classname = computed(() => [
   align-items: center;
 
   width: 100%;
-  border: 1px solid $color-neutral-300;
+  border: 1px solid;
   border-radius: $radius-2;
 
-  &:hover {
-    border-color: $color-neutral-400;
-    transition: $hover-duration-sm;
-  }
-
-  &:focus {
-    border-color: $color-neutral-400;
-    transition: $active-duration-sm;
-  }
-
-  &:focus-within {
-    outline: 1px solid;
-    outline-color: transparent;
-    outline-offset: -1px;
-    transition: $active-duration-sm;
-  }
-
-  &#{$rounded} {
-    border-radius: 50px !important;
-  }
-
-  &#{$variant-filled} {
-    --variant-filled-text-color: transparent;
-
-    border: none !important;
-    color: var(--variant-filled-text-color) !important;
-    background-color: transparent;
-    outline: none !important;
-  }
-
-  &#{$variant-lined} {
-    --variant-lined-background-color: transparent;
-    --variant-lined-text-color: unset;
-
-    border: 1px solid;
-    color: var(--variant-lined-text-color) !important;
-    background-color: var(--variant-lined-background-color) !important;
-  }
-
-  &#{$variant-nofilled} {
-    --variant-nofilled-background-color: transparent;
-
-    border: transparent;
-    background-color: var(--variant-nofilled-background-color) !important;
-  }
-
-  &#{$size-xs} {
+  @include is($size-xs) {
     gap: $space-2;
     height: 32px;
     padding-inline: $space-3;
@@ -117,7 +67,7 @@ const classname = computed(() => [
     @include text(regular, xs);
   }
 
-  &#{$size-sm} {
+  @include is($size-sm) {
     gap: $space-3;
     height: 40px;
     padding-inline: $space-4;
@@ -126,7 +76,7 @@ const classname = computed(() => [
     @include text(regular, sm);
   }
 
-  &#{$size-md} {
+  @include is($size-md) {
     gap: $space-4;
     height: 48px;
     padding-inline: $space-5;
@@ -135,7 +85,7 @@ const classname = computed(() => [
     @include text(regular, md);
   }
 
-  &#{$size-lg} {
+  @include is($size-lg) {
     gap: $space-5;
     height: 56px;
     padding-inline: $space-6;
@@ -144,92 +94,49 @@ const classname = computed(() => [
     @include text(regular, md);
   }
 
-  &#{$white-color} {
-    --variant-filled-text-color: #{$color-neutral-950};
-    --variant-lined-text-color: white;
-
+  @include is($white-color) {
     border-color: white;
-    color: white;
-    background-color: white;
 
     &:hover {
-      --variant-lined-background-color: white;
-      --variant-nofilled-background-color: white;
-      --variant-lined-text-color: #{$color-neutral-950};
-
-      border-color: #{$color-neutral-50};
-      color:  #{$color-neutral-950};
-      background-color: #{$color-neutral-150};
-    }
-
-    &:active {
-      --variant-nofilled-background-color: #{$color-neutral-100};
-      --variant-lined-background-color: #{$color-neutral-100};
-
-      border-color: #{$color-neutral-150};
-      color: #{$color-neutral-950};
-      background-color: #{$color-neutral-150};
+      border-color: $color-neutral-50;
+      background-color: $color-neutral-100;
     }
   }
 
-  &#{$neutral-color} {
-    --variant-filled-text-color: #{$color-neutral-950};
-    --variant-lined-text-color: #{$color-neutral-950};
-
-    transform: $blur-duration-sm;
-    border-color: $color-neutral-300;
-    color: $color-neutral-300;
+  @include is($white-color + $active) {
+    border-color: $color-neutral-50;
     background-color: $color-neutral-100;
+  }
+
+  @include is($neutral-color) {
+    border-color: $color-neutral-300;
 
     &:hover {
-      --variant-nofilled-background-color: #{$color-neutral-100};
-      --variant-lined-background-color: #{$color-neutral-100};
-
-      transform: $hover-duration-sm;
       border-color: $color-neutral-400;
-      background-color: $color-neutral-150;
-    }
-
-    &:focus-within {
-      --variant-nofilled-background-color: #{$color-neutral-100};
-      --variant-lined-background-color: #{$color-neutral-100};
-
-      transform: $active-duration-sm;
-      background-color: $color-neutral-150;
+      background-color: $color-neutral-100;
     }
   }
 
-  &#{$primary-color} {
-    --variant-filled-text-color: white;
-    --variant-nofilled-background-color: transparent;
-    --variant-lined-text-color: #{$color-primary};
+  @include is($neutral-color + $active) {
+    border-color: $color-neutral-400;
+    background-color: $color-neutral-100;
+  }
 
+  @include is($primary-color) {
     border-color: $color-primary;
-    color: $color-primary;
-    background-color: $color-primary;
 
     &:hover {
-      --variant-nofilled-background-color: #{$color-primary-100};
-      --variant-lined-background-color: #{$color-primary-100};
-
       border-color: $color-primary-600;
-      background-color: $color-primary-600;
-    }
-
-    &:active {
-      border-color: #{$color-primary-700};
-      background-color: #{$color-primary-700};
-    }
-
-    &:disabled {
-      --variant-filled-text-color: #{$color-neutral-400};
-
-      border-color: #{$color-neutral-100};
-      background-color: #{$color-neutral-100};
+      background-color: $color-neutral-100;
     }
   }
 
-  &#{$rounded} {
+  @include is($primary-color + $active) {
+    border-color: $color-primary-600;
+    background-color: $color-neutral-100;
+  }
+
+  @include is($rounded) {
     border-radius: 50px;
   }
 
@@ -237,25 +144,25 @@ const classname = computed(() => [
     flex-shrink: 0;
     color: inherit;
 
-    #{$size-xs} & {
+    @include is($size-xs) {
       width: 16px;
       height: 16px;
       margin-inline: -#{$space-05};
     }
 
-    #{$size-sm} & {
+    @include is($size-sm) {
       width: 20px;
       height: 20px;
       margin-inline: -#{$space-1};
     }
 
-    #{$size-md} & {
+    @include is($size-md) {
       width: 24px;
       height: 24px;
       margin-inline: -#{$space-2};
     }
 
-    #{$size-lg} & {
+    @include is($size-lg) {
       width: 28px;
       height: 28px;
       margin-inline: -#{$space-3};
@@ -271,32 +178,20 @@ const classname = computed(() => [
 
     text-overflow: ellipsis;
 
-    #{$size-xs} & {
+    @include is($size-xs) {
       $space: $space-05;
-
-      margin-inline: -#{$space};
-      padding-inline: $space;
     }
 
-    #{$size-sm} & {
+    @include is($size-sm) {
       $space: $space-1;
-
-      margin-inline: -#{$space};
-      padding-inline: $space;
     }
 
-    #{$size-md} & {
+    @include is($size-md) {
       $space: $space-2;
-
-      margin-inline: -#{$space};
-      padding-inline: $space;
     }
 
-    #{$size-lg} & {
+    @include is($size-lg) {
       $space: $space-3;
-
-      margin-inline: -#{$space};
-      padding-inline: $space;
     }
   }
 
@@ -304,28 +199,36 @@ const classname = computed(() => [
     color: inherit;
     transition: $blur-duration-sm;
 
-    #{$active} & {
+    @include is($active) {
       transform: scale(1, -1);
       transition: $active-duration-sm;
     }
 
-    #{$neutral-color} & {
+    @include is($white-color) {
+      color: $color-neutral-50;
+    }
+
+    @include is($neutral-color) {
       color: $color-neutral-400;
     }
 
-    #{$size-xs} & {
+    @include is($primary-color) {
+      color: $color-primary;
+    }
+
+    @include is($size-xs) {
       margin-inline: -#{$space-05};
     }
 
-    #{$size-sm} & {
+    @include is($size-sm) {
       margin-inline: -#{$space-1};
     }
 
-    #{$size-md} & {
+    @include is($size-md) {
       margin-inline: -#{$space-2};
     }
 
-    #{$size-lg} & {
+    @include is($size-lg) {
       margin-inline: -#{$space-3};
     }
   }

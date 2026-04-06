@@ -12,6 +12,11 @@ interface Props {
 
 const props = defineProps<Props>()
 
+const classname = computed(() => [
+  'select-option',
+  `select-option-${size}`,
+])
+
 const isIndicatorVisible = computed(() => props.isSelected && !props.checkbox)
 
 export type { Props as SelectOptionProps }
@@ -20,7 +25,7 @@ export type { Props as SelectOptionProps }
 <template>
   <button
     aria-selected
-    class="select-option"
+    :class="classname"
   >
     <AppCheckbox
       v-if="checkbox"
@@ -41,12 +46,11 @@ export type { Props as SelectOptionProps }
 
 <style lang="scss">
 .select-option {
-  $root: '.select';
   $this: &;
-  $root-size-xs: $root + '-size-xs' ;
-  $root-size-sm: $root + '-size-sm';
-  $root-size-md: $root + '-size-md ' + $this;
-  $root-size-lg: $root + '-size-lg';
+  $size-xs: $this + '-size-xs' ;
+  $size-sm: $this + '-size-sm';
+  $size-md: $this + '-size-md ' + $this;
+  $size-lg: $this + '-size-lg';
 
   cursor: pointer;
 
@@ -62,22 +66,22 @@ export type { Props as SelectOptionProps }
 
   transition: $blur-duration-sm;
 
-  #{$root-size-xs} & {
+  @include is($size-xs) {
     gap: $space-2;
     height: 32px;
   }
 
-  #{$root-size-sm} & {
+  @include is($size-sm) {
     gap: $space-3;
     height: 36px;
   }
 
-   &#{$root-size-md} {
+   @include is($size-md) {
     gap: $space-4;
     height: 40px;
   }
 
-  #{$root-size-md} & {
+  @include is($size-md) {
     gap: $space-5;
     height: 44px;
   }

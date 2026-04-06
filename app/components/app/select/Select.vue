@@ -1,19 +1,10 @@
 <script lang="ts" setup>
-import type { Sizes, Subset, Colors } from '~/types/ds'
+import type { Size, Subset, Color } from '~/types/ds'
 import type { IconProps } from '../Icon.vue'
 import type { SelectOptionProps } from './_Option.vue'
 
 interface Props {
-  color?: Subset<Colors, 'neutral' | 'primary'> | 'white'
-  /**
-   * How to display selected items in multiple mode
-   *
-   * - `'number'` – AppTag with a counter
-   * - `'list'`   – Scrollable list of AppTags with label and close button
-   *
-   * @defaultvalue `'number'`
-   */
-  counter?: 'number' | 'list'
+  color?: Subset<Color, 'neutral' | 'primary'> | 'white'
   disabled?: boolean
   /**
    * Floats placeholder to the border when a value is selected
@@ -43,8 +34,7 @@ interface Props {
    * @defaultvalue `false`
    */
   search?: boolean
-  size?: Sizes
-  variant?: 'filled' | 'lined' | 'nofilled'
+  size?: Size
 }
 
 type Value = string | number
@@ -62,7 +52,6 @@ type MultipleModel = Array<GetItemValue<Item>>
 
 interface Injection {
   color: typeof props.color
-  counter: typeof props.counter
   floatPlaceholder: typeof props.floatPlaceholder
   icon: typeof props.icon
   isCollapsed: typeof isCollapsed
@@ -71,7 +60,6 @@ interface Injection {
   placeholder: typeof props.placeholder
   rounded: typeof props.rounded
   size: typeof props.size
-  variant: typeof props.variant
 }
 
 // Type Guards
@@ -133,23 +121,13 @@ const nodataText = computed(() => {
   return ''
 })
 
-const countOfSelected = computed(() => (Array.isArray(model.value) ? model.value.length : 0))
-
 const isSelected = computed(() => props.multiple ? !isEmpty(model.value) : !isNil(model.value))
 
 const isModelElementVisible = computed(() => !props.multiple)
 
-const isCounterVisible = computed(() => {
-  return Array.isArray(model.value)
-    && props.multiple
-    && model.value.length
-    && props.counter == 'number'
-})
-
 const isSelectedListVisible = computed(() => {
   return Array.isArray(model.value)
     && model.value.length
-    && props.counter == 'list'
 })
 
 const isOptionSelected = (option: Option) => {
@@ -194,12 +172,10 @@ const resetAll = () => {
 provide<Injection>('selectState', {
   isSelected,
   isCollapsed,
-  variant: props.variant,
   size: props.size,
   color: props.color,
   icon: props.icon,
   multiple: props.multiple,
-  counter: props.counter,
   placeholder: props.placeholder,
   floatPlaceholder: props.floatPlaceholder,
   rounded: props.rounded,
@@ -231,9 +207,6 @@ export type {
         >
           {{ model }}
         </div>
-        <AppSelectCounter v-if="isCounterVisible">
-          {{ countOfSelected }}
-        </AppSelectCounter>
         <AppSelectSelectedList
           v-if="isSelectedListVisible"
           :items="(Array.isArray(model) ? model : [])"
@@ -267,7 +240,7 @@ export type {
             class="select__reset-button"
             color="neutral"
             size="sm"
-            variant="nofilled"
+            variant="link"
             @click="resetAll"
           >
             Очистить все
@@ -293,15 +266,15 @@ export type {
   }
 
   &#{$size-xs} {
-    @include text(regular, 2xs);
-  }
-
-  &#{$size-sm} {
     @include text(regular, xs);
   }
 
-  &#{$size-md} {
+  &#{$size-sm} {
     @include text(regular, sm);
+  }
+
+  &#{$size-md} {
+    @include text(regular, md);
   }
 
   &#{$size-lg} {
