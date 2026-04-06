@@ -2,6 +2,7 @@
 import type { Size, Subset, Color } from '~/types/ds'
 import type { IconProps } from '../Icon.vue'
 import type { SelectOptionProps } from './_Option.vue'
+import type { VNodeChild } from 'vue'
 
 interface Props {
   color?: Subset<Color, 'neutral' | 'primary'> | 'white'
@@ -37,6 +38,13 @@ interface Props {
   size?: Size
 }
 
+type Model = GetModelValue<Item, typeof props.multiple>
+type MultipleModel = Array<GetItemValue<Item>>
+
+interface Slots {
+  value: (props: { model: Model, placeholder: Props['placeholder'] }) => VNodeChild
+}
+
 type Value = string | number
 type Option = SelectOptionProps
 type Item = Option | Value
@@ -46,9 +54,6 @@ type GetModelValue<TItem, TMultiple extends boolean | undefined>
   = TMultiple extends true
     ? Array<GetItemValue<TItem>>
     : GetItemValue<TItem> | undefined
-
-type Model = GetModelValue<Item, typeof props.multiple>
-type MultipleModel = Array<GetItemValue<Item>>
 
 interface Injection {
   color: typeof props.color
@@ -79,6 +84,8 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const model = defineModel<Model>()
+
+defineSlots<Slots>()
 
 const isCollapsed = ref<boolean>(false)
 const searchQuery = ref<string>('')
@@ -123,7 +130,7 @@ const nodataText = computed(() => {
 
 const isSelected = computed(() => props.multiple ? !isEmpty(model.value) : !isNil(model.value))
 
-const isModelElementVisible = computed(() => !props.multiple)
+const isModelElementVisible = computed(() => !props.multiple && model.value)
 
 const isSelectedListVisible = computed(() => {
   return Array.isArray(model.value)
@@ -201,17 +208,24 @@ export type {
     >
       <AppSelectField>
         <AppSelectPlaceholder />
-        <div
-          v-if="isModelElementVisible"
-          class="select__model"
+        <slot
+          v-if="isModelElementVisible || isSelectedListVisible"
+          :model
+          name="value"
+          :placeholder
         >
-          {{ model }}
-        </div>
-        <AppSelectSelectedList
-          v-if="isSelectedListVisible"
-          :items="(Array.isArray(model) ? model : [])"
-          @close="onSelectedClose"
-        />
+          <div
+            v-if="isModelElementVisible"
+            class="select__model"
+          >
+            {{ model }}
+          </div>
+          <AppSelectSelectedList
+            v-if="isSelectedListVisible"
+            :items="(Array.isArray(model) ? model : [])"
+            @close="onSelectedClose"
+          />
+        </slot>
       </AppSelectField>
       <template #content>
         <div class="select__content">
