@@ -11,36 +11,29 @@ export default {
   argTypes: {
     // Props
     title: {
-        control: 'text',
+      control: 'text',
     },
     description: {
-        control: 'text',
+      control: 'text',
     },
     accept: {
-        control: 'text',
+      control: 'text',
     },
     reject: {
-        control: 'text'
+      control: 'text',
     },
     // Slots
     default: {
-        control: 'text',
-        table: { category: 'slots' },
-    },
-    // Behavioral Props
-    modelValue: {
-      control: 'boolean',
-      description: 'показано или скрыто',
-      table: { category: 'behavioral props' },
+      control: 'text',
+      table: { category: 'slots' },
     },
   },
   args: {
     title: 'Вы уверены?',
-    description: 'Текст модального окна',
+    description: 'Это действие нельзя отменить',
     accept: 'Да',
     reject: 'Отмена',
     default: 'Default Slot: нажми чтобы открыть',
-    modelValue: true,
   },
 } satisfies Meta<typeof AppConfirmDialog>
 
@@ -53,7 +46,7 @@ export const Playground: Story = {
     template: `
       <AppConfirmDialog
         class="confirm-dialog"
-        v-model="args.modelValue"
+        :model-value="true"
         :title="args.title"
         :description="args.description"
         :accept="args.accept"
