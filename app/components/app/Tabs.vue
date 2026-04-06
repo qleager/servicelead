@@ -188,6 +188,7 @@ export type { Props as TabsProps, Model as TabsModel, Item as TabsItem, Slots as
   $size-sm: $this + '-size-sm';
   $size-md: $this + '-size-md';
 
+  z-index: 0;
   overflow: auto;
   display: flex;
 
