@@ -1,12 +1,19 @@
 import type { Meta, StoryObj } from '@nuxtjs/storybook'
 import AppSwitch from '@components/app/Switch.vue'
-import AppCard from '@components/app/card/Card.vue'
 
 export default {
   title: 'App/Switch',
   component: AppSwitch,
   parameters: {
     layout: 'centered',
+    backgrounds: {
+      options: {
+        white: { name: 'White', value: '#ffffff' },
+      },
+    },
+  },
+  globals: {
+    backgrounds: { value: 'white' },
   },
   argTypes: {
     // Props
@@ -75,24 +82,20 @@ type Story = StoryObj<typeof AppSwitch>
 
 export const Playground: Story = {
   render: args => ({
-    components: { AppSwitch, AppCard },
+    components: { AppSwitch },
     setup: () => ({ args }),
     template: `
-        <AppCard>
-          <template #content>
-            <AppSwitch
-              v-model="args.modelValue"
-              v-bind="args"
-            >
-              <template v-if="args.label" #label>
-                {{ args.label }}
-              </template>
-              <template v-if="args.description" #description>
-                {{ args.description }}
-              </template>
-            </AppSwitch>
-          </template>
-        </AppCard>
+      <AppSwitch
+        v-model="args.modelValue"
+        v-bind="args"
+      >
+        <template v-if="args.label" #label>
+          {{ args.label }}
+        </template>
+        <template v-if="args.description" #description>
+          {{ args.description }}
+        </template>
+      </AppSwitch>
     `,
   }),
 }
