@@ -45,7 +45,7 @@ const classname = computed(() => [
         color="neutral"
         icon="arrow_right"
         size="xs"
-        variant="lined"
+        variant="outline"
       />
     </footer>
   </article>
@@ -114,7 +114,8 @@ const classname = computed(() => [
   &__indicator {
     display: none;
     height: fit-content;
-    margin-top: $space-1;
+    margin-top: $space-2;
+    margin-right: $space-2;
 
     #{$minimal} & {
       display: flex;

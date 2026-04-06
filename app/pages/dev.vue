@@ -2,7 +2,8 @@
 import type { TableColumn } from '~/components/app/Table.vue'
 
 const initSettings = {
-  variant: 'filled',
+  buttonVariant: 'solid',
+  tagVariant: 'solid',
   size: 'sm',
   color: 'neutral',
   rounded: true,
@@ -60,26 +61,26 @@ const addRow = () => {
     </AppButton>
 
     <div
-      :keys="[settings.size, settings.color, settings.variant]"
       class="elements"
+      :keys="[settings.size, settings.color, settings.buttonVariant, settings.tagVariant]"
     >
       <AppButton
-        :variant="settings.variant"
-        :size="settings.size"
         :color="settings.color"
-        :rounded="settings.rounded"
         :icon="settings.icon"
+        :rounded="settings.rounded"
+        :size="settings.size"
+        :variant="settings.buttonVariant"
       >
         Button
       </AppButton>
       <AppTag
-        :variant="settings.variant"
-        :size="settings.size"
-        :color="settings.color"
-        :rounded="settings.rounded"
-        :icon="settings.icon"
-        closable
         actionable
+        closable
+        :color="settings.color"
+        :icon="settings.icon"
+        :rounded="settings.rounded"
+        :size="settings.size"
+        :variant="settings.tagVariant"
       >
         Badge
       </AppTag>
@@ -112,59 +113,69 @@ const addRow = () => {
     </div>
     <div class="settings">
       <AppLabel
-        title="Variant"
         caption="Вариант компонентов"
+        title="Variant"
       >
         <AppSelect
-          v-model="settings.variant"
+          v-model="settings.buttonVariant"
+          :items="['solid', 'outline', 'link']"
           size="sm"
-          :items="['filled', 'lined', 'nofilled']"
         />
       </AppLabel>
       <AppLabel
-        title="Size"
+        caption="Вариант AppTag"
+        title="Tag Variant"
+      >
+        <AppSelect
+          v-model="settings.tagVariant"
+          :items="['solid', 'outline', 'nofilled']"
+          size="sm"
+        />
+      </AppLabel>
+      <AppLabel
         caption="Размер компонентов"
+        title="Size"
       >
         <AppSelect
           v-model="settings.size"
-          size="sm"
           :items="['xs', 'sm', 'md', 'lg']"
+          size="sm"
         />
       </AppLabel>
       <AppLabel
-        title="Color"
         caption="Цвет компонентов"
+        title="Color"
       >
         <AppSelect
           v-model="settings.color"
-          size="sm"
           :items="['white', 'neutral', 'primary']"
+          size="sm"
         />
       </AppLabel>
       <AppLabel
-        title="Rounded"
         caption="Углы компонентов"
+        title="Rounded"
       >
         <AppSelect
           v-model="settings.rounded"
-          size="sm"
           :items="[{ label: 'Да', value: true }, { label: 'Нет', value: false }]"
+          size="sm"
         />
       </AppLabel>
       <AppLabel
-        title="Icon"
         caption="Иконки компонентов"
+        title="Icon"
       >
         <AppSelect
           v-model="settings.icon"
-          size="sm"
           :items="['notice', 'domain', 'filter']"
+          size="sm"
         />
       </AppLabel>
       <div class="settings-footer">
         <AppButton
-          size="sm"
           color="white"
+          size="sm"
           @click="reset"
         >
           Сбросить

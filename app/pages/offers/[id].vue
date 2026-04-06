@@ -4,8 +4,9 @@
 
 <template>
   <section class="page-offer">
-    <OffersSingleHeader />
-    <OffersSingleTabs />
+    <OfferSingleHeader />
+    <OfferSingleTabs />
+    <OfferNews />
   </section>
 </template>
 

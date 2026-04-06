@@ -1,0 +1,26 @@
+@use 'sass:string';
+
+// ⚠️ Only for BEM
+@mixin is($var) {
+  $parent-selector: &;
+
+  @if string.index(#{$parent-selector}, '__') {
+    #{$var} & {
+      @content;
+    }
+  }
+  
+  @else {
+    &#{$var} {
+      @content;
+    }
+  }
+}
+
+@mixin el($el) {
+  $root: &;
+
+  #{& + '__' + $el} {
+    @content;
+  }
+}

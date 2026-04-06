@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     '@chettapong/nuxt-lodash',
     '@nuxtjs/storybook',
     'nuxt-typed-router',
+    'nuxt-echarts',
   ],
 
   devtools: { enabled: true },
@@ -40,13 +41,21 @@ export default defineNuxtConfig({
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: '@use "@scss/design-system/index" as *;',
+          additionalData: `
+            @use "@scss/design-system/index" as *; 
+            @use "@scss/style-system/index" as *;
+          `,
         },
       },
     },
     plugins: [
       svgSpritePlugin(),
     ],
+  },
+
+  echarts: {
+    charts: ['BarChart', 'PieChart'],
+    components: ['DatasetComponent', 'GridComponent', 'TooltipComponent', 'TitleComponent'],
   },
 
   eslint: {

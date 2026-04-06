@@ -5,7 +5,6 @@
   <AppWidget
     icon="money"
     title="Деньги"
-    @click:button="undefined"
   >
     <template #description>
       За период: 20.04.25 - 20.05.25

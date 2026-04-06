@@ -1,21 +1,21 @@
 <script lang="ts" setup>
 import type { AnchorHTMLAttributes, VNodeChild } from 'vue'
 import type { IconProps } from './Icon.vue'
-import type { Colors, Sizes, Subset } from '~/types/ds'
+import type { Color, Size, Subset } from '~/types/ds'
 
 interface Props {
-  color?: Subset<Colors, 'neutral' | 'primary'> | 'white'
+  color?: Subset<Color, 'neutral' | 'primary'> | 'white'
   disabled?: boolean
   icon?: IconProps['name']
   loading?: boolean
   rounded?: boolean
-  size?: Sizes
+  size?: Size
   target?: AnchorHTMLAttributes['target']
   to?: RouteTo<true>
   trailingIcon?: boolean
   type?: 'button' | 'submit' | 'reset'
   value?: string | number
-  variant?: 'filled' | 'lined' | 'nofilled'
+  variant?: 'solid' | 'outline' | 'link'
 }
 
 interface Slots {
@@ -23,7 +23,7 @@ interface Slots {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  variant: 'filled',
+  variant: 'solid',
   size: 'md',
   rounded: true,
   color: 'primary',
@@ -84,9 +84,9 @@ export type { Props as ButtonProps }
   $this: &;
 
   ///
-  $variant-filled: $this + '-variant-filled';
-  $variant-lined: $this + '-variant-lined';
-  $variant-nofilled: $this + '-variant-nofilled';
+  $variant-solid: $this + '-variant-solid';
+  $variant-outline: $this + '-variant-outline';
+  $variant-link: $this + '-variant-link';
 
   ///
   $primary-color: $this + '-color-primary';
@@ -94,8 +94,6 @@ export type { Props as ButtonProps }
   $neutral-color: $this + '-color-neutral';
 
   ///
-  $size-3xs: $this + '-size-3xs';
-  $size-xxs: $this + '-size-xxs';
   $size-xs: $this + '-size-xs';
   $size-sm: $this + '-size-sm';
   $size-md: $this + '-size-md';
@@ -124,11 +122,15 @@ export type { Props as ButtonProps }
     transition: $active-duration-sm;
   }
 
-  &#{$rounded} {
+  &:disabled {
+    pointer-events: none;
+  }
+
+  @include is($rounded) {
     border-radius: 50px !important;
   }
 
-  &#{$size-xs} {
+  @include is($size-xs) {
     gap: $space-2;
     height: 32px;
     padding-inline: $space-3;
@@ -137,7 +139,7 @@ export type { Props as ButtonProps }
     @include text(regular, xs);
   }
 
-  &#{$size-sm} {
+  @include is($size-sm) {
     gap: $space-3;
     height: 40px;
     padding-inline: $space-4;
@@ -146,7 +148,7 @@ export type { Props as ButtonProps }
     @include text(regular, sm);
   }
 
-  &#{$size-md} {
+  @include is($size-md) {
     gap: $space-4;
     height: 48px;
     padding-inline: $space-5;
@@ -155,7 +157,7 @@ export type { Props as ButtonProps }
     @include text(regular, md);
   }
 
-  &#{$size-lg} {
+  @include is($size-lg) {
     gap: $space-5;
     height: 56px;
     padding-inline: $space-6;
@@ -164,188 +166,220 @@ export type { Props as ButtonProps }
     @include text(regular, md);
   }
 
-  &#{$variant-filled} {
-    --variant-filled-text-color: inherit;
-    --variant-filled-background-color: inherit;
-
-    border: 1px solid transparent !important;
-    color: var(--variant-filled-text-color);
-    background-color: var(--variant-filled-background-color);
-  }
-
-  &#{$variant-lined} {
-    --variant-lined-background-color: inherit;
-    --variant-lined-text-color: inherit;
-
+  @include is($variant-solid) {
     border: 1px solid transparent;
-    color: var(--variant-lined-text-color) ;
-    background-color: var(--variant-lined-background-color);
+    background-color: inherit;
   }
 
-  &#{$variant-nofilled} {
-    --variant-nofilled-text-color: inherit;
-
-    border: none !important;
-    color: var(--variant-nofilled-text-color);
-    background-color: var(--variant-nofilled-background-color) !important;
+  @include is($variant-outline) {
+    border: 1px solid transparent;
+    background-color: none;
   }
 
-  &#{$primary-color} {
-    --variant-filled-text-color: white;
-    --variant-filled-background-color: #{$color-primary};
-    --variant-nofilled-text-color: #{$color-primary};
-    --variant-lined-text-color: #{$color-primary};
+  @include is($variant-link) {
+    border: none;
+    background-color: none;
+  }
 
+  @include is($primary-color + $variant-solid) {
+    color: white;
+    background-color: $color-primary;
+
+    &:hover {
+      background-color: $color-primary-600;
+    }
+
+    &:active {
+      background-color: $color-primary-700;
+    }
+
+    &:disabled {
+      background-color: $color-primary-300;
+    }
+  }
+
+  @include is($primary-color + $variant-outline) {
     border-color: $color-primary;
+    color: $color-primary;
 
     &:hover {
-      --variant-lined-text-color: white;
-      --variant-filled-background-color: #{$color-primary-600};
-      --variant-nofilled-text-color: #{$color-primary-600};
-      --variant-lined-background-color: #{$color-primary};
-
-      border-color: $color-primary-600;
+      border-color: $color-primary;
+      color: white;
+      background-color: $color-primary;
     }
 
     &:active {
-      --variant-nofilled-text-color: #{$color-primary-700};
-      --variant-filled-background-color: #{$color-primary-700};
-      --variant-lined-background-color: #{$color-primary-700};
-
-      border-color: #{$color-primary-700};
+      border-color: $color-primary-700;
+      color: white;
     }
 
     &:disabled {
-      cursor: not-allowed;
-
-      --variant-nofilled-text-color: #{$color-primary-400};
-      --variant-filled-text-color: #{rgb(white, .8)};
-      --variant-filled-background-color: #{$color-primary-400};
-      --variant-lined-background-color: #{$color-primary-400};
-      --variant-lined-text-color: #{rgb(white, .8)};
-
-      border-color: #{$color-primary-400};
+      border-color: $color-primary-300;
+      color: $color-primary-300;
     }
   }
 
-  &#{$white-color} {
-    --variant-filled-background-color: white;
-    --variant-filled-text-color: #{$color-neutral-950};
-    --variant-lined-text-color: white;
-    --variant-nofilled-background-color: transparent;
-    --variant-nofilled-text-color: white;
+  @include is($primary-color + $variant-link) {
+    color: $color-primary;
 
+    &:hover {
+      color: $color-primary-600;
+    }
+
+    &:active {
+      color: $color-primary-700;
+    }
+
+    &:disabled {
+      color: $color-primary-300;
+    }
+  }
+
+  @include is($white-color + $variant-solid) {
+    color: inherit;
+    background-color: white;
+
+    &:hover {
+      background-color: $color-neutral-100;
+    }
+
+    &:active {
+      background-color: $color-neutral-150;
+    }
+
+    &:disabled {
+      color: $color-neutral-300;
+    }
+  }
+
+  @include is($white-color + $variant-outline) {
     border-color: white;
+    color: white;
 
     &:hover {
-      --variant-filled-background-color: #{$color-neutral-100};
-      --variant-nofilled-background-color: white;
-      --variant-lined-background-color: white;
-      --variant-lined-text-color: #{$color-neutral-950};
-
-      border-color: #{$color-neutral-50};
-      color: #{$color-neutral-950};
+      border-color: transparent;
+      color: inherit;
+      background-color: white;
     }
 
     &:active {
-      --variant-filled-background-color: #{$color-neutral-150};
-      --variant-nofilled-background-color: #{$color-neutral-100};
-      --variant-lined-background-color: #{$color-neutral-100};
-
-      border-color: #{$color-neutral-150};
-      color: #{$color-neutral-950};
+      border-color: transparent;
+      color: $color-neutral-950;
+      background-color: $color-neutral-150;
     }
 
     &:disabled {
-      cursor: not-allowed;
-
-      --variant-nofilled-background-color: white;
-      --variant-filled-background-color: white;
-      --variant-lined-background-color: white;
-
       border-color: white;
-      color: #{$color-neutral};
+      color: $color-neutral;
     }
   }
 
-  &#{$neutral-color} {
-    --variant-filled-text-color: #{$color-neutral-950};
-    --variant-filled-background-color: #{$color-neutral-100};
-    --variant-lined-text-color: #{$color-neutral-950};
-    --variant-nofilled-text-color: #{$color-neutral-400};
+  @include is($white-color + $variant-link) {
+    color: white;
 
+    &:hover {
+      color: $color-neutral-150;
+    }
+
+    &:active {
+      border-color: transparent;
+      color: $color-neutral-200;
+    }
+
+    &:disabled {
+      color: $color-neutral-50;
+    }
+  }
+
+  @include is($neutral-color + $variant-solid) {
+    background-color: $color-neutral-100;
+
+    &:hover {
+      background-color: $color-neutral-150;
+    }
+
+    &:active {
+      background-color: $color-neutral-200;
+    }
+
+    &:disabled {
+      color: $color-neutral-300;
+      background-color: $color-neutral-50;
+    }
+  }
+
+  @include is($neutral-color + $variant-outline) {
     border-color: $color-neutral-300;
 
     &:hover {
-      --variant-filled-background-color: #{$color-neutral-150};
-      --variant-lined-background-color: white;
-      --variant-nofilled-text-color: #{$color-neutral};
-
-      border-color: white;
+      border-color: transparent;
+      background-color: white;
     }
 
     &:active {
-      --variant-filled-background-color: #{$color-neutral-200};
-      --variant-lined-background-color: #{$color-neutral-100};
-      --variant-nofilled-text-color: #{$color-neutral-600};
-
-      border-color: $color-neutral-100;
+      background-color: $color-neutral-100;
     }
 
     &:disabled {
-      cursor: not-allowed;
-      border-color: #{$color-neutral-50};
-
-      --variant-nofilled-text-color: #{$color-neutral-300};
-      --variant-filled-text-color: #{$color-neutral-600};
-      --variant-lined-text-color: #{$color-neutral-600};
-      --variant-filled-background-color: #{$color-neutral-100};
-      --variant-lined-background-color: white;
+      border-color: $color-neutral-200;
+      color: $color-neutral-300;
     }
   }
 
-  &#{$trailing-icon} {
+  @include is($neutral-color + $variant-link) {
+    color: $color-neutral-400;
+
+    &:hover {
+      color: $color-neutral;
+    }
+
+    &:active {
+      color: $color-neutral-600;
+    }
+
+    &:disabled {
+      color: $color-neutral-200;
+    }
+  }
+
+  @include is($trailing-icon) {
     flex-direction: row-reverse;
   }
 
-  &#{$without-slot} {
+  @include is($without-slot) {
     justify-content: center;
     aspect-ratio: 1;
     padding: 0;
   }
 
   &__icon {
-    #{$size-xs} & {
+    @include is($size-xs) {
       width: 16px;
       height: 16px;
       margin-inline: -#{$space-05};
     }
 
-    #{$size-sm} & {
+    @include is($size-sm) {
       width: 20px;
       height: 20px;
       margin-inline: -#{$space-1};
     }
 
-    #{$size-md} & {
+    @include is($size-md) {
       width: 24px;
       height: 24px;
       margin-inline: -#{$space-2};
     }
 
-    #{$size-lg} & {
+    @include is($size-lg) {
       width: 28px;
       height: 28px;
       margin-inline: -#{$space-3};
     }
 
-    #{$loading} & {
+    @include is($loading) {
       animation: clockwiseRotate 1s linear infinite;
     }
-  }
-
-  &__slot:empty {
-    display: none;
   }
 }
 </style>

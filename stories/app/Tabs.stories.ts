@@ -12,14 +12,15 @@ export default {
     // Props
     color: {
       control: 'select',
-      options: ['primary', 'neutral', 'white'],
+      options: ['white', 'neutral'],
     },
     size: {
       control: 'select',
-      options: ['xs', 'sm', 'md', 'lg'],
+      options: ['xs', 'sm', 'md'],
     },
-    items: {
-      control: 'object',
+    variant: {
+      control: 'select',
+      options: ['pill', 'link'],
     },
     // Slots
     listLeading: {
@@ -48,13 +49,18 @@ export default {
       control: { min: 0, max: 4, type: 'number' },
       description: 'Value or index of Item',
     },
+    items: {
+      table: { category: 'Behavioral props' },
+      control: 'object',
+    },
   },
   args: {
-    size: 'md',
     color: 'white',
+    size: 'md',
+    variant: 'pill',
     items: [
       { label: 'Все офферы', icon: 'offers', value: 0 },
-      { label: 'Действует акция', value: 1 },
+      { label: 'Действует акция', value: 1, disabled: true },
       { label: 'Топ офферы' },
       { label: 'Избранные' },
       { label: 'Новые', icon: 'jobs', trailingIcon: true },
@@ -64,7 +70,7 @@ export default {
     leading: false,
     default: false,
     trailing: false,
-    modelValue: 1,
+    modelValue: 0,
   },
 } satisfies Meta<typeof AppTabs>
 
@@ -80,9 +86,10 @@ export const Playground: Story = {
         :color="args.color"
         :items="args.items"
         :size="args.size"
+        :variant="args.variant"
       >
         <template v-if="args.listLeading" #listLeading>
-          <AppTag size="sm" color="gray" variant="soft" :rounded="false">List Leading Slot</AppTag>
+          <AppTag size="sm" color="gray" variant="soft" :rounded="false" style="flex-shrink: 0">List Leading Slot</AppTag>
         </template>
         <template v-if="args.leading" #leading>
           <AppTag size="sm" color="gray" variant="soft" :rounded="false">Leading Item Slot</AppTag>
@@ -94,7 +101,7 @@ export const Playground: Story = {
           <AppTag size="sm" color="gray" variant="soft" :rounded="false">Trailing Item Slot</AppTag>
         </template>
         <template v-if="args.listTrailing" #listTrailing>
-          <AppTag size="sm" color="gray" variant="soft" :rounded="false">List Trailing Slot</AppTag>
+          <AppTag size="sm" color="gray" variant="soft" :rounded="false" style="flex-shrink: 0">List Trailing Slot</AppTag>
         </template>
       </AppTabs>
     `,

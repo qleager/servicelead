@@ -5,6 +5,14 @@ import type { Preview } from '@storybook-vue/nuxt'
 // const mode = process.env.NODE_ENV
 
 const preview: Preview = {
+  decorators: [
+    () => ({
+      template: `
+        <div id="teleports"></div>
+        <story />
+      `,
+    }),
+  ],
   parameters: {
     layout: 'centered',
     controls: {
@@ -13,6 +21,9 @@ const preview: Preview = {
         color: /(background|color)$/i,
         date: /Date$/i,
       },
+    },
+    docs: {
+      autodocs: false,
     },
     options: {
       panelPosition: 'right',

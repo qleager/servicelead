@@ -3,19 +3,15 @@ import type { VNodeChild } from 'vue'
 import type { IconProps } from './Icon.vue'
 
 interface Props {
-  title?: string
   icon?: IconProps['name']
+  title?: string
 }
 interface Slots {
-  header?: VNodeChild
   content: VNodeChild
+  trailingHeader?: VNodeChild
 }
 
-defineSlots<Slots>()
-
-const props = defineProps<Props>()
-
-const isHeaderGroupVisible = computed(() => props.icon || props.title)
+defineProps<Props>()
 
 export type { Props as SectionProps, Slots as SectionSlots }
 </script>
@@ -23,20 +19,12 @@ export type { Props as SectionProps, Slots as SectionSlots }
 <template>
   <div class="section">
     <div class="section__header">
-      <div
-        v-if="isHeaderGroupVisible"
-        class="section__header-group"
-      >
-        <AppIcon
-          v-if="icon"
-          class="section__icon"
-          :name="icon"
-        />
-        <div class="section__title">
-          {{ title }}
-        </div>
-      </div>
-      <slot name="header" />
+      <AppTitle
+        :icon
+        size="lg"
+        :title
+      />
+      <slot name="trailingHeader" />
     </div>
     <div class="section__main">
       <slot name="content" />
@@ -48,14 +36,14 @@ export type { Props as SectionProps, Slots as SectionSlots }
 .section {
   display: flex;
   flex-direction: column;
-  gap: $space-6;
+  gap: $space-4;
 
   &__header {
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    @include text(semibold, xl);
+    @include text(semibold, 2xl);
 
     &-group {
       display: flex;

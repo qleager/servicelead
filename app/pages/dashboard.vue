@@ -1,17 +1,40 @@
 <script lang="ts" setup>
+import type { TabsItem } from '~/components/app/Tabs.vue'
+
+const tabs: TabsItem[] = [
+  { label: 'Все проекты', value: 'all' },
+  { label: 'Мастер на час', value: 'master' },
+  { label: 'Бытовой ремонт', value: 'byt_rem' },
+  { label: 'Универсальный', value: 'universal' },
+]
 </script>
 
 <template>
   <section class="page-dashboard">
     <AppCarousel class="page-dashboard__carousel" />
-    <FinanceBalanceWidget class="page-dashboard__balance" />
-    <StatisticsLeadsWidget class="page-dashboard__leads" />
-    <StatisticsOrdersWidget class="page-dashboard__orders" />
-    <StatisticsWidget class="page-dashboard__statistics" />
     <NewsWidget class="page-dashboard__news" />
-    <FinanceIncomeWidget class="page-dashboard__income" />
-    <StatisticsTrafficWidget class="page-dashboard__traffic" />
-    <OffersWidget class="page-dashboard__offers" />
+
+    <!-- Start: filtration -->
+    <AppTabs
+      class="page-dashboard__tabs"
+      color="white"
+      :items="tabs"
+    >
+      <template #trailing="{ item }">
+        <AppTag
+          v-if="item.value !== 'all'"
+          color="neutral"
+          size="sm"
+        >
+          32%
+        </AppTag>
+      </template>
+    </AppTabs>
+    <StatisticsDashboard class="page-dashboard__statistics" />
+    <DashboardControlPanel class="page-dashboard__controls" />
+    <OfferWidget class="page-dashboard__offers" />
+    <!-- End: filtration -->
+
     <DashboardAddWidgetInformer class="page-dashboard__informer" />
   </section>
 </template>
@@ -22,48 +45,36 @@
 
   display: grid;
   grid-template:
-    'carousel carousel carousel balance balance leads'
-    'carousel carousel carousel balance balance orders'
-    'statistics statistics statistics statistics news news'
-    'income income income traffic traffic traffic'
-    'offers offers offers offers offers offers'
-    'help help help help help help'
+    'carousel   carousel   carousel   news'
+    'tabs       tabs       tabs       tabs'
+    'statistics statistics statistics statistics'
+    'controls   controls   controls   controls'
+    'offers     offers     offers     offers'
+    'informer   informer   informer   informer'
   ;
-  grid-template-columns: minmax(0, 1.4fr) repeat(4, minmax(0, 1fr)) minmax(0, 1.4fr);
-  grid-template-rows: repeat(5, minmax(132px, auto));
-  gap: $space-6;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 242px repeat(4, auto);
+  gap: $space-9;
 
   &__carousel {
     grid-area: carousel;
   }
 
-  &__balance {
-    grid-area: balance;
+  &__news {
+    grid-area: news;
   }
 
-  &__leads {
-    grid-area: leads;
-  }
-
-  &__orders {
-    grid-area: orders;
+  &__tabs {
+    grid-area: tabs;
+    margin-bottom: -$space-4;
   }
 
   &__statistics {
     grid-area: statistics;
   }
 
-  &__news {
-    grid-area: news;
-    max-height: 440px;
-  }
-
-  &__income {
-    grid-area: income;
-  }
-
-  &__traffic {
-    grid-area: traffic;
+  &__controls {
+    grid-area: controls;
   }
 
   &__offers {
@@ -71,9 +82,8 @@
   }
 
   &__informer {
-    grid-area: help;
-    margin-bottom: -#{$space-6};
-    padding-top: $space-10;
+    grid-area: informer;
+    margin-top: $space-10;
   }
 }
 </style>

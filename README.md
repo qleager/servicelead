@@ -1,7 +1,7 @@
-# 🚀 Get Started
 
-Проект использует **Docker + Dev Containers**.  
-После клонирования репозитория проекта, действия по установке и запуску выполняются **через VS Code**.
+# Servicelead
+
+Affiliate dashboard for a [CPA-Network](https://servicelead.ru)
 
 ## Stack
 `Docker` `Nuxt 4` `Typescript` `ESLint` `Stylelint` `SCSS` `pnpm` `Storybook`
@@ -10,8 +10,22 @@
 - **Consistent development environment**
 - **Linting, Formatter, and Auto-fix scripts** `VS Code only`
 - **Linting, Formatter, and Auto-fix styles** `VS Code only`
+- **Linting, Formatter, and Auto-fix template** `VS Code only`
 - **SCSS snippets** `VS Code only`
 - **Docker-based isolation**
+
+# 🚀 Get Started
+
+## Before You Start
+
+Please check the following before starting work on the project:
+
+1. Read [ExampleComponent.vue](app/components/ExampleComponent.vue)
+2. Review the [design system](app/assets/design-system) SCSS variables
+3. Read about [SCSS snippets](#scss-snippets)
+4. Check available [Composables](#use-composables)
+5. Check available [Utils](#use-utils)
+6. Read about [Conventional Commits](#use-conventional-commits)
 
 ## Use Snippets
 > [!Note]
@@ -47,10 +61,15 @@ gap: $space-2;
 ```scss
 transition: $duration-blur-sm;
 ```
-
 #### `ixxl`, `ixl`, `ilg`, `imd`, `ism`, `ixs` – get media query @mixin
 ```scss
 @include xs {
+  display: none;
+}
+```
+#### `is` – get the class‑state @include from the style system
+```scss
+@include is($root-component-class-state) {
   display: none;
 }
 ```
@@ -166,8 +185,13 @@ docs(AppButton): add jsondoc to props
 </details>
 
 ## Use Composables
+- [useConfirmDialog](docs/composables/use-confirm-dialog.md) — confirm dialog helper
 - [useOverlay](docs/composables/use-overlay.md) — shared overlay manager
 - [useBreakpoints](docs/composables/use-breakpoints.md) — responsive breakpoint helpers
+- [useDocumentScrollLock](docs/composables/use-document-scroll-lock.md) — document scroll lock helper
+
+## Use Utils
+- [search](docs/utils/search.md) — Fuse.js search wrapper
 
 ## 📦 Требования
 

@@ -2,11 +2,20 @@
 </script>
 
 <template>
-  <AppWidget
-    icon="news"
-    title="Новости"
-    @click:button="undefined"
-  >
+  <AppWidget>
+    <template #trailingHeader>
+      <AppTabs
+        :items="['Важное', 'Новости']"
+        variant="link"
+      />
+      <AppButton
+        class="widget__button"
+        color="neutral"
+        icon="arrow_right"
+        size="xs"
+        variant="outline"
+      />
+    </template>
     <template #content>
       <div class="news-widget__list">
         <NewsEntry
@@ -21,6 +30,10 @@
 
 <style lang="scss">
   .news-widget {
+    &__head {
+      display: flex;
+    }
+
     &__list {
       margin-inline: -$space-2;
     }

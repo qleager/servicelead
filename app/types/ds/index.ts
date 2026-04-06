@@ -1,3 +1,3 @@
-export * from './colors'
+export * from './color'
 export * from './helpers'
-export * from './sizes'
+export * from './size'

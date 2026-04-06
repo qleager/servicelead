@@ -5,7 +5,7 @@
 <script lang="ts" setup>
 import type { Placement } from '@floating-ui/vue'
 import type { TeleportProps, VNodeChild } from 'vue'
-import { onClickOutside } from '@vueuse/core'
+import { onClickOutside, onKeyStroke } from '@vueuse/core'
 import {
   useFloating,
   offset,
@@ -16,6 +16,10 @@ import {
 } from '@floating-ui/vue'
 
 interface Props {
+  /**
+   * Describes the placements which are allowed to be auto-chosen
+   */
+  allowedPlacements?: Placement[]
   /**
    * When `false`, the Floater will not close when clicking outside or pressing escape.
    *
@@ -64,12 +68,14 @@ let closeTimeout: ReturnType<typeof setTimeout> | undefined = undefined
 const transitionPlacement = computed(() => placement.value.split('-')[0])
 
 const { floatingStyles, placement } = useFloating(reference, floating, {
-  placement: props.placement,
+  // placement: props.placement,
   transform: false,
   // whileElementsMounted: autoUpdate,
   middleware: [
     offset(8),
-    ...(props.placement ? [] : [autoPlacement()]),
+    autoPlacement({
+      allowedPlacements: props.placement ? [props.placement] : props.allowedPlacements,
+    }),
     shift({ padding: 14 }),
     size({
       padding: 8,
@@ -118,10 +124,17 @@ const onMouseEnter = () => {
   if (props.mode === 'hover') model.value = true
 }
 
+const onEscape = () => {
+  if (!props.dismissible || !model.value) return
+  model.value = false
+}
+
 const onClickReference = () => {
   if (props.mode === 'hover') return
   model.value = !model.value
 }
+
+onKeyStroke('Escape', onEscape)
 
 onClickOutside(
   floating,
@@ -140,6 +153,7 @@ export type { Props as FloaterProps, Slots as FloaterSlots, Model as FloaterMode
       ref="reference"
       class="floater__trigger"
       @click="onClickReference"
+      @keyup.esc="onEscape"
       @mouseenter="onMouseEnter"
       @mouseleave="onMouseLeave"
     >
@@ -174,25 +188,37 @@ export type { Props as FloaterProps, Slots as FloaterSlots, Model as FloaterMode
 .floater {
   $this: &;
 
+  // Необходим для "закрепления" дропа при кейсах, когда флоатер находится в скролл-контейнерах
+  position: relative;
+
+  // Защита от растяжки
   width: fit-content;
 
   &__trigger {
     display: inline-block;
+    width: 100%;
+  }
+
+  &__content {
+    z-index: 1;
+
+    // Защита от выпадения конетента слота
+    display: grid;
+    grid-template-rows: auto 1fr;
   }
 
   &__transition {
     &-content {
       $placements: (
-        bottom: (enter: 'fadeInUpGentle', leave: 'fadeOutUpGentle'),
-        top: (enter: 'fadeInDownGentle', leave: 'fadeOutDownGentle'),
-        left: (enter: 'fadeInLeftGentle', leave: 'fadeOutLeftGentle'),
-        right: (enter: 'fadeInRightGentle', leave: 'fadeOutRightGentle'),
+        bottom: (enter: 'zoomInGentle', leave: 'fadeOutUpGentle'),
+        top: (enter: 'zoomInGentle', leave: 'fadeOutDownGentle'),
+        left: (enter: 'zoomInGentle', leave: 'fadeOutLeftGentle'),
+        right: (enter: 'zoomInGentle', leave: 'fadeOutRightGentle'),
       );
 
       @each $placement, $anims in $placements {
         &--#{$placement} {
           &-enter-active {
-            opacity: 0;
             animation: map.get($anims, enter) $show-duration-sm ease-out forwards
           }
 
