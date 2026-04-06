@@ -1,9 +1,15 @@
 <script lang="ts" setup>
 import type { VNodeChild } from 'vue'
 import type { IconProps } from './Icon.vue'
-import type { Color, Size, Subset } from '~/types/ds'
+import type { TabsItemProps } from './TabsItem.vue'
+import type { Subset, Color } from '~/types/ds'
 
 interface Props {
+  /**
+   * Colors of Indicator
+   *
+   * * @defaultvalue `'white'`
+   */
   color?: Subset<Color, 'neutral'> | 'white'
   items: Item[] | (string | number)[]
   /**
@@ -11,7 +17,7 @@ interface Props {
    *
    * * @defaultvalue `'md'`
    */
-  size?: Subset<Size, 'xs' | 'sm' | 'md'>
+  size?: TabsItemProps['size']
   /**
    * Variant of Buttons
    *
@@ -20,7 +26,7 @@ interface Props {
    *
    * @defaultvalue `'pill'`
    */
-  variant?: 'pill' | 'link'
+  variant?: TabsItemProps['variant']
 }
 
 type Model = Item['value'] | number
@@ -31,7 +37,7 @@ interface Slots {
    */
   default: (props: { item: Item, index: number }) => VNodeChild
   /**
-   * Before Item content, instead of Item icon
+   * Before Item content
    */
   leading: (props: { item: Item, index: number }) => VNodeChild
   /**
@@ -107,7 +113,7 @@ onMounted(() => {
 const updateIndicator = async () => {
   await nextTick()
 
-  const el = navRef.value?.querySelector<HTMLElement>('.tabs__item-active')
+  const el = navRef.value?.querySelector<HTMLElement>('.tabs-item-active')
 
   if (!el) return
 
@@ -131,45 +137,37 @@ export type { Props as TabsProps, Model as TabsModel, Item as TabsItem, Slots as
       ref="navRef"
       class="tabs__nav"
     >
-      <!-- IDEA: вынести в вспомогательный _Item.vue(TabsItem) -->
-      <button
+      <AppTabsItem
         v-for="(item, index) in items"
         :key="item.label+index"
-        :class="{
-          'tabs__item': true,
-          'tabs__item-active': model === item.value,
-          'tabs__item-trailing-icon': item.trailingIcon,
-        }"
-        :disabled="item.disabled"
+        v-bind="item"
+        :active="model === item.value"
+        :size
+        :variant
         @click="onItemClick(item)"
       >
-        <span class="tabs__item-content">
+        <template #leading>
           <slot
             :index
             :item
             name="leading"
           />
-          <div class="tabs__item-content-group">
-            <AppIcon
-              v-if="item.icon"
-              class="tabs__item-icon"
-              :name="item.icon"
-            />
-            <slot
-              :index
-              :item
-              name="default"
-            >
-              {{ item.label }}
-            </slot>
-          </div>
+        </template>
+        <template #default>
+          <slot
+            :index
+            :item
+            name="default"
+          />
+        </template>
+        <template #trailing>
           <slot
             :index
             :item
             name="trailing"
           />
-        </span>
-      </button>
+        </template>
+      </AppTabsItem>
       <div
         class="tabs__indicator"
         :style="indicatorStyle"
@@ -204,169 +202,6 @@ export type { Props as TabsProps, Model as TabsModel, Item as TabsItem, Slots as
 
     @include is($variant-link) {
       gap: $space-6;
-    }
-  }
-
-  &__item {
-    $this: &;
-    $trailing-icon: $this + '-trailing-icon';
-
-    cursor: pointer;
-    position: relative;
-    flex-shrink: 0;
-
-    @include is($size-xs) {
-      gap: $space-2;
-
-      @include text(regular, xs);
-    }
-
-    @include is($size-sm) {
-      gap: $space-3;
-
-      @include text(regular, sm);
-    }
-
-    @include is($size-md) {
-      gap: $space-4;
-
-      @include text(regular, md);
-    }
-
-    @include is($variant-pill) {
-      display: flex;
-      align-items: center;
-
-      border: 1px solid transparent;
-      border-radius: 50px;
-
-      background-color: transparent;
-
-      transition: $blur-duration-sm;
-
-      &:hover {
-        border-color: $color-neutral-50 !important;
-        transition: $hover-duration-sm;
-      }
-
-      &:disabled {
-        cursor: not-allowed;
-        color: $color-neutral-200 !important;
-      }
-
-      &::before {
-        pointer-events: none;
-        content: '';
-
-        position: absolute;
-        z-index: 1;
-        inset: 0;
-
-        border: 1px solid $color-neutral-300;
-        border-radius: inherit;
-
-        transition: $blur-duration-sm;
-      }
-
-      &:disabled::before {
-        border-color: $color-neutral-200 !important;
-      }
-
-      &:hover::before {
-        border: 1px solid $color-neutral-200;
-        transition: $hover-duration-sm;
-      }
-    }
-
-    @include is($variant-link) {
-      padding-bottom: $space-2;
-      color: $color-neutral;
-      transition: $blur-duration-sm;
-
-      &:hover {
-        color: inherit;
-        transition: $hover-duration-sm;
-      }
-
-      &:disabled {
-        color: $color-neutral-200;
-      }
-    }
-
-    @include is($size-xs + $variant-link) {
-      height: 24px;
-      padding-bottom: $space-05;
-    }
-
-    @include is($size-sm + $variant-link) {
-      height: 28px;
-      padding-bottom: $space-1;
-    }
-
-    @include is($size-md + $variant-link) {
-      height: 32px;
-      padding-bottom: $space-2;
-    }
-
-    @include is($size-xs + $variant-pill) {
-      height: 32px;
-      padding-inline: $space-3;
-    }
-
-    @include is($size-sm + $variant-pill) {
-      height: 40px;
-      padding-inline: $space-4;
-    }
-
-    @include is($size-md + $variant-pill) {
-      height: 48px;
-      padding-inline: $space-5;
-    }
-
-    &-active {
-      @include is($variant-link) {
-        color: inherit;
-      }
-    }
-
-    &-content {
-      pointer-events: none;
-
-      position: relative;
-      z-index: 3;
-
-      display: inline-flex;
-      gap: inherit;
-      align-items: center;
-
-      &-group {
-        display: flex;
-        gap: $space-2;
-
-        @include is($trailing-icon) {
-          flex-direction: row-reverse;
-        }
-      }
-    }
-
-    &-icon {
-      @include is($size-xs) {
-        width: 16px;
-        height: 16px;
-        margin-inline: -$space-05;
-      }
-
-      @include is($size-sm) {
-        width: 20px;
-        height: 20px;
-        margin-inline: -$space-1;
-      }
-
-      @include is($size-md) {
-        width: 24px;
-        height: 24px;
-        margin-inline: -$space-2;
-      }
     }
   }
 
