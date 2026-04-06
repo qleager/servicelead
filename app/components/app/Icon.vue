@@ -19,7 +19,7 @@ export type { Props as IconProps }
     :height="size"
     :width="size"
   >
-    <use :xlink:href="`/sprite#${name}`" />
+    <use :xlink:href="`/_nuxt/sprite#${name}`" />
   </svg>
 </template>
 

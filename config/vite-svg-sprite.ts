@@ -7,7 +7,7 @@ const ROOT_DIR = fileURLToPath(new URL('../', import.meta.url))
 export function svgSpritePlugin() {
   return VitePluginSvgSpritemap(resolve(ROOT_DIR, 'app/assets/icons/*.svg'), {
     prefix: false,
-    route: 'sprite',
+    route: '/_nuxt/sprite',
     output: 'sprite.[hash][extname]',
     svgo: {
       plugins: [
