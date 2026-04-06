@@ -5,23 +5,23 @@ definePageMeta({
 </script>
 
 <template>
-  <div class="auth-form">
-    <div class="auth-form__header">
-      <div class="auth-form__title">
+  <div class="auth-signup">
+    <div class="auth-signup__header">
+      <div class="auth-signup__title">
         Регистрация
       </div>
-      <div class="auth-form__subtitle">
+      <div class="auth-signup__subtitle">
         Создайте аккаунт и начните получать конверсии
       </div>
     </div>
 
-    <div class="auth-form__fields">
+    <div class="auth-signup__fields">
       <AppLabel
-        class="auth-form__field"
+        class="auth-signup__field"
         title="Имя"
       >
         <AppInput
-          class="auth-form__input"
+          class="auth-signup__input"
           name="name"
           placeholder="Введите имя"
           type="text"
@@ -29,11 +29,11 @@ definePageMeta({
       </AppLabel>
 
       <AppLabel
-        class="auth-form__field"
+        class="auth-signup__field"
         title="Телефон"
       >
         <AppInput
-          class="auth-form__input"
+          class="auth-signup__input"
           name="phone"
           placeholder="Введите номер телефона"
           type="text"
@@ -41,11 +41,11 @@ definePageMeta({
       </AppLabel>
 
       <AppLabel
-        class="auth-form__field"
+        class="auth-signup__field"
         title="E-mail"
       >
         <AppInput
-          class="auth-form__input"
+          class="auth-signup__input"
           name="email"
           placeholder="Введите e-mail"
           type="text"
@@ -53,11 +53,11 @@ definePageMeta({
       </AppLabel>
 
       <AppLabel
-        class="auth-form__field"
+        class="auth-signup__field"
         title="Предпочтительный вид связи"
       >
         <AppInput
-          class="auth-form__input"
+          class="auth-signup__input"
           name="social_account"
           placeholder="Введите имя пользователя"
           type="text"
@@ -65,11 +65,11 @@ definePageMeta({
       </AppLabel>
 
       <AppLabel
-        class="auth-form__field"
+        class="auth-signup__field"
         title="Источники трафика"
       >
         <AppSelect
-          class="auth-form__input"
+          class="auth-signup__input"
           counter="list"
           :items="['Доски объявлений', 'Яндекс Директ', 'SEO трафик', 'Тизерные сети']"
           multiple
@@ -79,23 +79,23 @@ definePageMeta({
       </AppLabel>
     </div>
 
-    <div class="auth-form__submit">
+    <div class="auth-signup__submit">
       <AppButton
-        class="auth-form__button"
+        class="auth-signup__button"
         type="submit"
       >
         Создать аккаунт
       </AppButton>
-      <div class="auth-form__consent">
+      <div class="auth-signup__consent">
         Нажимая на кнопку «Создать аккаунт» — Вы соглашаетесь на обработку ваших персональных данных.
       </div>
     </div>
 
-    <div class="auth-form__actions">
+    <div class="auth-signup__actions">
       Уже с нами?
 
       <NuxtLink
-        class="auth-form__link auth-form__link-cta"
+        class="auth-signup__link auth-signup__link-cta"
         to="/auth"
       >
         Войти
@@ -105,7 +105,7 @@ definePageMeta({
 </template>
 
 <style lang="scss">
-.auth-form {
+.auth-signup {
   display: flex;
   flex: 1;
   flex-direction: column;

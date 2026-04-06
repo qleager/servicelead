@@ -5,7 +5,7 @@ definePageMeta({
 </script>
 
 <template>
-  <div class="auth-form">
+  <div class="auth-recovery-email">
     <AppButton
       color="neutral"
       icon="arrow_left"
@@ -16,21 +16,21 @@ definePageMeta({
       Вернуться к входу
     </AppButton>
 
-    <div class="auth-form__header">
-      <div class="auth-form__title">
+    <div class="auth-recovery-email__header">
+      <div class="auth-recovery-email__title">
         Сброс пароля
       </div>
-      <div class="auth-form__subtitle">
+      <div class="auth-recovery-email__subtitle">
         Укажите e-mail — отправим ссылку для сброса
       </div>
     </div>
 
     <AppLabel
-      class="auth-form__field"
+      class="auth-recovery-email__field"
       title="E-mail"
     >
       <AppInput
-        class="auth-form__input"
+        class="auth-recovery-email__input"
         name="email"
         placeholder="Введите e-mail"
         type="text"
@@ -38,7 +38,7 @@ definePageMeta({
     </AppLabel>
 
     <AppButton
-      class="auth-form__button"
+      class="auth-recovery-email__button"
       type="submit"
     >
       Отправить ссылку
@@ -47,7 +47,7 @@ definePageMeta({
 </template>
 
 <style lang="scss">
-.auth-form {
+.auth-recovery-email {
   display: flex;
   flex: 1;
   flex-direction: column;

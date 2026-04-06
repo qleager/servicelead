@@ -5,18 +5,19 @@ definePageMeta({
 </script>
 
 <template>
-  <div class="auth-form">
-    <div class="auth-form__header">
-      <div class="auth-form__title">
+  <div class="auth-signup-success">
+    <div class="auth-signup-success__header">
+      <div class="auth-signup-success__title">
         Почти готово
       </div>
-      <div class="auth-form__subtitle">
+      <div class="auth-signup-success__subtitle">
         Письмо с паролем уже летит на вашу почту.<br> Заходите в кабинет, но  пока менеджер не подтвердит аккаунт, некоторые функции будут недоступны.
       </div>
     </div>
 
     <AppButton
-      class="auth-form__button"
+      class="auth-signup-success__button"
+      to="/auth"
     >
       Войти в кабинет
     </AppButton>
@@ -24,7 +25,7 @@ definePageMeta({
 </template>
 
 <style lang="scss">
-.auth-form {
+.auth-signup-success {
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -49,6 +50,7 @@ definePageMeta({
   &__button {
     justify-content: center;
     width: 100%;
+    text-decoration: none;
   }
 }
 </style>

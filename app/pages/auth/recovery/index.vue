@@ -5,7 +5,7 @@ definePageMeta({
 </script>
 
 <template>
-  <div class="auth-form">
+  <div class="auth-recovery">
     <AppButton
       color="neutral"
       icon="arrow_left"
@@ -16,25 +16,25 @@ definePageMeta({
       Вернуться к входу
     </AppButton>
 
-    <div class="auth-form__header">
-      <div class="auth-form__title">
+    <div class="auth-recovery__header">
+      <div class="auth-recovery__title">
         Восстановление доступа
       </div>
-      <div class="auth-form__subtitle">
+      <div class="auth-recovery__subtitle">
         Выберите удобный способ
       </div>
     </div>
 
-    <div class="auth-form__methods">
+    <div class="auth-recovery__methods">
       <NuxtLink
-        class="auth-form__method"
+        class="auth-recovery__method"
         to="/auth/recovery/email"
       >
-        <div class="auth-form__method-inner">
-          <div class="auth-form__method-title">
+        <div class="auth-recovery__method-inner">
+          <div class="auth-recovery__method-title">
             Сбросить пароль по e-mail
           </div>
-          <div class="auth-form__method-text">
+          <div class="auth-recovery__method-text">
             Отправим ссылку для сброса на почту
           </div>
         </div>
@@ -42,14 +42,14 @@ definePageMeta({
       </NuxtLink>
 
       <NuxtLink
-        class="auth-form__method"
+        class="auth-recovery__method"
         to="#"
       >
-        <div class="auth-form__method-inner">
-          <div class="auth-form__method-title">
+        <div class="auth-recovery__method-inner">
+          <div class="auth-recovery__method-title">
             Telegram
           </div>
-          <div class="auth-form__method-text">
+          <div class="auth-recovery__method-text">
             Написать в поддержку — ответим быстро
           </div>
         </div>
@@ -60,7 +60,7 @@ definePageMeta({
 </template>
 
 <style lang="scss">
-.auth-form {
+.auth-recovery {
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -100,6 +100,18 @@ definePageMeta({
 
     color: $color-neutral-400;
     text-decoration: none;
+
+    transition: $blur-duration-md;
+
+    &:hover {
+      border-color: $color-neutral;
+      transition: $hover-duration-md;
+    }
+
+    &:active {
+      border-color: $color-neutral-600;
+      transition: $active-duration-md;
+    }
 
     &-inner {
       display: flex;
