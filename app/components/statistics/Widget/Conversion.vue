@@ -41,20 +41,23 @@ const asix = ref<BarAsix<ApiStatisticsLeadItem>>({ x: 'label', y: 'value' })
       />
     </template>
     <template #value>
-      <div class="statistics-widget-conversion__values">
-        <div class="statistics-widget-conversion__number">
-          10
-        </div>
-        <AppTag
-          color="green"
-          icon="arrow_up"
-          size="sm"
-          trailing-icon
-          variant="soft"
-        >
-          +5
-        </AppTag>
-      </div>
+      <AppLabeledValue
+        class="statistics-widget-conversion__value"
+        size="lg"
+        value="10"
+      >
+        <template #trailingValue>
+          <AppTag
+            color="green"
+            icon="arrow_up"
+            size="sm"
+            trailing-icon
+            variant="soft"
+          >
+            +5
+          </AppTag>
+        </template>
+      </AppLabeledValue>
     </template>
     <template #chart>
       <ChartBar
@@ -78,12 +81,6 @@ const asix = ref<BarAsix<ApiStatisticsLeadItem>>({ x: 'label', y: 'value' })
 .statistics-widget-conversion {
   $this: &;
 
-  &__values {
-    display: flex;
-    gap: $space-1;
-    align-items: flex-end;
-  }
-
   &__chart {
     max-width: 210px;
     margin-left: auto;
@@ -101,12 +98,6 @@ const asix = ref<BarAsix<ApiStatisticsLeadItem>>({ x: 'label', y: 'value' })
         border-bottom: 1px dashed $color-neutral-200;
       }
     }
-  }
-
-  &__number {
-    @include text(medium, 5xl);
-
-    line-height: 1;
   }
 
   &__select {
