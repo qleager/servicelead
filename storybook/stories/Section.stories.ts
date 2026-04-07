@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@nuxtjs/storybook'
 import AppSection from '@components/app/Section.vue'
 import AppTag from '@components/app/Tag.vue'
-import { iconNames } from '@app/types/components/app/icon'
+import { iconNames } from '../helpers/icon-names'
 
 export default {
   title: 'App/Section',
