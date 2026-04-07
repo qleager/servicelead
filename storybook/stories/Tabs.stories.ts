@@ -87,6 +87,7 @@ export const Playground: Story = {
         :items="args.items"
         :size="args.size"
         :variant="args.variant"
+        style="width: 100%"
       >
         <template v-if="args.listLeading" #listLeading>
           <AppTag size="sm" color="gray" variant="soft" :rounded="false" style="flex-shrink: 0">List Leading Slot</AppTag>

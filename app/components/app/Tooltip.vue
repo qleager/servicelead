@@ -60,6 +60,7 @@ export type { Props as TooltipProps }
     text-align: center;
 
     background: white;
+    box-shadow: $shadow-md;
   }
 }
 </style>

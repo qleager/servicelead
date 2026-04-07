@@ -1,26 +1,32 @@
 <script lang="ts" setup>
-import type { IconName } from '@app/types/components/app/icon'
+import type { Icons } from '~/types/components/icon'
 
 interface Props {
-  name: IconName
+  name: Icons
   size?: number
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   size: 24,
+})
+
+const Icon = computed(() => {
+  return props.name
+    ? defineAsyncComponent(() => import(`assets/icons/${props.name}.svg?use`))
+    : null
 })
 
 export type { Props as IconProps }
 </script>
 
 <template>
-  <svg
+  <component
+    :is="Icon"
+    v-if="name"
     class="icon"
     :height="size"
     :width="size"
-  >
-    <use :xlink:href="`/sprite#${name}`" />
-  </svg>
+  />
 </template>
 
 <style lang="scss">

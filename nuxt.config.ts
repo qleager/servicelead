@@ -2,7 +2,7 @@
  * Guide: https://nuxt.com/docs/api/configuration/nuxt-config
  */
 import { fileURLToPath } from 'node:url'
-import { svgSpritePlugin } from './config/vite-svg-sprite'
+import { createSvgSpritemapPlugin } from './config/svg-spritemap'
 
 export default defineNuxtConfig({
   modules: [
@@ -49,7 +49,7 @@ export default defineNuxtConfig({
       },
     },
     plugins: [
-      svgSpritePlugin(),
+      createSvgSpritemapPlugin('./assets/icons/*.svg'),
     ],
   },
 

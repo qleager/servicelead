@@ -9,7 +9,7 @@
     />
     <StatisticsWidgetGeo class="offer-single-statistics__geo" />
     <StatisticsWidgetProductivity class="offer-single-statistics__productivity" />
-    <StatisticsWidgetSummary
+    <StatisticsWidgetSummaryByOffer
       class="offer-single-statistics__summary"
       is-filter-visible
     />

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@nuxtjs/storybook'
 import AppWidget from '@components/app/Widget.vue'
 import AppTag from '@components/app/Tag.vue'
-import { iconNames } from '@app/types/components/app/icon'
+import { iconNames } from '../helpers/icon-names'
 
 export default {
   title: 'App/Widget',
@@ -18,13 +18,17 @@ export default {
       control: 'select',
       options: [null, ...iconNames],
     },
+    color: {
+      control: 'select',
+      options: ['white', 'neutral'],
+    },
 
     // Slots
     content: {
       control: 'text',
     },
     trailingHeader: {
-      control: 'text',
+      control: 'boolean',
       table: { category: 'slots' },
     },
     description: {
@@ -38,8 +42,9 @@ export default {
   args: {
     title: 'Widget title',
     description: 'Widget description',
-    trailingHeader: 'Widget Trailing header',
+    trailingHeader: true,
     icon: 'domain',
+    color: 'white',
 
     content: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt aperiam molestias at nisi veniam dicta quaerat, excepturi eligendi ratione rerum amet earum cumque enim culpa neque! Voluptatem aperiam cupiditate vero.',
     footer: true,
@@ -53,14 +58,15 @@ export const Playground: Story = {
     components: { AppWidget, AppTag },
     setup: () => ({ args }),
     template: `
-      <div style="width:320px;">
+      <div style="width:420px;">
         <AppWidget
           :title="args.title"
           :icon="args.icon"
+          :color="args.color"
         >
           <template v-if="args.trailingHeader" #trailingHeader>
             <AppTag size="sm" color="gray" variant="soft">
-              {{ args.trailingHeader }}
+              Trailing Header Slot
             </AppTag>
           </template>
           <template v-if="args.description" #description>

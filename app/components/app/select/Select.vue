@@ -1,53 +1,48 @@
 <script lang="ts" setup>
+import type { Size, Subset, Color } from '~/types/ds'
 import type { IconProps } from '../Icon.vue'
 import type { SelectOptionProps } from './_Option.vue'
+import type { VNodeChild } from 'vue'
 
 interface Props {
-  color?: 'white' | 'neutral' | 'primary'
-  /**
-   * How to display selected items in multiple mode
-   *
-   * - `'number'` – AppTag with a counter
-   * - `'list'`   – Scrollable list of AppTags with label and close button
-   *
-   * @defaultvalue `'number'`
-   */
-  counter?: 'number' | 'list'
+  color?: Subset<Color, 'neutral' | 'primary'> | 'white'
   disabled?: boolean
+  /**
+   * Floats placeholder to the border when a value is selected
+   *
+   * @defaultvalue `false`
+   */
+  floatPlaceholder?: boolean
   icon?: IconProps['name']
   items: Item[]
   multiple?: boolean
   placeholder?: string
   /**
-   * Controls how the placeholder behaves when a value is selected
-   *
-   * - `'static'` – Always visible inside the input
-   * - `'float'`  – Floats to the border when a value is selected
-   * - `false`    – Visible inside the input, hidden when a value is selected
-   *
-   * @defaultvalue false
-   */
-  placeholderMode?: 'static' | 'float'
-  /**
    * Show reset selected button
    *
-   * @defaultvalue false
+   * @defaultvalue `false`
    */
   reset?: boolean
   /**
    * Apply 50% border radius
    *
-   * @defaultvalue false
+   * @defaultvalue `false`
    */
   rounded?: boolean
   /**
    * Show search field in the dropdown
    *
-   * @defaultvalue false
+   * @defaultvalue `false`
    */
   search?: boolean
-  size?: 'xs' | 'sm' | 'md' | 'lg'
-  variant?: 'solid' | 'outline' | 'nofilled'
+  size?: Size
+}
+
+type Model = GetModelValue<Item, typeof props.multiple>
+type MultipleModel = Array<GetItemValue<Item>>
+
+interface Slots {
+  value: (props: { model: Model, placeholder: Props['placeholder'] }) => VNodeChild
 }
 
 type Value = string | number
@@ -60,21 +55,16 @@ type GetModelValue<TItem, TMultiple extends boolean | undefined>
     ? Array<GetItemValue<TItem>>
     : GetItemValue<TItem> | undefined
 
-type Model = GetModelValue<Item, typeof props.multiple>
-type MultipleModel = Array<GetItemValue<Item>>
-
 interface Injection {
   color: typeof props.color
-  counter: typeof props.counter
+  floatPlaceholder: typeof props.floatPlaceholder
   icon: typeof props.icon
   isCollapsed: typeof isCollapsed
   isSelected: typeof isSelected
   multiple: typeof props.multiple
   placeholder: typeof props.placeholder
-  placeholderMode: typeof props.placeholderMode
   rounded: typeof props.rounded
   size: typeof props.size
-  variant: typeof props.variant
 }
 
 // Type Guards
@@ -83,7 +73,7 @@ const isOptionObject = (option: Option | Value): option is Option => {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  variant: 'outline',
+  variant: 'lined',
   multiple: false,
   counter: 'number',
   placeholder: 'Выберите...',
@@ -94,6 +84,8 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const model = defineModel<Model>()
+
+defineSlots<Slots>()
 
 const isCollapsed = ref<boolean>(false)
 const searchQuery = ref<string>('')
@@ -136,23 +128,13 @@ const nodataText = computed(() => {
   return ''
 })
 
-const countOfSelected = computed(() => (Array.isArray(model.value) ? model.value.length : 0))
-
 const isSelected = computed(() => props.multiple ? !isEmpty(model.value) : !isNil(model.value))
 
-const isModelElementVisible = computed(() => !props.multiple)
-
-const isCounterVisible = computed(() => {
-  return Array.isArray(model.value)
-    && props.multiple
-    && model.value.length
-    && props.counter == 'number'
-})
+const isModelElementVisible = computed(() => !props.multiple && model.value)
 
 const isSelectedListVisible = computed(() => {
   return Array.isArray(model.value)
     && model.value.length
-    && props.counter == 'list'
 })
 
 const isOptionSelected = (option: Option) => {
@@ -187,6 +169,7 @@ const updateModel = (value: Value) => {
 
   // Single Mode
   model.value = value
+  isCollapsed.value = false
 }
 
 const resetAll = () => {
@@ -196,14 +179,12 @@ const resetAll = () => {
 provide<Injection>('selectState', {
   isSelected,
   isCollapsed,
-  variant: props.variant,
   size: props.size,
   color: props.color,
   icon: props.icon,
   multiple: props.multiple,
-  counter: props.counter,
   placeholder: props.placeholder,
-  placeholderMode: props.placeholderMode,
+  floatPlaceholder: props.floatPlaceholder,
   rounded: props.rounded,
 })
 
@@ -219,28 +200,35 @@ export type {
 
 <template>
   <div :class="classname">
-    <AppDropdown
+    <AppFloater
       v-model="isCollapsed"
+      :allowed-placements="['top', 'bottom']"
+      class="select__floater"
+      width="min-reference"
     >
       <AppSelectField>
         <AppSelectPlaceholder />
-        <div
-          v-if="isModelElementVisible"
-          class="select__model"
+        <slot
+          v-if="isModelElementVisible || isSelectedListVisible"
+          :model
+          name="value"
+          :placeholder
         >
-          {{ model }}
-        </div>
-        <AppSelectCounter v-if="isCounterVisible">
-          {{ countOfSelected }}
-        </AppSelectCounter>
-        <AppSelectSelectedList
-          v-if="isSelectedListVisible"
-          :items="(Array.isArray(model) ? model : [])"
-          @close="onSelectedClose"
-        />
+          <div
+            v-if="isModelElementVisible"
+            class="select__model"
+          >
+            {{ model }}
+          </div>
+          <AppSelectSelectedList
+            v-if="isSelectedListVisible"
+            :items="(Array.isArray(model) ? model : [])"
+            @close="onSelectedClose"
+          />
+        </slot>
       </AppSelectField>
       <template #content>
-        <div class="select__slot select__slot-content">
+        <div class="select__content">
           <AppSelectSearch
             v-if="search"
             v-model="searchQuery"
@@ -255,13 +243,16 @@ export type {
             @click="onOptionClick(option)"
           />
 
-          <div class="select__nodata-text">
+          <div
+            v-if="nodataText"
+            class="select__nodata-text"
+          >
             {{ nodataText }}
           </div>
           <AppButton
             v-if="reset"
             class="select__reset-button"
-            color="lighter"
+            color="neutral"
             size="sm"
             variant="link"
             @click="resetAll"
@@ -270,7 +261,7 @@ export type {
           </AppButton>
         </div>
       </template>
-    </AppDropdown>
+    </AppFloater>
   </div>
 </template>
 
@@ -278,19 +269,59 @@ export type {
 .select {
   $this: &;
   $disabled: $this + '-disabled';
-
-  width: 250px;
+  $size-xs: $this + '-size-xs';
+  $size-sm: $this + '-size-sm';
+  $size-md: $this + '-size-md';
+  $size-lg: $this + '-size-lg';
 
   &#{$disabled} {
     pointer-events: none;
     filter: brightness(1.2);
   }
 
-  &__slot {
-    &-content {
-      display: flex;
-      flex-direction: column;
-      gap: $space-1;
+  &#{$size-xs} {
+    @include text(regular, xs);
+  }
+
+  &#{$size-sm} {
+    @include text(regular, sm);
+  }
+
+  &#{$size-md} {
+    @include text(regular, md);
+  }
+
+  &#{$size-lg} {
+    @include text(regular, md);
+  }
+
+  &__floater {
+    width: 100%;
+  }
+
+  &__content {
+    overflow: auto;
+
+    height: 100%;
+    border-radius: $radius-2;
+
+    background: white;
+    box-shadow: $shadow-md;
+
+    @include is($size-xs) {
+      padding: $space-2 $space-1;
+    }
+
+    @include is($size-sm) {
+      padding: $space-3 $space-1;
+    }
+
+    @include is($size-md) {
+      padding: $space-4 $space-2;
+    }
+
+    @include is($size-lg) {
+      padding: $space-5 $space-3;
     }
   }
 
@@ -305,17 +336,6 @@ export type {
     padding-block: $space-3;
     color: $color-neutral-500;
     text-align: center;
-
-    &:empty {
-      display: none;
-    }
-  }
-
-  .dropdown,
-  .floater,
-  /* stylelint-disable-next-line selector-class-pattern */
-  .floater__slot-default {
-    width: 100%;
   }
 
 }

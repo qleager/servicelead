@@ -22,11 +22,14 @@ const classname = computed(() => [
 
 const tagSize = computed(() => {
   switch (size) {
-    case 'md':
-      return 'sm'
+    case 'xs':
+      return 'xs'
       break
     case 'sm':
       return 'xs'
+      break
+    case 'md':
+      return 'sm'
       break
     default:
       return 'md'
@@ -44,7 +47,6 @@ const tagSize = computed(() => {
       :key="index"
       closable
       color="neutral"
-      icon="mail_24"
       :size="tagSize"
       variant="outline"
       @close="emits('close', index)"
@@ -57,24 +59,40 @@ const tagSize = computed(() => {
 <style lang="scss">
 .select-selected-list {
   $this: &;
-  $size-md: $this + '-size-md';
   $size-xs: $this + '-size-xs';
+  $size-sm: $this + '-size-sm';
+  $size-md: $this + '-size-md';
+  $size-lg: $this + '-size-lg';
 
   overflow: auto;
   display: flex;
   gap: $space-1;
 
-  &#{$size-xs} {
+  @include is($size-xs) {
     $space: $space-3;
 
-    margin-inline: -#{$space};
+    margin-inline: -$space;
     padding-inline: $space;
   }
 
-  &#{$size-md} {
+  @include is($size-sm) {
+    $space: $space-4;
+
+    margin-inline: -$space;
+    padding-inline: $space;
+  }
+
+  @include is($size-md) {
     $space: $space-5;
 
-    margin-inline: -#{$space};
+    margin-inline: -$space;
+    padding-inline: $space;
+  }
+
+  @include is($size-lg) {
+    $space: $space-6;
+
+    margin-inline: -$space;
     padding-inline: $space;
   }
 

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@nuxtjs/storybook'
-import AppCard from '@components/app/card/Card.vue'
+import AppCard from '@components/app/Card.vue'
 import AppTag from '@components/app/Tag.vue'
 
 export default {
@@ -20,6 +20,10 @@ export default {
       control: 'text',
       table: { category: 'slots' },
     },
+    color: {
+      control: 'select',
+      options: ['white', 'neutral'],
+    },
     description: {
       control: 'text',
       table: { category: 'slots' },
@@ -37,7 +41,7 @@ export default {
   args: {
     title: 'Card title',
     description: 'Card description',
-
+    color: 'white',
     top: false,
     header: false,
     content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.1',
@@ -54,7 +58,7 @@ export const Playground: Story = {
     setup: () => ({ args }),
     template: `
       <div style="width:320px;">
-        <AppCard>
+        <AppCard :color="args.color">
           <template v-if="args.top" #top>
             <AppTag size="sm" color="gray" variant="soft">Top Slot</AppTag>
           </template>
