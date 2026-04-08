@@ -14,6 +14,7 @@
         <template #top>
           <div class="threads__top">
             <span>Thread Filter</span>
+            <ThreadActions />
           </div>
         </template>
         <template #content>
