@@ -1,5 +1,32 @@
 <script lang="ts" setup>
+import type { Icons } from '~/types/components/icon'
+import type { TabsItem } from '~/components/app/Tabs.vue'
 
+type GeoTabItem = TabsItem & {
+  tabIcon?: Icons
+  tabIconColor?: 'green' | 'yellow' | 'red'
+}
+
+const tabs: GeoTabItem[] = [
+  {
+    label: 'Все',
+  },
+  {
+    label: 'Название',
+    tabIcon: 'triangle-solid',
+    tabIconColor: 'green',
+  },
+  {
+    label: 'Название',
+    tabIcon: 'square-solid',
+    tabIconColor: 'yellow',
+  },
+  {
+    label: 'Название',
+    tabIcon: 'circle-solid',
+    tabIconColor: 'red',
+  },
+]
 </script>
 
 <template>
@@ -27,25 +54,22 @@
         <AppTabs
           class="offer-single-geo__tabs"
           color="neutral"
-          :items="[
-            {
-              label: 'Все',
-            },
-            {
-              icon: 'triangle-solid',
-              label: 'Название',
-            },
-            {
-              icon: 'square-solid',
-              label: 'Название',
-            },
-            {
-              icon: 'circle-solid',
-              label: 'Название',
-            },
-          ]"
+          :items="tabs"
           size="xs"
-        />
+        >
+          <template #default="{ item }">
+            <div class="offer-single-geo__tab-content">
+              <AppIcon
+                v-if="(item as GeoTabItem).tabIcon"
+                class="offer-single-geo__tab-icon"
+                :class="`offer-single-geo__tab-icon-${(item as GeoTabItem).tabIconColor}`"
+                :name="(item as GeoTabItem).tabIcon!"
+                :size="16"
+              />
+              <span>{{ item.label }}</span>
+            </div>
+          </template>
+        </AppTabs>
       </div>
       <div class="offer-single-geo__top-column">
         <AppInput
@@ -97,6 +121,30 @@
 
   &__help {
     max-width: 290px;
+  }
+
+  &__tab {
+    &-content {
+      display: flex;
+      gap: $space-05;
+      align-items: center;
+
+      @include text(regular, sm);
+    }
+
+    &-icon {
+      &-green {
+        color: $color-green;
+      }
+
+      &-yellow {
+        color: $color-yellow-400;
+      }
+
+      &-red {
+        color: $color-red-400;
+      }
+    }
   }
 }
 </style>
