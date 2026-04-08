@@ -120,13 +120,13 @@ const columns = ref<TableColumn<SummaryRow>[]>([
           h(AppTooltip, {
             content: 'Подтверждено',
           },
-          [
-            h(AppIcon, {
+          {
+            default: () => h(AppIcon, {
               name: 'check_24',
               size: 16,
               class: 'statistics-widget-summary__table-head-icon',
             }),
-          ])
+          })
         ),
         accessorKey: 'conversionApproved',
         footer: ({ table, column }) => getSumCellsOfColumn(table, column.id),
@@ -136,13 +136,13 @@ const columns = ref<TableColumn<SummaryRow>[]>([
           h(AppTooltip, {
             content: 'Холд',
           },
-          [
-            h(AppIcon, {
+          {
+            default: () => h(AppIcon, {
               name: 'hold',
               size: 16,
               class: 'statistics-widget-summary__table-head-icon',
             }),
-          ])
+          })
         ),
         accessorKey: 'conversionHeld',
         footer: ({ table, column }) => getSumCellsOfColumn(table, column.id),
@@ -152,13 +152,13 @@ const columns = ref<TableColumn<SummaryRow>[]>([
           h(AppTooltip, {
             content: 'Треш',
           },
-          [
-            h(AppIcon, {
+          {
+            default: () => h(AppIcon, {
               name: 'Trash',
               size: 16,
               class: 'statistics-widget-summary__table-head-icon',
             }),
-          ])
+          })
         ),
         accessorKey: 'conversionCanceled',
         footer: ({ table, column }) => getSumCellsOfColumn(table, column.id),
