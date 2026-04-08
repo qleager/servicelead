@@ -311,13 +311,13 @@ const columns = ref<TableColumn<StatisticsFullRow>[]>([
         header: () => (
           h(AppTooltip, {
             content: 'Подтверждено',
-          }, [
-            h(AppIcon, {
+          }, {
+            default: () => h(AppIcon, {
               name: 'check_24',
               size: 16,
               class: 'statistics-full__table-head-icon',
             }),
-          ])
+          })
         ),
       },
       {
@@ -325,13 +325,13 @@ const columns = ref<TableColumn<StatisticsFullRow>[]>([
         header: () => (
           h(AppTooltip, {
             content: 'Холд',
-          }, [
-            h(AppIcon, {
+          }, {
+            default: () => h(AppIcon, {
               name: 'hold',
               size: 16,
               class: 'statistics-full__table-head-icon',
             }),
-          ])
+          })
         ),
       },
       {
@@ -340,13 +340,13 @@ const columns = ref<TableColumn<StatisticsFullRow>[]>([
           h(AppTooltip, {
             content: 'Треш',
           },
-          [
-            h(AppIcon, {
+          {
+            default: () => h(AppIcon, {
               name: 'Trash',
               size: 16,
               class: 'statistics-full__table-head-icon',
             }),
-          ])
+          })
         ),
       },
     ],
