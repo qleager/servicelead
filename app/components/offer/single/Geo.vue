@@ -32,15 +32,15 @@
               label: 'Все',
             },
             {
-              icon: 'city_triangle',
+              icon: 'triangle-solid',
               label: 'Название',
             },
             {
-              icon: 'city_square',
+              icon: 'square-solid',
               label: 'Название',
             },
             {
-              icon: 'city_circle',
+              icon: 'circle-solid',
               label: 'Название',
             },
           ]"
