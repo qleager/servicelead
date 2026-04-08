@@ -1,5 +1,91 @@
 <script lang="ts" setup>
+import type { TableColumn } from '~/components/app/Table.vue'
 
+type OfferSinglePricelistRow = {
+  service: string
+  company: number
+  pm: number
+}
+
+const data = ref<OfferSinglePricelistRow[]>([
+  {
+    service: 'Установка Windows и очистка компьютера от вирусов',
+    company: 1000,
+    pm: 1000,
+  },
+  {
+    service: 'Установка Windows и очистка компьютера от вирусов',
+    company: 1000,
+    pm: 1000,
+  },
+  {
+    service: 'Установка Windows и очистка компьютера от вирусов',
+    company: 1000,
+    pm: 1000,
+  },
+  {
+    service: 'Установка Windows и очистка компьютера от вирусов',
+    company: 1000,
+    pm: 1000,
+  },
+  {
+    service: 'Установка Windows и очистка компьютера от вирусов',
+    company: 1000,
+    pm: 1000,
+  },
+  {
+    service: 'Установка Windows и очистка компьютера от вирусов',
+    company: 1000,
+    pm: 1000,
+  },
+  {
+    service: 'Установка Windows и очистка компьютера от вирусов',
+    company: 1000,
+    pm: 1000,
+  },
+  {
+    service: 'Установка Windows и очистка компьютера от вирусов',
+    company: 1000,
+    pm: 1000,
+  },
+  {
+    service: 'Установка Windows и очистка компьютера от вирусов',
+    company: 1000,
+    pm: 1000,
+  },
+  {
+    service: 'Установка Windows и очистка компьютера от вирусов',
+    company: 1000,
+    pm: 1000,
+  },
+  {
+    service: 'Установка Windows и очистка компьютера от вирусов',
+    company: 1000,
+    pm: 1000,
+  },
+  {
+    service: 'Установка Windows и очистка компьютера от вирусов',
+    company: 1000,
+    pm: 1000,
+  },
+])
+
+const columns = ref<TableColumn<OfferSinglePricelistRow>[]>([
+  {
+    header: 'Услуга',
+    accessorKey: 'service',
+  },
+  {
+    header: () => h('span', { class: 'offer-single-pricelist__align-right' }, 'Компания'),
+    accessorKey: 'company',
+    cell: ({ cell }) => h('span', { class: 'offer-single-pricelist__align-right' }, formatCurrency(Number(cell.getValue()))),
+  },
+  {
+    header: () => h('span', { class: 'offer-single-pricelist__align-right' }, 'ЧМ'),
+    accessorKey: 'pm',
+    cell: ({ cell }) => h('span', { class: 'offer-single-pricelist__align-right' }, formatCurrency(Number(cell.getValue()))),
+  },
+])
 </script>
 
 <template>
@@ -36,8 +122,12 @@
       </div>
     </div>
     <div class="offer-single-pricelist__content">
-      <div class="offer-single-pricelist__table">
-        table
+      <div class="offer-single-pricelist__table-wrap">
+        <AppTable
+          class="offer-single-pricelist__table"
+          :columns="columns"
+          :data="data"
+        />
       </div>
       <HelpWidget class="offer-single-pricelist__help" />
     </div>
@@ -70,11 +160,21 @@
   }
 
   &__table {
-    flex: 1;
+    width: 100%;
+
+    &-wrap {
+      flex: 1;
+    }
   }
 
   &__help {
     max-width: 290px;
+  }
+
+  &__align-right {
+    display: inline-block;
+    width: 100%;
+    text-align: right;
   }
 }
 </style>
