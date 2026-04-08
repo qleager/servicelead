@@ -13,7 +13,7 @@
       <AppCard>
         <template #top>
           <div class="threads__top">
-            <span>Thread Filter</span>
+            <ThreadFilter />
           </div>
         </template>
         <template #content>
