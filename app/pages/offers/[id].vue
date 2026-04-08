@@ -21,9 +21,5 @@
   height: 100%;
   margin-top: -$space-9;
   padding-top: $space-9;
-
-  background: url('/images/offers-single-head-image.png')
-    no-repeat
-    right top / auto 336px;
 }
 </style>
