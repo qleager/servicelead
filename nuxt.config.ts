@@ -2,7 +2,7 @@
  * Guide: https://nuxt.com/docs/api/configuration/nuxt-config
  */
 import { fileURLToPath } from 'node:url'
-import VitePluginSvgSpritemap from '@spiriit/vite-plugin-svg-spritemap'
+import { createSvgSpritemapPlugin } from './config/svg-spritemap'
 
 export default defineNuxtConfig({
   modules: [
@@ -49,33 +49,7 @@ export default defineNuxtConfig({
       },
     },
     plugins: [
-      VitePluginSvgSpritemap('./assets/icons/*.svg', {
-        types: './types/app/components/icon.d.ts',
-        svgo: {
-          plugins: [
-            {
-              name: 'preset-default',
-              params: {
-                overrides: {
-                  cleanupIds: false,
-                },
-              },
-            },
-            {
-              name: 'prefixIds',
-              params: {
-                prefix: false,
-              },
-            },
-            {
-              name: 'removeAttrs',
-              params: {
-                attrs: '(fill|stroke)',
-              },
-            },
-          ],
-        },
-      }),
+      createSvgSpritemapPlugin('./assets/icons/*.svg'),
     ],
   },
 
