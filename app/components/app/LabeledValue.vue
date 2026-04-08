@@ -1,19 +1,20 @@
 <script lang="ts" setup>
 import type { VNodeChild } from 'vue'
+import type { Subset, Size } from '~/types/ds'
 
 interface Props {
   caption?: string
   leadingValue?: string
-  size?: 'sm' | 'lg'
+  size?: Subset<Size, 'sm' | 'lg'>
   trailingValue?: string
   value?: string
 }
 
 interface Slots {
-  caption?: () => VNodeChild
-  leadingValue?: () => VNodeChild
-  trailingValue?: () => VNodeChild
-  value?: () => VNodeChild
+  caption: () => VNodeChild
+  leadingValue: () => VNodeChild
+  trailingValue: () => VNodeChild
+  value: () => VNodeChild
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -25,7 +26,6 @@ const slots = defineSlots<Slots>()
 const hasCaption = computed(() => props.caption !== undefined || !!slots.caption)
 const hasLeadingValue = computed(() => props.leadingValue !== undefined || !!slots.leadingValue)
 const hasTrailingValue = computed(() => props.trailingValue !== undefined || !!slots.trailingValue)
-const hasValue = computed(() => props.value !== undefined || !!slots.value)
 
 const classname = computed(() => ([
   'labeled-value',
@@ -46,7 +46,6 @@ export type { Props as LabeledValueProps }
       </slot>
     </div>
     <div
-      v-if="hasLeadingValue || hasValue || hasTrailingValue"
       class="labeled-value__content"
     >
       <div
@@ -58,7 +57,6 @@ export type { Props as LabeledValueProps }
         </slot>
       </div>
       <div
-        v-if="hasValue"
         class="labeled-value__value"
       >
         <slot name="value">
@@ -98,7 +96,7 @@ export type { Props as LabeledValueProps }
   &__content {
     display: flex;
     gap: $space-1;
-    align-items: flex-end;
+    align-items: baseline;
   }
 
   &__leading,
