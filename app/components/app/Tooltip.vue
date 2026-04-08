@@ -6,7 +6,7 @@ interface Props {
 }
 
 interface Slots {
-  content?: () => VNodeChild
+  content: () => VNodeChild
   default: () => VNodeChild
 }
 
