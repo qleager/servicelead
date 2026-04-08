@@ -10,8 +10,12 @@
 
   Показать примеры, очень короткие, читсо то, чтобы донести принцип
   1. Об общем слоте header и cell
-  2. Об именованох слотах &{name}-header и &{name}-сell
+  2. Об именованох слотах &{name}-header и &{name}-сell и &{name}-foot
   3. О рендер функции в columns и data (Это некая замена слотам отметить)
+  4. О size колонок
+  5. О sticky header и footer
+  6. О том как запинить колонку с нужной стороны
+  7. О cellBorder
 -->
 <script lang="ts" setup generic="TData extends RowData">
 import type { Cell, Column, ColumnDef, Header, Row, RowData, Table } from '@tanstack/vue-table'
@@ -69,6 +73,10 @@ const table = useVueTable({
   data: props.data,
   columns: props.columns,
   getCoreRowModel: getCoreRowModel(),
+  defaultColumn: {
+    minSize: 100,
+    size: 100,
+  },
   state: {
     get columnPinning() {
       return modelColumnPinning.value
@@ -176,6 +184,7 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
           :key="header.id"
           :class="getHeadClasses(header)"
           :colspan="header.colSpan"
+          :style="`width: ${header.getSize()}px`"
         >
           <div class="table__head-content">
             <template
@@ -293,8 +302,12 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
   $sticky-header: $this + '-sticky-header';
   $sticky-footer: $this + '-sticky-footer';
 
+  table-layout: fixed;
   border-spacing: 0;
   border-collapse: separate;
+
+  width: max-content;
+
   text-indent: 0;
 
   &__header {

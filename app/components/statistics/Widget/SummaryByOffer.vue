@@ -270,7 +270,7 @@ const getSumCellsOfColumn = (table: Table<SummaryRow>, columnKey: string) => {
   }
 
   &__table {
-    width: 100%;
+    min-width: 100%;
 
     &-head-icon {
       transform: translateX(-$space-1);

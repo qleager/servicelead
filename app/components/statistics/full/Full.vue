@@ -418,8 +418,6 @@ const getSumOfColumn = (columnKey: StatisticsFullNumericKey) => {
   }
 
   &__table {
-    width: 100%;
-
     &-head-icon {
       transform: translateX(-$space-1);
     }
