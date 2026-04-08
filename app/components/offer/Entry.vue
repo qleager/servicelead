@@ -128,14 +128,18 @@
     </template>
     <template #footer>
       <div class="offer-entry__footer">
-        <div class="offer-entry__price">
-          <div class="offer-entry__price-header">
-            Ставка
-          </div>
-          <div class="offer-entry__price-value">
-            до 2300 <span class="offer-entry__price-value--currency">₽</span>
-          </div>
-        </div>
+        <AppLabeledValue
+          caption="Ставка"
+          class="offer-entry__price"
+          size="sm"
+        >
+          <template #leadingValue>
+            <span class="offer-entry__price-leading">до</span>
+          </template>
+          <template #value>
+            <span class="offer-entry__price-value">2300 <span class="offer-entry__price-currency">₽</span></span>
+          </template>
+        </AppLabeledValue>
         <div class="offer-entry__actions">
           <AppButton
             color="neutral"
@@ -234,26 +238,16 @@
   }
 
   &__price {
-    display: flex;
-    flex-direction: column;
-    gap: $space-05;
-
-    &-header {
-      @include text(regular, xs);
-
-      color: $color-neutral-400;
-      letter-spacing: -.03em;
+    &-leading {
+      line-height: normal;
     }
 
     &-value {
-      @include text(medium, lg);
+      line-height: normal;
+    }
 
-      line-height: 1.4;
-      letter-spacing: -.03em;
-
-      &--currency {
-        @include text(semibold, sm);
-      }
+    &-currency {
+      @include text(semibold, sm);
     }
   }
 

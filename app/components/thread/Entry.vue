@@ -40,19 +40,22 @@
         Лендинги
       </AppTag>
     </div>
-    <div class="thread-entry__metric">
-      <div class="thread-entry__metric-label">
-        Конверсии
-      </div>
-      <div class="thread-entry__metric-data">
-        <div class="thread-entry__metric-value">
-          75
-        </div>
-        <div class="thread-entry__metric-meta">
-          /мес
-        </div>
-      </div>
-    </div>
+    <AppLabeledValue
+      class="thread-entry__metric"
+      size="lg"
+      value="75"
+    >
+      <template
+        #caption
+      >
+        <span class="thread-entry__metric-caption">
+          Конверсии
+        </span>
+      </template>
+      <template #trailingValue>
+        /мес
+      </template>
+    </AppLabeledValue>
   </div>
 </template>
 
@@ -131,33 +134,7 @@
   }
 
   &__metric {
-    display: flex;
-    flex-direction: column;
-    gap: $space-2;
-
-    &-data {
-      display: flex;
-      align-items: flex-end;
-    }
-
-    &-value {
-      @include text(medium, 5xl);
-
-      line-height: 1;
-    }
-
-    &-meta {
-      @include text(regular, sm);
-
-      line-height: 1;
-    }
-
-    &-label {
-      @include text(regular, xs);
-
-      color: $color-neutral-400;
-      transition: inherit;
-
+    &-caption {
       @include is($hover) {
         color: $color-neutral-600;
         transition: inherit;

@@ -27,49 +27,55 @@ const data = ref<PieData>([
     title="Конверсии по трафику"
   >
     <template #value>
-      <div class="statistics-widget-traffic__values">
-        <div class="statistics-widget-traffic__metric">
-          <div class="statistics-widget-traffic__head">
-            <AppChip
-              color="neutral"
-              size="xs"
-              standalone
-            />
-            <div class="statistics-widget-traffic__label">
-              Формы
+      <AppLabeledValue
+        size="lg"
+      >
+        <template #value>
+          <div class="statistics-widget-traffic__value">
+            <div class="statistics-widget-traffic__metric">
+              <div class="statistics-widget-traffic__head">
+                <AppChip
+                  color="neutral"
+                  size="xs"
+                  standalone
+                />
+                <div class="statistics-widget-traffic__label">
+                  Формы
+                </div>
+              </div>
+              <div class="statistics-widget-traffic__amount">
+                <div class="statistics-widget-traffic__number">
+                  46
+                </div>
+                <div class="statistics-widget-traffic__unit">
+                  %
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="statistics-widget-traffic__amount">
-            <div class="statistics-widget-traffic__number">
-              46
-            </div>
-            <div class="statistics-widget-traffic__unit">
-              %
-            </div>
-          </div>
-        </div>
 
-        <div class="statistics-widget-traffic__metric">
-          <div class="statistics-widget-traffic__head">
-            <AppChip
-              color="primary"
-              size="xs"
-              standalone
-            />
-            <div class="statistics-widget-traffic__label">
-              Звонки
+            <div class="statistics-widget-traffic__metric">
+              <div class="statistics-widget-traffic__head">
+                <AppChip
+                  color="primary"
+                  size="xs"
+                  standalone
+                />
+                <div class="statistics-widget-traffic__label">
+                  Звонки
+                </div>
+              </div>
+              <div class="statistics-widget-traffic__amount">
+                <div class="statistics-widget-traffic__number">
+                  54
+                </div>
+                <div class="statistics-widget-traffic__unit">
+                  %
+                </div>
+              </div>
             </div>
           </div>
-          <div class="statistics-widget-traffic__amount">
-            <div class="statistics-widget-traffic__number">
-              54
-            </div>
-            <div class="statistics-widget-traffic__unit">
-              %
-            </div>
-          </div>
-        </div>
-      </div>
+        </template>
+      </AppLabeledValue>
     </template>
 
     <template #chart>
@@ -102,7 +108,7 @@ const data = ref<PieData>([
 .statistics-widget-traffic {
   $this: &;
 
-  &__values {
+  &__value {
     display: flex;
     gap: $space-6;
   }

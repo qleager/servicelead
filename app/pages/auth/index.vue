@@ -5,23 +5,23 @@ definePageMeta({
 </script>
 
 <template>
-  <div class="auth-form">
-    <div class="auth-form__header">
-      <div class="auth-form__title">
+  <div class="auth-login">
+    <div class="auth-login__header">
+      <div class="auth-login__title">
         Рады видеть
       </div>
-      <div class="auth-form__subtitle">
+      <div class="auth-login__subtitle">
         Войдите в личный кабинет
       </div>
     </div>
 
-    <div class="auth-form__fields">
+    <div class="auth-login__fields">
       <AppLabel
-        class="auth-form__field"
+        class="auth-login__field"
         title="E-mail"
       >
         <AppInput
-          class="auth-form__input"
+          class="auth-login__input"
           name="email"
           placeholder="Введите e-mail"
           type="text"
@@ -29,11 +29,12 @@ definePageMeta({
       </AppLabel>
 
       <AppLabel
-        class="auth-form__field"
+        class="auth-login__field"
         title="Пароль"
       >
         <AppInput
-          class="auth-form__input"
+          class="auth-login__input"
+          icon="eye"
           name="password"
           placeholder="Введите пароль"
           trailing-icon
@@ -41,15 +42,15 @@ definePageMeta({
         />
       </AppLabel>
 
-      <div class="auth-form__actions">
+      <div class="auth-login__actions">
         <AppCheckbox
           label="Запомнить"
           name="remember"
         />
 
         <NuxtLink
-          class="auth-form__link"
-          to="#"
+          class="auth-login__link"
+          to="/auth/recovery"
         >
           Забыли пароль?
         </NuxtLink>
@@ -57,18 +58,18 @@ definePageMeta({
     </div>
 
     <AppButton
-      class="auth-form__button"
+      class="auth-login__button"
       type="submit"
     >
       Войти
     </AppButton>
 
-    <div class="auth-form__actions">
+    <div class="auth-login__actions">
       Нет аккаунта?
 
       <NuxtLink
-        class="auth-form__link auth-form__link-cta"
-        to="#"
+        class="auth-login__link auth-login__link-cta"
+        to="/auth/signup"
       >
         Зарегистрироваться
       </NuxtLink>
@@ -77,7 +78,7 @@ definePageMeta({
 </template>
 
 <style lang="scss">
-.auth-form {
+.auth-login {
   display: flex;
   flex: 1;
   flex-direction: column;
