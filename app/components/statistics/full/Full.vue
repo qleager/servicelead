@@ -398,10 +398,10 @@ const getSumOfColumn = (columnKey: StatisticsFullNumericKey) => {
       <div class="statistics-full__table-wrap">
         <AppTable
           v-model:column-pinning="columnPinning"
+          cell-border="column-row"
           class="statistics-full__table"
           :columns
           :data
-          vertical-border
         />
       </div>
     </template>

@@ -235,10 +235,10 @@ const getSumCellsOfColumn = (table: Table<SummaryRow>, columnKey: string) => {
           <template #content>
             <AppTable
               v-model:column-pinning="columnPinning"
+              cell-border="column"
               class="statistics-widget-summary__table"
               :columns
               :data
-              vertical-border
             />
           </template>
         </AppCard>

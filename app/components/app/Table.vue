@@ -18,10 +18,10 @@ import type { Cell, Column, ColumnDef, Header, Row, RowData, Table } from '@tans
 import { FlexRender, getCoreRowModel, useVueTable } from '@tanstack/vue-table'
 
 export interface TableProps<TData extends RowData = RowData> {
+  cellBorder?: 'column' | 'column-row' | 'row'
   columns: TableColumn<TData>[]
   data: TData[]
   sticky?: boolean | 'header' | 'footer'
-  verticalBorder?: boolean
 }
 
 export interface TableColumnPinningModel {
@@ -78,7 +78,7 @@ const table = useVueTable({
 
 const classname = computed(() => ([
   'table',
-  { 'table-vertical-border': props.verticalBorder },
+  props.cellBorder ? `table-border-${props.cellBorder}` : '',
   { 'table-sticky-header': props.sticky === 'header' || props.sticky === true },
   { 'table-sticky-footer': props.sticky === 'footer' || props.sticky === true },
 ]))
@@ -287,7 +287,9 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
 <style lang="scss">
 .table {
   $this: &;
-  $vertical-border: $this + '-vertical-border';
+  $border-column: $this + '-border-column';
+  $border-row: $this + '-border-row';
+  $border-column-row: $this + '-border-column-row';
   $sticky-header: $this + '-sticky-header';
   $sticky-footer: $this + '-sticky-footer';
 
@@ -379,7 +381,15 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
     }
 
     &-first-in-general-header {
-      @include is($vertical-border) {
+      @include is($border-column) {
+        border-left: 1px solid $color-neutral-150;
+
+        &:first-child {
+          border-color: transparent;
+        }
+      }
+
+      @include is($border-column-row) {
         border-left: 1px solid $color-neutral-150;
 
         &:first-child {
@@ -419,13 +429,25 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
     }
 
     &-first-in-general-header {
-      @include is($vertical-border) {
+      @include is($border-column) {
         border-left: 1px solid $color-neutral-150;
 
         &:first-child {
           border-color: transparent;
         }
       }
+
+      @include is($border-column-row) {
+        border-left: 1px solid $color-neutral-150;
+
+        &:first-child {
+          border-left: unset;
+        }
+      }
+    }
+
+    @include is($border-column-row) {
+      border-top: 1px solid $color-neutral-150;
     }
 
     &-content {
@@ -466,7 +488,7 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
     }
 
     &-first-in-general-header {
-      @include is($vertical-border) {
+      @include is($border-column) {
         border-left: 1px solid $color-neutral-150;
 
         &:first-child {
