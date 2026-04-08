@@ -3,7 +3,7 @@
 <template>
   <div class="offer-single-header">
     <div class="offer-single-header__media">
-      <NuxtImg :src="'/images/offer-single-header.png'" />
+      <NuxtImg src="/images/offer-single-header.png" />
     </div>
     <div
       class="offer-single-header__tags"
