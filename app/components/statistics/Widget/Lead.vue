@@ -35,20 +35,23 @@ const asix = ref<BarAsix<ApiStatisticsLeadItem>>({ x: 'label', y: 'value' })
       />
     </template>
     <template #value>
-      <div class="statistics-widget-lead__value">
-        <div>
-          60
-        </div>
-        <AppTag
-          color="green"
-          icon="arrow_up"
-          size="sm"
-          trailing-icon
-          variant="soft"
-        >
-          +7
-        </AppTag>
-      </div>
+      <AppLabeledValue
+        class="statistics-widget-lead__value"
+        size="lg"
+        value="60"
+      >
+        <template #trailingValue>
+          <AppTag
+            color="green"
+            icon="arrow_up"
+            size="sm"
+            trailing-icon
+            variant="soft"
+          >
+            +7
+          </AppTag>
+        </template>
+      </AppLabeledValue>
     </template>
     <template #chart>
       <ChartBar
@@ -70,15 +73,6 @@ const asix = ref<BarAsix<ApiStatisticsLeadItem>>({ x: 'label', y: 'value' })
 
 <style lang="scss">
 .statistics-widget-lead {
-  &__value {
-    display: flex;
-    gap: $space-1;
-    align-items: flex-end;
-    line-height: 1 !important;
-
-    @include text(medium, 5xl);
-  }
-
   &__chart {
     max-width: 210px;
     margin-left: auto;
@@ -97,6 +91,5 @@ const asix = ref<BarAsix<ApiStatisticsLeadItem>>({ x: 'label', y: 'value' })
       }
     }
   }
-
 }
 </style>
