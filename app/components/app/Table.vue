@@ -10,18 +10,22 @@
 
   Показать примеры, очень короткие, читсо то, чтобы донести принцип
   1. Об общем слоте header и cell
-  2. Об именованох слотах &{name}-header и &{name}-сell
+  2. Об именованох слотах &{name}-header и &{name}-сell и &{name}-foot
   3. О рендер функции в columns и data (Это некая замена слотам отметить)
+  4. О size колонок
+  5. О sticky header и footer
+  6. О том как запинить колонку с нужной стороны
+  7. О cellBorder
 -->
 <script lang="ts" setup generic="TData extends RowData">
 import type { Cell, Column, ColumnDef, Header, Row, RowData, Table } from '@tanstack/vue-table'
 import { FlexRender, getCoreRowModel, useVueTable } from '@tanstack/vue-table'
 
 export interface TableProps<TData extends RowData = RowData> {
+  cellBorder?: 'column' | 'column-row' | 'row'
   columns: TableColumn<TData>[]
   data: TData[]
   sticky?: boolean | 'header' | 'footer'
-  verticalBorder?: boolean
 }
 
 export interface TableColumnPinningModel {
@@ -69,6 +73,10 @@ const table = useVueTable({
   data: props.data,
   columns: props.columns,
   getCoreRowModel: getCoreRowModel(),
+  defaultColumn: {
+    minSize: 100,
+    size: 100,
+  },
   state: {
     get columnPinning() {
       return modelColumnPinning.value
@@ -78,7 +86,7 @@ const table = useVueTable({
 
 const classname = computed(() => ([
   'table',
-  { 'table-vertical-border': props.verticalBorder },
+  props.cellBorder ? `table-border-${props.cellBorder}` : '',
   { 'table-sticky-header': props.sticky === 'header' || props.sticky === true },
   { 'table-sticky-footer': props.sticky === 'footer' || props.sticky === true },
 ]))
@@ -176,6 +184,7 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
           :key="header.id"
           :class="getHeadClasses(header)"
           :colspan="header.colSpan"
+          :style="`width: ${header.getSize()}px`"
         >
           <div class="table__head-content">
             <template
@@ -287,12 +296,18 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
 <style lang="scss">
 .table {
   $this: &;
-  $vertical-border: $this + '-vertical-border';
+  $border-column: $this + '-border-column';
+  $border-row: $this + '-border-row';
+  $border-column-row: $this + '-border-column-row';
   $sticky-header: $this + '-sticky-header';
   $sticky-footer: $this + '-sticky-footer';
 
+  table-layout: fixed;
   border-spacing: 0;
   border-collapse: separate;
+
+  width: max-content;
+
   text-indent: 0;
 
   &__header {
@@ -379,7 +394,15 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
     }
 
     &-first-in-general-header {
-      @include is($vertical-border) {
+      @include is($border-column) {
+        border-left: 1px solid $color-neutral-150;
+
+        &:first-child {
+          border-color: transparent;
+        }
+      }
+
+      @include is($border-column-row) {
         border-left: 1px solid $color-neutral-150;
 
         &:first-child {
@@ -419,13 +442,25 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
     }
 
     &-first-in-general-header {
-      @include is($vertical-border) {
+      @include is($border-column) {
         border-left: 1px solid $color-neutral-150;
 
         &:first-child {
           border-color: transparent;
         }
       }
+
+      @include is($border-column-row) {
+        border-left: 1px solid $color-neutral-150;
+
+        &:first-child {
+          border-left: unset;
+        }
+      }
+    }
+
+    @include is($border-column-row) {
+      border-top: 1px solid $color-neutral-150;
     }
 
     &-content {
@@ -466,7 +501,7 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
     }
 
     &-first-in-general-header {
-      @include is($vertical-border) {
+      @include is($border-column) {
         border-left: 1px solid $color-neutral-150;
 
         &:first-child {
