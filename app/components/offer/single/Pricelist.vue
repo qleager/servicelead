@@ -93,43 +93,53 @@ const columns = ref<TableColumn<OfferSinglePricelistRow>[]>([
     class="offer-single-pricelist"
   >
     <div class="offer-single-pricelist__top">
-      <div class="offer-single-pricelist__top-column">
-        <AppTitle
-          icon="price"
-          title="Прайс - лист"
-        />
+      <OfferSingleTabPane>
+        <template #main>
+          <div class="offer-single-pricelist__header">
+            <AppTitle
+              icon="price"
+              title="Прайс - лист"
+            />
 
-        <AppButton
-          color="neutral"
-          icon="arrow_down"
-          size="sm"
-          trailing-icon
-          variant="link"
-          @click="console.log('download')"
-        >
-          Скачать
-        </AppButton>
-      </div>
-
-      <div class="offer-single-pricelist__top-column">
-        <AppInput
-          class="offer-single-pricelist__search"
-          icon="search"
-          placeholder="Начните поиск..."
-          reset
-          rounded
-        />
-      </div>
+            <AppButton
+              color="neutral"
+              icon="arrow_down"
+              size="sm"
+              trailing-icon
+              variant="link"
+              @click="console.log('download')"
+            >
+              Скачать
+            </AppButton>
+          </div>
+        </template>
+        <template #sidebar>
+          <AppInput
+            class="offer-single-pricelist__search"
+            icon="search"
+            placeholder="Начните поиск..."
+            reset
+            rounded
+          />
+        </template>
+      </OfferSingleTabPane>
     </div>
+    <!-- <div class="offer-single-pricelist__content"> -->
     <div class="offer-single-pricelist__content">
-      <div class="offer-single-pricelist__table-wrap">
-        <AppTable
-          class="offer-single-pricelist__table"
-          :columns="columns"
-          :data="data"
-        />
-      </div>
-      <HelpWidget class="offer-single-pricelist__help" />
+      <OfferSingleTabPane>
+        <template #main>
+          <div class="offer-single-pricelist__table-wrap">
+            <AppTable
+              class="offer-single-pricelist__table"
+              :columns="columns"
+              :data="data"
+            />
+          </div>
+        </template>
+        <template #sidebar>
+          <HelpWidget class="offer-single-pricelist__help" />
+        </template>
+      </OfferSingleTabPane>
     </div>
   </div>
 </template>
@@ -138,16 +148,10 @@ const columns = ref<TableColumn<OfferSinglePricelistRow>[]>([
 .offer-single-pricelist {
   $this: &;
 
-  &__top {
+  &__header {
     display: flex;
-    gap: $space-4;
-    justify-content: space-between;
-
-    &-column {
-      display: flex;
-      gap: $space-6;
-      align-items: center;
-    }
+    gap: $space-6;
+    align-items: center;
   }
 
   &__search {
