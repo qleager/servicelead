@@ -3,8 +3,10 @@ import { h } from 'vue'
 import type { TableColumn } from '~/components/app/Table.vue'
 
 const AppButton = resolveComponent('AppButton')
+const AppIcon = resolveComponent('AppIcon')
 const AppDropdown = resolveComponent('AppDropdown')
 const AppTag = resolveComponent('AppTag')
+const AppTooltip = resolveComponent('AppTooltip')
 
 type StatisticsFullRow = {
   date: string
@@ -12,15 +14,40 @@ type StatisticsFullRow = {
   type: string
   project: string
   tool: string
-  clientPhone: string
+  clientPhone: string[]
   city: string[]
   link: string
 }
+
+const quickActions = [
+  { label: 'Редактировать', icon: 'edit' },
+  { label: 'Дублировать', icon: 'Copy' },
+  { label: 'Добавить в папку', icon: 'new-folder' },
+  { label: 'Перенести в архив', icon: 'archive' },
+]
 
 const columns = ref<TableColumn<StatisticsFullRow>[]>([
   {
     header: 'Дата',
     accessorKey: 'date',
+    cell: ({ cell }) => h('div', {
+      class: 'threads__date',
+    }, [
+      h('span', {
+        class: 'threads__date-value',
+      }, String(cell.getValue() ?? '')),
+      h('div', {
+        class: 'threads__date-actions',
+      }, quickActions.map(action => h(AppTooltip, {
+        content: action.label,
+      }, {
+        default: () => h(AppIcon, {
+          class: 'threads__date-button',
+          name: action.icon,
+          size: 16,
+        }),
+      }))),
+    ]),
   },
   {
     header: 'Название',
@@ -43,6 +70,7 @@ const columns = ref<TableColumn<StatisticsFullRow>[]>([
     header: 'Инструмент',
     accessorKey: 'tool',
     cell: ({ cell }) => h(AppTag, {
+      icon: 'avito',
       color: 'neutral',
       size: 'sm',
       variant: 'soft',
@@ -51,6 +79,36 @@ const columns = ref<TableColumn<StatisticsFullRow>[]>([
   {
     header: 'Телефон клиента',
     accessorKey: 'clientPhone',
+    cell: ({ cell }) => {
+      const clientPhones = Array.isArray(cell.getValue()) ? cell.getValue() : []
+      const primaryClientPhone = clientPhones[0] ?? '-'
+      const extraClientPhones = clientPhones.slice(1)
+      const extraCount = extraClientPhones.length
+
+      if (extraCount === 0) {
+        return primaryClientPhone
+      }
+
+      return h('div', {
+        class: 'threads__extra-cell',
+      }, [
+        h('span', primaryClientPhone),
+        h(AppDropdown, {
+          mode: 'hover',
+        }, {
+          default: () => h(AppTag, {
+            color: 'neutral',
+            size: 'sm',
+            variant: 'soft',
+          }, () => `+${extraCount}`),
+          content: () => h('div', {
+            class: 'threads__extra-tooltip',
+          }, extraClientPhones.map(clientPhone => h('div', {
+            class: 'threads__extra-tooltip-item',
+          }, clientPhone))),
+        }),
+      ])
+    },
   },
   {
     header: 'Город',
@@ -66,11 +124,11 @@ const columns = ref<TableColumn<StatisticsFullRow>[]>([
       }
 
       return h('div', {
-        class: 'threads__city-cell',
+        class: 'threads__extra-cell',
       }, [
         h('span', primaryCity),
         h(AppDropdown, {
-          mode: 'click',
+          mode: 'hover',
         }, {
           default: () => h(AppTag, {
             color: 'neutral',
@@ -78,9 +136,9 @@ const columns = ref<TableColumn<StatisticsFullRow>[]>([
             variant: 'soft',
           }, () => `+${extraCount}`),
           content: () => h('div', {
-            class: 'threads__city-tooltip',
+            class: 'threads__extra-tooltip',
           }, extraCities.map(city => h('div', {
-            class: 'threads__city-tooltip-item',
+            class: 'threads__extra-tooltip-item',
           }, city))),
         }),
       ])
@@ -108,9 +166,9 @@ const data = ref<StatisticsFullRow[]>([
     type: 'Компания',
     project: 'Мастер на час',
     tool: 'Авито',
-    clientPhone: '+7 947 • • • 83 45',
+    clientPhone: ['+7 947 • • • 83 45'],
     city: ['-'],
-    link: 'https://thread.app/51476',
+    link: 'http://localhost:3000/threads',
   },
   {
     date: '03.03.2026',
@@ -118,9 +176,9 @@ const data = ref<StatisticsFullRow[]>([
     type: 'Частный мастер',
     project: 'Мастер на час',
     tool: 'Лендинг',
-    clientPhone: '+7 921 • • • 39 89',
+    clientPhone: ['+7 921 • • • 39 89'],
     city: ['Москва', 'Жуковский'],
-    link: 'https://thread.app/51477',
+    link: 'http://localhost:3000/threads',
   },
   {
     date: '03.03.2026',
@@ -128,9 +186,9 @@ const data = ref<StatisticsFullRow[]>([
     type: 'Частный мастер',
     project: 'Бытовой ремонт',
     tool: 'Авито',
-    clientPhone: '+7 947 • • • 83 45',
+    clientPhone: ['+7 947 • • • 83 45'],
     city: ['-'],
-    link: 'https://thread.app/51344',
+    link: 'http://localhost:3000/threads',
   },
   {
     date: '03.03.2026',
@@ -138,9 +196,9 @@ const data = ref<StatisticsFullRow[]>([
     type: 'Частный мастер',
     project: 'Универсальный',
     tool: 'Авито',
-    clientPhone: '+7 921 • • • 39 89',
+    clientPhone: ['+7 921 • • • 39 89'],
     city: ['Самара', 'Тольятти', 'Сызрань', 'Новокуйбышевск'],
-    link: 'https://thread.app/51401',
+    link: 'http://localhost:3000/threads',
   },
   {
     date: '03.03.2026',
@@ -148,9 +206,9 @@ const data = ref<StatisticsFullRow[]>([
     type: 'Частный мастер',
     project: 'Бытовой ремонт',
     tool: 'Лендинг',
-    clientPhone: '+7 931 • • • 67 38',
+    clientPhone: ['+7 931 • • • 67 38', '+7 931 • • • 63 22'],
     city: ['Владивосток'],
-    link: 'https://thread.app/51478',
+    link: 'http://localhost:3000/threads',
   },
   {
     date: '03.03.2026',
@@ -158,9 +216,9 @@ const data = ref<StatisticsFullRow[]>([
     type: 'Компания',
     project: 'Мастер на час',
     tool: 'Tilda Webhook',
-    clientPhone: '+7 946 • • • 88 67',
+    clientPhone: ['+7 946 • • • 88 67'],
     city: ['Владивосток', 'Артем'],
-    link: 'https://thread.app/51480',
+    link: 'http://localhost:3000/threads',
   },
   {
     date: '03.03.2026',
@@ -168,9 +226,9 @@ const data = ref<StatisticsFullRow[]>([
     type: 'Частный мастер',
     project: 'Бытовой ремонт',
     tool: 'Telegram бот',
-    clientPhone: '-',
+    clientPhone: ['-'],
     city: ['Москва'],
-    link: 'https://thread.app/51481',
+    link: 'http://localhost:3000/threads',
   },
   {
     date: '03.03.2026',
@@ -178,9 +236,9 @@ const data = ref<StatisticsFullRow[]>([
     type: 'Частный мастер',
     project: 'Мастер на час',
     tool: 'Авито',
-    clientPhone: '+7 921 • • • 39 89',
+    clientPhone: ['+7 921 • • • 39 89'],
     city: ['Екатеринбург'],
-    link: 'https://thread.app/51482',
+    link: 'http://localhost:3000/threads',
   },
   {
     date: '03.03.2026',
@@ -188,9 +246,9 @@ const data = ref<StatisticsFullRow[]>([
     type: 'Компания',
     project: 'Бытовой ремонт',
     tool: 'Лендинг',
-    clientPhone: '+7 947 • • • 83 45',
+    clientPhone: ['+7 947 • • • 83 45'],
     city: ['Самара', 'Тольятти'],
-    link: 'https://thread.app/51483',
+    link: 'http://localhost:3000/threads',
   },
   {
     date: '03.03.2026',
@@ -198,9 +256,9 @@ const data = ref<StatisticsFullRow[]>([
     type: 'Компания',
     project: 'Универсальный',
     tool: 'Лендинг',
-    clientPhone: '+7 921 • • • 39 89',
+    clientPhone: ['+7 921 • • • 39 89'],
     city: ['Екатеринбург', 'Березовский', 'Верхняя Пышма', 'Арамиль'],
-    link: 'https://thread.app/51484',
+    link: 'http://localhost:3000/threads',
   },
 ])
 </script>
@@ -217,8 +275,8 @@ const data = ref<StatisticsFullRow[]>([
       <AppCard>
         <template #top>
           <div class="threads__top">
-            <ThreadActions />
             <ThreadFilter />
+            <ThreadActions />
           </div>
         </template>
         <template #content>
@@ -241,6 +299,8 @@ const data = ref<StatisticsFullRow[]>([
 
 <style lang="scss">
 .threads {
+  $this: &;
+
   display: flex;
   flex-direction: column;
   gap: $space-4;
@@ -264,20 +324,60 @@ const data = ref<StatisticsFullRow[]>([
     padding: $space-4;
   }
 
-  &__city-cell {
+  &__extra-cell {
     display: flex;
-    gap: $space-1;
+    gap: $space-2;
     align-items: center;
   }
 
-  &__city-tooltip {
+  &__extra-tooltip {
     display: flex;
     flex-direction: column;
     gap: $space-05;
   }
 
-  &__city-tooltip-item {
+  &__extra-tooltip-item {
     white-space: nowrap;
+  }
+
+  &__date {
+    display: grid;
+    align-items: center;
+    min-height: 32px;
+
+    &-value,
+    &-actions {
+      grid-area: 1 / 1;
+      transition: $hover-duration-sm;
+    }
+
+    &-value {
+      .table__row-body:hover & {
+        opacity: 0;
+        transition: inherit;
+      }
+    }
+
+    &-actions {
+      pointer-events: none;
+
+      display: flex;
+      gap: $space-1;
+      align-items: center;
+
+      opacity: 0;
+
+      .table__row-body:hover & {
+        pointer-events: auto;
+        opacity: 1;
+        transition: inherit;
+      }
+    }
+
+    &-button {
+      cursor: pointer;
+      color: $color-neutral-950;
+    }
   }
 }
 </style>
