@@ -142,7 +142,7 @@ const getDeltaClasses = (baseClass: string, value: unknown) => {
   $this: &;
 
   &__table {
-    width: 100%;
+    min-width: 100%;
 
     &-cell {
       &-city {

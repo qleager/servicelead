@@ -211,13 +211,14 @@ const data = ref<StatisticsFullRow[]>([
       <div class="threads__title">
         Потоки
       </div>
-      <span>ThreadFilterByStatus</span>
+      <ThreadFilterByStatus />
     </div>
     <div class="threads__main">
       <AppCard>
         <template #top>
           <div class="threads__top">
-            <span>Thread Filter</span>
+            <ThreadActions />
+            <ThreadFilter />
           </div>
         </template>
         <template #content>
