@@ -7,7 +7,7 @@
       <div class="threads__title">
         Потоки
       </div>
-      <span>ThreadFilterByStatus</span>
+      <ThreadFilterByStatus />
     </div>
     <div class="threads__main">
       <AppCard>
