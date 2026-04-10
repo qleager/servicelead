@@ -27,6 +27,12 @@ export default defineNuxtConfig({
 
   css: ['./app/assets/scss/globals.scss'],
 
+  runtimeConfig: {
+    apiUrl: '',
+    apiAuthUrl: '',
+    apiServiceName: '',
+  },
+
   alias: {
     '@scss': fileURLToPath(new URL('./app/assets/scss', import.meta.url)),
     '@app': fileURLToPath(new URL('./app', import.meta.url)),
