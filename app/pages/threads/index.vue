@@ -19,7 +19,7 @@ type StatisticsFullRow = {
   link: string
 }
 
-const quickActions = [
+const quickRowActions = [
   { label: 'Редактировать', icon: 'edit' },
   { label: 'Дублировать', icon: 'Copy' },
   { label: 'Добавить в папку', icon: 'new-folder' },
@@ -31,18 +31,18 @@ const columns = ref<TableColumn<StatisticsFullRow>[]>([
     header: 'Дата',
     accessorKey: 'date',
     cell: ({ cell }) => h('div', {
-      class: 'threads__date',
+      class: 'threads__table-date-cell',
     }, [
       h('span', {
-        class: 'threads__date-value',
-      }, String(cell.getValue() ?? '')),
+        class: 'threads__table-date-cell-value',
+      }, cell.getValue() as string),
       h('div', {
-        class: 'threads__date-actions',
-      }, quickActions.map(action => h(AppTooltip, {
+        class: 'threads__table-date-cell-actions',
+      }, quickRowActions.map(action => h(AppTooltip, {
         content: action.label,
       }, {
         default: () => h(AppIcon, {
-          class: 'threads__date-button',
+          class: 'threads__table-date-cell-button',
           name: action.icon,
           size: 16,
         }),
@@ -64,7 +64,7 @@ const columns = ref<TableColumn<StatisticsFullRow>[]>([
       color: 'primary',
       size: 'sm',
       variant: 'soft',
-    }, () => String(cell.getValue() ?? '')),
+    }, () => cell.getValue()),
   },
   {
     header: 'Инструмент',
@@ -74,7 +74,7 @@ const columns = ref<TableColumn<StatisticsFullRow>[]>([
       color: 'neutral',
       size: 'sm',
       variant: 'soft',
-    }, () => String(cell.getValue() ?? '')),
+    }, () => cell.getValue()),
   },
   {
     header: 'Телефон клиента',
@@ -90,7 +90,7 @@ const columns = ref<TableColumn<StatisticsFullRow>[]>([
       }
 
       return h('div', {
-        class: 'threads__extra-cell',
+        class: 'threads__table-extra-cell',
       }, [
         h('span', primaryClientPhone),
         h(AppDropdown, {
@@ -102,9 +102,9 @@ const columns = ref<TableColumn<StatisticsFullRow>[]>([
             variant: 'soft',
           }, () => `+${extraCount}`),
           content: () => h('div', {
-            class: 'threads__extra-tooltip',
+            class: 'threads__table-extra-tooltip',
           }, extraClientPhones.map(clientPhone => h('div', {
-            class: 'threads__extra-tooltip-item',
+            class: 'threads__table-extra-tooltip-item',
           }, clientPhone))),
         }),
       ])
@@ -124,7 +124,7 @@ const columns = ref<TableColumn<StatisticsFullRow>[]>([
       }
 
       return h('div', {
-        class: 'threads__extra-cell',
+        class: 'threads__table-extra-cell',
       }, [
         h('span', primaryCity),
         h(AppDropdown, {
@@ -136,9 +136,9 @@ const columns = ref<TableColumn<StatisticsFullRow>[]>([
             variant: 'soft',
           }, () => `+${extraCount}`),
           content: () => h('div', {
-            class: 'threads__extra-tooltip',
+            class: 'threads__table-extra-tooltip',
           }, extraCities.map(city => h('div', {
-            class: 'threads__extra-tooltip-item',
+            class: 'threads__table-extra-tooltip-item',
           }, city))),
         }),
       ])
@@ -147,15 +147,13 @@ const columns = ref<TableColumn<StatisticsFullRow>[]>([
   {
     header: 'Ссылка',
     accessorKey: 'link',
-    cell: ({ cell }) => cell.getValue()
-      ? h(AppButton, {
-          color: 'neutral',
-          icon: 'link',
-          size: 'xs',
-          to: String(cell.getValue()),
-          variant: 'link',
-        })
-      : null,
+    cell: ({ cell }) => h(AppButton, {
+      color: 'neutral',
+      icon: 'link',
+      size: 'xs',
+      to: String(cell.getValue()),
+      variant: 'link',
+    }),
   },
 ])
 
@@ -168,7 +166,7 @@ const data = ref<StatisticsFullRow[]>([
     tool: 'Авито',
     clientPhone: ['+7 947 • • • 83 45'],
     city: ['-'],
-    link: 'http://localhost:3000/threads',
+    link: 'http://localhost:3000/threads/1',
   },
   {
     date: '03.03.2026',
@@ -178,7 +176,7 @@ const data = ref<StatisticsFullRow[]>([
     tool: 'Лендинг',
     clientPhone: ['+7 921 • • • 39 89'],
     city: ['Москва', 'Жуковский'],
-    link: 'http://localhost:3000/threads',
+    link: 'http://localhost:3000/threads/1',
   },
   {
     date: '03.03.2026',
@@ -188,7 +186,7 @@ const data = ref<StatisticsFullRow[]>([
     tool: 'Авито',
     clientPhone: ['+7 947 • • • 83 45'],
     city: ['-'],
-    link: 'http://localhost:3000/threads',
+    link: 'http://localhost:3000/threads/1',
   },
   {
     date: '03.03.2026',
@@ -198,7 +196,7 @@ const data = ref<StatisticsFullRow[]>([
     tool: 'Авито',
     clientPhone: ['+7 921 • • • 39 89'],
     city: ['Самара', 'Тольятти', 'Сызрань', 'Новокуйбышевск'],
-    link: 'http://localhost:3000/threads',
+    link: 'http://localhost:3000/threads/1',
   },
   {
     date: '03.03.2026',
@@ -208,7 +206,7 @@ const data = ref<StatisticsFullRow[]>([
     tool: 'Лендинг',
     clientPhone: ['+7 931 • • • 67 38', '+7 931 • • • 63 22'],
     city: ['Владивосток'],
-    link: 'http://localhost:3000/threads',
+    link: 'http://localhost:3000/threads/1',
   },
   {
     date: '03.03.2026',
@@ -218,7 +216,7 @@ const data = ref<StatisticsFullRow[]>([
     tool: 'Tilda Webhook',
     clientPhone: ['+7 946 • • • 88 67'],
     city: ['Владивосток', 'Артем'],
-    link: 'http://localhost:3000/threads',
+    link: 'http://localhost:3000/threads/1',
   },
   {
     date: '03.03.2026',
@@ -228,7 +226,7 @@ const data = ref<StatisticsFullRow[]>([
     tool: 'Telegram бот',
     clientPhone: ['-'],
     city: ['Москва'],
-    link: 'http://localhost:3000/threads',
+    link: 'http://localhost:3000/threads/1',
   },
   {
     date: '03.03.2026',
@@ -238,7 +236,7 @@ const data = ref<StatisticsFullRow[]>([
     tool: 'Авито',
     clientPhone: ['+7 921 • • • 39 89'],
     city: ['Екатеринбург'],
-    link: 'http://localhost:3000/threads',
+    link: 'http://localhost:3000/threads/1',
   },
   {
     date: '03.03.2026',
@@ -248,7 +246,7 @@ const data = ref<StatisticsFullRow[]>([
     tool: 'Лендинг',
     clientPhone: ['+7 947 • • • 83 45'],
     city: ['Самара', 'Тольятти'],
-    link: 'http://localhost:3000/threads',
+    link: 'http://localhost:3000/threads/1',
   },
   {
     date: '03.03.2026',
@@ -258,7 +256,7 @@ const data = ref<StatisticsFullRow[]>([
     tool: 'Лендинг',
     clientPhone: ['+7 921 • • • 39 89'],
     city: ['Екатеринбург', 'Березовский', 'Верхняя Пышма', 'Арамиль'],
-    link: 'http://localhost:3000/threads',
+    link: 'http://localhost:3000/threads/1',
   },
 ])
 </script>
@@ -281,7 +279,7 @@ const data = ref<StatisticsFullRow[]>([
         </template>
         <template #content>
           <AppTable
-            class="statistics-full__table"
+            class="threads__table"
             :columns
             :data
           />
@@ -324,59 +322,63 @@ const data = ref<StatisticsFullRow[]>([
     padding: $space-4;
   }
 
-  &__extra-cell {
-    display: flex;
-    gap: $space-2;
-    align-items: center;
-  }
+  &__table {
+    min-width: 100%;
 
-  &__extra-tooltip {
-    display: flex;
-    flex-direction: column;
-    gap: $space-05;
-  }
-
-  &__extra-tooltip-item {
-    white-space: nowrap;
-  }
-
-  &__date {
-    display: grid;
-    align-items: center;
-    min-height: 32px;
-
-    &-value,
-    &-actions {
-      grid-area: 1 / 1;
-      transition: $hover-duration-sm;
-    }
-
-    &-value {
-      .table__row-body:hover & {
-        opacity: 0;
-        transition: inherit;
-      }
-    }
-
-    &-actions {
-      pointer-events: none;
-
+    &-extra-cell {
       display: flex;
-      gap: $space-1;
+      gap: $space-2;
       align-items: center;
+    }
 
-      opacity: 0;
+    &-extra-tooltip {
+      display: flex;
+      flex-direction: column;
+      gap: $space-05;
 
-      .table__row-body:hover & {
-        pointer-events: auto;
-        opacity: 1;
-        transition: inherit;
+      &-item {
+        white-space: nowrap;
       }
     }
 
-    &-button {
-      cursor: pointer;
-      color: $color-neutral-950;
+    &-date-cell {
+      display: grid;
+      align-items: center;
+      min-height: 32px;
+
+      &-value,
+      &-actions {
+        grid-area: 1 / 1;
+        transition: $hover-duration-sm;
+      }
+
+      &-value {
+        .table__row-body:hover & {
+          opacity: 0;
+          transition: inherit;
+        }
+      }
+
+      &-actions {
+        pointer-events: none;
+
+        display: flex;
+        gap: $space-1;
+        align-items: center;
+
+        opacity: 0;
+
+        .table__row-body:hover & {
+          pointer-events: auto;
+          opacity: 1;
+          transition: inherit;
+        }
+      }
+
+      &-button {
+        cursor: pointer;
+        color: $color-neutral-950;
+      }
     }
   }
 }
