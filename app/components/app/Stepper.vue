@@ -12,6 +12,7 @@ type Model = Item['value']
 interface Item {
   disabled?: boolean
   label?: string
+  disabled?: boolean
   value?: string | number // для доступа к слоту
 }
 
