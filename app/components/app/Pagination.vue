@@ -1,11 +1,4 @@
 <script lang="ts" setup>
-import type { SelectOption } from './select/Select.vue'
-
-type Slots = Record<string, never>
-
-type PageItem = number | 'ellipsis'
-type ItemsPerPage = 10 | 30 | 80 | 100
-
 interface Props {
   counter?: boolean
   itemsPerPage?: ItemsPerPage
@@ -19,81 +12,71 @@ interface Emits {
 
 type Model = number
 
-const DEFAULT_PAGE = 1
-const DEFAULT_ITEMS_PER_PAGE: ItemsPerPage = 10
-const ELLIPSIS: PageItem = 'ellipsis'
+type PageItem = number | 'ellipsis'
+type ItemsPerPage = 10 | 30 | 80 | 100
 
 const props = withDefaults(defineProps<Props>(), {
   total: 0,
-  itemsPerPage: DEFAULT_ITEMS_PER_PAGE,
-  counter: false,
+  itemsPerPage: 10,
   showEdges: true,
 })
 
 const emits = defineEmits<Emits>()
 
-const model = defineModel<Model>({ default: DEFAULT_PAGE })
+const model = defineModel<Model>({ default: 1 })
 
-defineSlots<Slots>()
-
-const itemsPerPageOptions = computed<SelectOption[]>(() => [
-  { label: 'Показывать 10 строк', value: 10 },
-  { label: 'Показывать 30 строк', value: 30 },
-  { label: 'Показывать 80 строк', value: 80 },
-  { label: 'Показывать 100 строк', value: 100 },
-])
+const itemsPerPageOptions = [
+  { label: 'Показывать 10', value: 10 },
+  { label: 'Показывать 30', value: 30 },
+  { label: 'Показывать 80', value: 80 },
+  { label: 'Показывать 100', value: 100 },
+]
 
 const totalPages = computed(() => {
   const perPage = normalizeItemsPerPage(props.itemsPerPage)
 
-  return Math.max(DEFAULT_PAGE, Math.ceil(props.total / perPage))
+  return Math.max(1, Math.ceil(props.total / perPage))
 })
-
-const currentPage = computed(() => clampPage(model.value))
 
 const counterModel = computed<ItemsPerPage>({
   get: () => normalizeItemsPerPage(props.itemsPerPage),
   set: value => onItemsPerPageUpdate(value),
 })
 
-const isPreviousButtonVisible = computed(() => currentPage.value > DEFAULT_PAGE)
-
-const isNextButtonVisible = computed(() => currentPage.value < totalPages.value)
-
 const pageItems = computed<PageItem[]>(() => {
   if (totalPages.value <= 1) {
-    return [DEFAULT_PAGE]
+    return [1]
   }
 
   if (!props.showEdges) {
-    return getRange(DEFAULT_PAGE, totalPages.value)
+    return getRange(1, totalPages.value)
   }
 
   const pages = new Set<number>([
-    DEFAULT_PAGE,
+    1,
     totalPages.value,
-    currentPage.value - 1,
-    currentPage.value,
-    currentPage.value + 1,
+    model.value - 1,
+    model.value,
+    model.value + 1,
   ])
 
-  if (currentPage.value <= 2) {
+  if (model.value <= 2) {
     pages.add(3)
   }
 
-  if (currentPage.value >= totalPages.value - 1) {
+  if (model.value >= totalPages.value - 1) {
     pages.add(totalPages.value - 2)
   }
 
   const normalized = [...pages]
-    .filter(page => page >= DEFAULT_PAGE && page <= totalPages.value)
+    .filter(page => page >= 1 && page <= totalPages.value)
     .sort((left, right) => left - right)
 
   return normalized.reduce<PageItem[]>((result, page, index) => {
     const previousPage = normalized[index - 1]
 
     if (previousPage && page - previousPage > 1) {
-      result.push(ELLIPSIS)
+      result.push('ellipsis')
     }
 
     result.push(page)
@@ -111,11 +94,7 @@ const normalizeItemsPerPage = (value: number): ItemsPerPage => {
     return value as ItemsPerPage
   }
 
-  return DEFAULT_ITEMS_PER_PAGE
-}
-
-const clampPage = (value: number) => {
-  return Math.min(Math.max(value || DEFAULT_PAGE, DEFAULT_PAGE), totalPages.value)
+  return 10
 }
 
 const isPageItemNumber = (item: PageItem): item is number => {
@@ -123,26 +102,14 @@ const isPageItemNumber = (item: PageItem): item is number => {
 }
 
 const isPageCurrent = (page: number) => {
-  return page === currentPage.value
+  return page === model.value
 }
-
-const syncModel = () => {
-  const page = clampPage(model.value)
-
-  if (model.value !== page) {
-    model.value = page
-  }
-}
-
-watch([() => props.total, () => props.itemsPerPage], () => {
-  syncModel()
-}, { immediate: true })
 
 const onItemsPerPageUpdate = (value: number) => {
   const itemsPerPage = normalizeItemsPerPage(value)
 
   emits('update:itemsPerPage', itemsPerPage)
-  model.value = DEFAULT_PAGE
+  model.value = 1
 }
 
 const onPageClick = (page: number) => {
@@ -152,18 +119,17 @@ const onPageClick = (page: number) => {
 }
 
 const onPreviousClick = () => {
-  model.value = currentPage.value - 1
+  model.value = model.value - 1
 }
 
 const onNextClick = () => {
-  model.value = currentPage.value + 1
+  model.value = model.value + 1
 }
 
 export type {
   Props as PaginationProps,
   Emits as PaginationEmits,
   Model as PaginationModel,
-  Slots as PaginationSlots,
 }
 </script>
 
@@ -173,7 +139,7 @@ export type {
       v-if="counter"
       v-model="counterModel"
       :items="itemsPerPageOptions"
-      placeholder="Показывать 10 строк"
+      placeholder="Показывать 10"
       size="xs"
     >
       <template #value="{ model: selectedItemsPerPage }">
@@ -185,10 +151,10 @@ export type {
 
     <div class="pagination__list">
       <AppButton
-        v-if="isPreviousButtonVisible"
         aria-label="Предыдущая страница"
         class="pagination__control pagination__control-arrow"
         color="neutral"
+        :disabled="model <= 1"
         icon="arrow_left"
         rounded
         size="xs"
@@ -223,10 +189,10 @@ export type {
       </template>
 
       <AppButton
-        v-if="isNextButtonVisible"
         aria-label="Следующая страница"
         class="pagination__control pagination__control-arrow"
         color="neutral"
+        :disabled="model >= totalPages"
         icon="arrow_right"
         rounded
         size="xs"

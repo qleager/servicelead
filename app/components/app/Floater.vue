@@ -200,7 +200,7 @@ export type { Props as FloaterProps, Slots as FloaterSlots, Model as FloaterMode
   }
 
   &__content {
-    z-index: 3;
+    z-index: 1;
 
     // Защита от выпадения конетента слота
     display: grid;
