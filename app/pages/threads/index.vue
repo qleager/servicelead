@@ -3,7 +3,6 @@ import { h } from 'vue'
 import type { TableColumn } from '~/components/app/Table.vue'
 
 const AppButton = resolveComponent('AppButton')
-const AppIcon = resolveComponent('AppIcon')
 const AppDropdown = resolveComponent('AppDropdown')
 const AppTag = resolveComponent('AppTag')
 const AppTooltip = resolveComponent('AppTooltip')
@@ -35,16 +34,18 @@ const columns = ref<TableColumn<StatisticsFullRow>[]>([
     }, [
       h('span', {
         class: 'threads__table-date-cell-value',
-      }, cell.getValue() as string),
+      }, cell.getValue()),
       h('div', {
         class: 'threads__table-date-cell-actions',
       }, quickRowActions.map(action => h(AppTooltip, {
         content: action.label,
       }, {
-        default: () => h(AppIcon, {
+        default: () => h(AppButton, {
           class: 'threads__table-date-cell-button',
-          name: action.icon,
-          size: 16,
+          icon: action.icon,
+          size: 'xs',
+          variant: 'link',
+          color: 'neutral',
         }),
       }))),
     ]),
@@ -80,7 +81,7 @@ const columns = ref<TableColumn<StatisticsFullRow>[]>([
     header: 'Телефон клиента',
     accessorKey: 'clientPhone',
     cell: ({ cell }) => {
-      const clientPhones = Array.isArray(cell.getValue()) ? cell.getValue() : []
+      const clientPhones = cell.getValue<string[]>()
       const primaryClientPhone = clientPhones[0] ?? '-'
       const extraClientPhones = clientPhones.slice(1)
       const extraCount = extraClientPhones.length
@@ -114,7 +115,7 @@ const columns = ref<TableColumn<StatisticsFullRow>[]>([
     header: 'Город',
     accessorKey: 'city',
     cell: ({ cell }) => {
-      const cities = Array.isArray(cell.getValue()) ? cell.getValue() : []
+      const cities = cell.getValue<string[]>()
       const primaryCity = cities[0] ?? '-'
       const extraCities = cities.slice(1)
       const extraCount = extraCities.length
@@ -148,9 +149,10 @@ const columns = ref<TableColumn<StatisticsFullRow>[]>([
     header: 'Ссылка',
     accessorKey: 'link',
     cell: ({ cell }) => h(AppButton, {
+      class: 'threads__table-last-cell',
       color: 'neutral',
       icon: 'link',
-      size: 'xs',
+      size: 'md',
       to: String(cell.getValue()),
       variant: 'link',
     }),
@@ -374,11 +376,10 @@ const data = ref<StatisticsFullRow[]>([
           transition: inherit;
         }
       }
+    }
 
-      &-button {
-        cursor: pointer;
-        color: $color-neutral-950;
-      }
+    &-last-cell {
+      margin-block: -$space-6;
     }
   }
 }
