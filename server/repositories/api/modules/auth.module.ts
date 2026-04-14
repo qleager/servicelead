@@ -1,13 +1,133 @@
 import FetchFactory from '@shared/repository/factory'
 import type { Response } from '@shared/types/api'
 import type { FetchOptions } from '@shared/types/repository'
-import type { AuthCodeDto, AuthType, TokenPair } from '~~/server/types/api/auth'
+import type { AuthCodeDto, AuthType, AuthValueDto, RegisteredUser, TokenAuthValueDto, TokenDto, TokenPair, TokenPasswordDto, UserIdTokenDto } from '~~/server/types/api/auth'
 
 class AuthModule extends FetchFactory {
   private RESOURCE = '/auth'
 
   async authorize(type: AuthType, fetchOptions?: FetchOptions<AuthCodeDto>) {
     return this.call<Response<TokenPair>>(
+      `${this.RESOURCE}/${type}`,
+      {
+        method: 'POST',
+        ...fetchOptions,
+      },
+    )
+  }
+
+  async registerUser(type: AuthType, fetchOptions?: FetchOptions<AuthCodeDto>) {
+    return this.call<Response<RegisteredUser>>(
+      `${this.RESOURCE}/${type}`,
+      {
+        method: 'POST',
+        ...fetchOptions,
+      },
+    )
+  }
+
+  async resetPassword(type: AuthType, fetchOptions?: FetchOptions<UserIdTokenDto>) {
+    return this.call<{ status: 'ok' }>(
+      `${this.RESOURCE}/${type}`,
+      {
+        method: 'POST',
+        ...fetchOptions,
+      },
+    )
+  }
+
+  async resetPasswordRequest(type: AuthType, fetchOptions?: FetchOptions<AuthValueDto>) {
+    return this.call<{ status: 'ok' }>(
+      `${this.RESOURCE}/${type}`,
+      {
+        method: 'POST',
+        ...fetchOptions,
+      },
+    )
+  }
+
+  async resetPasswordConfirmation(type: AuthType, fetchOptions?: FetchOptions<TokenDto>) {
+    return this.call<{ status: 'ok' }>(
+      `${this.RESOURCE}/${type}`,
+      {
+        method: 'POST',
+        ...fetchOptions,
+      },
+    )
+  }
+
+  async changePassword(type: AuthType, fetchOptions?: FetchOptions<TokenPasswordDto>) {
+    return this.call<Response<TokenPair>>(
+      `${this.RESOURCE}/${type}`,
+      {
+        method: 'POST',
+        ...fetchOptions,
+      },
+    )
+  }
+
+  async changePasswordRequest(type: AuthType, fetchOptions?: FetchOptions<AuthValueDto>) {
+    return this.call<{ status: 'ok' }>(
+      `${this.RESOURCE}/${type}`,
+      {
+        method: 'POST',
+        ...fetchOptions,
+      },
+    )
+  }
+
+  async changePasswordConfirmation(type: AuthType, fetchOptions?: FetchOptions<TokenPasswordDto>) {
+    return this.call<{ status: 'ok' }>(
+      `${this.RESOURCE}/${type}`,
+      {
+        method: 'POST',
+        ...fetchOptions,
+      },
+    )
+  }
+
+  async addAuthValue(type: AuthType, fetchOptions?: FetchOptions<TokenAuthValueDto>) {
+    return this.call<{ status: 'ok' }>(
+      `${this.RESOURCE}/${type}`,
+      {
+        method: 'POST',
+        ...fetchOptions,
+      },
+    )
+  }
+
+  async verifyToken(type: AuthType, fetchOptions?: FetchOptions<TokenDto>) {
+    return this.call<{ status: 'ok' }>(
+      `${this.RESOURCE}/${type}`,
+      {
+        method: 'POST',
+        ...fetchOptions,
+      },
+    )
+  }
+
+  async getUserLogin(type: AuthType, fetchOptions?: FetchOptions<TokenDto>) {
+    return this.call<{ status: 'ok' }>(
+      `${this.RESOURCE}/${type}`,
+      {
+        method: 'POST',
+        ...fetchOptions,
+      },
+    )
+  }
+
+  async getUserLogins(type: AuthType, fetchOptions?: FetchOptions<TokenDto>) {
+    return this.call<{ status: 'ok' }>(
+      `${this.RESOURCE}/${type}`,
+      {
+        method: 'POST',
+        ...fetchOptions,
+      },
+    )
+  }
+
+  async closeSession(type: AuthType, fetchOptions?: FetchOptions<UserIdTokenDto>) {
+    return this.call<{ status: 'ok' }>(
       `${this.RESOURCE}/${type}`,
       {
         method: 'POST',
