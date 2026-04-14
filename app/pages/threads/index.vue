@@ -34,7 +34,7 @@ const columns = ref<TableColumn<StatisticsFullRow>[]>([
     }, [
       h('span', {
         class: 'threads__table-date-cell-value',
-      }, cell.getValue()),
+      }, cell.getValue<string>()),
       h('div', {
         class: 'threads__table-date-cell-actions',
       }, quickRowActions.map(action => h(AppTooltip, {
