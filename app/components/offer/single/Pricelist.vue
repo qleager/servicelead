@@ -119,14 +119,12 @@ const columns = ref<TableColumn<OfferSinglePricelistRow>[]>([
           rounded
         />
       </template>
-      <template #main>
-        <div class="offer-single-pricelist__table-wrap">
-          <AppTable
-            class="offer-single-pricelist__table"
-            :columns="columns"
-            :data="data"
-          />
-        </div>
+      <template #content>
+        <AppTable
+          class="offer-single-pricelist__table"
+          :columns="columns"
+          :data="data"
+        />
       </template>
       <template #sidebar>
         <HelpWidget class="offer-single-pricelist__help" />
@@ -151,14 +149,6 @@ const columns = ref<TableColumn<OfferSinglePricelistRow>[]>([
 
   &__table {
     width: 100%;
-
-    &-wrap {
-      flex: 1;
-    }
-  }
-
-  &__help {
-    max-width: 290px;
   }
 
   &__align-right {

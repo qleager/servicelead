@@ -54,8 +54,8 @@
           rounded
         />
       </template>
-      <template #main>
-        <div class="offer-single-pricelist__table-wrap">
+      <template #content>
+        <div class="offer-single-pricelist__table">
           table
         </div>
       </template>
@@ -86,13 +86,7 @@
   }
 
   &__table {
-    &-wrap {
-      flex: 1;
-    }
-  }
-
-  &__help {
-    max-width: 290px;
+    width: 100%;
   }
 }
 </style>
