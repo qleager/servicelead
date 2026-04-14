@@ -8,7 +8,7 @@ class AuthModule extends FetchFactory {
 
   async authorize(type: AuthType, fetchOptions?: FetchOptions<AuthCodeDto>) {
     return this.call<Response<TokenPair>>(
-      `${this.RESOURCE}/${type}`,
+      `${this.RESOURCE}/authorize/${type}`,
       {
         method: 'POST',
         ...fetchOptions,
@@ -18,7 +18,7 @@ class AuthModule extends FetchFactory {
 
   async registerUser(type: AuthType, fetchOptions?: FetchOptions<AuthCodeDto>) {
     return this.call<Response<RegisteredUser>>(
-      `${this.RESOURCE}/${type}`,
+      `${this.RESOURCE}/registerUser/${type}`,
       {
         method: 'POST',
         ...fetchOptions,
@@ -28,7 +28,7 @@ class AuthModule extends FetchFactory {
 
   async resetPassword(type: AuthType, fetchOptions?: FetchOptions<UserIdTokenDto>) {
     return this.call<{ status: 'ok' }>(
-      `${this.RESOURCE}/${type}`,
+      `${this.RESOURCE}/resetPassword/${type}`,
       {
         method: 'POST',
         ...fetchOptions,
@@ -38,7 +38,7 @@ class AuthModule extends FetchFactory {
 
   async resetPasswordRequest(type: AuthType, fetchOptions?: FetchOptions<AuthValueDto>) {
     return this.call<{ status: 'ok' }>(
-      `${this.RESOURCE}/${type}`,
+      `${this.RESOURCE}/resetPasswordRequest/${type}`,
       {
         method: 'POST',
         ...fetchOptions,
@@ -48,7 +48,7 @@ class AuthModule extends FetchFactory {
 
   async resetPasswordConfirmation(type: AuthType, fetchOptions?: FetchOptions<TokenDto>) {
     return this.call<{ status: 'ok' }>(
-      `${this.RESOURCE}/${type}`,
+      `${this.RESOURCE}/resetPasswordConfirmation/${type}`,
       {
         method: 'POST',
         ...fetchOptions,
@@ -58,7 +58,7 @@ class AuthModule extends FetchFactory {
 
   async changePassword(type: AuthType, fetchOptions?: FetchOptions<TokenPasswordDto>) {
     return this.call<Response<TokenPair>>(
-      `${this.RESOURCE}/${type}`,
+      `${this.RESOURCE}/changePassword/${type}`,
       {
         method: 'POST',
         ...fetchOptions,
@@ -68,7 +68,7 @@ class AuthModule extends FetchFactory {
 
   async changePasswordRequest(type: AuthType, fetchOptions?: FetchOptions<AuthValueDto>) {
     return this.call<{ status: 'ok' }>(
-      `${this.RESOURCE}/${type}`,
+      `${this.RESOURCE}/changePasswordRequest/${type}`,
       {
         method: 'POST',
         ...fetchOptions,
@@ -78,7 +78,7 @@ class AuthModule extends FetchFactory {
 
   async changePasswordConfirmation(type: AuthType, fetchOptions?: FetchOptions<TokenPasswordDto>) {
     return this.call<{ status: 'ok' }>(
-      `${this.RESOURCE}/${type}`,
+      `${this.RESOURCE}/changePasswordConfirmation/${type}`,
       {
         method: 'POST',
         ...fetchOptions,
@@ -88,7 +88,7 @@ class AuthModule extends FetchFactory {
 
   async addAuthValue(type: AuthType, fetchOptions?: FetchOptions<TokenAuthValueDto>) {
     return this.call<{ status: 'ok' }>(
-      `${this.RESOURCE}/${type}`,
+      `${this.RESOURCE}/addAuthValue/${type}`,
       {
         method: 'POST',
         ...fetchOptions,
@@ -98,7 +98,7 @@ class AuthModule extends FetchFactory {
 
   async verifyToken(type: AuthType, fetchOptions?: FetchOptions<TokenDto>) {
     return this.call<{ status: 'ok' }>(
-      `${this.RESOURCE}/${type}`,
+      `${this.RESOURCE}/verifyToken/${type}`,
       {
         method: 'POST',
         ...fetchOptions,
@@ -108,7 +108,7 @@ class AuthModule extends FetchFactory {
 
   async getUserLogin(type: AuthType, fetchOptions?: FetchOptions<TokenDto>) {
     return this.call<{ status: 'ok' }>(
-      `${this.RESOURCE}/${type}`,
+      `${this.RESOURCE}/getUserLogin/${type}`,
       {
         method: 'POST',
         ...fetchOptions,
@@ -118,7 +118,7 @@ class AuthModule extends FetchFactory {
 
   async getUserLogins(type: AuthType, fetchOptions?: FetchOptions<TokenDto>) {
     return this.call<{ status: 'ok' }>(
-      `${this.RESOURCE}/${type}`,
+      `${this.RESOURCE}/getUserLogins/${type}`,
       {
         method: 'POST',
         ...fetchOptions,
@@ -128,7 +128,7 @@ class AuthModule extends FetchFactory {
 
   async closeSession(type: AuthType, fetchOptions?: FetchOptions<UserIdTokenDto>) {
     return this.call<{ status: 'ok' }>(
-      `${this.RESOURCE}/${type}`,
+      `${this.RESOURCE}/closeSession/${type}`,
       {
         method: 'POST',
         ...fetchOptions,
