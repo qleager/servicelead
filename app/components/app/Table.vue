@@ -16,10 +16,11 @@
   5. О sticky header и footer
   6. О том как запинить колонку с нужной стороны
   7. О cellBorder
+  8. О сортировке через enableSorting и sortingFn. А model:sorting отвечает за состояние
 -->
 <script lang="ts" setup generic="TData extends RowData">
-import type { Cell, Column, ColumnDef, Header, Row, RowData, Table } from '@tanstack/vue-table'
-import { FlexRender, getCoreRowModel, useVueTable } from '@tanstack/vue-table'
+import type { Cell, Column, ColumnDef, Header, Row, RowData, SortingState, Table, Updater } from '@tanstack/vue-table'
+import { FlexRender, getCoreRowModel, getSortedRowModel, useVueTable } from '@tanstack/vue-table'
 
 export interface TableProps<TData extends RowData = RowData> {
   cellBorder?: 'column' | 'column-row' | 'row'
@@ -32,6 +33,8 @@ export interface TableColumnPinningModel {
   left?: string[]
   right?: string[]
 }
+
+export type TableSortingModel = SortingState
 
 export type TableSlots<TData extends RowData = RowData> = {
   cell?: (props: TableCellSlotProps<TData>) => unknown
@@ -66,20 +69,33 @@ export interface TableFooterSlotProps<TData extends RowData = RowData> {
 const props = defineProps<TableProps<TData>>()
 
 const modelColumnPinning = defineModel<TableColumnPinningModel>('columnPinning')
+const modelSorting = defineModel<TableSortingModel>('sorting', { default: () => [] })
 
 const slots = defineSlots<TableSlots<TData>>()
+
+const updateSorting = (updater: Updater<SortingState>) => {
+  modelSorting.value = typeof updater === 'function'
+    ? updater(modelSorting.value)
+    : updater
+}
 
 const table = useVueTable({
   data: props.data,
   columns: props.columns,
   getCoreRowModel: getCoreRowModel(),
+  getSortedRowModel: getSortedRowModel(),
+  onSortingChange: updateSorting,
   defaultColumn: {
     minSize: 100,
     size: 100,
+    enableSorting: false,
   },
   state: {
     get columnPinning() {
       return modelColumnPinning.value
+    },
+    get sorting() {
+      return modelSorting.value
     },
   },
 })
@@ -139,7 +155,10 @@ const getHeadClasses = (head: Header<TData, unknown>) => {
     'table__head',
     `table__head-index-${index}`,
     stickyPosition ? `table__head-sticky-${stickyPosition}` : null,
-    { 'table__head-first-in-general-header': isGroupStartCell(index) },
+    {
+      'table__head-first-in-general-header': isGroupStartCell(index),
+      'table__head-sortable': head.column.getCanSort(),
+    },
   ]
 }
 
@@ -168,6 +187,19 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
     stickyPosition ? `table__foot-sticky-${stickyPosition}` : null,
     { 'table__foot-first-in-general-header': isGroupStartCell(index) },
   ]
+}
+
+const getSortingIndicatorIcon = (head: Header<TData, unknown>) => {
+  const sortingState = head.column.getIsSorted()
+
+  switch (sortingState) {
+    case 'asc':
+      return 'sort-asc'
+    case 'desc':
+      return 'sort-desc'
+    default:
+      return 'sort'
+  }
 }
 </script>
 
@@ -208,6 +240,15 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
                   />
                 </slot>
               </slot>
+              <AppButton
+                v-if="header.column.getCanSort()"
+                class="table__head-sorting-indicator"
+                color="neutral"
+                :icon="getSortingIndicatorIcon(header)"
+                size="xs"
+                variant="link"
+                @click="header.column.getToggleSortingHandler()?.($event)"
+              />
             </template>
           </div>
         </th>
@@ -362,6 +403,7 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
     $this: &;
     $sticky-left: $this + '-sticky-left';
     $sticky-right: $this + '-sticky-right';
+    $sortable: $this + '-sortable';
 
     @include label(regular, md);
 
@@ -413,6 +455,15 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
 
     &-content {
       padding: $space-2 $space-3;
+
+      #{$sortable} & {
+        display: flex;
+        align-items: center;
+      }
+    }
+
+    &-sorting-indicator {
+      margin: -$space-2 0;
     }
   }
 
