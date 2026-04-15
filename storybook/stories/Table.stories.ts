@@ -36,7 +36,7 @@ const totalByKey = (key: Exclude<keyof TableRow, 'day'>) => {
 const columns: TableColumn<TableRow>[] = [
   { accessorKey: 'day', header: 'День недели', footer: 'Итого' },
   { accessorKey: 'january', header: 'Январь', footer: totalByKey('january') },
-  { accessorKey: 'february', header: 'Февраль', footer: totalByKey('february') },
+  { accessorKey: 'february', header: 'Февраль', footer: totalByKey('february'), enableSorting: true },
   { accessorKey: 'march', header: 'Март', footer: totalByKey('march') },
   { accessorKey: 'april', header: 'Апрель', footer: totalByKey('april') },
   { accessorKey: 'may', header: 'Май', footer: totalByKey('may') },
@@ -65,8 +65,9 @@ export default {
       control: 'select',
       options: [false, true, 'header', 'footer'],
     },
-    verticalBorder: {
-      control: 'boolean',
+    cellBorder: {
+      control: 'select',
+      options: ['column', 'column-row', 'row'],
     },
     header: {
       control: 'boolean',
@@ -94,9 +95,8 @@ export default {
     columns,
     data,
     sticky: false,
-    verticalBorder: true,
     header: false,
-    cell: false,
+    cellBorder: 'row',
     footer: false,
   },
 } satisfies Meta<typeof AppTable>
