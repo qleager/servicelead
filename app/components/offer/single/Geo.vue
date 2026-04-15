@@ -239,8 +239,6 @@ const columns = ref<TableColumn<OfferSingleGeoRow>[]>([
             </div>
           </template>
         </AppTabs>
-      </div>
-      <div class="offer-single-geo__top-column">
         <AppInput
           class="offer-single-geo__search"
           icon="search"
@@ -249,15 +247,13 @@ const columns = ref<TableColumn<OfferSingleGeoRow>[]>([
           rounded
         />
       </div>
-    </div>
-    <div class="offer-single-geo__content">
-      <div class="offer-single-geo__table-wrap">
-        <AppTable
-          class="offer-single-geo__table"
-          :columns
-          :data
-        />
-      </div>
+    </template>
+    <template #content>
+      <AppTable
+        class="offer-single-geo__table"
+        :columns
+        :data
+      />
     </template>
     <template #sidebar>
       <HelpWidget class="offer-single-pricelist__help" />
@@ -271,11 +267,11 @@ const columns = ref<TableColumn<OfferSingleGeoRow>[]>([
 
   &__header {
     display: flex;
-    gap: $space-6;
+    gap: $space-4;
     align-items: center;
     justify-content: space-between;
 
-    &-title{
+    &-title {
       display: flex;
       gap: $space-6;
       align-items: center;
@@ -293,10 +289,6 @@ const columns = ref<TableColumn<OfferSingleGeoRow>[]>([
 
   &__table {
     width: 100%;
-
-    &-wrap {
-      flex: 1;
-    }
 
     &-header {
       &-city {
