@@ -126,7 +126,7 @@ const columns = ref<TableColumn<OfferSinglePricelistRow>[]>([
       />
     </template>
     <template #sidebar>
-      <HelpWidget class="offer-single-pricelist__help" />
+      <HelpWidget />
     </template>
   </OfferSinglePaneTemplate>
 </template>

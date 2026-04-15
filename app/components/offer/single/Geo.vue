@@ -256,7 +256,7 @@ const columns = ref<TableColumn<OfferSingleGeoRow>[]>([
       />
     </template>
     <template #sidebar>
-      <HelpWidget class="offer-single-pricelist__help" />
+      <HelpWidget />
     </template>
   </OfferSinglePaneTemplate>
 </template>
@@ -325,10 +325,6 @@ const columns = ref<TableColumn<OfferSingleGeoRow>[]>([
         }
       }
     }
-  }
-
-  &__help {
-    max-width: 290px;
   }
 
   &__tab {
