@@ -14,8 +14,3 @@ export type FetchOptions<B = undefined, Q = undefined>
     ) & (
       Q extends undefined ? { query?: Q } : { query: Q }
     )
-
-export interface Response<T> {
-  data: T
-  error: string | null
-}

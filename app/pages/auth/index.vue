@@ -2,6 +2,22 @@
 definePageMeta({
   layout: 'auth',
 })
+
+const { $api } = useNuxtApp()
+
+const onSubmit = async () => {
+  try {
+    await $api.auth.login({
+      body: {
+        email: '',
+        password: '',
+      },
+    })
+  }
+  catch (error) {
+    alert(error)
+  }
+}
 </script>
 
 <template>
@@ -60,6 +76,7 @@ definePageMeta({
     <AppButton
       class="auth-login__button"
       type="submit"
+      @click="onSubmit"
     >
       Войти
     </AppButton>

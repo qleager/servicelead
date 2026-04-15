@@ -1,4 +1,5 @@
-import AuthModule from '~/repository/api/modules/auth.module'
+import ExampleModule from '@app/repositories/api/example.module'
+import AuthBffModule from '@app/repositories/api/auth.bff.module'
 
 export default defineNuxtPlugin(() => {
   const event = useRequestEvent()
@@ -9,7 +10,11 @@ export default defineNuxtPlugin(() => {
   })
 
   const modules = {
-    auth: new AuthModule(apiFetcher),
+    /*
+     * Method layer for accessing the external API through BFF routes.
+     */
+    auth: new AuthBffModule(apiFetcher),
+    example: new ExampleModule(apiFetcher),
   }
 
   return {
