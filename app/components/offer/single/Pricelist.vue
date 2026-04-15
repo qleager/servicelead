@@ -89,12 +89,10 @@ const columns = ref<TableColumn<OfferSinglePricelistRow>[]>([
 </script>
 
 <template>
-  <div
-    class="offer-single-pricelist"
-  >
-    <OfferSinglePaneTemplate>
-      <template #header>
-        <div class="offer-single-pricelist__header">
+  <OfferSinglePaneTemplate class="offer-single-pricelist">
+    <template #header>
+      <div class="offer-single-pricelist__header">
+        <div class="offer-single-pricelist__header-title">
           <AppTitle
             icon="price"
             title="Прайс - лист"
@@ -118,19 +116,19 @@ const columns = ref<TableColumn<OfferSinglePricelistRow>[]>([
           reset
           rounded
         />
-      </template>
-      <template #content>
-        <AppTable
-          class="offer-single-pricelist__table"
-          :columns="columns"
-          :data="data"
-        />
-      </template>
-      <template #sidebar>
-        <HelpWidget class="offer-single-pricelist__help" />
-      </template>
-    </OfferSinglePaneTemplate>
-  </div>
+      </div>
+    </template>
+    <template #content>
+      <AppTable
+        class="offer-single-pricelist__table"
+        :columns="columns"
+        :data="data"
+      />
+    </template>
+    <template #sidebar>
+      <HelpWidget class="offer-single-pricelist__help" />
+    </template>
+  </OfferSinglePaneTemplate>
 </template>
 
 <style lang="scss">
@@ -141,6 +139,13 @@ const columns = ref<TableColumn<OfferSinglePricelistRow>[]>([
     display: flex;
     gap: $space-6;
     align-items: center;
+    justify-content: space-between;
+
+    &-title{
+      display: flex;
+      gap: $space-6;
+      align-items: center;
+    }
   }
 
   &__search {

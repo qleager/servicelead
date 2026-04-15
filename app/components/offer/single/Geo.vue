@@ -3,12 +3,12 @@
 </script>
 
 <template>
-  <div
+  <OfferSinglePaneTemplate
     class="offer-single-geo"
   >
-    <OfferSinglePaneTemplate>
-      <template #header>
-        <div class="offer-single-geo__header">
+    <template #header>
+      <div class="offer-single-geo__header">
+        <div class="offer-single-geo__header-title">
           <AppTitle
             icon="geo_24"
             title="Гео"
@@ -53,17 +53,17 @@
           reset
           rounded
         />
-      </template>
-      <template #content>
-        <div class="offer-single-pricelist__table">
-          table
-        </div>
-      </template>
-      <template #sidebar>
-        <HelpWidget class="offer-single-pricelist__help" />
-      </template>
-    </OfferSinglePaneTemplate>
-  </div>
+      </div>
+    </template>
+    <template #content>
+      <div class="offer-single-pricelist__table">
+        table
+      </div>
+    </template>
+    <template #sidebar>
+      <HelpWidget class="offer-single-pricelist__help" />
+    </template>
+  </OfferSinglePaneTemplate>
 </template>
 
 <style lang="scss">
@@ -74,6 +74,13 @@
     display: flex;
     gap: $space-6;
     align-items: center;
+    justify-content: space-between;
+
+    &-title{
+      display: flex;
+      gap: $space-6;
+      align-items: center;
+    }
   }
 
   &__search {
