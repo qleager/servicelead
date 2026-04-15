@@ -27,7 +27,7 @@ const AppTooltip = resolveComponent('AppTooltip')
 
 const rawData = ref<StatisticsFullRow[]>([
   {
-    date: '03.04.2026',
+    date: '03.01.2025',
     trafficForms: 4,
     trafficCalls: 4,
     trafficTotal: 20,
@@ -261,14 +261,17 @@ const columns = ref<TableColumn<StatisticsFullRow>[]>([
       {
         accessorKey: 'trafficForms',
         header: 'Формы',
+        enableSorting: true,
       },
       {
         accessorKey: 'trafficCalls',
         header: 'Звонки',
+        enableSorting: true,
       },
       {
         accessorKey: 'trafficTotal',
         header: 'Всего',
+        enableSorting: true,
       },
     ],
   },
@@ -279,14 +282,17 @@ const columns = ref<TableColumn<StatisticsFullRow>[]>([
       {
         accessorKey: 'leadForms',
         header: 'Формы',
+        enableSorting: true,
       },
       {
         accessorKey: 'leadCalls',
         header: 'Звонки',
+        enableSorting: true,
       },
       {
         accessorKey: 'leadTotal',
         header: 'Всего',
+        enableSorting: true,
       },
     ],
   },
@@ -297,17 +303,21 @@ const columns = ref<TableColumn<StatisticsFullRow>[]>([
       {
         accessorKey: 'conversionForms',
         header: 'Формы',
+        enableSorting: true,
       },
       {
         accessorKey: 'conversionCalls',
         header: 'Звонки',
+        enableSorting: true,
       },
       {
         accessorKey: 'conversionTotal',
         header: 'Всего',
+        enableSorting: true,
       },
       {
         accessorKey: 'conversionApproved',
+        enableSorting: true,
         header: () => (
           h(AppTooltip, {
             content: 'Подтверждено',
@@ -322,6 +332,7 @@ const columns = ref<TableColumn<StatisticsFullRow>[]>([
       },
       {
         accessorKey: 'conversionHeld',
+        enableSorting: true,
         header: () => (
           h(AppTooltip, {
             content: 'Холд',
@@ -336,6 +347,7 @@ const columns = ref<TableColumn<StatisticsFullRow>[]>([
       },
       {
         accessorKey: 'conversionCanceled',
+        enableSorting: true,
         header: () => (
           h(AppTooltip, {
             content: 'Треш',
@@ -358,16 +370,19 @@ const columns = ref<TableColumn<StatisticsFullRow>[]>([
       {
         header: 'Всего',
         accessorKey: 'financeTotal',
+        enableSorting: true,
         cell: ({ cell }) => formatCurrency(cell.getValue()),
       },
       {
         header: 'Выплачено',
         accessorKey: 'financePaid',
+        enableSorting: true,
         cell: ({ cell }) => formatCurrency(cell.getValue()),
       },
       {
         header: 'Прогноз',
         accessorKey: 'financeForecast',
+        enableSorting: true,
         cell: ({ cell }) => formatCurrency(cell.getValue()),
       },
     ],
