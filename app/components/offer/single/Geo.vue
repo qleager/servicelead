@@ -253,6 +253,7 @@ const columns = ref<TableColumn<OfferSingleGeoRow>[]>([
     <div class="offer-single-geo__content">
       <div class="offer-single-geo__table-wrap">
         <AppTable
+          cell-border="row"
           class="offer-single-geo__table"
           :columns
           :data

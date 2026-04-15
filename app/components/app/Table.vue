@@ -478,6 +478,14 @@ const getSortingIndicatorIcon = (head: Header<TData, unknown>) => {
     white-space: nowrap;
     vertical-align: middle;
 
+    @include is($border-column-row) {
+      border-top: 1px solid $color-neutral-150;
+    }
+
+    @include is($border-row) {
+      border-top: 1px solid $color-neutral-150;
+    }
+
     &#{$sticky-left} {
       position: sticky;
       left: 0;
@@ -508,10 +516,6 @@ const getSortingIndicatorIcon = (head: Header<TData, unknown>) => {
           border-left: unset;
         }
       }
-    }
-
-    @include is($border-column-row) {
-      border-top: 1px solid $color-neutral-150;
     }
 
     &-content {
