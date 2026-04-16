@@ -198,6 +198,7 @@ export type { Props as RadioGroupProps, Model as RadioGroupModel, Slots as Radio
 
       &#{$item-hover} {
         background-color: $color-neutral-50;
+        transition: $hover-duration-sm;
       }
 
       @include is($disabled) {
@@ -224,6 +225,7 @@ export type { Props as RadioGroupProps, Model as RadioGroupModel, Slots as Radio
 
       &#{$item-hover} {
         background-color: $color-neutral-50;
+        transition: $hover-duration-sm;
       }
 
       @include is($disabled) {
@@ -282,17 +284,21 @@ export type { Props as RadioGroupProps, Model as RadioGroupModel, Slots as Radio
 
       width: 20px;
       height: 20px;
+      border: 3px solid $color-primary-50;
       border-radius: $radius-10;
 
       background-color: $color-primary-50;
 
       @include is($item-hover) {
+        border-color: $color-primary-100;
         background-color: $color-primary-100;
+        transition: $hover-duration-sm;
       }
 
       @include is($item-active) {
         border: 3px solid $color-primary-100;
         background-color: $color-primary;
+        transition: $active-duration-sm;
       }
 
       @include is($item-hover + $item-active) {
