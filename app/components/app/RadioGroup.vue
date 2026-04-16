@@ -252,6 +252,12 @@ export type { Props as RadioGroupProps, Model as RadioGroupModel, Slots as Radio
       gap: $space-2;
     }
 
+    &-text {
+      display: flex;
+      flex-direction: column;
+      gap: $space-05;
+    }
+
     &-label {
       text-align: start;
 
@@ -282,7 +288,7 @@ export type { Props as RadioGroupProps, Model as RadioGroupModel, Slots as Radio
       align-items: center;
       justify-content: center;
 
-      width: 20px;
+      min-width: 20px;
       height: 20px;
       border: 3px solid $color-primary-50;
       border-radius: $radius-10;
