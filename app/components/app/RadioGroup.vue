@@ -8,7 +8,7 @@ interface Props {
   indicator?: 'start' | 'end' | 'hidden'
   items: Item[] | string[]
   size?: Subset<Size, 'sm' | 'md'>
-  variant?: 'card' | 'pill' | 'list' // pill в дизе как tag
+  variant?: 'card' | 'pill' | 'list'
 }
 
 type Model = Item['value']
@@ -19,7 +19,8 @@ interface Slots {
   label?: (props: { item: Item }) => VNodeChild
 }
 
-interface Item extends Record<string, any> {
+interface Item {
+  [key: string]: unknown
   description?: string
   disabled?: boolean
   icon?: IconProps['name']
@@ -42,46 +43,59 @@ const classname = computed(() => [
   `radio-group-variant-${props.variant}`,
   `radio-group-size-${props.size}`,
   `radio-group-indicator-${props.indicator}`,
+  { 'radio-group-disabled': props.disabled },
 ])
 
-// нормалайзер
 const items = computed(() => {
   return props.items.map((item) => {
     if (typeof item === 'string') {
-      return { label: item, value: item } // и label и value = item
+      return { label: item, value: item }
     }
 
-    // никаких проверок, даже пустой объект пусть возвращает
     return item
   })
 })
+
+const iconSize = computed(() => {
+  switch (props.size) {
+    case 'sm': {
+      return 20
+    }
+    case 'md': {
+      return 24
+    }
+    default: {
+      const _exhaustiveCheck: never = props.size
+      return _exhaustiveCheck
+    }
+  }
+})
+
+export type { Props as RadioGroupProps, Model as RadioGroupModel, Slots as RadioGroupSlots, Item as RadioGroupItem }
 </script>
 
 <template>
-  <div
-    v-for="(item, index) in items"
-    :key="item.value ?? item.label ?? index"
-    :class="classname"
-  >
-    <!-- // каждый айтем обязательно кнопка -->
-    <!-- // рядом input для submit совместимости  -->
+  <div :class="classname">
     <button
-      class="radio-group__item"
+      v-for="(item, index) in items"
+      :key="item.value ?? item.label ?? index"
       :class="[
         'radio-group__item',
-        { 'stepper__item-active': model === item.value },
+        { 'radio-group__item-active': model === item.value },
       ]"
+      :disabled
       @click="model = item.value"
     >
-      <div class="radio-group__indicator">
-        <!--
-        Вариант
-        <div
-          v-if="model === item.value"
-          class="radio-group__indicator-fill"
-        /> -->
-      </div>
-      <div class="radio-group__info">
+      <input
+        v-model="model"
+        class="radio-group__field"
+        :disabled
+        type="radio"
+        :value="item.value"
+        :id="item.value ?? item.label ?? String(index)"
+      >
+      <div class="radio-group__item-indicator" />
+      <div class="radio-group__item-info">
         <template v-if="$slots.icon || item.icon">
           <slot
             :item
@@ -89,15 +103,19 @@ const items = computed(() => {
           >
             <AppIcon
               v-if="item.icon"
-              class="radio-group__icon"
+              class="radio-group__item-icon"
               :name="item.icon"
+              :size="iconSize"
             />
           </slot>
         </template>
-        <div class="radio-group__text">
+        <div
+          v-if="($slots.label || item.label) || ($slots.description || item.description)"
+          class="radio-group__item-text"
+        >
           <div
             v-if="$slots.label || item.label"
-            class="radio-group__text-label"
+            class="radio-group__item-label"
           >
             <slot
               :item
@@ -108,7 +126,7 @@ const items = computed(() => {
           </div>
           <div
             v-if="$slots.description || item.description"
-            class="radio-group__text-description"
+            class="radio-group__item-description"
           >
             <slot
               :item
@@ -120,22 +138,13 @@ const items = computed(() => {
         </div>
       </div>
     </button>
-    <input
-      v-model="model"
-      class="radio-group__field"
-      type="radio"
-      :value="item.value"
-      :id="item.value ?? item.label ?? String(index)"
-    >
   </div>
-  // в конце провести проверку на табулирование (табом выбирать айтем, энтером заселектить)
 </template>
 
 <style lang="scss">
-// ширину и высоту не задавать
-// gap 8px пока
 .radio-group {
   $this: &;
+  $disabled: $this + '-disabled';
 
   ///
   $size-sm: $this + '-size-sm';
@@ -155,13 +164,19 @@ const items = computed(() => {
   gap: $space-2;
 
   &__item {
-    $this: &;
+    $this-item: &;
+    $item-hover: $this-item + ':hover';
+    $item-active: $this-item + '-active';
+    $item-disable: $this-item + '-disable';
 
-    // внутренние переменные не получится через include is
-    $active: $this + '-active';
-
+    cursor: pointer;
     display: flex;
+    flex: 1;
     gap: $space-2;
+
+    @include is($disabled) {
+      pointer-events: none;
+    }
 
     @include is($indicator-start) {
       flex-direction: row;
@@ -169,6 +184,129 @@ const items = computed(() => {
 
     @include is($indicator-end) {
       flex-direction: row-reverse;
+      justify-content: space-between;
+    }
+
+    @include is($variant-card) {
+      border: 1px solid $color-neutral-200;
+      border-radius: $radius-4;
+
+      &#{$item-active} {
+        border: 1px solid $color-primary;
+        background-color: $color-neutral-50;
+      }
+
+      &#{$item-hover} {
+        background-color: $color-neutral-50;
+      }
+
+      @include is($disabled) {
+        border: $color-neutral-200;
+      }
+    }
+
+    @include is($variant-card + $size-md) {
+      padding: $space-3;
+    }
+
+    @include is($variant-card + $size-sm) {
+      padding: $space-2 $space-3;
+    }
+
+    @include is($variant-pill) {
+      border: 1px solid $color-neutral-200;
+      border-radius: $radius-8;
+
+      &#{$item-active} {
+        border: 1px solid $color-primary;
+        background-color: $color-neutral-50;
+      }
+
+      &#{$item-hover} {
+        background-color: $color-neutral-50;
+      }
+
+      @include is($disabled) {
+        border: $color-neutral-200;
+        background-color: transparent;
+      }
+    }
+
+    @include is($variant-pill + $size-md) {
+      padding: $space-3 $space-5 $space-3 $space-4;
+    }
+
+    @include is($variant-pill + $size-sm) {
+      padding: $space-2 $space-3;
+    }
+
+    @include is($variant-list) {
+      padding: 0;
+      border: none;
+    }
+
+    &-info {
+      display: flex;
+      gap: $space-2;
+    }
+
+    &-label {
+      text-align: start;
+
+      @include is($size-md) {
+        @include text(regular, md);
+      }
+
+      @include is($size-sm) {
+        @include text(regular, sm);
+      }
+    }
+
+    &-description {
+      color: $color-neutral;
+      text-align: start;
+
+      @include is($size-md) {
+        @include text(regular, sm);
+      }
+
+      @include is($size-sm) {
+        @include text(regular, xs);
+      }
+    }
+
+    &-indicator {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 20px;
+      height: 20px;
+      border-radius: $radius-10;
+
+      background-color: $color-primary-50;
+
+      @include is($item-hover) {
+        background-color: $color-primary-100;
+      }
+
+      @include is($item-active) {
+        border: 3px solid $color-primary-100;
+        background-color: $color-primary;
+      }
+
+      @include is($item-hover + $item-active) {
+        border: 3px solid $color-primary-100;
+        background-color: $color-primary;
+      }
+
+      @include is($indicator-hidden) {
+        display: none;
+      }
+
+      @include is($disabled) {
+        background-color: $color-neutral-100;
+      }
     }
   }
 
@@ -183,23 +321,6 @@ const items = computed(() => {
     white-space: nowrap;
 
     clip-path: inset(50%);
-  }
-
-  &__indicator {
-    width: 20px;
-    height: 20px;
-    border: 3px solid $color-primary-50;
-    border-radius: $radius-10;
-
-    background-color: $color-primary-50;
-
-    @include is($active) {
-      background-color: $color-primary;
-    }
-
-    @include is($indicator-hidden) {
-      display: none;
-    }
   }
 }
 </style>
