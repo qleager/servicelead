@@ -60,15 +60,23 @@ export type { Props as StepperProps, Model as StepperModel, Slots as StepperSlot
           <div class="stepper__item-dot" />
           <div class="stepper__item-line" />
         </div>
-        <slot
-          :is-completed="index < currentStepIndex"
-          :is-current="currentStepIndex === index"
-          :item
-          :name="`${item.value ?? index}-item`"
-        >
-          <!-- хз, получится так :name или нет -->
-          {{ item?.label ?? index }}
-        </slot>
+        <div class="stepper__item-label">
+          <slot
+            v-if="index <= currentStepIndex"
+            :is-completed="index < currentStepIndex"
+            :is-current="currentStepIndex === index"
+            :item
+            :name="`${item.value ?? index}-item`"
+          >
+            <!-- хз, получится так :name или нет -->
+            {{ item?.label ?? index }}
+          </slot>
+          <template v-else>
+            {{ item.label }}
+            {{ index }}
+            {{ currentStepIndex }}
+          </template>
+        </div>
       </button>
     </template>
   </div>
@@ -88,14 +96,12 @@ export type { Props as StepperProps, Model as StepperModel, Slots as StepperSlot
     display: flex;
     gap: $space-2;
 
-    // background-color: red;
-
-    &#{$completed} {
-      // background-color: green;
-    }
-
-    &#{$current} {
-      // background-color: yellow;
+    &:last-child {
+      #{$this-item} {
+        &-line {
+          min-height: unset;
+        }
+      }
     }
 
     &-counter {
@@ -106,7 +112,7 @@ export type { Props as StepperProps, Model as StepperModel, Slots as StepperSlot
       align-self: stretch;
 
       width: 16px;
-      padding: $space-3 $space-3 0;
+      padding-inline: $space-3;
     }
 
     &-dot {
@@ -146,6 +152,12 @@ export type { Props as StepperProps, Model as StepperModel, Slots as StepperSlot
 
       #{$current} & {
         background-color: $color-primary-200;
+      }
+    }
+
+    &-label {
+      #{$this-item}:not(#{$current}):not(#{$completed}) & {
+        color: $color-neutral-400;
       }
     }
   }
