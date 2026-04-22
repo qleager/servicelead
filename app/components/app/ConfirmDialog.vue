@@ -71,13 +71,13 @@ export type { Props as ConfirmDialogProps }
       <div class="confirm-dialog__footer">
         <AppButton
           color="neutral"
-          @click="onReject; close()"
+          @click="onReject(); close()"
         >
           {{ reject }}
         </AppButton>
         <AppButton
           color="primary"
-          @click="onAccept; close()"
+          @click="onAccept(); close()"
         >
           {{ accept }}
         </AppButton>
