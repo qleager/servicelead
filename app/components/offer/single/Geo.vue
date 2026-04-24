@@ -185,8 +185,12 @@ const columns = ref<TableColumn<OfferSingleGeoRow>[]>([
     cell: ({ cell }) => formatCurrency(Number(cell.getValue())),
   },
   {
-    header: () => h('span', { class: 'offer-single-geo__align-right' }, 'Зоны покрытия'),
+    header: () => h('span', {}, 'Зоны покрытия'),
     accessorKey: 'zone',
+    meta: {
+      align: 'right',
+    },
+    size: 175,
     cell: () => h(AppButton, {
       class: 'offer-single-geo__table-map-button',
       color: 'neutral',
@@ -290,7 +294,7 @@ const columns = ref<TableColumn<OfferSingleGeoRow>[]>([
   }
 
   &__table {
-    width: 100%;
+    width: fill;
 
     &-wrap {
       flex: 1;
@@ -359,11 +363,6 @@ const columns = ref<TableColumn<OfferSingleGeoRow>[]>([
         color: $color-red-400;
       }
     }
-  }
-
-  &__align-right {
-    display: flex;
-    justify-content: flex-end;
   }
 }
 </style>
