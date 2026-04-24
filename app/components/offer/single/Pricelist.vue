@@ -49,7 +49,7 @@ const data = ref<OfferSinglePricelistRow[]>([
     pm: 1000,
   },
   {
-    service: 'Установка Windows и очистка компьютера от вирусов',
+    service: ' Установка Windows и очистка компьютера от вирусов',
     company: 1000,
     pm: 1000,
   },
@@ -74,15 +74,25 @@ const columns = ref<TableColumn<OfferSinglePricelistRow>[]>([
   {
     header: 'Услуга',
     accessorKey: 'service',
+    // @ts-expect-error: ⛔️ очень не безопастно, для простого кейса ок
+    size: '100%',
   },
   {
     header: () => h('span', { class: 'offer-single-pricelist__align-right' }, 'Компания'),
     accessorKey: 'company',
+    meta: {
+      align: 'right',
+    },
+    size: 105,
     cell: ({ cell }) => h('span', { class: 'offer-single-pricelist__align-right' }, formatCurrency(Number(cell.getValue()))),
   },
   {
     header: () => h('span', { class: 'offer-single-pricelist__align-right' }, 'ЧМ'),
     accessorKey: 'pm',
+    meta: {
+      align: 'right',
+    },
+    size: 105,
     cell: ({ cell }) => h('span', { class: 'offer-single-pricelist__align-right' }, formatCurrency(Number(cell.getValue()))),
   },
 ])
@@ -169,12 +179,6 @@ const columns = ref<TableColumn<OfferSinglePricelistRow>[]>([
 
   &__help {
     max-width: 290px;
-  }
-
-  &__align-right {
-    display: inline-block;
-    width: 100%;
-    text-align: right;
   }
 }
 </style>
