@@ -3,23 +3,16 @@ import type { VNodeChild } from 'vue'
 
 interface Slots {
   content: () => VNodeChild
-  header?: () => VNodeChild
-  sidebar?: () => VNodeChild
+  header: () => VNodeChild
+  sidebar: () => VNodeChild
 }
-
-const slots = defineSlots<Slots>()
-
-const classname = computed(() => [
-  'offer-single-pane-template',
-  { 'offer-single-pane-template-sidebar': slots.sidebar },
-])
 
 export type { Slots as OfferSinglePaneTemplateSlots }
 </script>
 
 <template>
   <div
-    :class="classname"
+    class="offer-single-pane-template"
   >
     <div
       v-if="$slots.header"
@@ -28,15 +21,13 @@ export type { Slots as OfferSinglePaneTemplateSlots }
       <slot name="header" />
     </div>
     <div class="offer-single-pane-template__main">
-      <div class="offer-single-pane-template__content">
-        <slot name="content" />
-      </div>
-      <div
-        v-if="$slots.sidebar"
-        class="offer-single-pane-template__sidebar"
-      >
-        <slot name="sidebar" />
-      </div>
+      <slot name="content" />
+    </div>
+    <div
+      v-if="$slots.sidebar"
+      class="offer-single-pane-template__sidebar"
+    >
+      <slot name="sidebar" />
     </div>
   </div>
 </template>
@@ -44,11 +35,11 @@ export type { Slots as OfferSinglePaneTemplateSlots }
 <style lang="scss">
 .offer-single-pane-template {
   $this: &;
-  $sidebar: $this + '-sidebar';
+  $grid-sidebar: $this + '-grid-sidebar';
 
   display: flex;
-  flex-direction: column;
-  gap: $space-6;
+  flex-flow: row wrap;
+  gap: $space-6 $space-4;
 
   padding: $space-6;
   border-radius: $radius-10;
@@ -60,13 +51,14 @@ export type { Slots as OfferSinglePaneTemplateSlots }
   }
 
   &__main {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: $space-4;
+    grid-area: main;
+    flex: 1;
+    width: 100%;
+  }
 
-    @include is($sidebar) {
-      grid-template-columns: 1fr 290px;
-    }
+  &__sidebar {
+    grid-area: sidebar;
+    max-width: 290px;
   }
 }
 </style>
