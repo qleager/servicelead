@@ -64,6 +64,7 @@ defineSlots<Slots>()
   $this: &;
 
   &__drop {
+    max-height: inherit;
     box-shadow: $shadow-md;
   }
 }

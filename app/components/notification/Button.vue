@@ -69,7 +69,7 @@ export type { Props as NotificationButtonProps }
 <style lang="scss">
 .notification-button {
   &__content {
-    max-width: 320px;
+    width: 320px;
     margin: -$space-2;
   }
 }

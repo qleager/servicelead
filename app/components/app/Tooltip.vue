@@ -14,40 +14,34 @@ defineProps<Props>()
 
 defineSlots<Slots>()
 
-export type { Props as TooltipProps }
+export type { Props as TooltipProps, Slots as TooltipSlots }
 </script>
 
 <template>
-  <div class="tooltip">
-    <AppFloater
-      mode="hover"
-    >
-      <div class="tooltip__slot tooltip__slot-default">
-        <slot>
-          <AppIcon name="question" />
+  <AppFloater
+    class="tooltip"
+    mode="hover"
+    portal="#teleports"
+  >
+    <slot>
+      <AppIcon
+        class="tooltip__default-trigger"
+        name="question"
+      />
+    </slot>
+    <template #content>
+      <div class="tooltip__content">
+        <slot name="content">
+          {{ content }}
         </slot>
       </div>
-      <template #content>
-        <div class="tooltip__content">
-          <slot name="content">
-            {{ content }}
-          </slot>
-        </div>
-      </template>
-    </AppFloater>
-  </div>
+    </template>
+  </AppFloater>
 </template>
 
 <style lang="scss">
 .tooltip {
   $this: &;
-
-  position: relative;
-  display: inline-block;
-
-  &__icon {
-    cursor: pointer;
-  }
 
   &__content {
     @include text(regular, xs);
@@ -61,6 +55,12 @@ export type { Props as TooltipProps }
 
     background: white;
     box-shadow: $shadow-md;
+  }
+
+  &__default-trigger {
+    padding: $space-05;
+    border: 1px solid $color-neutral-400;
+    border-radius: 50px;
   }
 }
 </style>

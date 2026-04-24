@@ -40,13 +40,22 @@ const columns = ref<TableColumn<ConversionByCitiesRow>[]>([{
   accessorKey: 'city',
 }, {
   header: 'Конверсии',
+  meta: {
+    align: 'right',
+  },
   accessorKey: 'conversion',
 }, {
   header: 'К неделе',
+  meta: {
+    align: 'right',
+  },
   accessorKey: 'conversionByWeek',
 }, {
   header: 'К месяцу',
   accessorKey: 'conversionByMonth',
+  meta: {
+    align: 'right',
+  },
 }])
 
 const formatDelta = (value: unknown) => {

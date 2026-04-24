@@ -16,10 +16,12 @@
   5. О sticky header и footer
   6. О том как запинить колонку с нужной стороны
   7. О cellBorder
+  8. О сортировке через enableSorting и sortingFn. А model:sorting отвечает за состояние
+  9. О meta: { align } и других
 -->
 <script lang="ts" setup generic="TData extends RowData">
-import type { Cell, Column, ColumnDef, Header, Row, RowData, Table } from '@tanstack/vue-table'
-import { FlexRender, getCoreRowModel, useVueTable } from '@tanstack/vue-table'
+import type { Cell, Column, ColumnDef, Header, Row, RowData, SortingState, Table, Updater } from '@tanstack/vue-table'
+import { FlexRender, getCoreRowModel, getSortedRowModel, useVueTable } from '@tanstack/vue-table'
 
 export interface TableProps<TData extends RowData = RowData> {
   cellBorder?: 'column' | 'column-row' | 'row'
@@ -32,6 +34,8 @@ export interface TableColumnPinningModel {
   left?: string[]
   right?: string[]
 }
+
+export type TableSortingModel = SortingState
 
 export type TableSlots<TData extends RowData = RowData> = {
   cell?: (props: TableCellSlotProps<TData>) => unknown
@@ -66,20 +70,37 @@ export interface TableFooterSlotProps<TData extends RowData = RowData> {
 const props = defineProps<TableProps<TData>>()
 
 const modelColumnPinning = defineModel<TableColumnPinningModel>('columnPinning')
+const modelSorting = defineModel<TableSortingModel>('sorting', { default: () => [] })
 
 const slots = defineSlots<TableSlots<TData>>()
+
+const updateSorting = (updater: Updater<SortingState>) => {
+  modelSorting.value = typeof updater === 'function'
+    ? updater(modelSorting.value)
+    : updater
+}
 
 const table = useVueTable({
   data: props.data,
   columns: props.columns,
   getCoreRowModel: getCoreRowModel(),
+  getSortedRowModel: getSortedRowModel(),
+  onSortingChange: updateSorting,
   defaultColumn: {
-    minSize: 100,
-    size: 100,
+    // @ts-expect-error: ⛔️ спорное решение, веротяно оно может что то сломать
+    // сделано чтобы не вешать size, если он явно не задан
+    size: 'auto',
+    enableSorting: false,
+    meta: {
+      align: 'left',
+    },
   },
   state: {
     get columnPinning() {
       return modelColumnPinning.value
+    },
+    get sorting() {
+      return modelSorting.value
     },
   },
 })
@@ -134,12 +155,17 @@ const isGroupStartCell = (index: number) => {
 const getHeadClasses = (head: Header<TData, unknown>) => {
   const index = head.getLeafHeaders()[0]?.column.getIndex() ?? head.column.getIndex()
   const stickyPosition = head.column.getIsPinned()
+  const align = head.column.columnDef.meta?.align
 
   return [
     'table__head',
     `table__head-index-${index}`,
+    `table__head-align-${align}`,
     stickyPosition ? `table__head-sticky-${stickyPosition}` : null,
-    { 'table__head-first-in-general-header': isGroupStartCell(index) },
+    {
+      'table__head-first-in-general-header': isGroupStartCell(index),
+      'table__head-sortable': head.column.getCanSort(),
+    },
   ]
 }
 
@@ -147,11 +173,13 @@ const getCellClasses = (cell: Cell<TData, unknown>) => {
   const index = cell.column.getIndex()
   const rowIndex = cell.row.index
   const stickyPosition = cell.column.getIsPinned()
+  const align = cell.column.columnDef.meta?.align
 
   return [
     'table__cell',
     `table__cell-index-${index}`,
     `table__cell-row-${rowIndex}`,
+    `table__cell-align-${align}`,
     stickyPosition ? `table__cell-sticky-${stickyPosition}` : null,
     { 'table__cell-first-in-general-header': isGroupStartCell(index) },
   ]
@@ -160,14 +188,29 @@ const getCellClasses = (cell: Cell<TData, unknown>) => {
 const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
   const index = foot.getLeafHeaders()[0]?.column.getIndex() ?? foot.column.getIndex()
   const stickyPosition = foot.column.getIsPinned()
+  const align = foot.column.columnDef.meta?.align
 
   return [
     'table__foot',
     `table__foot-index-${index}`,
     `table__foot-row-${rowIndex}`,
+    `table__foot-align-${align}`,
     stickyPosition ? `table__foot-sticky-${stickyPosition}` : null,
     { 'table__foot-first-in-general-header': isGroupStartCell(index) },
   ]
+}
+
+const getSortingIndicatorIcon = (head: Header<TData, unknown>) => {
+  const sortingState = head.column.getIsSorted()
+
+  switch (sortingState) {
+    case 'asc':
+      return 'sort-asc'
+    case 'desc':
+      return 'sort-desc'
+    default:
+      return 'sort'
+  }
 }
 </script>
 
@@ -208,6 +251,15 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
                   />
                 </slot>
               </slot>
+              <AppButton
+                v-if="header.column.getCanSort()"
+                class="table__head-sorting-indicator"
+                color="neutral"
+                :icon="getSortingIndicatorIcon(header)"
+                size="xs"
+                variant="link"
+                @click="header.column.getToggleSortingHandler()?.($event)"
+              />
             </template>
           </div>
         </th>
@@ -302,12 +354,9 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
   $sticky-header: $this + '-sticky-header';
   $sticky-footer: $this + '-sticky-footer';
 
-  table-layout: fixed;
   border-spacing: 0;
   border-collapse: separate;
-
   width: max-content;
-
   text-indent: 0;
 
   &__header {
@@ -362,6 +411,10 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
     $this: &;
     $sticky-left: $this + '-sticky-left';
     $sticky-right: $this + '-sticky-right';
+    $sortable: $this + '-sortable';
+    $align-center: $this + '-align-center';
+    $align-right: $this + '-align-right';
+    $align-left: $this + '-align-left';
 
     @include label(regular, md);
 
@@ -413,6 +466,27 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
 
     &-content {
       padding: $space-2 $space-3;
+
+      #{$sortable} & {
+        display: flex;
+        align-items: center;
+      }
+
+      #{$align-center} & {
+        text-align: center;
+      }
+
+      #{$align-right} & {
+        text-align: right;
+      }
+
+      #{$align-left} & {
+        text-align: left;
+      }
+    }
+
+    &-sorting-indicator {
+      margin: -$space-2 0;
     }
   }
 
@@ -421,11 +495,22 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
     $this: &;
     $sticky-left: $this + '-sticky-left';
     $sticky-right: $this + '-sticky-right';
+    $align-center: $this + '-align-center';
+    $align-right: $this + '-align-right';
+    $align-left: $this + '-align-left';
 
     padding: 0;
     border: 0;
     white-space: nowrap;
     vertical-align: middle;
+
+    @include is($border-column-row) {
+      border-top: 1px solid $color-neutral-150;
+    }
+
+    @include is($border-row) {
+      border-top: 1px solid $color-neutral-150;
+    }
 
     &#{$sticky-left} {
       position: sticky;
@@ -459,12 +544,20 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
       }
     }
 
-    @include is($border-column-row) {
-      border-top: 1px solid $color-neutral-150;
-    }
-
     &-content {
       padding: $space-3 $space-3;
+
+      #{$align-center} & {
+        text-align: center;
+      }
+
+      #{$align-right} & {
+        text-align: right;
+      }
+
+      #{$align-left} & {
+        text-align: left;
+      }
     }
   }
 
@@ -472,6 +565,9 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
     $this: &;
     $sticky-left: $this + '-sticky-left';
     $sticky-right: $this + '-sticky-right';
+    $align-center: $this + '-align-center';
+    $align-right: $this + '-align-right';
+    $align-left: $this + '-align-left';
 
     @include text(semibold, sm);
 
@@ -512,6 +608,18 @@ const getFootClasses = (foot: Header<TData, unknown>, rowIndex: number) => {
 
     &-content {
       padding: $space-3 $space-3;
+
+      #{$align-center} & {
+        text-align: center;
+      }
+
+      #{$align-right} & {
+        text-align: right;
+      }
+
+      #{$align-left} & {
+        text-align: left;
+      }
     }
 
     &-row {
