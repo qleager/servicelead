@@ -87,8 +87,6 @@ const table = useVueTable({
   getSortedRowModel: getSortedRowModel(),
   onSortingChange: updateSorting,
   defaultColumn: {
-    minSize: 100,
-    size: 100,
     enableSorting: false,
     meta: {
       align: 'left',
@@ -353,12 +351,9 @@ const getSortingIndicatorIcon = (head: Header<TData, unknown>) => {
   $sticky-header: $this + '-sticky-header';
   $sticky-footer: $this + '-sticky-footer';
 
-  table-layout: fixed;
   border-spacing: 0;
   border-collapse: separate;
-
   width: max-content;
-
   text-indent: 0;
 
   &__header {
