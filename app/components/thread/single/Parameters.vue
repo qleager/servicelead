@@ -64,100 +64,99 @@ export type { ParametersData as ThreadParameters }
 </script>
 
 <template>
-  <div class="thread-single-parameters">
-    <AppWidget
-      icon="filter"
-      title="Параметры потока"
-    >
-      <template #content>
-        <AppCollapse
-          v-for="section in data"
-          :key="section.key"
-          v-model="openedSections[section.key]"
-          class="thread-single-parameters__section"
+  <AppWidget
+    class="thread-single-parameters"
+    icon="filter"
+    title="Параметры потока"
+  >
+    <template #content>
+      <AppCollapse
+        v-for="section in data"
+        :key="section.key"
+        v-model="openedSections[section.key]"
+        class="thread-single-parameters__section"
+      >
+        <div
+          v-if="section.title"
+          class="thread-single-parameters__section-head"
         >
+          {{ section.title }}
+          <AppIcon
+            name="dropdown"
+          />
+        </div>
+        <template #content>
           <div
-            v-if="section.title"
-            class="thread-single-parameters__section-head"
+            class="thread-single-parameters__section-content"
+            :class="{
+              'thread-single-parameters__section-content--single-column': isSingleColumnSection(section),
+            }"
           >
-            {{ section.title }}
-            <AppIcon
-              name="dropdown"
-            />
-          </div>
-          <template #content>
             <div
-              class="thread-single-parameters__section-content"
-              :class="{
-                'thread-single-parameters__section-content--single-column': isSingleColumnSection(section),
-              }"
+              v-for="param in section.items"
+              :key="param.key"
+              class="thread-single-parameters__param"
             >
-              <div
-                v-for="param in section.items"
-                :key="param.key"
-                class="thread-single-parameters__param"
-              >
-                <div class="thread-single-parameters__param-label">
-                  {{ param.label }}
-                </div>
-                <div class="thread-single-parameters__param-value">
-                  <template v-if="isArray(param.value)">
-                    {{ getPrimaryValue(param.value) }}
-                    <AppDropdown
-                      v-if="hasExtraValues(param.value)"
-                      mode="hover"
-                    >
-                      <template #default>
-                        <AppTag
-                          color="neutral"
-                          size="sm"
-                          variant="soft"
+              <div class="thread-single-parameters__param-label">
+                {{ param.label }}
+              </div>
+              <div class="thread-single-parameters__param-value">
+                <template v-if="isArray(param.value)">
+                  {{ getPrimaryValue(param.value) }}
+                  <AppDropdown
+                    v-if="hasExtraValues(param.value)"
+                    mode="hover"
+                  >
+                    <template #default>
+                      <AppTag
+                        color="neutral"
+                        size="sm"
+                        variant="soft"
+                      >
+                        +{{ getExtraValues(param.value).length }}
+                      </AppTag>
+                    </template>
+                    <template #content>
+                      <div class="thread-single-parameters__extra-tooltip">
+                        <div
+                          v-for="extraValue in getExtraValues(param.value)"
+                          :key="extraValue"
+                          class="thread-single-parameters__extra-tooltip-item"
                         >
-                          +{{ getExtraValues(param.value).length }}
-                        </AppTag>
-                      </template>
-                      <template #content>
-                        <div class="thread-single-parameters__extra-tooltip">
-                          <div
-                            v-for="extraValue in getExtraValues(param.value)"
-                            :key="extraValue"
-                            class="thread-single-parameters__extra-tooltip-item"
-                          >
-                            {{ extraValue }}
-                          </div>
+                          {{ extraValue }}
                         </div>
-                      </template>
-                    </AppDropdown>
-                  </template>
-                  <template v-else-if="isBoolean(param.value)">
-                    <AppTag
-                      :color="param.value ? 'green' : 'neutral'"
-                      size="sm"
-                      variant="soft"
-                    >
-                      {{ param.value ? 'Включен' : 'Выключен' }}
-                    </AppTag>
-                  </template>
-                  <template v-else>
-                    {{ param.value }}
-                  </template>
-                  <AppButton
-                    v-if="param.isCopyable"
-                    class="thread-single-parameters__copy-btn"
-                    color="neutral"
-                    icon="Copy"
-                    size="xs"
-                    variant="link"
-                    @click="onCopy(param.value)"
-                  />
-                </div>
+                      </div>
+                    </template>
+                  </AppDropdown>
+                </template>
+                <template v-else-if="isBoolean(param.value)">
+                  <AppTag
+                    :color="param.value ? 'green' : 'neutral'"
+                    size="sm"
+                    variant="soft"
+                  >
+                    {{ param.value ? 'Включен' : 'Выключен' }}
+                  </AppTag>
+                </template>
+                <template v-else>
+                  {{ param.value }}
+                </template>
+                <AppButton
+                  v-if="param.isCopyable"
+                  class="thread-single-parameters__copy-btn"
+                  color="neutral"
+                  icon="Copy"
+                  size="xs"
+                  variant="link"
+                  @click="onCopy(param.value)"
+                />
               </div>
             </div>
-          </template>
-        </AppCollapse>
-      </template>
-    </AppWidget>
-  </div>
+          </div>
+        </template>
+      </AppCollapse>
+    </template>
+  </AppWidget>
 </template>
 
 <style lang="scss">
