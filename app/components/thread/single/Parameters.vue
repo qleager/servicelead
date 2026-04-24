@@ -60,7 +60,7 @@ const onCopy = (value?: ParametersValue) => {
   return value != null && copyToClipboard(String(value))
 }
 
-export type { ParametersData as ThreadData }
+export type { ParametersData as ThreadParameters }
 </script>
 
 <template>
