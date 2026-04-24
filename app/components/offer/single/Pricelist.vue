@@ -74,8 +74,6 @@ const columns = ref<TableColumn<OfferSinglePricelistRow>[]>([
   {
     header: 'Услуга',
     accessorKey: 'service',
-    // @ts-expect-error: ⛔️ очень не безопастно, для простого кейса ок
-    size: '100%',
   },
   {
     header: () => h('span', { class: 'offer-single-pricelist__align-right' }, 'Компания'),
@@ -170,7 +168,7 @@ const columns = ref<TableColumn<OfferSinglePricelistRow>[]>([
   }
 
   &__table {
-    width: 100%;
+    min-width: 100%;
 
     &-wrap {
       flex: 1;
