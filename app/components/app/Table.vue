@@ -87,6 +87,9 @@ const table = useVueTable({
   getSortedRowModel: getSortedRowModel(),
   onSortingChange: updateSorting,
   defaultColumn: {
+    // @ts-expect-error: ⛔️ спорное решение, веротяно оно может что то сломать
+    // сделано чтобы не вешать size, если он явно не задан
+    size: 'auto',
     enableSorting: false,
     meta: {
       align: 'left',
