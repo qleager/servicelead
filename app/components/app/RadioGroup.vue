@@ -1,3 +1,6 @@
+<!-- IDEA: Все таки просится разделить AppRadioGroup и AppRadio как Item
+           раздельно реализован AppTabs, если сейчас осень'26 и более, реализация AppTabs обкатана, и показала себя хорошо – тут можно(нужно) сделать так же
+-->
 <script lang="ts" setup>
 import type { Size, Subset } from '~/types/ds'
 import type { IconProps } from './Icon.vue'
@@ -7,6 +10,7 @@ interface Props {
   disabled?: boolean
   indicator?: 'start' | 'end' | 'hidden'
   items: Item[] | string[]
+  name?: string
   size?: Subset<Size, 'sm' | 'md'>
   variant?: 'card' | 'pill' | 'list'
 }
@@ -56,21 +60,6 @@ const items = computed(() => {
   })
 })
 
-const iconSize = computed(() => {
-  switch (props.size) {
-    case 'sm': {
-      return 20
-    }
-    case 'md': {
-      return 24
-    }
-    default: {
-      const _exhaustiveCheck: never = props.size
-      return _exhaustiveCheck
-    }
-  }
-})
-
 export type { Props as RadioGroupProps, Model as RadioGroupModel, Slots as RadioGroupSlots, Item as RadioGroupItem }
 </script>
 
@@ -90,28 +79,26 @@ export type { Props as RadioGroupProps, Model as RadioGroupModel, Slots as Radio
         v-model="model"
         class="radio-group__field"
         :disabled
+        :name
+        tabindex="-1"
         type="radio"
         :value="item.value"
         :id="item.value ?? item.label ?? String(index)"
       >
       <div class="radio-group__item-indicator" />
       <div class="radio-group__item-info">
-        <template v-if="$slots.icon || item.icon">
-          <slot
-            :item
-            name="icon"
-          >
-            <AppIcon
-              v-if="item.icon"
-              class="radio-group__item-icon"
-              :name="item.icon"
-              :size="iconSize"
-            />
-          </slot>
-        </template>
+        <slot
+          :item
+          name="icon"
+        >
+          <AppIcon
+            v-if="item.icon"
+            class="radio-group__item-icon"
+            :name="item.icon"
+          />
+        </slot>
         <div
-          v-if="($slots.label || item.label) || ($slots.description || item.description)"
-          class="radio-group__item-text"
+          class="radio-group__item-main"
         >
           <div
             v-if="$slots.label || item.label"
@@ -164,10 +151,10 @@ export type { Props as RadioGroupProps, Model as RadioGroupModel, Slots as Radio
   gap: $space-2;
 
   &__item {
-    $this-item: &;
-    $item-hover: $this-item + ':hover';
-    $item-active: $this-item + '-active';
-    $item-disable: $this-item + '-disable';
+    $this: &;
+    $item-hover: $this + ':hover';
+    $item-active: $this + '-active';
+    $item-disabled: $this + '-disabled';
 
     cursor: pointer;
     display: flex;
@@ -206,14 +193,6 @@ export type { Props as RadioGroupProps, Model as RadioGroupModel, Slots as Radio
       }
     }
 
-    @include is($variant-card + $size-md) {
-      padding: $space-3;
-    }
-
-    @include is($variant-card + $size-sm) {
-      padding: $space-2 $space-3;
-    }
-
     @include is($variant-pill) {
       border: 1px solid $color-neutral-200;
       border-radius: $radius-8;
@@ -234,6 +213,19 @@ export type { Props as RadioGroupProps, Model as RadioGroupModel, Slots as Radio
       }
     }
 
+    @include is($variant-list) {
+      padding: 0;
+      border: none;
+    }
+
+    @include is($variant-card + $size-md) {
+      padding: $space-3;
+    }
+
+    @include is($variant-card + $size-sm) {
+      padding: $space-2 $space-3;
+    }
+
     @include is($variant-pill + $size-md) {
       padding: $space-3 $space-5 $space-3 $space-4;
     }
@@ -242,9 +234,16 @@ export type { Props as RadioGroupProps, Model as RadioGroupModel, Slots as Radio
       padding: $space-2 $space-3;
     }
 
-    @include is($variant-list) {
-      padding: 0;
-      border: none;
+    &-icon {
+      @include is($size-sm) {
+        width: 20px;
+        height: 20px;
+      }
+
+      @include is($size-md) {
+        width: 24px;
+        height: 24px;
+      }
     }
 
     &-info {
@@ -252,7 +251,7 @@ export type { Props as RadioGroupProps, Model as RadioGroupModel, Slots as Radio
       gap: $space-2;
     }
 
-    &-text {
+    &-main {
       display: flex;
       flex-direction: column;
       gap: $space-05;
@@ -307,17 +306,17 @@ export type { Props as RadioGroupProps, Model as RadioGroupModel, Slots as Radio
         transition: $active-duration-sm;
       }
 
-      @include is($item-hover + $item-active) {
-        border: 3px solid $color-primary-100;
-        background-color: $color-primary;
-      }
-
       @include is($indicator-hidden) {
         display: none;
       }
 
       @include is($disabled) {
         background-color: $color-neutral-100;
+      }
+
+      @include is($item-hover + $item-active) {
+        border: 3px solid $color-primary-100;
+        background-color: $color-primary;
       }
     }
   }
