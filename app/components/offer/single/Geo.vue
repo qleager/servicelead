@@ -293,7 +293,7 @@ const columns = ref<TableColumn<OfferSingleGeoRow>[]>([
   }
 
   &__table {
-    width: fill;
+    width: 100%;
 
     &-header {
       &-city {
