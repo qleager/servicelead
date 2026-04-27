@@ -45,7 +45,6 @@ const activePanel = computed(() => {
       :is="activePanel.component"
       v-if="activePanel"
       v-bind="activePanel.data"
-      class="offer-single-tabs__panel"
     />
   </div>
 </template>
@@ -57,11 +56,5 @@ const activePanel = computed(() => {
   display: flex;
   flex-direction: column;
   gap: $space-4;
-
-  &__panel {
-    padding: $space-4;
-    border-radius: $radius-10;
-    background: white;
-  }
 }
 </style>
