@@ -141,15 +141,19 @@ export type { ParametersData as ThreadParameters }
                 <template v-else>
                   {{ param.value }}
                 </template>
-                <AppButton
-                  v-if="param.isCopyable"
-                  class="thread-single-parameters__copy-btn"
-                  color="neutral"
-                  icon="Copy"
-                  size="xs"
-                  variant="link"
-                  @click="onCopy(param.value)"
-                />
+                <AppTooltip v-if="param.isCopyable">
+                  <AppButton
+                    class="thread-single-parameters__copy-btn"
+                    color="neutral"
+                    icon="Copy"
+                    size="xs"
+                    variant="link"
+                    @click="onCopy(param.value)"
+                  />
+                  <template #content>
+                    Скопировать
+                  </template>
+                </AppTooltip>
               </div>
             </div>
           </div>
