@@ -18,6 +18,7 @@
   7. О cellBorder
   8. О сортировке через enableSorting и sortingFn. А model:sorting отвечает за состояние
   9. О meta: { align } и других
+  10. О выборе строк в таблице (enableRowSelection prop, modelRowSelection)
 -->
 <script lang="ts" setup generic="TData extends RowData">
 import type { Cell, Column, ColumnDef, Header, Row, RowData, RowSelectionState, SortingState, Table, Updater } from '@tanstack/vue-table'
