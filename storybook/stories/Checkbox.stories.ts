@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@nuxtjs/storybook'
 import AppCheckbox from '@components/app/Checkbox.vue'
+import { iconNames } from '../helpers/icon-names'
 
 export default {
   title: 'App/Checkbox',
@@ -18,6 +19,10 @@ export default {
     },
     required: {
       control: 'boolean',
+    },
+    icon: {
+      control: 'select',
+      options: iconNames,
     },
     // Slots
     label: {
@@ -47,6 +52,7 @@ export default {
     label: 'Checkbox Label',
     disabled: false,
     required: false,
+    icon: 'check_24',
     id: 'checkbox',
     name: 'checkbox',
     value: 'accept',
