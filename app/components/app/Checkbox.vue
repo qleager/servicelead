@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { VNodeChild } from 'vue'
 import type { Icons } from '~/types/components/icon'
 import type { Size } from '~/types/ds'
 
@@ -14,7 +15,7 @@ interface Props {
 }
 
 interface Slots {
-  label: () => void
+  label: () => VNodeChild
 }
 
 type Model = boolean
