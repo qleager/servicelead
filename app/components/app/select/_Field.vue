@@ -1,12 +1,13 @@
 <script lang="ts" setup>
 import type { SelectInjection } from './Select.vue'
 
-const { size, color, icon, isCollapsed, rounded } = inject('selectState') as SelectInjection
+const { size, color, icon, isCollapsed, rounded, variant } = inject('selectState') as SelectInjection
 
 const classname = computed(() => [
   'select-field',
   `select-field-size-${size}`,
   `select-field-color-${color}`,
+  `select-field-variant-${variant}`,
   { 'select-field-active': isCollapsed.value },
   { 'select-field-rounded': rounded },
 ])
@@ -37,6 +38,7 @@ const classname = computed(() => [
 <style lang="scss">
 .select-field {
   $this: &;
+  $size-2xs: $this + '-size-2xs';
   $size-xs: $this + '-size-xs';
   $size-sm: $this + '-size-sm';
   $size-md: $this + '-size-md';
@@ -44,27 +46,41 @@ const classname = computed(() => [
   $white-color: $this + '-color-white';
   $neutral-color: $this + '-color-neutral';
   $primary-color: $this + '-color-primary';
+  $variant-outline: $this + '-variant-outline';
+  $variant-ghost: $this + '-variant-ghost';
   $rounded: $this + '-rounded';
   $active: $this + '-active';
 
   cursor: pointer;
-
   position: relative;
-
   display: flex;
   align-items: center;
 
-  width: 100%;
-  border: 1px solid;
-  border-radius: $radius-2;
+  @include is($variant-outline) {
+    border: 1px solid;
+    border-radius: $radius-2;
+  }
+
+  @include is($variant-ghost) {
+    border-radius: $radius-2;
+  }
+
+  @include is($size-2xs) {
+    gap: $space-2;
+    height: 24px;
+    padding-inline: $space-2;
+    border-radius: $radius-2;
+
+    @include text(regular, sm);
+  }
 
   @include is($size-xs) {
-    gap: $space-2;
+    gap: $space-1;
     height: 32px;
     padding-inline: $space-3;
     border-radius: $radius-2;
 
-    @include text(regular, xs);
+    @include text(regular, sm);
   }
 
   @include is($size-sm) {
@@ -81,15 +97,6 @@ const classname = computed(() => [
     height: 48px;
     padding-inline: $space-5;
     border-radius: $radius-2;
-
-    @include text(regular, md);
-  }
-
-  @include is($size-lg) {
-    gap: $space-5;
-    height: 56px;
-    padding-inline: $space-6;
-    border-radius: $radius-3;
 
     @include text(regular, md);
   }
@@ -113,7 +120,7 @@ const classname = computed(() => [
 
     &:hover {
       border-color: $color-neutral-400;
-      background-color: $color-neutral-100;
+      background-color: $color-neutral-50;
     }
   }
 
@@ -127,7 +134,7 @@ const classname = computed(() => [
 
     &:hover {
       border-color: $color-primary-600;
-      background-color: $color-neutral-100;
+      background-color: $color-neutral-50;
     }
   }
 
@@ -143,6 +150,12 @@ const classname = computed(() => [
   &__icon {
     flex-shrink: 0;
     color: inherit;
+
+    @include is($size-2xs) {
+      width: 16px;
+      height: 16px;
+      margin-inline: -#{$space-05};
+    }
 
     @include is($size-xs) {
       width: 16px;
@@ -178,6 +191,10 @@ const classname = computed(() => [
 
     text-overflow: ellipsis;
 
+    @include is($size-2xs) {
+      $space: $space-05;
+    }
+
     @include is($size-xs) {
       $space: $space-05;
     }
@@ -188,10 +205,6 @@ const classname = computed(() => [
 
     @include is($size-md) {
       $space: $space-2;
-    }
-
-    @include is($size-lg) {
-      $space: $space-3;
     }
   }
 
@@ -216,20 +229,24 @@ const classname = computed(() => [
       color: $color-primary;
     }
 
+    @include is($size-2xs) {
+      width: 16px;
+      height: 16px;
+    }
+
     @include is($size-xs) {
-      margin-inline: -#{$space-05};
+      width: 16px;
+      height: 16px;
     }
 
     @include is($size-sm) {
-      margin-inline: -#{$space-1};
+      width: 20px;
+      height: 20px;
     }
 
     @include is($size-md) {
-      margin-inline: -#{$space-2};
-    }
-
-    @include is($size-lg) {
-      margin-inline: -#{$space-3};
+      width: 20px;
+      height: 20px;
     }
   }
 }

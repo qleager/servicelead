@@ -35,7 +35,8 @@ interface Props {
    * @defaultvalue `false`
    */
   search?: boolean
-  size?: Size
+  size?: Subset<Size, '2xs' | 'xs' | 'sm' | 'md'>
+  variant?: 'outline' | 'ghost' | 'soft'
 }
 
 type Model = GetModelValue<Item, typeof props.multiple>
@@ -65,6 +66,7 @@ interface Injection {
   placeholder: typeof props.placeholder
   rounded: typeof props.rounded
   size: typeof props.size
+  variant: typeof props.variant
 }
 
 // Type Guards
@@ -73,7 +75,7 @@ const isOptionObject = (option: Option | Value): option is Option => {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  variant: 'lined',
+  variant: 'outline',
   multiple: false,
   counter: 'number',
   placeholder: 'Выберите...',
@@ -186,6 +188,7 @@ provide<Injection>('selectState', {
   placeholder: props.placeholder,
   floatPlaceholder: props.floatPlaceholder,
   rounded: props.rounded,
+  variant: props.variant,
 })
 
 export type {
@@ -269,6 +272,7 @@ export type {
 .select {
   $this: &;
   $disabled: $this + '-disabled';
+  $size-2xs: $this + '-size-2xs';
   $size-xs: $this + '-size-xs';
   $size-sm: $this + '-size-sm';
   $size-md: $this + '-size-md';
@@ -279,8 +283,12 @@ export type {
     filter: brightness(1.2);
   }
 
+  &#{$size-2xs} {
+    @include text(regular, sm);
+  }
+
   &#{$size-xs} {
-    @include text(regular, xs);
+    @include text(regular, sm);
   }
 
   &#{$size-sm} {
@@ -288,10 +296,6 @@ export type {
   }
 
   &#{$size-md} {
-    @include text(regular, md);
-  }
-
-  &#{$size-lg} {
     @include text(regular, md);
   }
 
@@ -307,6 +311,10 @@ export type {
 
     background: white;
     box-shadow: $shadow-md;
+
+    @include is($size-2xs) {
+      padding: $space-1 $space-05;
+    }
 
     @include is($size-xs) {
       padding: $space-2 $space-1;
