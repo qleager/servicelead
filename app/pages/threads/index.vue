@@ -295,6 +295,7 @@ const data = ref<StatisticsFullRow[]>([
             class="threads__table"
             :columns
             :data
+            enable-row-selection
           />
         </template>
         <template #footer>

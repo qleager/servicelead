@@ -20,13 +20,14 @@
   9. О meta: { align } и других
 -->
 <script lang="ts" setup generic="TData extends RowData">
-import type { Cell, Column, ColumnDef, Header, Row, RowData, SortingState, Table, Updater } from '@tanstack/vue-table'
+import type { Cell, Column, ColumnDef, Header, Row, RowData, RowSelectionState, SortingState, Table, Updater } from '@tanstack/vue-table'
 import { FlexRender, getCoreRowModel, getSortedRowModel, useVueTable } from '@tanstack/vue-table'
 
 export interface TableProps<TData extends RowData = RowData> {
   cellBorder?: 'column' | 'column-row' | 'row'
   columns: TableColumn<TData>[]
   data: TData[]
+  enableRowSelection?: boolean
   sticky?: boolean | 'header' | 'footer'
 }
 
@@ -36,6 +37,12 @@ export interface TableColumnPinningModel {
 }
 
 export type TableSortingModel = SortingState
+
+export type TableRowSelectionModel = RowSelectionState
+
+export interface TableEmits<TData extends RowData = RowData> {
+  select: [event: MouseEvent, row: Row<TData>]
+}
 
 export type TableSlots<TData extends RowData = RowData> = {
   cell?: (props: TableCellSlotProps<TData>) => unknown
@@ -69,10 +76,47 @@ export interface TableFooterSlotProps<TData extends RowData = RowData> {
 
 const props = defineProps<TableProps<TData>>()
 
+const emits = defineEmits<TableEmits<TData>>()
+
 const modelColumnPinning = defineModel<TableColumnPinningModel>('columnPinning')
+const modelRowSelection = defineModel<TableRowSelectionModel>('rowSelection', { default: () => ({}) })
 const modelSorting = defineModel<TableSortingModel>('sorting', { default: () => [] })
 
 const slots = defineSlots<TableSlots<TData>>()
+
+const columns = computed<TableColumn<TData>[]>(() => {
+  if (!props.enableRowSelection) {
+    return props.columns
+  }
+
+  return [
+    // Add column with checkbox row selecter
+    {
+      cell: ({ row }) => h(resolveComponent('AppCheckbox'), {
+        'class': 'table__row-selection-checkbox',
+        'modelValue': row.getIsSelected(),
+        'onClick': (event: MouseEvent) => emits('select', event, row),
+        'onUpdate:modelValue': (value: boolean) => row.toggleSelected(value),
+        'size': 'xs',
+      }),
+      header: ({ table }) => h(resolveComponent('AppCheckbox'), {
+        'class': 'table__row-selection-checkbox',
+        'disabled': table.getRowModel().rows.length === 0,
+        'icon': table.getIsAllRowsSelected() ? 'check_24' : 'close',
+        'modelValue': table.getIsAllRowsSelected() || table.getIsSomeRowsSelected(),
+        'onUpdate:modelValue': (value: boolean) => table.toggleAllRowsSelected(value),
+        'size': 'xs',
+      }),
+      enableSorting: false,
+      id: '_rowSelection',
+      size: 44,
+      meta: {
+        align: 'center',
+      },
+    },
+    ...props.columns,
+  ]
+})
 
 const updateSorting = (updater: Updater<SortingState>) => {
   modelSorting.value = typeof updater === 'function'
@@ -80,12 +124,26 @@ const updateSorting = (updater: Updater<SortingState>) => {
     : updater
 }
 
+const updateRowSelection = (updater: Updater<RowSelectionState>) => {
+  modelRowSelection.value = typeof updater === 'function'
+    ? updater(modelRowSelection.value)
+    : updater
+}
+
 const table = useVueTable({
-  data: props.data,
-  columns: props.columns,
+  get data() {
+    return props.data
+  },
+  get columns() {
+    return columns.value
+  },
   getCoreRowModel: getCoreRowModel(),
   getSortedRowModel: getSortedRowModel(),
   onSortingChange: updateSorting,
+  onRowSelectionChange: updateRowSelection,
+  get enableRowSelection() {
+    return props.enableRowSelection
+  },
   defaultColumn: {
     // @ts-expect-error: ⛔️ спорное решение, веротяно оно может что то сломать
     // сделано чтобы не вешать size, если он явно не задан
@@ -101,6 +159,9 @@ const table = useVueTable({
     },
     get sorting() {
       return modelSorting.value
+    },
+    get rowSelection() {
+      return modelRowSelection.value
     },
   },
 })
