@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 interface Props {
-  title?: string
-  required?: boolean
   caption?: string
   error?: string
+  required?: boolean
+  title?: string
 }
 
 const props = defineProps<Props>()
@@ -13,9 +13,7 @@ const classname = computed(() => [
   { 'label-error': props.error },
 ])
 
-const captionText = computed(() =>
-  props.error || props.caption,
-)
+const captionText = computed(() => props.error || props.caption)
 
 export type { Props as LabelProps }
 </script>
@@ -23,6 +21,7 @@ export type { Props as LabelProps }
 <template>
   <label :class="classname">
     <div
+      v-if="title"
       class="label__title"
     >
       {{ title }}
@@ -31,10 +30,9 @@ export type { Props as LabelProps }
         class="label__required"
       >*</span>
     </div>
-    <div class="label__slot label__slot-default">
-      <slot :required />
-    </div>
+    <slot :required />
     <div
+      v-if="captionText"
       class="label__caption"
     >
       {{ captionText }}
@@ -56,11 +54,7 @@ export type { Props as LabelProps }
 
     color: $color-neutral-950;
 
-    &:empty {
-      display: none;
-    }
-
-    #{$error} & {
+    @include is($error) {
       color: $color-error;
     }
   }
@@ -76,11 +70,7 @@ export type { Props as LabelProps }
 
     color: $color-neutral-400;
 
-    &:empty {
-      display: none;
-    }
-
-    #{$error} & {
+    @include is($error) {
       color: $color-error;
     }
   }

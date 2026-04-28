@@ -190,21 +190,18 @@ export type { Props as FloaterProps, Slots as FloaterSlots, Model as FloaterMode
 
   // Необходим для "закрепления" дропа при кейсах, когда флоатер находится в скролл-контейнерах
   position: relative;
+  display: inline-block;
 
   // Защита от растяжки
   width: fit-content;
 
   &__trigger {
-    display: inline-block;
+    display: flex;
     width: 100%;
   }
 
   &__content {
     z-index: 1;
-
-    // Защита от выпадения конетента слота
-    display: grid;
-    grid-template-rows: auto 1fr;
   }
 
   &__transition {

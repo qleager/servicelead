@@ -4,14 +4,17 @@
       <AppSelect
         icon="calendar"
         :items="['02.02.2026 – 03.03.2026']"
+        size="2xs"
+        variant="ghost"
       />
 
       <div class="statistics-full-filter__group">
         <div class="statistics-full-filter__item">
-          <div class="statistics-full-filter__label">
+          <div class="statistics-full-filter__item-label">
             Группировка
           </div>
           <AppSelect
+            class="statistics-full-filter__item-value"
             :items="[
               'Дата',
               'Оффер',
@@ -21,19 +24,24 @@
               'Города',
               'Лиды',
             ]"
+            size="2xs"
+            variant="ghost"
           />
         </div>
 
         <div class="statistics-full-filter__item">
-          <div class="statistics-full-filter__label">
+          <div class="statistics-full-filter__item-label">
             Детализация
           </div>
           <AppSelect
+            class="statistics-full-filter__item-value"
             :items="[
               'По дням',
               'По неделям',
               'По месяцам',
             ]"
+            size="2xs"
+            variant="ghost"
           />
         </div>
       </div>
@@ -93,28 +101,32 @@
   &__item {
     display: flex;
     gap: $space-2;
-    align-items: center;
-  }
+    align-items: baseline;
 
-  &__label {
-    display: flex;
-    gap: $space-2;
-    align-items: center;
+    &-label {
+      display: flex;
+      gap: $space-2;
+      align-items: center;
 
-    @include text(regular, xs);
+      @include text(regular, xs);
 
-    color: $color-neutral;
-    text-transform: uppercase;
-    letter-spacing: .08em;
+      color: $color-neutral;
+      text-transform: uppercase;
+      letter-spacing: .08em;
 
-    &::after {
-      content: "";
+      &::after {
+        content: "";
 
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
 
-      background: $color-neutral-300;
+        background: $color-neutral-300;
+      }
+    }
+
+    &-value {
+      margin-left: -$space-1;
     }
   }
 }

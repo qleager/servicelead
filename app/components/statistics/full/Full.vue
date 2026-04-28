@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { Table } from '@tanstack/vue-table'
 import type { TableColumn, TableColumnPinningModel } from '~/components/app/Table.vue'
 
 type StatisticsFullRow = {
@@ -20,14 +21,12 @@ type StatisticsFullRow = {
   financeForecast: number
 }
 
-type StatisticsFullNumericKey = Exclude<keyof StatisticsFullRow, 'date'>
-
 const AppIcon = resolveComponent('AppIcon')
 const AppTooltip = resolveComponent('AppTooltip')
 
-const rawData = ref<StatisticsFullRow[]>([
+const data = ref<StatisticsFullRow[]>([
   {
-    date: '03.04.2026',
+    date: '03.01.2025',
     trafficForms: 4,
     trafficCalls: 4,
     trafficTotal: 20,
@@ -226,33 +225,11 @@ const rawData = ref<StatisticsFullRow[]>([
   },
 ])
 
-const data = computed<StatisticsFullRow[]>(() => {
-  const totalRow: StatisticsFullRow = {
-    date: 'Всего',
-    trafficForms: getSumOfColumn('trafficForms'),
-    trafficCalls: getSumOfColumn('trafficCalls'),
-    trafficTotal: getSumOfColumn('trafficTotal'),
-    leadForms: getSumOfColumn('leadForms'),
-    leadCalls: getSumOfColumn('leadCalls'),
-    leadTotal: getSumOfColumn('leadTotal'),
-    conversionForms: getSumOfColumn('conversionForms'),
-    conversionCalls: getSumOfColumn('conversionCalls'),
-    conversionTotal: getSumOfColumn('conversionTotal'),
-    conversionApproved: getSumOfColumn('conversionApproved'),
-    conversionHeld: getSumOfColumn('conversionHeld'),
-    conversionCanceled: getSumOfColumn('conversionCanceled'),
-    financeTotal: getSumOfColumn('financeTotal'),
-    financePaid: getSumOfColumn('financePaid'),
-    financeForecast: getSumOfColumn('financeForecast'),
-  }
-
-  return [totalRow, ...rawData.value]
-})
-
 const columns = ref<TableColumn<StatisticsFullRow>[]>([
   {
     header: 'Дата',
     accessorKey: 'date',
+    footer: () => 'Всего',
   },
   {
     header: 'Трафик',
@@ -261,14 +238,20 @@ const columns = ref<TableColumn<StatisticsFullRow>[]>([
       {
         accessorKey: 'trafficForms',
         header: 'Формы',
+        enableSorting: true,
+        footer: ({ table, column }) => getSumCellsOfColumn(table, column.id),
       },
       {
         accessorKey: 'trafficCalls',
         header: 'Звонки',
+        enableSorting: true,
+        footer: ({ table, column }) => getSumCellsOfColumn(table, column.id),
       },
       {
         accessorKey: 'trafficTotal',
         header: 'Всего',
+        enableSorting: true,
+        footer: ({ table, column }) => getSumCellsOfColumn(table, column.id),
       },
     ],
   },
@@ -279,14 +262,20 @@ const columns = ref<TableColumn<StatisticsFullRow>[]>([
       {
         accessorKey: 'leadForms',
         header: 'Формы',
+        enableSorting: true,
+        footer: ({ table, column }) => getSumCellsOfColumn(table, column.id),
       },
       {
         accessorKey: 'leadCalls',
         header: 'Звонки',
+        enableSorting: true,
+        footer: ({ table, column }) => getSumCellsOfColumn(table, column.id),
       },
       {
         accessorKey: 'leadTotal',
         header: 'Всего',
+        enableSorting: true,
+        footer: ({ table, column }) => getSumCellsOfColumn(table, column.id),
       },
     ],
   },
@@ -297,17 +286,25 @@ const columns = ref<TableColumn<StatisticsFullRow>[]>([
       {
         accessorKey: 'conversionForms',
         header: 'Формы',
+        enableSorting: true,
+        footer: ({ table, column }) => getSumCellsOfColumn(table, column.id),
       },
       {
         accessorKey: 'conversionCalls',
         header: 'Звонки',
+        enableSorting: true,
+        footer: ({ table, column }) => getSumCellsOfColumn(table, column.id),
       },
       {
         accessorKey: 'conversionTotal',
         header: 'Всего',
+        enableSorting: true,
+        footer: ({ table, column }) => getSumCellsOfColumn(table, column.id),
       },
       {
         accessorKey: 'conversionApproved',
+        enableSorting: true,
+        footer: ({ table, column }) => getSumCellsOfColumn(table, column.id),
         header: () => (
           h(AppTooltip, {
             content: 'Подтверждено',
@@ -322,6 +319,8 @@ const columns = ref<TableColumn<StatisticsFullRow>[]>([
       },
       {
         accessorKey: 'conversionHeld',
+        enableSorting: true,
+        footer: ({ table, column }) => getSumCellsOfColumn(table, column.id),
         header: () => (
           h(AppTooltip, {
             content: 'Холд',
@@ -336,6 +335,8 @@ const columns = ref<TableColumn<StatisticsFullRow>[]>([
       },
       {
         accessorKey: 'conversionCanceled',
+        enableSorting: true,
+        footer: ({ table, column }) => getSumCellsOfColumn(table, column.id),
         header: () => (
           h(AppTooltip, {
             content: 'Треш',
@@ -358,17 +359,23 @@ const columns = ref<TableColumn<StatisticsFullRow>[]>([
       {
         header: 'Всего',
         accessorKey: 'financeTotal',
+        enableSorting: true,
         cell: ({ cell }) => formatCurrency(cell.getValue()),
+        footer: ({ table, column }) => formatCurrency(getSumCellsOfColumn(table, column.id)),
       },
       {
         header: 'Выплачено',
         accessorKey: 'financePaid',
+        enableSorting: true,
         cell: ({ cell }) => formatCurrency(cell.getValue()),
+        footer: ({ table, column }) => formatCurrency(getSumCellsOfColumn(table, column.id)),
       },
       {
         header: 'Прогноз',
         accessorKey: 'financeForecast',
+        enableSorting: true,
         cell: ({ cell }) => formatCurrency(cell.getValue()),
+        footer: ({ table, column }) => formatCurrency(getSumCellsOfColumn(table, column.id)),
       },
     ],
   },
@@ -378,9 +385,9 @@ const columnPinning = ref<TableColumnPinningModel>({
   left: ['date'],
 })
 
-const getSumOfColumn = (columnKey: StatisticsFullNumericKey) => {
-  return rawData.value.reduce((sum, row) => {
-    return sum + Number(row[columnKey] ?? 0)
+const getSumCellsOfColumn = (table: Table<StatisticsFullRow>, columnKey: string) => {
+  return table.getRowModel().rows.reduce((sum, row) => {
+    return sum + (row.getValue<number>(columnKey) ?? 0)
   }, 0)
 }
 </script>
