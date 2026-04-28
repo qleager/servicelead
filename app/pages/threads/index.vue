@@ -300,8 +300,9 @@ const data = ref<StatisticsFullRow[]>([
         </template>
         <template #footer>
           <AppPagination
-            counter
-            total="70"
+            show-edges
+            :sibling-count="3"
+            :total="10000"
           />
         </template>
       </AppCard>

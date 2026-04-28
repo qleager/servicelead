@@ -1,205 +1,197 @@
 <script lang="ts" setup>
 interface Props {
-  counter?: boolean
-  itemsPerPage?: ItemsPerPage
+  /**
+   * Number of items per page
+   * @defaultValue 10
+   */
+  itemsPerPage?: number
+  /**
+   * Whether to show the first, previous, next, and last controls
+   * @defaultValue true
+   */
+  showControls?: boolean
+  /**
+   * When true, always show first page, last page, and ellipsis
+   * @defaultValue false
+   */
   showEdges?: boolean
-  total?: number
+  /**
+   * When true, show select with items per page
+   * @defaultValue false
+   */
+  // showCounter?: boolean
+  /**
+   * Number of sibling should be shown around the current page
+   * @defaultValue 2
+   */
+  siblingCount?: number
+  /**
+   * Number of items in your list
+   * @defaultValue 10
+   */
+  total: number
 }
 
-interface Emits {
-  'update:itemsPerPage': [itemsPerPage: ItemsPerPage]
-}
-
+/**
+ * Current Page
+ * @defaultValue 1
+ */
 type Model = number
-
 type PageItem = number | 'ellipsis'
-type ItemsPerPage = 10 | 30 | 80 | 100
 
 const props = withDefaults(defineProps<Props>(), {
-  total: 0,
   itemsPerPage: 10,
-  showEdges: true,
+  showControls: true,
+  showEdges: false,
+  siblingCount: 2,
 })
 
-const emits = defineEmits<Emits>()
-
-const model = defineModel<Model>({ default: 1 })
-
-const itemsPerPageOptions = [
-  { label: 'Показывать 10', value: 10 },
-  { label: 'Показывать 30', value: 30 },
-  { label: 'Показывать 80', value: 80 },
-  { label: 'Показывать 100', value: 100 },
-]
-
-const totalPages = computed(() => {
-  const perPage = normalizeItemsPerPage(props.itemsPerPage)
-
-  return Math.max(1, Math.ceil(props.total / perPage))
+const model = defineModel<Model>({
+  default: 1,
 })
 
-const counterModel = computed<ItemsPerPage>({
-  get: () => normalizeItemsPerPage(props.itemsPerPage),
-  set: value => onItemsPerPageUpdate(value),
-})
+const itemsPerPage = computed(() =>
+  Math.max(1, props.itemsPerPage),
+)
 
-const pageItems = computed<PageItem[]>(() => {
-  if (totalPages.value <= 1) {
-    return [1]
-  }
+const pageCount = computed(() =>
+  Math.max(1, Math.ceil(props.total / itemsPerPage.value)),
+)
 
+const currentPage = computed(() =>
+  Math.min(Math.max(model.value, 1), pageCount.value),
+)
+
+const isPreviousDisabled = computed(() => currentPage.value <= 1)
+const isNextDisabled = computed(() => currentPage.value >= pageCount.value)
+
+const pages = computed<PageItem[]>(() => {
   if (!props.showEdges) {
-    return getRange(1, totalPages.value)
+    return getRange(1, pageCount.value)
   }
 
-  const pages = new Set<number>([
-    1,
-    totalPages.value,
-    model.value - 1,
-    model.value,
-    model.value + 1,
-  ])
+  const siblingCount = Math.max(0, props.siblingCount)
+  const edgeItemsCount = 2
+  const currentPageItemsCount = 1
+  const ellipsisItemsCount = 2
+  const visibleItemsCount = siblingCount * 2
+    + edgeItemsCount
+    + currentPageItemsCount
+    + ellipsisItemsCount
 
-  if (model.value <= 2) {
-    pages.add(3)
+  if (pageCount.value <= visibleItemsCount) {
+    return getRange(1, pageCount.value)
   }
 
-  if (model.value >= totalPages.value - 1) {
-    pages.add(totalPages.value - 2)
+  const firstPage = 1
+  const lastPage = pageCount.value
+  const middleItemsCount = visibleItemsCount - 2
+  const isNearStart = currentPage.value <= siblingCount + 3
+  const isNearEnd = currentPage.value >= lastPage - siblingCount - 2
+
+  if (isNearStart) {
+    return [
+      ...getRange(firstPage, middleItemsCount),
+      'ellipsis',
+      lastPage,
+    ]
   }
 
-  const normalized = [...pages]
-    .filter(page => page >= 1 && page <= totalPages.value)
-    .sort((left, right) => left - right)
+  if (isNearEnd) {
+    return [
+      firstPage,
+      'ellipsis',
+      ...getRange(lastPage - middleItemsCount + 1, lastPage),
+    ]
+  }
 
-  return normalized.reduce<PageItem[]>((result, page, index) => {
-    const previousPage = normalized[index - 1]
-
-    if (previousPage && page - previousPage > 1) {
-      result.push('ellipsis')
-    }
-
-    result.push(page)
-
-    return result
-  }, [])
+  return [
+    firstPage,
+    'ellipsis',
+    ...getRange(currentPage.value - siblingCount, currentPage.value + siblingCount),
+    'ellipsis',
+    lastPage,
+  ]
 })
 
 const getRange = (start: number, end: number) => {
+  if (start > end) {
+    return []
+  }
+
   return Array.from({ length: end - start + 1 }, (_, index) => start + index)
 }
 
-const normalizeItemsPerPage = (value: number): ItemsPerPage => {
-  if ([10, 30, 80, 100].includes(value)) {
-    return value as ItemsPerPage
-  }
-
-  return 10
+const isPageNumber = (page: PageItem): page is number => {
+  return typeof page === 'number'
 }
 
-const isPageItemNumber = (item: PageItem): item is number => {
-  return typeof item === 'number'
+const setPage = (page: number) => {
+  model.value = Math.min(Math.max(page, 1), pageCount.value)
 }
 
-const isPageCurrent = (page: number) => {
-  return page === model.value
+const setPreviousPage = () => {
+  setPage(model.value - 1)
 }
 
-const onItemsPerPageUpdate = (value: number) => {
-  const itemsPerPage = normalizeItemsPerPage(value)
-
-  emits('update:itemsPerPage', itemsPerPage)
-  model.value = 1
+const setNextPage = () => {
+  setPage(model.value + 1)
 }
 
-const onPageClick = (page: number) => {
-  if (!isPageCurrent(page)) {
-    model.value = page
-  }
-}
+watch(pageCount, () => {
+  setPage(model.value)
+})
 
-const onPreviousClick = () => {
-  model.value = model.value - 1
-}
-
-const onNextClick = () => {
-  model.value = model.value + 1
-}
-
-export type {
-  Props as PaginationProps,
-  Emits as PaginationEmits,
-  Model as PaginationModel,
-}
+export type { Props as PaginationProps, Model as PaginationModel }
 </script>
 
 <template>
   <div class="pagination">
-    <AppSelect
-      v-if="counter"
-      v-model="counterModel"
-      :items="itemsPerPageOptions"
-      placeholder="Показывать 10"
+    <AppButton
+      v-if="showControls"
+      color="neutral"
+      :disabled="isPreviousDisabled"
+      icon="arrow_left"
       size="xs"
+      variant="link"
+      @click="setPreviousPage"
+    />
+
+    <template
+      v-for="(page, index) in pages"
+      :key="`${page}-${index}`"
     >
-      <template #value="{ model: selectedItemsPerPage }">
-        <div class="pagination__counter-value">
-          Показывать {{ selectedItemsPerPage }}
-        </div>
-      </template>
-    </AppSelect>
-
-    <div class="pagination__list">
       <AppButton
-        aria-label="Предыдущая страница"
-        class="pagination__control pagination__control-arrow"
+        v-if="isPageNumber(page)"
+        class="pagination__button-page"
         color="neutral"
-        :disabled="model <= 1"
-        icon="arrow_left"
-        rounded
         size="xs"
-        variant="outline"
-        @click="onPreviousClick"
-      />
-
-      <template
-        v-for="(item, index) in pageItems"
-        :key="`${item}-${index}`"
+        :variant="page === currentPage ? 'solid' : 'link'"
+        @click="setPage(page)"
       >
-        <AppButton
-          v-if="isPageItemNumber(item)"
-          class="pagination__control"
-          color="neutral"
-          rounded
-          size="xs"
-          type="button"
-          :variant="isPageCurrent(item) ? 'solid' : 'outline'"
-          @click="onPageClick(item)"
-        >
-          {{ item }}
-        </AppButton>
-
-        <span
-          v-else
-          aria-hidden="true"
-          class="pagination__ellipsis"
-        >
-          ...
+        <span class="pagination__button-page-text">
+          {{ page }}
         </span>
-      </template>
+      </AppButton>
 
-      <AppButton
-        aria-label="Следующая страница"
-        class="pagination__control pagination__control-arrow"
-        color="neutral"
-        :disabled="model >= totalPages"
-        icon="arrow_right"
-        rounded
-        size="xs"
-        variant="outline"
-        @click="onNextClick"
-      />
-    </div>
+      <span
+        v-else
+        aria-hidden="true"
+        class="pagination__ellipsis"
+      >
+        ...
+      </span>
+    </template>
+
+    <AppButton
+      v-if="showControls"
+      color="neutral"
+      :disabled="isNextDisabled"
+      icon="arrow_right"
+      size="xs"
+      variant="link"
+      @click="setNextPage"
+    />
   </div>
 </template>
 
@@ -208,25 +200,19 @@ export type {
   $this: &;
 
   display: flex;
-  flex-wrap: wrap;
-  gap: $space-4;
+  gap: $space-1;
   align-items: center;
-  justify-content: space-between;
 
-  width: 100%;
-
-  &__list {
-    overflow-x: auto;
-    display: flex;
-    flex: 1 1 auto;
-    gap: $space-2;
-    justify-content: flex-end;
-
-    min-width: 0;
+  &__button {
+    // cомнительно но пох
+    &-page {
+      justify-content: center;
+      min-width: 32px;
+      padding-inline: $space-1 !important;
+    }
   }
 
   &__ellipsis {
-    pointer-events: none;
     user-select: none;
     min-width: 32px;
     text-align: center;

@@ -132,6 +132,8 @@ export type { Props as ButtonProps }
 
   @include is($size-xs) {
     gap: $space-2;
+
+    min-width: 32px;
     height: 32px;
     padding-inline: $space-3;
     border-radius: $radius-2;
@@ -141,6 +143,8 @@ export type { Props as ButtonProps }
 
   @include is($size-sm) {
     gap: $space-3;
+
+    min-width: 40px;
     height: 40px;
     padding-inline: $space-4;
     border-radius: $radius-2;
@@ -150,6 +154,8 @@ export type { Props as ButtonProps }
 
   @include is($size-md) {
     gap: $space-4;
+
+    min-width: 48px;
     height: 48px;
     padding-inline: $space-5;
     border-radius: $radius-2;
@@ -159,6 +165,8 @@ export type { Props as ButtonProps }
 
   @include is($size-lg) {
     gap: $space-5;
+
+    min-width: 56px;
     height: 56px;
     padding-inline: $space-6;
     border-radius: $radius-3;
