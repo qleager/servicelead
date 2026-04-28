@@ -16,7 +16,12 @@ export interface RegisteredUser {
 
 export interface UserIdTokenDto {
   token: string
-  userId: number
+  userId?: number
+}
+
+export interface AuthValueBase {
+  type: AuthValueType
+  value: string
 }
 
 export interface AuthValueDto {
@@ -33,10 +38,16 @@ export interface TokenPasswordDto {
   token: string
 }
 
+export interface TokenServiceDto {
+  serviceName: string
+  token: string
+}
+
 export interface TokenAuthValueDto {
   authValue: string
   serviceName: string
-  token?: string
+  token: string
 }
 
 export type AuthType = 'Sms' | 'Email' | 'Call'
+export type AuthValueType = 'Phone' | 'Email'

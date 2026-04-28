@@ -1,7 +1,7 @@
 import FetchFactory from '@shared/repository/factory'
 import type { Response } from '@shared/types/api'
 import type { FetchOptions } from '@shared/types/repository'
-import type { AuthCodeDto, AuthType, AuthValueDto, RegisteredUser, TokenAuthValueDto, TokenDto, TokenPair, TokenPasswordDto, UserIdTokenDto } from '~~/server/types/api/auth'
+import type { AuthCodeDto, AuthType, AuthValueBase, AuthValueDto, RegisteredUser, TokenAuthValueDto, TokenDto, TokenPair, TokenPasswordDto, TokenServiceDto, UserIdTokenDto } from '~~/server/types/api/auth'
 
 class AuthModule extends FetchFactory {
   private RESOURCE = '/auth'
@@ -96,8 +96,18 @@ class AuthModule extends FetchFactory {
     )
   }
 
-  async verifyToken(type: AuthType, fetchOptions?: FetchOptions<TokenDto>) {
-    return this.call<Response<void>>(
+  async verifyToken(type: AuthType, fetchOptions?: FetchOptions<TokenServiceDto>) {
+    return this.call<Response<number>>(
+      `${this.RESOURCE}/verifyToken/${type}`,
+      {
+        method: 'POST',
+        ...fetchOptions,
+      },
+    )
+  }
+
+  async refreshToken(type: AuthType, fetchOptions?: FetchOptions<TokenDto>) {
+    return this.call<Response<TokenPair>>(
       `${this.RESOURCE}/verifyToken/${type}`,
       {
         method: 'POST',
@@ -107,7 +117,7 @@ class AuthModule extends FetchFactory {
   }
 
   async getUserLogin(type: AuthType, fetchOptions?: FetchOptions<TokenDto>) {
-    return this.call<Response<void>>(
+    return this.call<Response<string>>(
       `${this.RESOURCE}/getUserLogin/${type}`,
       {
         method: 'POST',
@@ -117,7 +127,7 @@ class AuthModule extends FetchFactory {
   }
 
   async getUserLogins(type: AuthType, fetchOptions?: FetchOptions<TokenDto>) {
-    return this.call<Response<void>>(
+    return this.call<Response<AuthValueBase>>(
       `${this.RESOURCE}/getUserLogins/${type}`,
       {
         method: 'POST',
