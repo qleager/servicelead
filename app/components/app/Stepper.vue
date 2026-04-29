@@ -13,11 +13,12 @@ interface Item {
   description?: string
   disabled?: boolean
   label?: string
+  slot?: string
   value?: string | number
 }
 
 interface Slots {
-  [key: `${string | number}-item`]: (props: { item: Item, isCompleted: boolean, isCurrent: boolean }) => VNodeChild
+  [key: string]: (props: { item: Item, isCompleted: boolean, isCurrent: boolean, slot: string }) => VNodeChild
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -71,7 +72,7 @@ export type { Props as StepperProps, Model as StepperModel, Slots as StepperSlot
             :is-completed="index < currentStepIndex"
             :is-current="currentStepIndex === index"
             :item
-            :name="`${item.value ?? index}-item`"
+            :name="item.slot ?? `${item.value ?? index}-item`"
           >
             <div class="stepper__item-label">
               <template v-if="item.label">
