@@ -92,8 +92,6 @@ export type { Props as StepperProps, Model as StepperModel, Slots as StepperSlot
 
 <style lang="scss">
 .stepper {
-  $this: &;
-
   display: flex;
   flex-direction: column;
   gap: $space-2;
