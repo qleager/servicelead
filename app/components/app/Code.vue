@@ -34,12 +34,17 @@ export type { Props as CodeProps }
         {{ title }}
       </div>
 
-      <AppButton
-        color="neutral"
-        icon="Copy"
-        variant="link"
-        @click="copyCode"
-      />
+      <AppTooltip>
+        <AppButton
+          color="neutral"
+          icon="Copy"
+          variant="link"
+          @click="copyCode"
+        />
+        <template #content>
+          Скопировать код
+        </template>
+      </AppTooltip>
     </div>
 
     <pre class="code__pre"><code
