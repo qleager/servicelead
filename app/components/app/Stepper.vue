@@ -25,13 +25,6 @@ interface Props {
  */
 type Model = Item['value']
 
-interface SlotProps {
-  index: number
-  isCompleted: boolean
-  isCurrent: boolean
-  item: Item
-}
-
 interface Item {
   /**
    * Additional text shown below the step label
@@ -56,8 +49,8 @@ interface Item {
 }
 
 interface Slots {
-  [key: string]: (props: SlotProps) => VNodeChild
-  indicator: (props: SlotProps) => VNodeChild
+  [key: string]: (props: { item: Item, isCompleted: boolean, isCurrent: boolean }) => VNodeChild
+  indicator: (props: { isCompleted: boolean, isCurrent: boolean }) => VNodeChild
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -65,8 +58,6 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const model = defineModel<Model>()
-
-defineSlots<Slots>()
 
 const currentStepIndex = computed(() => {
   return props.items.findIndex((item, index) => (item.value ?? index) === model.value)
@@ -81,8 +72,6 @@ const onItemClick = (item: Item, index: number) => {
 const isCompleted = (index: number) => index < currentStepIndex.value
 
 const isCurrent = (index: number) => index === currentStepIndex.value
-
-const getSlotName = (item: Item) => item.slot ?? 'default'
 
 export type { Props as StepperProps, Model as StepperModel, Slots as StepperSlots, Item as StepperItem }
 </script>
@@ -106,26 +95,21 @@ export type { Props as StepperProps, Model as StepperModel, Slots as StepperSlot
         @click="onItemClick(item, index)"
       >
         <div class="stepper__item-indicator">
-          <slot
-            :index
-            :is-completed="isCompleted(index)"
-            :is-current="isCurrent(index)"
-            :item
-            name="indicator"
-          >
+          <slot name="indicator">
             <div class="stepper__item-indicator-dot">
-              {{ index + 1 }}
+              <slot name="indicator">
+                {{ index + 1 }}
+              </slot>
             </div>
           </slot>
           <div class="stepper__item-indicator-line" />
         </div>
         <div class="stepper__item-content">
           <slot
-            :index
             :is-completed="isCompleted(index)"
             :is-current="isCurrent(index)"
             :item
-            :name="getSlotName(item)"
+            :name="item.slot"
           >
             <div
               v-if="item.label"
