@@ -59,6 +59,8 @@ const props = withDefaults(defineProps<Props>(), {
 
 const model = defineModel<Model>()
 
+defineSlots<Slots>()
+
 const currentStepIndex = computed(() => {
   return props.items.findIndex((item, index) => (item.value ?? index) === model.value)
 })
@@ -95,11 +97,13 @@ export type { Props as StepperProps, Model as StepperModel, Slots as StepperSlot
         @click="onItemClick(item, index)"
       >
         <div class="stepper__item-indicator">
-          <slot name="indicator">
+          <slot
+            :is-completed="isCompleted(index)"
+            :is-current="isCurrent(index)"
+            name="indicator"
+          >
             <div class="stepper__item-indicator-dot">
-              <slot name="indicator">
-                {{ index + 1 }}
-              </slot>
+              {{ index + 1 }}
             </div>
           </slot>
           <div class="stepper__item-indicator-line" />
