@@ -2,23 +2,62 @@
 import type { VNodeChild } from 'vue'
 
 interface Props {
+  /**
+   * Allows changing the current step from the UI
+   *
+   * @defaultvalue `true`
+   */
   actionable?: boolean
+  /**
+   * List of steps to display
+   */
   items: Item[]
+  /**
+   * Layout direction of the stepper
+   *
+   * @defaultvalue `'vertical'`
+   */
   orientation?: 'vertical'
 }
 
+/**
+ * Current step
+ */
 type Model = Item['value']
 
+interface SlotProps {
+  index: number
+  isCompleted: boolean
+  isCurrent: boolean
+  item: Item
+}
+
 interface Item {
+  /**
+   * Additional text shown below the step label
+   */
   description?: string
+  /**
+   * Disables interaction for the step
+   */
   disabled?: boolean
+  /**
+   * Text shown as the step title
+   */
   label?: string
+  /**
+   * Slot name used to customize this step
+   */
   slot?: string
+  /**
+   * Unique value used as the step model value
+   */
   value?: string | number
 }
 
 interface Slots {
-  [key: string]: (props: { item: Item, isCompleted: boolean, isCurrent: boolean, slot: string }) => VNodeChild
+  [key: string]: (props: SlotProps) => VNodeChild
+  indicator: (props: SlotProps) => VNodeChild
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -27,8 +66,9 @@ const props = withDefaults(defineProps<Props>(), {
 
 const model = defineModel<Model>()
 
+defineSlots<Slots>()
+
 const currentStepIndex = computed(() => {
-  // тут ищем Item.value иначе это будет как раз index
   return props.items.findIndex((item, index) => (item.value ?? index) === model.value)
 })
 
@@ -37,6 +77,12 @@ const onItemClick = (item: Item, index: number) => {
     model.value = item.value ?? index
   }
 }
+
+const isCompleted = (index: number) => index < currentStepIndex.value
+
+const isCurrent = (index: number) => index === currentStepIndex.value
+
+const getSlotName = (item: Item) => item.slot ?? 'default'
 
 export type { Props as StepperProps, Model as StepperModel, Slots as StepperSlots, Item as StepperItem }
 </script>
@@ -53,36 +99,45 @@ export type { Props as StepperProps, Model as StepperModel, Slots as StepperSlot
         :class="[
           'stepper__item',
           {
-            'stepper__item-completed': index < currentStepIndex,
-            'stepper__item-current': index === currentStepIndex,
+            'stepper__item-completed': isCompleted(index),
+            'stepper__item-current': isCurrent(index),
           },
         ]"
         @click="onItemClick(item, index)"
       >
         <div class="stepper__item-indicator">
-          <div class="stepper__item-indicator-dot">
-            <slot name="indicator">
+          <slot
+            :index
+            :is-completed="isCompleted(index)"
+            :is-current="isCurrent(index)"
+            :item
+            name="indicator"
+          >
+            <div class="stepper__item-indicator-dot">
               {{ index + 1 }}
-            </slot>
-          </div>
+            </div>
+          </slot>
           <div class="stepper__item-indicator-line" />
         </div>
         <div class="stepper__item-content">
           <slot
-            :is-completed="index < currentStepIndex"
-            :is-current="currentStepIndex === index"
+            :index
+            :is-completed="isCompleted(index)"
+            :is-current="isCurrent(index)"
             :item
-            :name="item.slot ?? `${item.value ?? index}-item`"
+            :name="getSlotName(item)"
           >
-            <div class="stepper__item-label">
-              <template v-if="item.label">
-                {{ item.label }}
-              </template>
+            <div
+              v-if="item.label"
+              class="stepper__item-label"
+            >
+              {{ item.label }}
             </div>
-            <div class="stepper__item-description">
-              <template v-if="item.label">
-                {{ item.description }}
-              </template>
+            <div
+              v-if="item.description"
+              class="stepper__item-description"
+            >
+              {{ item.description }}
             </div>
           </slot>
         </div>
@@ -103,7 +158,7 @@ export type { Props as StepperProps, Model as StepperModel, Slots as StepperSlot
     $current: $this + '-current';
 
     display: flex;
-    gap: $space-2;
+    gap: $space-1;
 
     &-indicator {
       display: flex;
@@ -122,14 +177,22 @@ export type { Props as StepperProps, Model as StepperModel, Slots as StepperSlot
 
         width: 16px;
         height: 16px;
-        margin-top: 4px;
+        margin-top: $space-05;
         border-radius: $radius-10;
 
         @include text(regular, xs);
 
         color: white;
 
-        background-color: $color-primary;
+        background-color: $color-neutral-150;
+
+        #{$completed} & {
+          background-color: $color-primary;
+        }
+
+        #{$current} & {
+          background-color: $color-primary;
+        }
       }
 
       &-line {
@@ -151,10 +214,6 @@ export type { Props as StepperProps, Model as StepperModel, Slots as StepperSlot
 
         #{$this}:last-of-type & {
           min-height: unset;
-
-          // или..
-          // display: none;
-          // иначе -line у последнего никогда не будет completed
         }
       }
     }
@@ -163,20 +222,12 @@ export type { Props as StepperProps, Model as StepperModel, Slots as StepperSlot
       @include text(semibold, sm);
 
       text-align: left;
-
-      #{$this}:not(#{$current}):not(#{$completed}) & {
-        color: $color-neutral-400;
-      }
     }
 
     &-description {
       @include text(regular, sm);
 
       text-align: left;
-
-      #{$this}:not(#{$current}):not(#{$completed}) & {
-        color: $color-neutral-400;
-      }
     }
   }
 }
