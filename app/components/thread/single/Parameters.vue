@@ -1,66 +1,10 @@
 <script setup lang="ts">
-import { copyToClipboard } from '~/utils/copyToClipboard'
-
-interface Props {
-  data?: ParametersData[]
-}
-
-interface ParametersData {
-  items?: ParametersItem[]
-  key: string
-  title?: string
-}
-
-interface ParametersItem {
-  isCopyable?: boolean
-  key: string
-  label: string
-  value?: ParametersValue
-}
-
-type ParametersValue = string | string[] | number | boolean | null
-
-const props = withDefaults(defineProps<Props>(), {
-  data: () => [],
+const openedSections = reactive({
+  legalData: false,
+  analytics: false,
+  utmParams: false,
+  additional: false,
 })
-
-const openedSections = reactive(
-  Object.fromEntries(
-    props.data.map((section, index) => [section.key, index === 0 ? true : false]),
-  ) as Record<string, boolean>,
-)
-
-const isArray = (value?: ParametersValue): value is string[] => {
-  return Array.isArray(value)
-}
-
-const isBoolean = (value?: ParametersValue): value is boolean => {
-  return typeof value === 'boolean'
-}
-
-const isSingleColumnSection = (section: ParametersData) => {
-  const items = section.items ?? []
-
-  return items.length > 0 && items.every(item => isBoolean(item.value))
-}
-
-const getPrimaryValue = (value?: ParametersValue) => {
-  return Array.isArray(value) ? value[0] ?? '-' : value
-}
-
-const getExtraValues = (value?: ParametersValue) => {
-  return Array.isArray(value) ? value.slice(1) : []
-}
-
-const hasExtraValues = (value?: ParametersValue) => {
-  return Array.isArray(value) && value.length > 1
-}
-
-const onCopy = (value?: ParametersValue) => {
-  return value != null && copyToClipboard(String(value))
-}
-
-export type { ParametersData as ThreadParameters }
 </script>
 
 <template>
@@ -70,90 +14,342 @@ export type { ParametersData as ThreadParameters }
     title="Параметры потока"
   >
     <template #content>
-      <AppCollapse
-        v-for="section in data"
-        :key="section.key"
-        v-model="openedSections[section.key]"
-        class="thread-single-parameters__section"
-      >
-        <div
-          v-if="section.title"
-          class="thread-single-parameters__section-head"
-        >
-          {{ section.title }}
-          <AppIcon
-            name="dropdown"
-          />
-        </div>
-        <template #content>
-          <div
-            class="thread-single-parameters__section-content"
-            :class="{
-              'thread-single-parameters__section-content--single-column': isSingleColumnSection(section),
-            }"
-          >
-            <div
-              v-for="param in section.items"
-              :key="param.key"
-              class="thread-single-parameters__param"
-            >
-              <div class="thread-single-parameters__param-label">
-                {{ param.label }}
-              </div>
-              <div class="thread-single-parameters__param-value">
-                <template v-if="isArray(param.value)">
-                  {{ getPrimaryValue(param.value) }}
-                  <AppDropdown
-                    v-if="hasExtraValues(param.value)"
-                    mode="hover"
-                  >
-                    <template #default>
-                      <AppTag
-                        color="neutral"
-                        size="sm"
-                        variant="soft"
-                      >
-                        +{{ getExtraValues(param.value).length }}
-                      </AppTag>
-                    </template>
-                    <template #content>
-                      <div class="thread-single-parameters__extra-tooltip">
-                        <div
-                          v-for="extraValue in getExtraValues(param.value)"
-                          :key="extraValue"
-                          class="thread-single-parameters__extra-tooltip-item"
-                        >
-                          {{ extraValue }}
-                        </div>
-                      </div>
-                    </template>
-                  </AppDropdown>
+      <div class="thread-single-parameters__section">
+        <div class="thread-single-parameters__section-content">
+          <div class="thread-single-parameters__param">
+            <div class="thread-single-parameters__param-label">
+              Дата
+            </div>
+            <div class="thread-single-parameters__param-value">
+              12.02.2026
+            </div>
+          </div>
+          <div class="thread-single-parameters__param">
+            <div class="thread-single-parameters__param-label">
+              Оффер
+            </div>
+            <div class="thread-single-parameters__param-value">
+              Компьютерная помощь
+            </div>
+          </div>
+          <div class="thread-single-parameters__param">
+            <div class="thread-single-parameters__param-label">
+              ID
+            </div>
+            <div class="thread-single-parameters__param-value">
+              51323
+              <AppTooltip>
+                <AppButton
+                  class="thread-single-parameters__copy-btn"
+                  color="neutral"
+                  icon="Copy"
+                  size="xs"
+                  variant="link"
+                  @click="copyToClipboard('51323')"
+                />
+                <template #content>
+                  Скопировать
                 </template>
-                <template v-else-if="isBoolean(param.value)">
+              </AppTooltip>
+            </div>
+          </div>
+          <div class="thread-single-parameters__param">
+            <div class="thread-single-parameters__param-label">
+              Инструмент
+            </div>
+            <div class="thread-single-parameters__param-value">
+              Лендинг
+            </div>
+          </div>
+          <div class="thread-single-parameters__param">
+            <div class="thread-single-parameters__param-label">
+              Сценарий
+            </div>
+            <div class="thread-single-parameters__param-value">
+              Компания
+            </div>
+          </div>
+          <div class="thread-single-parameters__param">
+            <div class="thread-single-parameters__param-label">
+              Город
+            </div>
+            <div class="thread-single-parameters__param-value">
+              Абакан
+              <AppDropdown mode="hover">
+                <template #default>
                   <AppTag
-                    :color="param.value ? 'green' : 'neutral'"
+                    color="neutral"
                     size="sm"
                     variant="soft"
                   >
-                    {{ param.value ? 'Включен' : 'Выключен' }}
+                    +3
                   </AppTag>
                 </template>
-                <template v-else>
-                  {{ param.value }}
+                <template #content>
+                  <div class="thread-single-parameters__extra-tooltip">
+                    <div class="thread-single-parameters__extra-tooltip-item">
+                      Москва
+                    </div>
+                    <div class="thread-single-parameters__extra-tooltip-item">
+                      Санкт-Петербург
+                    </div>
+                    <div class="thread-single-parameters__extra-tooltip-item">
+                      Казань
+                    </div>
+                  </div>
                 </template>
-                <AppTooltip v-if="param.isCopyable">
-                  <AppButton
-                    class="thread-single-parameters__copy-btn"
-                    color="neutral"
-                    icon="Copy"
-                    size="xs"
-                    variant="link"
-                    @click="onCopy(param.value)"
-                  />
-                  <template #content>
-                    Скопировать
-                  </template>
-                </AppTooltip>
+              </AppDropdown>
+            </div>
+          </div>
+          <div class="thread-single-parameters__param">
+            <div class="thread-single-parameters__param-label">
+              Проект
+            </div>
+            <div class="thread-single-parameters__param-value">
+              Универсальный
+            </div>
+          </div>
+          <div class="thread-single-parameters__param">
+            <div class="thread-single-parameters__param-label">
+              Телефон
+            </div>
+            <div class="thread-single-parameters__param-value">
+              +7 947 847 83 45
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <AppCollapse
+        v-model="openedSections.legalData"
+        class="thread-single-parameters__section"
+      >
+        <div class="thread-single-parameters__section-head">
+          Юридические данные
+          <AppIcon name="dropdown" />
+        </div>
+        <template #content>
+          <div class="thread-single-parameters__section-content">
+            <div class="thread-single-parameters__param">
+              <div class="thread-single-parameters__param-label">
+                Юридическое наименование
+              </div>
+              <div class="thread-single-parameters__param-value">
+                ООО «Название компании»
+              </div>
+            </div>
+            <div class="thread-single-parameters__param">
+              <div class="thread-single-parameters__param-label">
+                Фактический адрес
+              </div>
+              <div class="thread-single-parameters__param-value">
+                г. Москва, ул. Примерная, д. 1, оф. 100
+              </div>
+            </div>
+            <div class="thread-single-parameters__param">
+              <div class="thread-single-parameters__param-label">
+                ОГРН
+              </div>
+              <div class="thread-single-parameters__param-value">
+                1234567890123
+              </div>
+            </div>
+            <div class="thread-single-parameters__param">
+              <div class="thread-single-parameters__param-label">
+                ИНН
+              </div>
+              <div class="thread-single-parameters__param-value">
+                1234567890
+              </div>
+            </div>
+          </div>
+        </template>
+      </AppCollapse>
+
+      <AppCollapse
+        v-model="openedSections.analytics"
+        class="thread-single-parameters__section"
+      >
+        <div class="thread-single-parameters__section-head">
+          Аналитика и пиксели
+          <AppIcon name="dropdown" />
+        </div>
+        <template #content>
+          <div class="thread-single-parameters__section-content">
+            <div class="thread-single-parameters__param">
+              <div class="thread-single-parameters__param-label">
+                Яндекс.Метрика ID
+              </div>
+              <div class="thread-single-parameters__param-value">
+                12345678
+              </div>
+            </div>
+            <div class="thread-single-parameters__param">
+              <div class="thread-single-parameters__param-label">
+                Google Analytics ID
+              </div>
+              <div class="thread-single-parameters__param-value">
+                UA-12345678-9
+              </div>
+            </div>
+            <div class="thread-single-parameters__param">
+              <div class="thread-single-parameters__param-label">
+                Facebook Pixel ID
+              </div>
+              <div class="thread-single-parameters__param-value">
+                653298765275437
+              </div>
+            </div>
+            <div class="thread-single-parameters__param">
+              <div class="thread-single-parameters__param-label">
+                VK.com Pixel ID (старый)
+              </div>
+              <div class="thread-single-parameters__param-value">
+                VK-RTRG-420111-1lune
+              </div>
+            </div>
+            <div class="thread-single-parameters__param">
+              <div class="thread-single-parameters__param-label">
+                VK.com Pixel ID (новый)
+              </div>
+              <div class="thread-single-parameters__param-value">
+                1234567
+              </div>
+            </div>
+            <div class="thread-single-parameters__param">
+              <div class="thread-single-parameters__param-label">
+                Google Tag Manager
+              </div>
+              <div class="thread-single-parameters__param-value">
+                GTM-WG1234
+              </div>
+            </div>
+            <div class="thread-single-parameters__param">
+              <div class="thread-single-parameters__param-label">
+                Zadarma ID
+              </div>
+              <div class="thread-single-parameters__param-value">
+                240e75faa1ad774fff6d3e26d3912345
+              </div>
+            </div>
+            <div class="thread-single-parameters__param">
+              <div class="thread-single-parameters__param-label">
+                Mango ID
+              </div>
+              <div class="thread-single-parameters__param-value">
+                12345
+              </div>
+            </div>
+            <div class="thread-single-parameters__param">
+              <div class="thread-single-parameters__param-label">
+                Tik-Tok ID
+              </div>
+              <div class="thread-single-parameters__param-value">
+                C0L5ONCP76SVVJ0V5LN0
+              </div>
+            </div>
+          </div>
+        </template>
+      </AppCollapse>
+
+      <AppCollapse
+        v-model="openedSections.utmParams"
+        class="thread-single-parameters__section"
+      >
+        <div class="thread-single-parameters__section-head">
+          Метки потока
+          <AppIcon name="dropdown" />
+        </div>
+        <template #content>
+          <div class="thread-single-parameters__section-content">
+            <div class="thread-single-parameters__param">
+              <div class="thread-single-parameters__param-label">
+                Subid 1
+              </div>
+              <div class="thread-single-parameters__param-value">
+                6hgh
+              </div>
+            </div>
+            <div class="thread-single-parameters__param">
+              <div class="thread-single-parameters__param-label">
+                Subid 2
+              </div>
+              <div class="thread-single-parameters__param-value">
+                gt566
+              </div>
+            </div>
+            <div class="thread-single-parameters__param">
+              <div class="thread-single-parameters__param-label">
+                Subid 3
+              </div>
+              <div class="thread-single-parameters__param-value">
+                gj45
+              </div>
+            </div>
+            <div class="thread-single-parameters__param">
+              <div class="thread-single-parameters__param-label">
+                URL карточки в яндекс картах
+              </div>
+              <div class="thread-single-parameters__param-value">
+                127867364738687
+              </div>
+            </div>
+          </div>
+        </template>
+      </AppCollapse>
+
+      <AppCollapse
+        v-model="openedSections.additional"
+        class="thread-single-parameters__section"
+      >
+        <div class="thread-single-parameters__section-head">
+          Дополнительный захват лидов
+          <AppIcon name="dropdown" />
+        </div>
+        <template #content>
+          <div
+            class="thread-single-parameters__section-content thread-single-parameters__section-content--single-column"
+          >
+            <div class="thread-single-parameters__param">
+              <div class="thread-single-parameters__param-label">
+                Popup при уходе
+              </div>
+              <div class="thread-single-parameters__param-value">
+                <AppTag
+                  color="green"
+                  size="sm"
+                  variant="soft"
+                >
+                  Включен
+                </AppTag>
+              </div>
+            </div>
+            <div class="thread-single-parameters__param">
+              <div class="thread-single-parameters__param-label">
+                Плавающая кнопка вызова формы обратной связи
+              </div>
+              <div class="thread-single-parameters__param-value">
+                <AppTag
+                  color="green"
+                  size="sm"
+                  variant="soft"
+                >
+                  Включен
+                </AppTag>
+              </div>
+            </div>
+            <div class="thread-single-parameters__param">
+              <div class="thread-single-parameters__param-label">
+                Чат-бот
+              </div>
+              <div class="thread-single-parameters__param-value">
+                <AppTag
+                  color="neutral"
+                  size="sm"
+                  variant="soft"
+                >
+                  Выключен
+                </AppTag>
               </div>
             </div>
           </div>
