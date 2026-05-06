@@ -16,11 +16,13 @@ const props = withDefaults(defineProps<Props>(), {
 
 defineSlots<Slots>()
 
-const iconByType: Record<NonNullable<Props['type']>, Icons> = {
-  info: 'info',
-}
-
-const iconName = computed(() => iconByType[props.type])
+const iconName = computed<Icons>(() => {
+  switch (props.type) {
+    case 'info':
+    default:
+      return 'info'
+  }
+})
 
 const classname = computed(() => [
   'alert',
