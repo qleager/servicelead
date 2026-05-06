@@ -1,7 +1,4 @@
 <script lang="ts" setup>
-import { copyToClipboard } from '~/utils/copyToClipboard'
-import { ref } from 'vue'
-
 // IDEA: автоматическое определение языка? или просто пропс lang? или оставляем его в title, типа "HTML · Contact Form"?
 interface Props {
   title?: string
