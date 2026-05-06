@@ -40,6 +40,7 @@ const columns = ref<TableColumn<StatisticsFullRow>[]>([
         class: 'threads__table-date-cell-actions',
       }, quickRowActions.map(action => h(AppTooltip, {
         content: action.label,
+        placement: 'top',
       }, {
         default: () => h(AppButton, {
           class: 'threads__table-date-cell-button',

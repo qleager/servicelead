@@ -1,8 +1,10 @@
 <script lang="ts" setup>
 import type { VNodeChild } from 'vue'
+import type { FloaterProps } from './Floater.vue'
 
 interface Props {
   content?: string
+  placement?: FloaterProps['placement']
 }
 
 interface Slots {
@@ -21,6 +23,7 @@ export type { Props as TooltipProps, Slots as TooltipSlots }
   <AppFloater
     class="tooltip"
     mode="hover"
+    :placement
     portal="#teleports"
   >
     <slot>
