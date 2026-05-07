@@ -11,6 +11,8 @@ type BreadcrumbItem = {
 const props = defineProps<Props>()
 
 const isLast = (index: number) => index + 1 === props.items.length
+
+const isLink = (item: BreadcrumbItem) => !!item.to
 </script>
 
 <template>
@@ -27,7 +29,7 @@ const isLast = (index: number) => index + 1 === props.items.length
     >
       <div
         class="breadcrumbs__item-label"
-        @click="!isLast(index) ? navigateTo(item.to) : ''"
+        @click="!isLast(index) && isLink(item) ? navigateTo(item.to) : ''"
       >
         {{ item.label }}
       </div>
