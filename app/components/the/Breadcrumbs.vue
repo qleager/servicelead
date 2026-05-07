@@ -56,9 +56,14 @@ const isLink = (item: BreadcrumbItem) => !!item.to
 
     display: flex;
     align-items: center;
-    color: $color-neutral;
 
     @include text(regular, xs);
+
+    color: $color-neutral;
+
+    &#{$last} {
+      color: $color-neutral-950;
+    }
 
     &-label {
       cursor: pointer;
@@ -68,24 +73,18 @@ const isLink = (item: BreadcrumbItem) => !!item.to
       &:hover {
         border-bottom: 1px solid $color-neutral;
       }
+
+      #{$last} & {
+        cursor: default;
+
+        &:hover {
+          border-bottom: 1px solid transparent;
+        }
+      }
     }
 
     &-dot {
       user-select: none;
-    }
-
-    &#{$last} {
-      color: $color-neutral-950;
-
-      #{$this} {
-        &-label {
-          cursor: default;
-
-          &:hover {
-            border-bottom: 1px solid transparent;
-          }
-        }
-      }
     }
   }
 }
