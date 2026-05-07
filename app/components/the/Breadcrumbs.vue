@@ -60,9 +60,11 @@ const isLast = (index: number) => index + 1 === props.items.length
 
     &-label {
       cursor: pointer;
+      padding-bottom: 2px;
+      border-bottom: 1px solid transparent;
 
       &:hover {
-        text-decoration: underline;
+        border-bottom: 1px solid $color-neutral;
       }
     }
 
@@ -78,7 +80,7 @@ const isLast = (index: number) => index + 1 === props.items.length
           cursor: default;
 
           &:hover {
-            text-decoration: none;
+            border-bottom: 1px solid transparent;
           }
         }
       }
