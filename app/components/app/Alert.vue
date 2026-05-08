@@ -16,6 +16,11 @@ const props = withDefaults(defineProps<Props>(), {
 
 defineSlots<Slots>()
 
+const classname = computed(() => [
+  'alert',
+  `alert-type-${props.type}`,
+])
+
 const iconName = computed<Icons>(() => {
   switch (props.type) {
     case 'info':
@@ -23,11 +28,6 @@ const iconName = computed<Icons>(() => {
       return 'info'
   }
 })
-
-const classname = computed(() => [
-  'alert',
-  `alert-type-${props.type}`,
-])
 
 export type { Props as AlertProps }
 </script>
@@ -56,8 +56,6 @@ export type { Props as AlertProps }
   border-radius: $space-6;
 
   @include text(regular, sm);
-
-  line-height: 1.357em;
 
   @include is($type-info) {
     color: $color-neutral-950;
