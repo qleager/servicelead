@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { VNodeChild } from 'vue'
 import type { ChartAsix, ChartData, ChartTooltipSlotProps } from '~/types/components/chart'
+import { TOOLTIP_OPTIONS } from '~/constants/chart'
 
 interface Props {
   /**
@@ -29,9 +30,7 @@ const option = computed(() => {
       bottom: 0,
       containLabel: false,
     },
-    tooltip: {
-      trigger: 'item',
-    },
+    tooltip: { ...TOOLTIP_OPTIONS },
     dataset: {
       source: data,
     },
