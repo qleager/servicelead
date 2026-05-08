@@ -1,8 +1,15 @@
+<script setup lang="ts">
+import { useBreadcrumbs } from '~/composables/useBreadcrumbs'
+
+const { items } = useBreadcrumbs()
+</script>
+
 <template>
   <div class="layout-default">
     <TheHeader class="layout-default__header" />
     <TheSidebar class="layout-default__sidebar" />
     <main class="layout-default__main">
+      <TheBreadcrumbs v-if="items.length" />
       <slot />
     </main>
     <TheBar

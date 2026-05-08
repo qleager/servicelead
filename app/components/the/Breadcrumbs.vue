@@ -1,45 +1,25 @@
 <script lang="ts" setup>
-interface Props {
-  items: BreadcrumbItem[]
-}
+import { useBreadcrumbs } from '~/composables/useBreadcrumbs'
 
-type BreadcrumbItem = {
-  label: string
-  to?: string
-}
-
-const props = defineProps<Props>()
-
-const isLast = (index: number) => index + 1 === props.items.length
-
-const isLink = (item: BreadcrumbItem) => !!item.to
+const { items } = useBreadcrumbs()
 </script>
 
 <template>
   <div class="breadcrumbs">
-    <div
+    <NuxtLink
       v-for="(item, index) in items"
       :key="index"
-      :class="[
-        'breadcrumbs__item',
-        {
-          'breadcrumbs__item-last': isLast(index),
-        },
-      ]"
+      active-class="breadcrumbs__item--active"
+      class="breadcrumbs__item"
+      :to="item.to"
     >
-      <div
-        class="breadcrumbs__item-label"
-        @click="!isLast(index) && isLink(item) ? navigateTo(item.to) : ''"
-      >
+      <div class="breadcrumbs__item-label">
         {{ item.label }}
       </div>
-      <div
-        v-if="!isLast(index)"
-        class="breadcrumbs__item-dot"
-      >
+      <div class="breadcrumbs__item-dot">
         ·
       </div>
-    </div>
+    </NuxtLink>
   </div>
 </template>
 
@@ -52,7 +32,7 @@ const isLink = (item: BreadcrumbItem) => !!item.to
 
   &__item {
     $this: &;
-    $last: $this + '-last';
+    $last: $this + '--active';
 
     display: flex;
     align-items: center;
@@ -60,31 +40,37 @@ const isLink = (item: BreadcrumbItem) => !!item.to
     @include text(regular, xs);
 
     color: $color-neutral;
+    text-decoration: none;
 
     &#{$last} {
+      pointer-events: none;
       color: $color-neutral-950;
     }
 
     &-label {
       cursor: pointer;
-      padding-bottom: 2px;
-      border-bottom: 1px solid transparent;
+      color: $color-neutral;
 
       &:hover {
-        border-bottom: 1px solid $color-neutral;
+        text-decoration: underline;
       }
 
       #{$last} & {
         cursor: default;
+        color: $color-neutral-950;
 
         &:hover {
-          border-bottom: 1px solid transparent;
+          text-decoration: none;
         }
       }
     }
 
     &-dot {
       user-select: none;
+
+      #{$last} & {
+        display: none;
+      }
     }
   }
 }
