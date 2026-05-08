@@ -362,8 +362,6 @@ const openedSections = reactive({
 <style lang="scss">
 .thread-single-parameters {
   &__section {
-    $section: &;
-
     @include text(medium, md);
 
     &:not(:first-child) {
@@ -371,7 +369,7 @@ const openedSections = reactive({
       padding-top: $space-4;
       border-top: 1px solid $color-neutral-150;
 
-      #{$section}-content {
+      .thread-single-parameters__section-content {
         padding-top: $space-6;
       }
     }
