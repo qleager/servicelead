@@ -90,8 +90,6 @@ export type { Props as CodeProps }
     padding: $space-4;
 
     @include text(regular, sm);
-
-    line-height: 1.357em;
   }
 }
 </style>
