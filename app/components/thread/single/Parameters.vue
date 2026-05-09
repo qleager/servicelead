@@ -365,26 +365,21 @@ const openedSections = reactive({
     @include text(medium, md);
 
     &:not(:first-child) {
-      margin-top: $space-4;
-      padding-top: $space-4;
       border-top: 1px solid $color-neutral-150;
-
-      .thread-single-parameters__section-content {
-        padding-top: $space-6;
-      }
     }
 
     &-head {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 48px;
+      padding: $space-7 0;
     }
 
     &-content {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: $space-4 $space-14;
+      padding-bottom: $space-6;
 
       &--single-column {
         grid-template-columns: 1fr;
