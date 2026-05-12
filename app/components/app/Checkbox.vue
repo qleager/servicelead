@@ -1,8 +1,11 @@
 <script lang="ts" setup>
+import type { VNodeChild } from 'vue'
+import type { Icons } from '~/types/components/icon'
 import type { Size } from '~/types/ds'
 
 interface Props {
   disabled?: boolean
+  icon?: Icons
   id?: string
   label?: string
   name?: string
@@ -12,12 +15,13 @@ interface Props {
 }
 
 interface Slots {
-  label: () => void
+  label: () => VNodeChild
 }
 
 type Model = boolean
 
 const props = withDefaults(defineProps<Props>(), {
+  icon: 'check_24',
   size: 'md',
 })
 
@@ -57,7 +61,7 @@ export type { Props as CheckboxProps, Model as CheckboxModel }
       <AppIcon
         v-if="model"
         class="checkbox__bullet-icon"
-        name="check_24"
+        :name="icon"
       />
     </span>
     <div

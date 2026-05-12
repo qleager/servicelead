@@ -185,8 +185,12 @@ const columns = ref<TableColumn<OfferSingleGeoRow>[]>([
     cell: ({ cell }) => formatCurrency(Number(cell.getValue())),
   },
   {
-    header: () => h('span', { class: 'offer-single-geo__align-right' }, 'Зоны покрытия'),
+    header: () => h('span', {}, 'Зоны покрытия'),
     accessorKey: 'zone',
+    meta: {
+      align: 'right',
+    },
+    size: 175,
     cell: () => h(AppButton, {
       class: 'offer-single-geo__table-map-button',
       color: 'neutral',
@@ -199,27 +203,27 @@ const columns = ref<TableColumn<OfferSingleGeoRow>[]>([
 </script>
 
 <template>
-  <div
+  <OfferSinglePaneTemplate
     class="offer-single-geo"
   >
-    <div class="offer-single-geo__top">
-      <div class="offer-single-geo__top-column">
-        <AppTitle
-          icon="geo_24"
-          title="Гео"
-        />
-        <AppButton
-          color="neutral"
-          icon="arrow_down"
-          size="sm"
-          trailing-icon
-          variant="link"
-          @click="console.log('download')"
-        >
-          Скачать
-        </AppButton>
-      </div>
-      <div class="offer-single-geo__top-column">
+    <template #header>
+      <div class="offer-single-geo__header">
+        <div class="offer-single-geo__header-title">
+          <AppTitle
+            icon="geo_24"
+            title="Гео"
+          />
+          <AppButton
+            color="neutral"
+            icon="arrow_down"
+            size="sm"
+            trailing-icon
+            variant="link"
+            @click="console.log('download')"
+          >
+            Скачать
+          </AppButton>
+        </div>
         <AppTabs
           class="offer-single-geo__tabs"
           color="neutral"
@@ -239,8 +243,6 @@ const columns = ref<TableColumn<OfferSingleGeoRow>[]>([
             </div>
           </template>
         </AppTabs>
-      </div>
-      <div class="offer-single-geo__top-column">
         <AppInput
           class="offer-single-geo__search"
           icon="search"
@@ -249,31 +251,32 @@ const columns = ref<TableColumn<OfferSingleGeoRow>[]>([
           rounded
         />
       </div>
-    </div>
-    <div class="offer-single-geo__content">
-      <div class="offer-single-geo__table-wrap">
-        <AppTable
-          cell-border="row"
-          class="offer-single-geo__table"
-          :columns
-          :data
-        />
-      </div>
-      <HelpWidget class="offer-single-pricelist__help" />
-    </div>
-  </div>
+    </template>
+    <template #content>
+      <AppTable
+        cell-border="row"
+        class="offer-single-geo__table"
+        :columns
+        :data
+      />
+    </template>
+    <template #sidebar>
+      <HelpWidget />
+    </template>
+  </OfferSinglePaneTemplate>
 </template>
 
 <style lang="scss">
 .offer-single-geo {
   $this: &;
 
-  &__top {
+  &__header {
     display: flex;
     gap: $space-4;
+    align-items: center;
     justify-content: space-between;
 
-    &-column {
+    &-title {
       display: flex;
       gap: $space-6;
       align-items: center;
@@ -291,10 +294,6 @@ const columns = ref<TableColumn<OfferSingleGeoRow>[]>([
 
   &__table {
     width: 100%;
-
-    &-wrap {
-      flex: 1;
-    }
 
     &-header {
       &-city {
@@ -333,10 +332,6 @@ const columns = ref<TableColumn<OfferSingleGeoRow>[]>([
     }
   }
 
-  &__help {
-    max-width: 290px;
-  }
-
   &__tab {
     &-content {
       display: flex;
@@ -359,11 +354,6 @@ const columns = ref<TableColumn<OfferSingleGeoRow>[]>([
         color: $color-red-400;
       }
     }
-  }
-
-  &__align-right {
-    display: flex;
-    justify-content: flex-end;
   }
 }
 </style>

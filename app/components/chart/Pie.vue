@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { VNodeChild } from 'vue'
 import type { ChartData, ChartTooltipSlotProps } from '~/types/components/chart'
+import { TOOLTIP_OPTIONS } from '~/constants/chart'
 
 interface Props {
   /**
@@ -26,9 +27,7 @@ const option = computed(() => {
   const items = props.data ?? []
 
   return {
-    tooltip: {
-      trigger: 'item',
-    },
+    tooltip: { ...TOOLTIP_OPTIONS },
     series: [{
       type: 'pie',
       radius: ['55.6%', '100%'],

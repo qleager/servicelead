@@ -29,6 +29,7 @@ const columns = ref<TableColumn<StatisticsFullRow>[]>([
   {
     header: 'Дата',
     accessorKey: 'date',
+    enableSorting: true,
     cell: ({ cell }) => h('div', {
       class: 'threads__table-date-cell',
     }, [
@@ -39,6 +40,7 @@ const columns = ref<TableColumn<StatisticsFullRow>[]>([
         class: 'threads__table-date-cell-actions',
       }, quickRowActions.map(action => h(AppTooltip, {
         content: action.label,
+        placement: 'top',
       }, {
         default: () => h(AppButton, {
           class: 'threads__table-date-cell-button',
@@ -52,14 +54,17 @@ const columns = ref<TableColumn<StatisticsFullRow>[]>([
   },
   {
     header: 'Название',
+    enableSorting: true,
     accessorKey: 'title',
   },
   {
     header: 'Сценарий',
+    enableSorting: true,
     accessorKey: 'type',
   },
   {
     header: 'Проект',
+    enableSorting: true,
     accessorKey: 'project',
     cell: ({ cell }) => h(AppTag, {
       color: 'primary',
@@ -69,6 +74,7 @@ const columns = ref<TableColumn<StatisticsFullRow>[]>([
   },
   {
     header: 'Инструмент',
+    enableSorting: true,
     accessorKey: 'tool',
     cell: ({ cell }) => h(AppTag, {
       icon: 'avito',
@@ -79,6 +85,7 @@ const columns = ref<TableColumn<StatisticsFullRow>[]>([
   },
   {
     header: 'Телефон клиента',
+    enableSorting: true,
     accessorKey: 'clientPhone',
     cell: ({ cell }) => {
       const clientPhones = cell.getValue<string[]>()
@@ -113,6 +120,7 @@ const columns = ref<TableColumn<StatisticsFullRow>[]>([
   },
   {
     header: 'Город',
+    enableSorting: true,
     accessorKey: 'city',
     cell: ({ cell }) => {
       const cities = cell.getValue<string[]>()
@@ -148,12 +156,15 @@ const columns = ref<TableColumn<StatisticsFullRow>[]>([
   {
     header: 'Ссылка',
     accessorKey: 'link',
+    meta: {
+      align: 'right',
+    },
     cell: ({ cell }) => h(AppButton, {
-      class: 'threads__table-last-cell',
+      class: 'threads__table-link-button',
       color: 'neutral',
       icon: 'link',
       size: 'md',
-      to: String(cell.getValue()),
+      to: cell.getValue(),
       variant: 'link',
     }),
   },
@@ -281,15 +292,18 @@ const data = ref<StatisticsFullRow[]>([
         </template>
         <template #content>
           <AppTable
+            cell-border="row"
             class="threads__table"
             :columns
             :data
+            enable-row-selection
           />
         </template>
         <template #footer>
           <AppPagination
-            counter
-            total="70"
+            show-edges
+            :sibling-count="3"
+            :total="10000"
           />
         </template>
       </AppCard>
@@ -378,7 +392,9 @@ const data = ref<StatisticsFullRow[]>([
       }
     }
 
-    &-last-cell {
+    &-link-button {
+      margin-right: -$space-3;
+      margin-left: auto;
       margin-block: -$space-6;
     }
   }

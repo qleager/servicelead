@@ -22,6 +22,7 @@ const classname = computed(() => [
 <style lang="scss">
 .select-placeholder {
   $this: &;
+  $size-2xs: $this + '-size-2xs';
   $size-xs: $this + '-size-xs';
   $size-sm: $this + '-size-sm';
   $size-md: $this + '-size-md';
@@ -32,8 +33,12 @@ const classname = computed(() => [
   font: inherit;
   color: $color-neutral-400;
 
+  @include is($size-2xs) {
+    @include text(regular, sm);
+  }
+
   @include is($size-xs) {
-    @include text(regular, xs);
+    @include text(regular, sm);
   }
 
   @include is($size-sm) {

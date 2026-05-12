@@ -73,7 +73,7 @@
   gap: $space-4;
   justify-content: space-between;
 
-  height: 185px;
+  min-height: 185px;
   padding: $space-5;
   border-radius: $radius-4;
 
@@ -90,6 +90,7 @@
     z-index: 1;
     top: 0;
     right: 0;
+    transform-origin: top right;
 
     width: 60px;
     height: 60px;
@@ -99,7 +100,7 @@
     transition: inherit;
 
     @include is($hover) {
-      opacity: 0;
+      transform: scale(0);
       transition: inherit;
     }
   }
