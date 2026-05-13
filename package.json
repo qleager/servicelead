@@ -28,6 +28,7 @@
     "nuxt": "^4.4.2",
     "nuxt-echarts": "1.0.1",
     "nuxt-typed-router": "4.0.7",
+    "nuxt-yup": "2.4.4",
     "prettier": "^3.8.1",
     "storybook": "~10.3.4",
     "vue": "^3.5.32",
