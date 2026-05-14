@@ -28,12 +28,12 @@
     "nuxt": "^4.4.2",
     "nuxt-echarts": "1.0.1",
     "nuxt-typed-router": "4.0.7",
-    "nuxt-yup": "2.4.4",
     "prettier": "^3.8.1",
     "storybook": "~10.3.4",
     "vue": "^3.5.32",
     "vue-echarts": "^8.0.1",
-    "vue-router": "^5.0.4"
+    "vue-router": "^5.0.4",
+    "yup": "^1.7.1"
   },
   "packageManager": "pnpm@10.28.0+sha512.77a884a165cbba2d8d1c19e3b4880eee6d2fcabd0d879121e282196b80042351d5eb3ca0935fa599da1dc51265cc68816ad2bddd2a2de5ea9fdf92adbec7cd34",
   "pnpm": {

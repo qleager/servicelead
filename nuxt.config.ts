@@ -12,7 +12,6 @@ export default defineNuxtConfig({
     '@nuxtjs/storybook',
     'nuxt-typed-router',
     'nuxt-echarts',
-    'nuxt-yup',
   ],
 
   devtools: { enabled: true },
