@@ -1,25 +1,47 @@
 <script lang="ts" setup>
-import { useBreadcrumbs } from '~/composables/useBreadcrumbs'
+type BreadcrumbItem = {
+  label: string
+  to?: string
+}
 
-const { items } = useBreadcrumbs()
+const route = useRoute()
+
+const items = computed<BreadcrumbItem[]>(() => {
+  return (route.meta.breadcrumb as BreadcrumbItem[]) ?? []
+})
 </script>
 
 <template>
-  <div class="breadcrumbs">
-    <NuxtLink
+  <div
+    v-if="items.length"
+    class="breadcrumbs"
+  >
+    <template
       v-for="(item, index) in items"
-      :key="index"
-      active-class="breadcrumbs__item--active"
-      class="breadcrumbs__item"
-      :to="item.to"
+      :key="item.label"
     >
-      <div class="breadcrumbs__item-label">
+      <NuxtLink
+        v-if="item.to"
+        class="breadcrumbs__item"
+        :to="item.to"
+      >
+        <div class="breadcrumbs__item-link">
+          {{ item.label }}
+        </div>
+        <div
+          v-if="index < items.length - 1"
+          class="breadcrumbs__item-separator"
+        >
+          ·
+        </div>
+      </NuxtLink>
+      <div
+        v-else
+        class="breadcrumbs__item"
+      >
         {{ item.label }}
       </div>
-      <div class="breadcrumbs__item-dot">
-        ·
-      </div>
-    </NuxtLink>
+    </template>
   </div>
 </template>
 
@@ -32,45 +54,26 @@ const { items } = useBreadcrumbs()
 
   &__item {
     $this: &;
-    $last: $this + '--active';
 
     display: flex;
     align-items: center;
 
     @include text(regular, xs);
 
-    color: $color-neutral;
     text-decoration: none;
 
-    &#{$last} {
-      pointer-events: none;
-      color: $color-neutral-950;
-    }
-
-    &-label {
+    &-link {
       cursor: pointer;
       color: $color-neutral;
 
       &:hover {
         text-decoration: underline;
       }
-
-      #{$last} & {
-        cursor: default;
-        color: $color-neutral-950;
-
-        &:hover {
-          text-decoration: none;
-        }
-      }
     }
 
-    &-dot {
+    &-separator {
       user-select: none;
-
-      #{$last} & {
-        display: none;
-      }
+      color: $color-neutral;
     }
   }
 }
