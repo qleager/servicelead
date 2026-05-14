@@ -10,6 +10,11 @@ interface Props<T extends Record<string, unknown>> {
    * An object representing the current state of the form
    */
   state: T
+  /**
+   * The list of input events that trigger the form validation
+   * @defaulvalue `"['blur', 'change', 'input']"`
+   */
+  validateOn?: ('input' | 'blur' | 'change' | 'focus')[]
 }
 
 interface Emits<T extends Record<string, unknown>> {
@@ -36,12 +41,18 @@ type Error = {
   message: string[]
 }
 
-export type { Props as FormProps, Emits as FormEmits, FormSubmitEvent, FormErrorEvent }
+type Injection = ComputedRef<{
+  errors: Ref<Error[]>
+}>
+
+export type { Props as FormProps, Emits as FormEmits, FormSubmitEvent, FormErrorEvent, Injection as FormInjection }
 </script>
 
 <script lang="ts" setup generic="N extends Record<string, unknown>">
 const props = defineProps<Props<N>>()
 const emit = defineEmits<Emits<N>>()
+
+const errors = ref<Error[]>([])
 
 const validate = async () => {
   if (props.schema) {
@@ -54,6 +65,7 @@ const validate = async () => {
 const onSubmit = async (event: SubmitEvent) => {
   try {
     const data = await validate()
+    errors.value = []
     const submitEvent = Object.assign(event, { data }) as FormSubmitEvent<N>
 
     emit('submit', submitEvent)
@@ -64,9 +76,11 @@ const onSubmit = async (event: SubmitEvent) => {
       throw error
     }
 
+    errors.value = getFieldErrors(error)
+
     const errorEvent = {
       ...event,
-      errors: getFieldErrors(error),
+      errors: errors.value,
     }
 
     emit('error', errorEvent)
@@ -76,6 +90,10 @@ const onSubmit = async (event: SubmitEvent) => {
     //
   }
 }
+
+provide<Injection>('formState', computed(() => ({
+  errors: errors,
+})))
 
 const getFieldErrors = (validationError: ValidationError): Error[] => {
   const validationErrors = validationError.inner

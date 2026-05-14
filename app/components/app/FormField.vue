@@ -1,21 +1,43 @@
 <script lang="ts" setup>
+import type { FormInjection } from './Form.vue'
+
 interface Props {
   caption?: string
   error?: string
+  /**
+   * The name of the FormField. Also used to match form errors and assigned to inputs nested in the slot
+   */
+  name?: string
   required?: boolean
   title?: string
 }
+
+type Injection = ComputedRef<{
+  name: typeof props.name
+  error?: string
+}>
+
+const injection = inject('formState') as FormInjection
 
 const props = defineProps<Props>()
 
 const classname = computed(() => [
   'label',
-  { 'label-error': props.error },
+  { 'label-error': errorMessage.value },
 ])
 
-const captionText = computed(() => props.error || props.caption)
+const captionText = computed(() => errorMessage.value || props.caption)
 
-export type { Props as LabelProps }
+const errorMessage = computed(() => {
+  return props.error || injection.value.errors.value.find(item => item.name === props.name)?.message.toString()
+})
+
+provide<Injection>('formFieldState', computed(() => ({
+  name: props.name,
+  error: errorMessage.value,
+})))
+
+export type { Props as FormFieldProps, Injection as FormFieldInjection }
 </script>
 
 <template>

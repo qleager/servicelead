@@ -1,18 +1,19 @@
 <script lang="ts" setup>
 import type { IconProps } from '~/components/app/Icon.vue'
-import type { InputHTMLAttributes } from 'vue'
+import type { FormFieldInjection } from './FormField.vue'
+import type { Size, Subset } from '~/types/ds'
 
 interface Props {
-  autocomplete?: InputHTMLAttributes['autocomplete']
+  autocomplete?: string
   color?: 'white' | 'neutral' | 'primary'
-  disabled?: InputHTMLAttributes['disabled']
+  disabled?: boolean
   error?: boolean
   icon?: IconProps['name']
-  name?: InputHTMLAttributes['name']
-  placeholder?: InputHTMLAttributes['placeholder']
+  name?: string
+  placeholder?: string
   reset?: boolean
   rounded?: boolean
-  size?: 'xs' | 'sm' | 'md' | 'lg'
+  size?: Subset<Size, 'xs' | 'sm' | 'md' | 'lg'>
   trailingIcon?: boolean
   // TODO: взять логику с nuxt ui
   type?: 'text' | 'number' | 'password' | 'search'
@@ -27,12 +28,15 @@ interface Emits {
 
 type Model = null | string | number
 
+const injection = inject('formFieldState') as FormFieldInjection
+
 const props = withDefaults(defineProps<Props>(), {
   variant: 'outline',
   size: 'md',
   placeholder: 'Введите...',
   color: 'neutral',
 })
+
 const emits = defineEmits<Emits>()
 
 const model = defineModel<Model>()
@@ -48,7 +52,7 @@ const classname = computed(() => ([
     'input-icon': props.icon,
     'input-icon-trailing': props.trailingIcon,
     'input-rounded': props.rounded,
-    'input-error': props.error,
+    'input-error': injection.value.error,
   },
 ]))
 
@@ -85,7 +89,7 @@ export type { Props as InputProps, Emits as InputEmits, Model as InputModel }
       :autocomplete
       class="input__field"
       :disabled
-      :name
+      :name="name ?? injection.name"
       :placeholder
       :type
     >
