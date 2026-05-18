@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-type BreadcrumbItem = {
+interface BreadcrumbItem {
   label: string
   to?: string
 }
@@ -7,8 +7,10 @@ type BreadcrumbItem = {
 const route = useRoute()
 
 const items = computed<BreadcrumbItem[]>(() => {
-  return (route.meta.breadcrumb as BreadcrumbItem[]) ?? []
+  return (route.meta.breadcrumbs as BreadcrumbItem[]) ?? []
 })
+
+export type { BreadcrumbItem }
 </script>
 
 <template>
@@ -73,6 +75,7 @@ const items = computed<BreadcrumbItem[]>(() => {
 
     &-separator {
       user-select: none;
+      margin-left: $space-1;
       color: $color-neutral;
     }
   }
