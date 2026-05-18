@@ -1,19 +1,38 @@
 <script lang="ts" setup>
+import { object, string, type InferType } from 'yup'
+import type { FormSubmitEvent } from '~/components/app/Form.vue'
+
+type Schema = InferType<typeof schema>
+
 definePageMeta({
   layout: 'auth',
 })
 
 const { $api } = useNuxtApp()
 
-const onSubmit = async () => {
+const schema = object({
+  email: string().email().required(),
+  password: string()
+    .min(8)
+    .required(),
+})
+
+const state = reactive({
+  email: '',
+  password: '',
+})
+
+const onSubmit = async (event: FormSubmitEvent<Schema>) => {
+  const data = event.data
+
   try {
     await $api.auth.login({
       body: {
-        email: '',
-        password: '',
+        ...data,
       },
     })
   }
+
   catch (error) {
     alert(error)
   }
@@ -31,55 +50,65 @@ const onSubmit = async () => {
       </div>
     </div>
 
-    <div class="auth-login__fields">
-      <AppLabel
-        class="auth-login__field"
-        title="E-mail"
-      >
-        <AppInput
-          class="auth-login__input"
-          name="email"
-          placeholder="Введите e-mail"
-          type="text"
-        />
-      </AppLabel>
-
-      <AppLabel
-        class="auth-login__field"
-        title="Пароль"
-      >
-        <AppInput
-          class="auth-login__input"
-          icon="eye"
-          name="password"
-          placeholder="Введите пароль"
-          trailing-icon
-          type="password"
-        />
-      </AppLabel>
-
-      <div class="auth-login__actions">
-        <AppCheckbox
-          label="Запомнить"
-          name="remember"
-        />
-
-        <NuxtLink
-          class="auth-login__link"
-          to="/auth/recovery"
-        >
-          Забыли пароль?
-        </NuxtLink>
-      </div>
-    </div>
-
-    <AppButton
-      class="auth-login__button"
-      type="submit"
-      @click="onSubmit"
+    <AppForm
+      class="auth-login__form"
+      :schema
+      :state
+      @submit="onSubmit"
     >
-      Войти
-    </AppButton>
+      <div class="auth-login__fields">
+        <AppFormField
+          class="auth-login__field"
+          name="email"
+          title="E-mail"
+        >
+          <AppInput
+            v-model="state.email"
+            autocomplete="username"
+            class="auth-login__input"
+            placeholder="Введите e-mail"
+            type="text"
+          />
+        </AppFormField>
+
+        <AppFormField
+          class="auth-login__field"
+          name="password"
+          title="Пароль"
+        >
+          <AppInput
+            v-model="state.password"
+            autocomplete="current-password"
+            class="auth-login__input"
+            icon="eye"
+            placeholder="Введите пароль"
+            trailing-icon
+            type="password"
+          />
+        </AppFormField>
+
+        <div class="auth-login__actions">
+          <AppCheckbox
+            label="Запомнить"
+            name="remember"
+          />
+
+          <NuxtLink
+            class="auth-login__link"
+            to="/auth/recovery"
+          >
+            Забыли пароль?
+          </NuxtLink>
+        </div>
+
+        <AppButton
+          class="auth-login__button"
+          type="submit"
+        >
+          Войти
+        </AppButton>
+      </div>
+    </AppForm>
 
     <div class="auth-login__actions">
       Нет аккаунта?
