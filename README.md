@@ -196,11 +196,11 @@ docs(AppButton): add jsondoc to props
 
 ## Use Page Meta
 
-This section describes page metadata configured with `definePageMeta`.
+This section describes page metadata configured with `definePageMeta`
 
 ### Breadcrumbs
 
-Use `breadcrumbs` in `definePageMeta` to show page breadcrumbs in `TheBreadcrumbs`.
+Use `breadcrumbs` in `definePageMeta` to show page breadcrumbs in `TheBreadcrumbs`
 
 ```ts
 definePageMeta({
