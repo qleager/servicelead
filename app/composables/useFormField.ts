@@ -40,28 +40,26 @@ export const useFormField = (props?: MaybeRefOrGetter<Props | undefined>) => {
   const errorMessage = computed(() => field?.errorMessage?.value)
   const error = computed(() => toValue(props)?.error || Boolean(errorMessage.value))
 
-  const emitFormBlur = async () => {
+  const emitFormEvent = async (event: FormInputEvent) => {
     if (name.value) {
-      await form?.validateField(name.value, 'blur')
+      await form?.validateField(name.value, event)
     }
   }
 
-  const emitFormChange = async () => {
-    if (name.value) {
-      await form?.validateField(name.value, 'change')
-    }
+  const emitFormBlur = () => {
+    emitFormEvent('blur')
   }
 
-  const emitFormFocus = async () => {
-    if (name.value) {
-      await form?.validateField(name.value, 'change')
-    }
+  const emitFormChange = () => {
+    emitFormEvent('change')
   }
 
-  const emitFormInput = async () => {
-    if (name.value) {
-      await form?.validateField(name.value, 'input')
-    }
+  const emitFormFocus = () => {
+    emitFormEvent('focus')
+  }
+
+  const emitFormInput = () => {
+    emitFormEvent('input')
   }
 
   return {
