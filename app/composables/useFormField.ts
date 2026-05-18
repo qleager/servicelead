@@ -1,5 +1,4 @@
 import type { ComputedRef, InjectionKey, MaybeRefOrGetter, Ref } from 'vue'
-import { computed, inject, toValue } from 'vue'
 
 interface Props {
   error?: boolean
@@ -21,7 +20,7 @@ type FormError = {
 
 type FormInjection = {
   errors: Ref<FormError[]>
-  validateField: (name: string, event: FormInputEvent) => Promise<void>
+  handleFieldEvent: (name: string, event: FormInputEvent) => Promise<void>
 }
 
 type FormFieldInjection = {
@@ -42,25 +41,17 @@ export const useFormField = (props?: MaybeRefOrGetter<Props | undefined>) => {
 
   const emitFormEvent = async (event: FormInputEvent) => {
     if (name.value) {
-      await form?.validateField(name.value, event)
+      await form?.handleFieldEvent(name.value, event)
     }
   }
 
-  const emitFormBlur = () => {
-    emitFormEvent('blur')
-  }
+  const emitFormBlur = () => emitFormEvent('blur')
 
-  const emitFormChange = () => {
-    emitFormEvent('change')
-  }
+  const emitFormChange = () => emitFormEvent('change')
 
-  const emitFormFocus = () => {
-    emitFormEvent('focus')
-  }
+  const emitFormFocus = () => emitFormEvent('focus')
 
-  const emitFormInput = () => {
-    emitFormEvent('input')
-  }
+  const emitFormInput = () => emitFormEvent('input')
 
   return {
     error,
