@@ -3,6 +3,7 @@
     <TheHeader class="layout-default__header" />
     <TheSidebar class="layout-default__sidebar" />
     <main class="layout-default__main">
+      <TheBreadcrumbs />
       <slot />
     </main>
     <TheBar

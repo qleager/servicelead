@@ -25,6 +25,7 @@ Please check the following before starting work on the project:
 3. Read about [SCSS snippets](#scss-snippets)
 4. Check available [Composables](#use-composables)
 5. Check available [Utils](#use-utils)
+5. Check available [Page Meta](#use-page-meta)
 6. Read about [Conventional Commits](#use-conventional-commits)
 
 ## Use Snippets
@@ -192,6 +193,23 @@ docs(AppButton): add jsondoc to props
 
 ## Use Utils
 - [search](docs/utils/search.md) — Fuse.js search wrapper
+
+## Use Page Meta
+
+This section describes page metadata configured with `definePageMeta`
+
+### Breadcrumbs
+
+Use `breadcrumbs` in `definePageMeta` to show page breadcrumbs in `TheBreadcrumbs`
+
+```ts
+definePageMeta({
+  breadcrumbs: [
+    { label: 'Tickets', to: '/tickets' },
+    { label: 'Ticket #123' },
+  ],
+})
+```
 
 ## 📦 Требования
 
