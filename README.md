@@ -193,6 +193,9 @@ docs(AppButton): add jsondoc to props
 ## Use Utils
 - [search](docs/utils/search.md) — Fuse.js search wrapper
 
+## Use Validation
+- [validation](docs/validation.md) — Yup validation with and without `AppForm`
+
 ## 📦 Требования
 
 Перед началом убедитесь, что установлено:
