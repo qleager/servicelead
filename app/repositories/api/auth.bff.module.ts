@@ -2,7 +2,7 @@ import FetchFactory from '@shared/repository/factory'
 import type { FetchOptions } from '@shared/types/repository'
 import type { LoginPayload } from '@shared/types/api/auth.bff'
 
-class ExampleModule extends FetchFactory {
+class AuthBffModule extends FetchFactory {
   private RESOURCE = '/auth'
 
   async login(fetchOptions?: FetchOptions<LoginPayload>) {
@@ -16,4 +16,4 @@ class ExampleModule extends FetchFactory {
   }
 }
 
-export default ExampleModule
+export default AuthBffModule
