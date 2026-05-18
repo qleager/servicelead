@@ -40,7 +40,7 @@ const model = defineModel<Model>()
 
 const inputElement = useTemplateRef<HTMLInputElement>('field')
 
-const { error, name } = useFormField(props)
+const { error, name, emitFormBlur, emitFormChange, emitFormInput, emitFormFocus } = useFormField(props)
 
 const classname = computed(() => ([
   'input',
@@ -69,6 +69,22 @@ const onClick = () => {
   emits('click')
 }
 
+const onBlur = () => {
+  emitFormBlur()
+}
+
+const onChange = () => {
+  emitFormChange()
+}
+
+const onFocus = () => {
+  emitFormFocus()
+}
+
+const onInput = () => {
+  emitFormInput()
+}
+
 export type { Props as InputProps, Emits as InputEmits, Model as InputModel }
 </script>
 
@@ -91,6 +107,10 @@ export type { Props as InputProps, Emits as InputEmits, Model as InputModel }
       :name
       :placeholder
       :type
+      @blur="onBlur"
+      @change="onChange"
+      @focus="onFocus"
+      @input="onInput"
     >
     <Transition name="input__transition-reset">
       <AppButton

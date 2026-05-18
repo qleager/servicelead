@@ -1,6 +1,6 @@
 <script lang="ts">
 import { ValidationError, type ObjectSchema } from 'yup'
-import { formInjectionKey, type FormError, type FormInjection } from '~/composables/useFormField'
+import { formInjectionKey, type FormError, type FormInjection, type FormInputEvent } from '~/composables/useFormField'
 
 interface Props<T extends Record<string, unknown>> {
   /**
@@ -15,7 +15,7 @@ interface Props<T extends Record<string, unknown>> {
    * The list of input events that trigger the form validation
    * @defaulvalue `"['blur', 'change', 'input']"`
    */
-  validateOn?: ('input' | 'blur' | 'change' | 'focus')[]
+  validateOn?: FormInputEvent[]
 }
 
 interface Emits<T extends Record<string, unknown>> {
@@ -35,18 +35,13 @@ export type { Props as FormProps, Emits as FormEmits, FormSubmitEvent, FormError
 </script>
 
 <script lang="ts" setup generic="N extends Record<string, unknown>">
-const props = defineProps<Props<N>>()
+const props = withDefaults(defineProps<Props<N>>(), {
+  validateOn: () => ['blur', 'change', 'input'],
+})
+
 const emit = defineEmits<Emits<N>>()
 
 const errors = ref<FormError[]>([])
-
-const validate = async () => {
-  if (props.schema) {
-    return props.schema?.validate(props.state, { abortEarly: false })
-  }
-
-  return props.state
-}
 
 const onSubmit = async (event: SubmitEvent) => {
   try {
@@ -74,19 +69,55 @@ const onSubmit = async (event: SubmitEvent) => {
   }
 }
 
-provide<FormInjection>(formInjectionKey, {
-  errors: errors,
-})
+const validate = async () => {
+  if (props.schema) {
+    return props.schema?.validate(props.state, { abortEarly: false })
+  }
 
-const getFieldErrors = (validationError: ValidationError): FormError[] => {
-  const validationErrors = validationError.inner
+  return props.state
+}
+
+const validateField = async (name: string, event: FormInputEvent) => {
+  if (!props.schema || !props.validateOn.includes(event)) {
+    return
+  }
+
+  try {
+    await props.schema.validateAt(name, props.state, { abortEarly: false })
+    removeFieldErrors(name)
+  }
+
+  catch (error) {
+    if (!(error instanceof ValidationError)) {
+      throw error
+    }
+
+    replaceFieldErrors(name, getFieldErrors(error, name))
+  }
+}
+
+const removeFieldErrors = (name: string) => {
+  errors.value = errors.value.filter(error => error.name !== name)
+}
+
+const replaceFieldErrors = (name: string, fieldErrors: FormError[]) => {
+  removeFieldErrors(name)
+  errors.value = [...errors.value, ...fieldErrors]
+}
+
+const getFieldErrors = (validationError: ValidationError, fallbackName?: string): FormError[] => {
+  const validationErrors = validationError.inner.length
+    ? validationError.inner
+    : [validationError]
 
   return validationErrors.reduce<FormError[]>((errors, error) => {
-    if (!error.path) {
+    const name = error.path || fallbackName
+
+    if (!name) {
       return errors
     }
 
-    const existingError = errors.find(item => item.name === error.path)
+    const existingError = errors.find(item => item.name === name)
 
     if (existingError) {
       existingError.message.push(error.message)
@@ -94,13 +125,18 @@ const getFieldErrors = (validationError: ValidationError): FormError[] => {
     }
 
     errors.push({
-      name: error.path,
+      name,
       message: [error.message],
     })
 
     return errors
   }, [])
 }
+
+provide<FormInjection>(formInjectionKey, {
+  errors: errors,
+  validateField,
+})
 </script>
 
 <template>
