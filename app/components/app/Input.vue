@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import type { IconProps } from '~/components/app/Icon.vue'
-import type { FormFieldInjection } from './FormField.vue'
 import type { Size, Subset } from '~/types/ds'
 
 interface Props {
@@ -28,8 +27,6 @@ interface Emits {
 
 type Model = null | string | number
 
-const injection = inject('formFieldState') as FormFieldInjection
-
 const props = withDefaults(defineProps<Props>(), {
   variant: 'outline',
   size: 'md',
@@ -43,6 +40,8 @@ const model = defineModel<Model>()
 
 const inputElement = useTemplateRef<HTMLInputElement>('field')
 
+const { error, name } = useFormField(props)
+
 const classname = computed(() => ([
   'input',
   `input-size-${props.size}`,
@@ -52,7 +51,7 @@ const classname = computed(() => ([
     'input-icon': props.icon,
     'input-icon-trailing': props.trailingIcon,
     'input-rounded': props.rounded,
-    'input-error': injection.value.error,
+    'input-error': error.value,
   },
 ]))
 
@@ -89,7 +88,7 @@ export type { Props as InputProps, Emits as InputEmits, Model as InputModel }
       :autocomplete
       class="input__field"
       :disabled
-      :name="name ?? injection.name"
+      :name
       :placeholder
       :type
     >

@@ -1,5 +1,6 @@
 <script lang="ts">
 import { ValidationError, type ObjectSchema } from 'yup'
+import { formInjectionKey, type FormError, type FormInjection } from '~/composables/useFormField'
 
 interface Props<T extends Record<string, unknown>> {
   /**
@@ -27,32 +28,17 @@ type FormSubmitEvent<T extends Record<string, unknown>> = SubmitEvent & {
 }
 
 type FormErrorEvent = SubmitEvent & {
-  errors: Error[]
+  errors: FormError[]
 }
 
-type Error = {
-  /**
-   * Name of validation field
-   */
-  name: string
-  /**
-   * Error messages of validation field
-   */
-  message: string[]
-}
-
-type Injection = ComputedRef<{
-  errors: Ref<Error[]>
-}>
-
-export type { Props as FormProps, Emits as FormEmits, FormSubmitEvent, FormErrorEvent, Injection as FormInjection }
+export type { Props as FormProps, Emits as FormEmits, FormSubmitEvent, FormErrorEvent }
 </script>
 
 <script lang="ts" setup generic="N extends Record<string, unknown>">
 const props = defineProps<Props<N>>()
 const emit = defineEmits<Emits<N>>()
 
-const errors = ref<Error[]>([])
+const errors = ref<FormError[]>([])
 
 const validate = async () => {
   if (props.schema) {
@@ -65,6 +51,7 @@ const validate = async () => {
 const onSubmit = async (event: SubmitEvent) => {
   try {
     const data = await validate()
+
     errors.value = []
     const submitEvent = Object.assign(event, { data }) as FormSubmitEvent<N>
 
@@ -77,11 +64,7 @@ const onSubmit = async (event: SubmitEvent) => {
     }
 
     errors.value = getFieldErrors(error)
-
-    const errorEvent = {
-      ...event,
-      errors: errors.value,
-    }
+    const errorEvent: FormErrorEvent = Object.assign(event, { errors: errors.value })
 
     emit('error', errorEvent)
   }
@@ -91,14 +74,14 @@ const onSubmit = async (event: SubmitEvent) => {
   }
 }
 
-provide<Injection>('formState', computed(() => ({
+provide<FormInjection>(formInjectionKey, {
   errors: errors,
-})))
+})
 
-const getFieldErrors = (validationError: ValidationError): Error[] => {
+const getFieldErrors = (validationError: ValidationError): FormError[] => {
   const validationErrors = validationError.inner
 
-  return validationErrors.reduce<Error[]>((errors, error) => {
+  return validationErrors.reduce<FormError[]>((errors, error) => {
     if (!error.path) {
       return errors
     }

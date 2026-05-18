@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { FormInjection } from './Form.vue'
+import { formFieldInjectionKey, formInjectionKey, type FormFieldInjection } from '~/composables/useFormField'
 
 interface Props {
   caption?: string
@@ -12,12 +12,7 @@ interface Props {
   title?: string
 }
 
-type Injection = ComputedRef<{
-  name: typeof props.name
-  error?: string
-}>
-
-const injection = inject('formState') as FormInjection
+const injection = inject(formInjectionKey, null)
 
 const props = defineProps<Props>()
 
@@ -28,16 +23,16 @@ const classname = computed(() => [
 
 const captionText = computed(() => errorMessage.value || props.caption)
 
-const errorMessage = computed(() => {
-  return props.error || injection.value.errors.value.find(item => item.name === props.name)?.message.toString()
+const errorMessage = computed(() => (
+  props.error || injection?.errors.value.find(item => item.name === props.name)?.message[0]
+))
+
+provide<FormFieldInjection>(formFieldInjectionKey, {
+  name: computed(() => props.name),
+  errorMessage,
 })
 
-provide<Injection>('formFieldState', computed(() => ({
-  name: props.name,
-  error: errorMessage.value,
-})))
-
-export type { Props as FormFieldProps, Injection as FormFieldInjection }
+export type { Props as FormFieldProps }
 </script>
 
 <template>
