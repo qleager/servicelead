@@ -77,8 +77,16 @@ const validate = async () => {
   return props.state
 }
 
-const validateField = async (name: string, event: FormInputEvent) => {
+const handleFieldEvent = async (name: string, event: FormInputEvent) => {
   if (!props.schema || !props.validateOn.includes(event)) {
+    return
+  }
+
+  await validateField(name)
+}
+
+const validateField = async (name: string) => {
+  if (!props.schema) {
     return
   }
 
@@ -135,7 +143,7 @@ const getFieldErrors = (validationError: ValidationError, fallbackName?: string)
 
 provide<FormInjection>(formInjectionKey, {
   errors: errors,
-  validateField,
+  handleFieldEvent,
 })
 </script>
 
