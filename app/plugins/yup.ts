@@ -1,4 +1,4 @@
-import { setLocale } from 'yup'
+import { addMethod, setLocale, string } from 'yup'
 
 export default defineNuxtPlugin(() => {
   setLocale({
@@ -54,5 +54,13 @@ export default defineNuxtPlugin(() => {
     tuple: {
       notType: 'Некорректный формат кортежа',
     },
+  })
+
+  addMethod(string, 'phone', function () {
+    return this.test(
+      'phone',
+      'Введите корректный номер телефона',
+      value => !value || /^\+?[0-9\s()-]+$/.test(value),
+    )
   })
 })
