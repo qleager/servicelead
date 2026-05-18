@@ -1,20 +1,29 @@
-import { useApi } from '@server/utils/api'
 import type { LoginPayload } from '@shared/types/api/auth.bff'
 
 export default defineEventHandler(async (event) => {
-  const api = useApi()
+  const api = event.context.api
   const cookies = parseCookies(event)
-  const SERVICENAME = useRuntimeConfig(event).apiServiceName
+  const serviceName = useRuntimeConfig(event).apiServiceName
   const body = await readBody<LoginPayload>(event)
+
+  if (!cookies.fingerprint) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'Missing fingerprint',
+      data: {
+        message: 'Need a fingerprint cookie',
+      },
+    })
+  }
 
   const result = await api.auth.authorize('Email', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'deviceId': cookies.fingerprint ?? '',
+      'deviceId': cookies.fingerprint,
     },
     body: {
-      serviceName: SERVICENAME,
+      serviceName,
       authValue: body.email,
       authCode: body.password,
     },

@@ -1,18 +1,18 @@
 <script lang="ts" setup>
 import type { IconProps } from '~/components/app/Icon.vue'
-import type { InputHTMLAttributes } from 'vue'
+import type { Size, Subset } from '~/types/ds'
 
 interface Props {
-  autocomplete?: InputHTMLAttributes['autocomplete']
+  autocomplete?: string
   color?: 'white' | 'neutral' | 'primary'
-  disabled?: InputHTMLAttributes['disabled']
+  disabled?: boolean
   error?: boolean
   icon?: IconProps['name']
-  name?: InputHTMLAttributes['name']
-  placeholder?: InputHTMLAttributes['placeholder']
+  name?: string
+  placeholder?: string
   reset?: boolean
   rounded?: boolean
-  size?: 'xs' | 'sm' | 'md' | 'lg'
+  size?: Subset<Size, 'xs' | 'sm' | 'md' | 'lg'>
   trailingIcon?: boolean
   // TODO: взять логику с nuxt ui
   type?: 'text' | 'number' | 'password' | 'search'
@@ -33,11 +33,14 @@ const props = withDefaults(defineProps<Props>(), {
   placeholder: 'Введите...',
   color: 'neutral',
 })
+
 const emits = defineEmits<Emits>()
 
 const model = defineModel<Model>()
 
 const inputElement = useTemplateRef<HTMLInputElement>('field')
+
+const { error, name, emitFormBlur, emitFormChange, emitFormInput, emitFormFocus } = useFormField(props)
 
 const classname = computed(() => ([
   'input',
@@ -48,7 +51,7 @@ const classname = computed(() => ([
     'input-icon': props.icon,
     'input-icon-trailing': props.trailingIcon,
     'input-rounded': props.rounded,
-    'input-error': props.error,
+    'input-error': error.value,
   },
 ]))
 
@@ -64,6 +67,22 @@ const onReset = () => {
 const onClick = () => {
   inputElement.value?.focus()
   emits('click')
+}
+
+const onBlur = () => {
+  emitFormBlur()
+}
+
+const onChange = () => {
+  emitFormChange()
+}
+
+const onFocus = () => {
+  emitFormFocus()
+}
+
+const onInput = () => {
+  emitFormInput()
 }
 
 export type { Props as InputProps, Emits as InputEmits, Model as InputModel }
@@ -88,6 +107,10 @@ export type { Props as InputProps, Emits as InputEmits, Model as InputModel }
       :name
       :placeholder
       :type
+      @blur="onBlur"
+      @change="onChange"
+      @focus="onFocus"
+      @input="onInput"
     >
     <Transition name="input__transition-reset">
       <AppButton

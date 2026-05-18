@@ -4,7 +4,7 @@
 Affiliate dashboard for a [CPA-Network](https://servicelead.ru)
 
 ## Stack
-`Docker` `Nuxt 4` `Typescript` `ESLint` `Stylelint` `SCSS` `pnpm` `Storybook`
+`Docker` `Nuxt 4` `Typescript` `ESLint` `Stylelint` `SCSS` `pnpm` `Storybook` `Yup`
 
 ## Features
 - **Consistent development environment**
@@ -210,6 +210,8 @@ definePageMeta({
   ],
 })
 ```
+## Use Validation
+- [validation](docs/validation.md) — Yup validation with and without `AppForm`
 
 ## 📦 Требования
 

@@ -44,6 +44,7 @@ export type { Props as CheckboxProps, Model as CheckboxModel }
 <template>
   <button
     :class="classname"
+    type="button"
     @click="model = !model"
   >
     <input

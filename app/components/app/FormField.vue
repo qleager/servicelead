@@ -1,21 +1,38 @@
 <script lang="ts" setup>
+import { formFieldInjectionKey, formInjectionKey, type FormFieldInjection } from '~/composables/useFormField'
+
 interface Props {
   caption?: string
   error?: string
+  /**
+   * The name of the FormField. Also used to match form errors and assigned to inputs nested in the slot
+   */
+  name?: string
   required?: boolean
   title?: string
 }
+
+const injection = inject(formInjectionKey, null)
 
 const props = defineProps<Props>()
 
 const classname = computed(() => [
   'label',
-  { 'label-error': props.error },
+  { 'label-error': errorMessage.value },
 ])
 
-const captionText = computed(() => props.error || props.caption)
+const captionText = computed(() => errorMessage.value || props.caption)
 
-export type { Props as LabelProps }
+const errorMessage = computed(() => (
+  props.error || injection?.errors.value.find(item => item.name === props.name)?.message[0]
+))
+
+provide<FormFieldInjection>(formFieldInjectionKey, {
+  name: computed(() => props.name),
+  errorMessage,
+})
+
+export type { Props as FormFieldProps }
 </script>
 
 <template>

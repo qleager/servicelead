@@ -4,7 +4,7 @@ import type { FetchOptions } from '@shared/types/repository'
 import type { AuthCodeDto, AuthType, AuthValueBase, AuthValueDto, RegisteredUser, TokenAuthValueDto, TokenDto, TokenPair, TokenPasswordDto, TokenServiceDto, UserIdTokenDto } from '~~/server/types/api/auth'
 
 class AuthModule extends FetchFactory {
-  private RESOURCE = '/auth'
+  private RESOURCE = '/auth/v2'
 
   async authorize(type: AuthType, fetchOptions?: FetchOptions<AuthCodeDto>) {
     return this.call<Response<TokenPair>>(
