@@ -38,9 +38,9 @@ const emits = defineEmits<Emits>()
 
 const model = defineModel<Model>()
 
-const inputElement = useTemplateRef<HTMLInputElement>('field')
-
 const { error, name, emitFormBlur, emitFormChange, emitFormInput, emitFormFocus } = useFormField(props)
+
+const inputElement = useTemplateRef<HTMLInputElement>('field')
 
 const classname = computed(() => ([
   'input',

@@ -8,11 +8,16 @@ import type { VNodeChild } from 'vue'
 
 interface Props {
   disabled?: boolean
+  error?: boolean
   indicator?: 'start' | 'end' | 'hidden'
   items: Item[] | string[]
   name?: string
   size?: Subset<Size, 'sm' | 'md'>
   variant?: 'card' | 'pill' | 'list'
+}
+
+interface Emits {
+  change: [event: Event]
 }
 
 type Model = Item['value']
@@ -38,16 +43,23 @@ const props = withDefaults(defineProps<Props>(), {
   variant: 'card',
 })
 
+const emit = defineEmits<Emits>()
+
 const model = defineModel<Model>()
 
 defineSlots<Slots>()
+
+const { error, name, emitFormChange } = useFormField(props)
 
 const classname = computed(() => [
   'radio-group',
   `radio-group-variant-${props.variant}`,
   `radio-group-size-${props.size}`,
   `radio-group-indicator-${props.indicator}`,
-  { 'radio-group-disabled': props.disabled },
+  {
+    'radio-group-disabled': props.disabled,
+    'radio-group-error': error.value,
+  },
 ])
 
 const items = computed(() => {
@@ -60,11 +72,22 @@ const items = computed(() => {
   })
 })
 
-export type { Props as RadioGroupProps, Model as RadioGroupModel, Slots as RadioGroupSlots, Item as RadioGroupItem }
+const onChange = (event: Event) => {
+  emitFormChange()
+  emit('change', event)
+}
+
+const onClick = (event: MouseEvent) => {
+  const button = event.currentTarget as HTMLButtonElement
+
+  model.value = button.value
+}
+
+export type { Props as RadioGroupProps, Emits as RadioGroupEmits, Model as RadioGroupModel, Slots as RadioGroupSlots, Item as RadioGroupItem }
 </script>
 
 <template>
-  <div :class="classname">
+  <fieldset :class="classname">
     <button
       v-for="(item, index) in items"
       :key="item.value ?? item.label ?? index"
@@ -72,19 +95,11 @@ export type { Props as RadioGroupProps, Model as RadioGroupModel, Slots as Radio
         'radio-group__item',
         { 'radio-group__item-active': model === item.value },
       ]"
-      :disabled
-      @click="model = item.value"
+      :disabled="item.disabled"
+      role="radio"
+      :value="item.value"
+      @click.capture="onClick"
     >
-      <input
-        v-model="model"
-        class="radio-group__field"
-        :disabled
-        :name
-        tabindex="-1"
-        type="radio"
-        :value="item.value"
-        :id="item.value ?? item.label ?? String(index)"
-      >
       <div class="radio-group__item-indicator" />
       <div class="radio-group__item-info">
         <slot
@@ -125,7 +140,16 @@ export type { Props as RadioGroupProps, Model as RadioGroupModel, Slots as Radio
         </div>
       </div>
     </button>
-  </div>
+
+    <input
+      v-model="model"
+      class="radio-group__field"
+      :disabled
+      :name
+      type="hidden"
+      @change="onChange"
+    >
+  </fieldset>
 </template>
 
 <style lang="scss">
@@ -147,8 +171,15 @@ export type { Props as RadioGroupProps, Model as RadioGroupModel, Slots as Radio
   $indicator-hidden: $this + '-indicator-hidden';
   $indicator-end: $this + '-indicator-end';
 
+  ///
+  $error: $this + '-error';
+
   display: flex;
   gap: $space-2;
+
+  margin: 0;
+  padding: 0;
+  border: unset;
 
   &__item {
     $this: &;
@@ -232,6 +263,10 @@ export type { Props as RadioGroupProps, Model as RadioGroupModel, Slots as Radio
 
     @include is($variant-pill + $size-sm) {
       padding: $space-2 $space-3;
+    }
+
+    @include is($error) {
+      border-color: $color-error;
     }
 
     &-icon {
@@ -318,20 +353,12 @@ export type { Props as RadioGroupProps, Model as RadioGroupModel, Slots as Radio
         border: 3px solid $color-primary-100;
         background-color: $color-primary;
       }
+
+      @include is($error) {
+        border-color: $color-red-50;
+        background-color: $color-red-50;
+      }
     }
-  }
-
-  &__field {
-    position: absolute;
-
-    overflow: hidden;
-
-    width: 1px;
-    height: 1px;
-
-    white-space: nowrap;
-
-    clip-path: inset(50%);
   }
 }
 </style>
