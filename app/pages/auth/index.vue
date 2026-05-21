@@ -2,6 +2,8 @@
 import { boolean, object, string, type InferType } from 'yup'
 import type { FormSubmitEvent } from '~/components/app/Form.vue'
 
+type Schema = InferType<typeof schema>
+
 definePageMeta({
   layout: 'auth',
 })
@@ -15,8 +17,6 @@ const schema = object({
     .required(),
   rememberMe: boolean(),
 })
-
-type Schema = InferType<typeof schema>
 
 const state = reactive({
   email: '',
