@@ -143,7 +143,6 @@ export type { Props as RadioGroupProps, Emits as RadioGroupEmits, Model as Radio
 
     <input
       v-model="model"
-      class="radio-group__field"
       :disabled
       :name
       type="hidden"

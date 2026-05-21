@@ -7,6 +7,7 @@ import type { VNodeChild } from 'vue'
 interface Props {
   color?: Subset<Color, 'neutral' | 'primary'> | 'white'
   disabled?: boolean
+  error?: boolean
   /**
    * Floats placeholder to the border when a value is selected
    *
@@ -58,6 +59,7 @@ type GetModelValue<TItem, TMultiple extends boolean | undefined>
 
 interface Injection {
   color: typeof props.color
+  error: Ref<boolean>
   floatPlaceholder: typeof props.floatPlaceholder
   icon: typeof props.icon
   isCollapsed: typeof isCollapsed
@@ -88,6 +90,8 @@ const props = withDefaults(defineProps<Props>(), {
 const model = defineModel<Model>()
 
 defineSlots<Slots>()
+
+const { name, error, emitFormChange } = useFormField(props)
 
 const isCollapsed = ref<boolean>(false)
 const searchQuery = ref<string>('')
@@ -151,6 +155,10 @@ const isOptionSelected = (option: Option) => {
   return model.value === option.value
 }
 
+const onChange = () => {
+  emitFormChange()
+}
+
 const onOptionClick = (option: Option) => {
   updateModel(option.value)
 }
@@ -178,6 +186,7 @@ const resetAll = () => {
   model.value = undefined
 }
 
+// TODO: Сделать через ключ инъекцию (пример в useFormField и AppFormField)
 provide<Injection>('selectState', {
   isSelected,
   isCollapsed,
@@ -189,6 +198,7 @@ provide<Injection>('selectState', {
   floatPlaceholder: props.floatPlaceholder,
   rounded: props.rounded,
   variant: props.variant,
+  error: error,
 })
 
 export type {
@@ -265,6 +275,12 @@ export type {
         </div>
       </template>
     </AppFloater>
+    <input
+      v-model="model"
+      :disabled
+      :name
+      @change="onChange"
+    >
   </div>
 </template>
 

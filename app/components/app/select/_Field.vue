@@ -1,15 +1,18 @@
 <script lang="ts" setup>
 import type { SelectInjection } from './Select.vue'
 
-const { size, color, icon, isCollapsed, rounded, variant } = inject('selectState') as SelectInjection
+const { size, color, icon, isCollapsed, rounded, variant, error } = inject('selectState') as SelectInjection
 
 const classname = computed(() => [
   'select-field',
   `select-field-size-${size}`,
   `select-field-color-${color}`,
   `select-field-variant-${variant}`,
-  { 'select-field-active': isCollapsed.value },
-  { 'select-field-rounded': rounded },
+  {
+    'select-field-active': isCollapsed.value,
+    'select-field-rounded': rounded,
+    'select-field-error': error.value,
+  },
 ])
 </script>
 
@@ -50,6 +53,7 @@ const classname = computed(() => [
   $variant-ghost: $this + '-variant-ghost';
   $rounded: $this + '-rounded';
   $active: $this + '-active';
+  $error: $this + '-error';
 
   cursor: pointer;
   position: relative;
@@ -145,6 +149,10 @@ const classname = computed(() => [
 
   @include is($rounded) {
     border-radius: 50px;
+  }
+
+  @include is($variant-outline + $error) {
+    border-color: $color-error;
   }
 
   &__icon {

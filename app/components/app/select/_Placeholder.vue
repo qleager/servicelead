@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { SelectInjection } from './Select.vue'
 
-const { placeholder, isSelected, floatPlaceholder, size } = inject('selectState') as SelectInjection
+const { placeholder, isSelected, floatPlaceholder, size, error } = inject('selectState') as SelectInjection
 
 const classname = computed(() => [
   'select-placeholder',
@@ -9,6 +9,7 @@ const classname = computed(() => [
   {
     'select-placeholder-hidden': isSelected.value && !floatPlaceholder,
     'select-placeholder-float': isSelected.value && floatPlaceholder,
+    'select-placeholder-error': error.value,
   },
 ])
 </script>
@@ -29,6 +30,7 @@ const classname = computed(() => [
   $size-lg: $this + '-size-lg';
   $float: $this + '-float';
   $hidden: $this + '-hidden';
+  $error: $this + '-error';
 
   font: inherit;
   color: $color-neutral-400;
@@ -78,6 +80,10 @@ const classname = computed(() => [
 
   @include is($hidden) {
     display: none;
+  }
+
+  @include is($error) {
+    color: $color-error;
   }
 }
 </style>
