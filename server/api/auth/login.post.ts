@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
       statusCode: 400,
       statusMessage: 'Missing fingerprint',
       data: {
-        message: 'Need a fingerprint cookie',
+        message: 'Missing a fingerprint cookie',
       },
     })
   }
@@ -35,13 +35,15 @@ export default defineEventHandler(async (event) => {
     setCookie(event, 'accessToken', data.accessToken, {
       httpOnly: true,
       sameSite: 'strict',
-      maxAge: 60 * 60 * 24 * 0.95,
+      // 7 days
+      maxAge: body.rememberMe ? 60 * 60 * 24 * 3 : undefined,
     })
 
     setCookie(event, 'refreshToken', data.refreshToken, {
       httpOnly: true,
       sameSite: 'strict',
-      maxAge: 60 * 60 * 24 * 29,
+      // 29 days
+      maxAge: body.rememberMe ? 60 * 60 * 24 * 29 : undefined,
     })
 
     setResponseStatus(event, 204)

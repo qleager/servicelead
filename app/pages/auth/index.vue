@@ -1,8 +1,6 @@
 <script lang="ts" setup>
-import { object, string, type InferType } from 'yup'
+import { boolean, object, string, type InferType } from 'yup'
 import type { FormSubmitEvent } from '~/components/app/Form.vue'
-
-type Schema = InferType<typeof schema>
 
 definePageMeta({
   layout: 'auth',
@@ -15,11 +13,15 @@ const schema = object({
   password: string()
     .min(8)
     .required(),
+  rememberMe: boolean(),
 })
+
+type Schema = InferType<typeof schema>
 
 const state = reactive({
   email: '',
   password: '',
+  rememberMe: true,
 })
 
 const onSubmit = async (event: FormSubmitEvent<Schema>) => {
@@ -89,8 +91,9 @@ const onSubmit = async (event: FormSubmitEvent<Schema>) => {
 
         <div class="auth-login__actions">
           <AppCheckbox
+            v-model="state.rememberMe"
             label="Запомнить"
-            name="remember"
+            name="rememberMe"
           />
 
           <NuxtLink
