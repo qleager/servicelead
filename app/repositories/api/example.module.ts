@@ -1,6 +1,6 @@
-import FetchFactory from '@shared/repository/factory'
+import FetchFactory from '@shared/repositories/factory'
 import type { Response } from '@shared/types/api'
-import type { FetchOptions } from '@shared/types/repository'
+import type { FetchOptions } from '@shared/types/repositories'
 import type { ExamplePayload, ExampleResponse } from '~/types/api/example'
 
 class ExampleModule extends FetchFactory {

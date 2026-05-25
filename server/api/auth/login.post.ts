@@ -36,7 +36,7 @@ export default defineEventHandler(async (event) => {
       httpOnly: true,
       sameSite: 'strict',
       // 7 days
-      maxAge: body.rememberMe ? 60 * 60 * 24 * 3 : undefined,
+      maxAge: body.rememberMe ? 60 * 60 * 24 * 7 : undefined,
     })
 
     setCookie(event, 'refreshToken', data.refreshToken, {

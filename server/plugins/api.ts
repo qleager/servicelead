@@ -1,4 +1,4 @@
-import AuthModule from '@server/repositories/api/modules/auth.module'
+import AuthModule from '~~/server/repositories/api/auth.module'
 
 interface ServerApi {
   auth: AuthModule

@@ -7,7 +7,7 @@ class HttpFactory {
     this.$fetch = fetch
   }
 
-  async call<T>(url: string, fetchOptions: NitroFetchOptions<'json'>): Promise<T> {
+  async call<T = void>(url: string, fetchOptions: NitroFetchOptions<'json'>): Promise<T> {
     return this.$fetch<T>(
       url,
       {
