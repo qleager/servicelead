@@ -1,12 +1,28 @@
 @use '@scss/design-system/index' as *;
 
+:root {
+  @include palette-color-vars;
+}
+
+html[data-theme='light'] {
+  color-scheme: light;
+
+  @include ui-theme-color-vars(light);
+}
+
+html[data-theme='dark'] {
+  color-scheme: dark;
+
+  @include ui-theme-color-vars(dark);
+}
+
 * {
   box-sizing: border-box;
   outline: none;
 }
 
 html {
-  color: $color-gray-950;
+  color: var(--ui-color-neutral-950);
 
   @include text(regular, md);
 }
@@ -14,7 +30,7 @@ html {
 body {
   margin: 0;
   padding: 0;
-  background-color: $color-neutral-50;
+  background-color: var(--ui-color-neutral-50);
 }
 
 button {
