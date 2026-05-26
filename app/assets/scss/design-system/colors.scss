@@ -1,3 +1,4 @@
+// ❇️ TODO: Избавиться от scss-переменных, когда перейдем на норм цвета
 @use 'sass:color';
 @use 'sass:map';
 @use 'sass:meta';
@@ -40,6 +41,27 @@ $color-primary-900: #021330;
 $color-primary-950: #010a18;
 
 // Palette of Neutral Light
+$color-gray-50: #f3f6fe;
+$color-gray-100: #e9eefb;
+$color-gray-150: #e2e9fc;
+$color-gray-200: #cfd5ec;
+$color-gray-250: color.adjust($color-neutral, $lightness: 50%);
+$color-gray-300: #c0c7e0;
+$color-gray-350: color.adjust($color-neutral, $lightness: 30%);
+$color-gray-400: #9ea6c8;
+$color-gray-450: color.adjust($color-neutral, $lightness: 10%);
+$color-gray-500: $color-neutral;
+$color-gray-550: color.adjust($color-neutral, $blackness: 10%);
+$color-gray-600: #5c6281;
+$color-gray-650: color.adjust($color-neutral, $blackness: 30%);
+$color-gray-700: #434862;
+$color-gray-750: color.adjust($color-neutral, $blackness: 50%);
+$color-gray-800: #2a2e42;
+$color-gray-850: color.adjust($color-neutral, $blackness: 70%);
+$color-gray-900: #1e2131;
+$color-gray-950: #121522;
+
+// Для обратной совместимости
 $color-neutral-50: #f3f6fe;
 $color-neutral-100: #e9eefb;
 $color-neutral-150: #e2e9fc;
@@ -59,27 +81,6 @@ $color-neutral-800: #2a2e42;
 $color-neutral-850: color.adjust($color-neutral, $blackness: 70%);
 $color-neutral-900: #1e2131;
 $color-neutral-950: #121522;
-
-// Palette of Neutral Dark
-$color-gray-50: #e5ebf9;
-$color-gray-100: #d2d8e8;
-$color-gray-150: color.adjust($color-gray, $lightness: 70%);
-$color-gray-200: #acb2c5;
-$color-gray-250: color.adjust($color-gray, $lightness: 50%);
-$color-gray-300: #7c8193;
-$color-gray-350: #565c6d;
-$color-gray-400: #494c5c;
-$color-gray-450: color.adjust($color-gray, $lightness: 10%);
-$color-gray-500: $color-gray;
-$color-gray-550: color.adjust($color-gray, $blackness: 10%);
-$color-gray-600: #2a2b34;
-$color-gray-650: color.adjust($color-gray, $blackness: 30%);
-$color-gray-700: #212229;
-$color-gray-750: #1d1e24;
-$color-gray-800: #1a1a20;
-$color-gray-850: color.adjust($color-gray, $blackness: 70%);
-$color-gray-900: #141519;
-$color-gray-950: #0f1013;
 
 // Palette of Red
 $color-red-50: #f9eaeb;
@@ -346,58 +347,38 @@ $palette-colors: (
 
 ///
 $ui-colors-light: (
-  primary: map.get($palette-colors, 'blue'),
-  neutral: (
-    default: $color-neutral,
-    50: $color-neutral-50,
-    100: $color-neutral-100,
-    150: $color-neutral-150,
-    200: $color-neutral-200,
-    250: $color-neutral-250,
-    300: $color-neutral-300,
-    350: $color-neutral-350,
-    400: $color-neutral-400,
-    450: $color-neutral-450,
-    500: $color-neutral-500,
-    550: $color-neutral-550,
-    600: $color-neutral-600,
-    650: $color-neutral-650,
-    700: $color-neutral-700,
-    750: $color-neutral-750,
-    800: $color-neutral-800,
-    850: $color-neutral-850,
-    900: $color-neutral-900,
-    950: $color-neutral-950,
+  text: (
+    default: map.get($palette-colors, 'gray', 950),
+    muted: map.get($palette-colors, 'gray', 800),
+    inverted: white,
   ),
+  background: (
+    default: white,
+    muted: map.get($palette-colors, 'gray', 50),
+    elevated: map.get($palette-colors, 'gray', 100),
+    accented: map.get($palette-colors, 'gray', 200),
+    inverted: map.get($palette-colors, 'gray', 900),
+  ),
+  primary: map.get($palette-colors, 'blue', default),
   error: map.get($palette-colors, 'red', default),
   warning: map.get($palette-colors, 'yellow', default),
   success: map.get($palette-colors, 'green', default),
   info: map.get($palette-colors, 'lightblue', default),
 );
 $ui-colors-dark: (
-  primary: map.get($palette-colors, 'blue'),
-  neutral: (
-    default: $color-gray,
-    50: $color-gray-950,
-    100: $color-gray-900,
-    150: $color-gray-850,
-    200: $color-gray-800,
-    250: $color-gray-750,
-    300: $color-gray-700,
-    350: $color-gray-650,
-    400: $color-gray-600,
-    450: $color-gray-550,
-    500: $color-gray-500,
-    550: $color-gray-450,
-    600: $color-gray-400,
-    650: $color-gray-350,
-    700: $color-gray-300,
-    750: $color-neutral-250,
-    800: $color-neutral-200,
-    850: $color-neutral-150,
-    900: $color-neutral-100,
-    950: $color-neutral-50,
+  text: (
+    default: white,
+    muted: map.get($palette-colors, 'gray', 200),
+    inverted: map.get($palette-colors, 'gray', 950),
   ),
+  background: (
+    default: map.get($palette-colors, 'gray', 900),
+    muted: map.get($palette-colors, 'gray', 800),
+    elevated: map.get($palette-colors, 'gray', 800),
+    accented: map.get($palette-colors, 'gray', 700),
+    inverted: white,
+  ),
+  primary: map.get($palette-colors, 'blue', 400),
   error: map.get($palette-colors, 'red', 400),
   warning: map.get($palette-colors, 'yellow', 400),
   success: map.get($palette-colors, 'green', 400),

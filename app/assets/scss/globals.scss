@@ -22,7 +22,7 @@ html[data-theme='dark'] {
 }
 
 html {
-  color: var(--ui-color-neutral-950);
+  color: var(--ui-color-text);
 
   @include text(regular, md);
 }
@@ -30,7 +30,7 @@ html {
 body {
   margin: 0;
   padding: 0;
-  background-color: var(--ui-color-neutral-50);
+  background-color: var(--ui-color-background-muted);
 }
 
 button {
