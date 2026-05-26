@@ -3,6 +3,7 @@
  */
 import { fileURLToPath } from 'node:url'
 import { createSvgSpritemapPlugin } from './config/svg-spritemap'
+import { colorModeHeadScript } from './config/theme-script'
 
 export default defineNuxtConfig({
   modules: [
@@ -21,6 +22,12 @@ export default defineNuxtConfig({
       title: 'Servicelead',
       meta: [
         { name: 'robots', content: 'noindex,nofollow' },
+      ],
+      script: [
+        // Applies data-theme from localStorage before the app renders
+        {
+          innerHTML: colorModeHeadScript,
+        },
       ],
     },
   },

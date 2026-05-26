@@ -10,8 +10,8 @@ const classname = computed(() => [
 <template>
   <aside :class="classname">
     <NuxtLink
-      to="/dashboard"
       class="sidebar__logo"
+      to="/dashboard"
     >
       <NuxtImg
         class="sidebar__logo-image"
@@ -19,9 +19,10 @@ const classname = computed(() => [
       />
     </NuxtLink>
     <NavigationMain :minimal="isCollapsed" />
+    <AppColorModeSwitch class="sidebar__theme-switcher" />
     <button
-      type="button"
       class="sidebar__button"
+      type="button"
       @click="isCollapsed = !isCollapsed"
     >
       <AppIcon name="collapse" />
@@ -95,6 +96,11 @@ const classname = computed(() => [
     }
   }
 
+  &__theme-switcher {
+    margin: $space-3 0 $space-3 $space-9;
+    margin-top: auto;
+  }
+
   &__button {
     cursor: pointer;
 
@@ -104,7 +110,6 @@ const classname = computed(() => [
     justify-content: flex-start;
 
     max-width: 256px;
-    margin-top: auto;
     padding: $space-3 0 $space-3 $space-10;
 
     @include text(semibold, md);

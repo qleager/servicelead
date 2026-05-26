@@ -7,3 +7,5 @@ export type Color
     | 'green'
     | 'blue'
     | 'purple'
+
+export type ThemeColorMode = 'light' | 'dark'

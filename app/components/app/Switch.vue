@@ -30,7 +30,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const slots = defineSlots<Slots>()
 
-const model = defineModel<Model>({ default: false })
+const model = defineModel<Model>()
 
 const classname = computed(() => [
   'switch',
@@ -45,16 +45,6 @@ export type { Props as SwitchProps, Model as SwitchModel, Slots as SwitchSlots }
 </script>
 
 <template>
-  <input
-    v-if="name"
-    :checked="model"
-    class="switch__input"
-    hidden
-    :name
-    readonly
-    type="checkbox"
-    :value
-  >
   <button
     :class="classname"
     :disabled="loading || disabled"
@@ -92,6 +82,16 @@ export type { Props as SwitchProps, Model as SwitchModel, Slots as SwitchSlots }
         </slot>
       </div>
     </div>
+    <input
+      v-if="name"
+      :checked="model"
+      class="switch__input"
+      hidden
+      :name
+      readonly
+      type="checkbox"
+      :value
+    >
   </button>
 </template>
 
