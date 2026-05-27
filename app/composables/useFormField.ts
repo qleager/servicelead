@@ -1,4 +1,5 @@
 import type { ComputedRef, InjectionKey, MaybeRefOrGetter, Ref } from 'vue'
+import type { ValidationErrorItem } from './useValidation'
 
 interface Props {
   error?: boolean
@@ -7,16 +8,7 @@ interface Props {
 
 type FormInputEvent = 'blur' | 'change' | 'input' | 'focus'
 
-type FormError = {
-  /**
-   * Name of validation field
-   */
-  name: string
-  /**
-   * Error messages of validation field
-   */
-  message: string[]
-}
+type FormError = ValidationErrorItem
 
 type FormInjection = {
   errors: Ref<FormError[]>

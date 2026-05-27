@@ -190,6 +190,7 @@ docs(AppButton): add jsondoc to props
 - [useOverlay](docs/composables/use-overlay.md) — shared overlay manager
 - [useBreakpoints](docs/composables/use-breakpoints.md) — responsive breakpoint helpers
 - [useDocumentScrollLock](docs/composables/use-document-scroll-lock.md) — document scroll lock helper
+- [useValidation](docs/composables/use-validation.md) — Yup validation with and without `AppForm`
 
 ## Use Utils
 - [search](docs/utils/search.md) — Fuse.js search wrapper
@@ -210,9 +211,6 @@ definePageMeta({
   ],
 })
 ```
-## Use Validation
-- [validation](docs/validation.md) — Yup validation with and without `AppForm`
-
 ## 📦 Требования
 
 Перед началом убедитесь, что установлено:

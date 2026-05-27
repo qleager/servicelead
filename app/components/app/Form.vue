@@ -1,6 +1,7 @@
 <script lang="ts">
 import { ValidationError, type ObjectSchema } from 'yup'
-import { formInjectionKey, type FormError, type FormInjection, type FormInputEvent } from '~/composables/useFormField'
+import { formInjectionKey, type FormInjection, type FormInputEvent } from '~/composables/useFormField'
+import type { ValidationErrorItem } from '~/composables/useValidation'
 
 interface Props<T extends Record<string, unknown>> {
   /**
@@ -28,7 +29,7 @@ type FormSubmitEvent<T extends Record<string, unknown>> = SubmitEvent & {
 }
 
 type FormErrorEvent = SubmitEvent & {
-  errors: FormError[]
+  errors: ValidationErrorItem[]
 }
 
 export type { Props as FormProps, Emits as FormEmits, FormSubmitEvent, FormErrorEvent }
@@ -41,13 +42,15 @@ const props = withDefaults(defineProps<Props<N>>(), {
 
 const emit = defineEmits<Emits<N>>()
 
-const errors = ref<FormError[]>([])
+const validation = useValidation({
+  schema: () => props.schema,
+  state: () => props.state,
+})
 
 const onSubmit = async (event: SubmitEvent) => {
   try {
-    const data = await validate()
+    const data = await validation.validate()
 
-    errors.value = []
     const submitEvent = Object.assign(event, { data }) as FormSubmitEvent<N>
 
     emit('submit', submitEvent)
@@ -58,23 +61,10 @@ const onSubmit = async (event: SubmitEvent) => {
       throw error
     }
 
-    errors.value = getFieldErrors(error)
-    const errorEvent: FormErrorEvent = Object.assign(event, { errors: errors.value })
+    const errorEvent: FormErrorEvent = Object.assign(event, { errors: validation.errors.value })
 
     emit('error', errorEvent)
   }
-
-  finally {
-    //
-  }
-}
-
-const validate = async () => {
-  if (props.schema) {
-    return props.schema?.validate(props.state, { abortEarly: false })
-  }
-
-  return props.state
 }
 
 const handleFieldEvent = async (name: string, event: FormInputEvent) => {
@@ -82,67 +72,11 @@ const handleFieldEvent = async (name: string, event: FormInputEvent) => {
     return
   }
 
-  await validateField(name)
-}
-
-const validateField = async (name: string) => {
-  if (!props.schema) {
-    return
-  }
-
-  try {
-    await props.schema.validateAt(name, props.state, { abortEarly: false })
-    removeFieldErrors(name)
-  }
-
-  catch (error) {
-    if (!(error instanceof ValidationError)) {
-      throw error
-    }
-
-    replaceFieldErrors(name, getFieldErrors(error, name))
-  }
-}
-
-const removeFieldErrors = (name: string) => {
-  errors.value = errors.value.filter(error => error.name !== name)
-}
-
-const replaceFieldErrors = (name: string, fieldErrors: FormError[]) => {
-  removeFieldErrors(name)
-  errors.value = [...errors.value, ...fieldErrors]
-}
-
-const getFieldErrors = (validationError: ValidationError, fallbackName?: string): FormError[] => {
-  const validationErrors = validationError.inner.length
-    ? validationError.inner
-    : [validationError]
-
-  return validationErrors.reduce<FormError[]>((errors, error) => {
-    const name = error.path || fallbackName
-
-    if (!name) {
-      return errors
-    }
-
-    const existingError = errors.find(item => item.name === name)
-
-    if (existingError) {
-      existingError.message.push(error.message)
-      return errors
-    }
-
-    errors.push({
-      name,
-      message: [error.message],
-    })
-
-    return errors
-  }, [])
+  await validation.validateField(name)
 }
 
 provide<FormInjection>(formInjectionKey, {
-  errors: errors,
+  errors: validation.errors,
   handleFieldEvent,
 })
 </script>

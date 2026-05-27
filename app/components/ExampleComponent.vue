@@ -78,7 +78,8 @@ const isCloseString = (close: Close): close is Exclude<Close, 'accept'> => {
   return typeof close === 'string' && close !== null
 }
 
-// Далее — все composables (включая проектные); исключение — хуки, запускающие побочные эффекты (например, useAsyncData)
+// Далее — независимые composables (включая проектные)
+// ⚠️ Composables, использующие props/model/state, вызываем после объявления этих данных
 const { current: currentBreakpoint } = useBreakpoints()
 
 // Пропсы
@@ -104,6 +105,7 @@ defineSlots<Slots>()
 // ℹ️ Пример, как типизация помогает помимо предотвращения ошибок:
 //    поставь курсор в кавычки и нажми Option+Esc (mac) / Ctrl+Space (win);
 //    Также если наводить на тип с зажатым command/ctrl - видим подробную типизацию
+
 // @ts-expect-error: example error
 const closePayloads: Close[] = ['accept', '']
 
@@ -116,6 +118,9 @@ const classname = computed(() => [
 ])
 
 const titleLength = computed(() => props.title.length)
+
+// Composables, использующие props/model/state — здесь
+// useValidation({ state: () => state })
 
 // Сетевые запросы — здесь
 // useAsyncData()
