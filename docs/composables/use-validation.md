@@ -120,7 +120,8 @@ By default, fields are revalidated on `blur`, `change`, and `input`. Change the 
 </AppForm>
 ```
 
-> Tip: field errors are passed to inputs through Vue injections by `useFormField`. In most cases, set the same `name` on `AppFormField` as in the Yup schema and keep the input inside that field.
+> [!Note]
+> Field errors are passed to inputs through Vue injections by `useFormField`. In most cases, set the same `name` on `AppFormField` as in the Yup schema and keep the input inside that field.
 
 ## Without AppForm
 
