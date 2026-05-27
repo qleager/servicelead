@@ -4,7 +4,7 @@
 Affiliate dashboard for a [CPA-Network](https://servicelead.ru)
 
 ## Stack
-`Docker` `Nuxt 4` `Typescript` `ESLint` `Stylelint` `SCSS` `pnpm` `Storybook` `Yup`
+`Docker` `Nuxt 4` `Typescript` `ESLint` `Stylelint` `SCSS` `pnpm` `Storybook` `Yup` `EChart`
 
 ## Features
 - **Consistent development environment**
