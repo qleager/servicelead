@@ -1,7 +1,8 @@
 import type { ColumnDef, Row, RowData, RowSelectionState, SortingState, Updater } from '@tanstack/vue-table'
 import { getCoreRowModel, getSortedRowModel, useVueTable } from '@tanstack/vue-table'
 import type { Ref } from 'vue'
-import { computed, h, resolveComponent } from 'vue'
+import { computed, h } from 'vue'
+import AppCheckbox from '~/components/app/Checkbox.vue'
 
 export interface UseTableProps<TData extends RowData = RowData> {
   columns: TableColumn<TData>[]
@@ -40,14 +41,14 @@ export const useTable = <TData extends RowData = RowData>(options: UseTableOptio
     return [
       // Add column with checkbox row selecter
       {
-        cell: ({ row }) => h(resolveComponent('AppCheckbox'), {
+        cell: ({ row }) => h(AppCheckbox, {
           'class': 'table__row-selection-checkbox',
           'modelValue': row.getIsSelected(),
           'onClick': (event: MouseEvent) => options.onSelect?.(event, row),
           'onUpdate:modelValue': (value: boolean) => row.toggleSelected(value),
           'size': 'xs',
         }),
-        header: ({ table }) => h(resolveComponent('AppCheckbox'), {
+        header: ({ table }) => h(AppCheckbox, {
           'class': 'table__row-selection-checkbox',
           'disabled': table.getRowModel().rows.length === 0,
           'icon': table.getIsAllRowsSelected() ? 'check_24' : 'close',
