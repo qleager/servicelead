@@ -24,22 +24,60 @@
 import type { Cell, Column, Header, Row, RowData, Table } from '@tanstack/vue-table'
 import { FlexRender } from '@tanstack/vue-table'
 import type {
+  TableColumn,
   TableColumnPinningModel,
+  TableGetRowId,
   TableRowSelectionModel,
   TableSortingModel,
-  UseTableProps,
+  TableSortingMode,
 } from '~/composables/useTable'
 
 export type {
   TableColumn,
   TableColumnPinningModel,
+  TableGetRowId,
   TableRowSelectionModel,
   TableSortingMode,
   TableSortingModel,
 } from '~/composables/useTable'
 
-export interface TableProps<TData extends RowData = RowData> extends UseTableProps<TData> {
+export interface TableProps<TData extends RowData = RowData> {
+  /**
+   * Border style of Cells
+   */
   cellBorder?: 'column' | 'column-row' | 'row'
+  /**
+   * Column definitions
+   */
+  columns: TableColumn<TData>[]
+  /**
+   * Row data
+   */
+  data: TData[]
+  /**
+   * Enable row selection
+   */
+  enableRowSelection?: boolean
+  /**
+   * Unique Row ID getter
+   */
+  getRowId?: TableGetRowId<TData>
+  /**
+   * Sorting mode
+   *
+   * - `'client'` - sort rows in Table
+   * - `'server'` - sort rows outside Table
+   *
+   * @defaultvalue `'client'`
+   */
+  sortingMode?: TableSortingMode
+  /**
+   * Sticky Header or Footer
+   *
+   * - `true` - sticky Header and Footer
+   * - `'header'` - sticky Header
+   * - `'footer'` - sticky Footer
+   */
   sticky?: boolean | 'header' | 'footer'
 }
 

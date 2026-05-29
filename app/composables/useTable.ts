@@ -8,6 +8,7 @@ export interface UseTableProps<TData extends RowData = RowData> {
   columns: TableColumn<TData>[]
   data: TData[]
   enableRowSelection?: boolean
+  getRowId?: TableGetRowId<TData>
   sortingMode?: TableSortingMode
 }
 
@@ -21,6 +22,8 @@ export type TableSortingModel = SortingState
 export type TableRowSelectionModel = RowSelectionState
 
 export type TableColumn<TData extends RowData = RowData, TValue = unknown> = ColumnDef<TData, TValue>
+
+export type TableGetRowId<TData extends RowData = RowData> = (row: TData, index: number, parent?: Row<TData>) => string
 
 export type TableSortingMode = 'client' | 'server'
 
@@ -95,6 +98,9 @@ export const useTable = <TData extends RowData = RowData>(options: UseTableOptio
     onRowSelectionChange: updateRowSelection,
     get enableRowSelection() {
       return options.props.enableRowSelection
+    },
+    get getRowId() {
+      return options.props.getRowId
     },
     defaultColumn: {
       // @ts-expect-error: ⛔️ спорное решение, веротяно оно может что то сломать
