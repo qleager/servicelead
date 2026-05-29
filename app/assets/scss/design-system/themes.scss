@@ -1,0 +1,5 @@
+@mixin theme($theme) {
+  html[data-theme='#{$theme}'] {
+    @content;
+  }
+}

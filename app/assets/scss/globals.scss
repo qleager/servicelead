@@ -1,16 +1,18 @@
+@use 'sass:meta';
 @use '@scss/design-system/index' as *;
+@use '@scss/plugins';
 
 :root {
   @include palette-color-vars;
 }
 
-html[data-theme='light'] {
+@include theme('light') {
   color-scheme: light;
 
   @include ui-theme-color-vars(light);
 }
 
-html[data-theme='dark'] {
+@include theme('dark') {
   color-scheme: dark;
 
   @include ui-theme-color-vars(dark);

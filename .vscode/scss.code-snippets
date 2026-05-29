@@ -127,4 +127,14 @@
     ],
     "description": "Choose of ds-duration variable"
   },
+  "Theme Mode": {
+    "scope": "scss",
+    "prefix": "theme",
+    "body": [
+      "@include theme(${1|dark,light|}) {",
+      "  $2",
+      "}"
+    ],
+    "description": "Include theme mode"
+  },
 }

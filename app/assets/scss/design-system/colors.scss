@@ -359,11 +359,18 @@ $ui-colors-light: (
     accented: map.get($palette-colors, 'gray', 200),
     inverted: map.get($palette-colors, 'gray', 900),
   ),
-  primary: map.get($palette-colors, 'blue', default),
-  error: map.get($palette-colors, 'red', default),
-  warning: map.get($palette-colors, 'yellow', default),
-  success: map.get($palette-colors, 'green', default),
-  info: map.get($palette-colors, 'lightblue', default),
+  // ℹ️ Переопредлить цвет из палитры
+  neutral: map.merge(
+      map.get($palette-colors, 'gray'),
+      (
+        default: map.get($palette-colors, 'gray', default),
+      )
+    ),
+  primary: map.get($palette-colors, 'blue'),
+  error: map.get($palette-colors, 'red'),
+  warning: map.get($palette-colors, 'yellow'),
+  success: map.get($palette-colors, 'green'),
+  info: map.get($palette-colors, 'lightblue'),
 );
 $ui-colors-dark: (
   text: (
@@ -378,6 +385,7 @@ $ui-colors-dark: (
     accented: map.get($palette-colors, 'gray', 700),
     inverted: white,
   ),
+  neutral: map.get($palette-colors, 'gray'),
   primary: map.get($palette-colors, 'blue', 400),
   error: map.get($palette-colors, 'red', 400),
   warning: map.get($palette-colors, 'yellow', 400),
