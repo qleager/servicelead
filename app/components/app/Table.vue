@@ -21,25 +21,27 @@
   10. О выборе строк в таблице (enableRowSelection prop, modelRowSelection)
 -->
 <script lang="ts" setup generic="TData extends RowData">
-import type { Cell, Column, ColumnDef, Header, Row, RowData, RowSelectionState, SortingState, Table, Updater } from '@tanstack/vue-table'
-import { FlexRender, getCoreRowModel, getSortedRowModel, useVueTable } from '@tanstack/vue-table'
+import type { Cell, Column, Header, Row, RowData, Table } from '@tanstack/vue-table'
+import { FlexRender } from '@tanstack/vue-table'
+import type {
+  TableColumnPinningModel,
+  TableRowSelectionModel,
+  TableSortingModel,
+  UseTableProps,
+} from '~/composables/useTable'
 
-export interface TableProps<TData extends RowData = RowData> {
+export type {
+  TableColumn,
+  TableColumnPinningModel,
+  TableRowSelectionModel,
+  TableSortingMode,
+  TableSortingModel,
+} from '~/composables/useTable'
+
+export interface TableProps<TData extends RowData = RowData> extends UseTableProps<TData> {
   cellBorder?: 'column' | 'column-row' | 'row'
-  columns: TableColumn<TData>[]
-  data: TData[]
-  enableRowSelection?: boolean
   sticky?: boolean | 'header' | 'footer'
 }
-
-export interface TableColumnPinningModel {
-  left?: string[]
-  right?: string[]
-}
-
-export type TableSortingModel = SortingState
-
-export type TableRowSelectionModel = RowSelectionState
 
 export interface TableEmits<TData extends RowData = RowData> {
   select: [event: MouseEvent, row: Row<TData>]
@@ -53,8 +55,6 @@ export type TableSlots<TData extends RowData = RowData> = {
   [key: `${string}-header`]: ((props: TableHeaderSlotProps<TData>) => unknown) | undefined
   [key: `${string}-cell`]: ((props: TableCellSlotProps<TData>) => unknown) | undefined
 }
-
-export type TableColumn<TData extends RowData = RowData, TValue = unknown> = ColumnDef<TData, TValue>
 
 export interface TableHeaderSlotProps<TData extends RowData = RowData> {
   column: Column<TData>
@@ -85,86 +85,12 @@ const modelSorting = defineModel<TableSortingModel>('sorting', { default: () => 
 
 const slots = defineSlots<TableSlots<TData>>()
 
-const columns = computed<TableColumn<TData>[]>(() => {
-  if (!props.enableRowSelection) {
-    return props.columns
-  }
-
-  return [
-    // Add column with checkbox row selecter
-    {
-      cell: ({ row }) => h(resolveComponent('AppCheckbox'), {
-        'class': 'table__row-selection-checkbox',
-        'modelValue': row.getIsSelected(),
-        'onClick': (event: MouseEvent) => emits('select', event, row),
-        'onUpdate:modelValue': (value: boolean) => row.toggleSelected(value),
-        'size': 'xs',
-      }),
-      header: ({ table }) => h(resolveComponent('AppCheckbox'), {
-        'class': 'table__row-selection-checkbox',
-        'disabled': table.getRowModel().rows.length === 0,
-        'icon': table.getIsAllRowsSelected() ? 'check_24' : 'close',
-        'modelValue': table.getIsAllRowsSelected() || table.getIsSomeRowsSelected(),
-        'onUpdate:modelValue': (value: boolean) => table.toggleAllRowsSelected(value),
-        'size': 'xs',
-      }),
-      enableSorting: false,
-      id: '_rowSelection',
-      size: 44,
-      meta: {
-        align: 'center',
-      },
-    },
-    ...props.columns,
-  ]
-})
-
-const updateSorting = (updater: Updater<SortingState>) => {
-  modelSorting.value = typeof updater === 'function'
-    ? updater(modelSorting.value)
-    : updater
-}
-
-const updateRowSelection = (updater: Updater<RowSelectionState>) => {
-  modelRowSelection.value = typeof updater === 'function'
-    ? updater(modelRowSelection.value)
-    : updater
-}
-
-const table = useVueTable({
-  get data() {
-    return props.data
-  },
-  get columns() {
-    return columns.value
-  },
-  getCoreRowModel: getCoreRowModel(),
-  getSortedRowModel: getSortedRowModel(),
-  onSortingChange: updateSorting,
-  onRowSelectionChange: updateRowSelection,
-  get enableRowSelection() {
-    return props.enableRowSelection
-  },
-  defaultColumn: {
-    // @ts-expect-error: ⛔️ спорное решение, веротяно оно может что то сломать
-    // сделано чтобы не вешать size, если он явно не задан
-    size: 'auto',
-    enableSorting: false,
-    meta: {
-      align: 'left',
-    },
-  },
-  state: {
-    get columnPinning() {
-      return modelColumnPinning.value
-    },
-    get sorting() {
-      return modelSorting.value
-    },
-    get rowSelection() {
-      return modelRowSelection.value
-    },
-  },
+const { table } = useTable({
+  modelColumnPinning,
+  modelRowSelection,
+  modelSorting,
+  onSelect: (event, row) => emits('select', event, row),
+  props,
 })
 
 const classname = computed(() => ([
