@@ -192,10 +192,11 @@ docs(AppButton): add jsondoc to props
 </details>
 
 ## Use Composables
-- [useConfirmDialog](docs/composables/use-confirm-dialog.md) — confirm dialog helper
-- [useOverlay](docs/composables/use-overlay.md) — shared overlay manager
 - [useBreakpoints](docs/composables/use-breakpoints.md) — responsive breakpoint helpers
+- [useConfirmDialog](docs/composables/use-confirm-dialog.md) — confirm dialog helper
 - [useDocumentScrollLock](docs/composables/use-document-scroll-lock.md) — document scroll lock helper
+- [useHighlighter](docs/composables/use-highlighter.md) — PrismJS syntax highlighting helper
+- [useOverlay](docs/composables/use-overlay.md) — shared overlay manager
 - [useValidation](docs/composables/use-validation.md) — Yup validation with and without `AppForm`
 
 ## Use Utils
