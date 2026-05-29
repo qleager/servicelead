@@ -168,9 +168,11 @@ const code7 = `<div id="sltop__form_placeholder_51325"></div>
         </div>
 
         <div class="thread-single-delivery__section-content">
-          <AppCode title="HTML · вставить перед </head>">
-            {{ code1 }}
-          </AppCode>
+          <AppCode
+            :code="code1"
+            lang="markup"
+            title="HTML · вставить перед </head>"
+          />
         </div>
       </div>
 
@@ -194,9 +196,11 @@ const code7 = `<div id="sltop__form_placeholder_51325"></div>
 
         <div class="thread-single-delivery__section-content">
           <AppAlert>Класс [sltop__form] — обязательный. Без него скрипт статистики не отследит отправку.</AppAlert>
-          <AppCode title="HTML · Contact Form">
-            {{ code2 }}
-          </AppCode>
+          <AppCode
+            :code="code2"
+            lang="markup"
+            title="HTML · Contact Form"
+          />
         </div>
       </div>
 
@@ -221,9 +225,11 @@ const code7 = `<div id="sltop__form_placeholder_51325"></div>
             Этот скрипт нужен только при кастомной отправке.<br>
             Если форма отправляется стандартным submit — он не нужен.
           </AppAlert>
-          <AppCode title="HTML · Contact Form">
-            {{ code3 }}
-          </AppCode>
+          <AppCode
+            :code="code3"
+            lang="javascript"
+            title="JavaScript · Contact Form"
+          />
         </div>
       </div>
 
@@ -245,9 +251,11 @@ const code7 = `<div id="sltop__form_placeholder_51325"></div>
 
         <div class="thread-single-delivery__section-content">
           AppStepper.vue
-          <AppCode title="Скрипт">
-            {{ code4 }}
-          </AppCode>
+          <AppCode
+            :code="code4"
+            lang="javascript"
+            title="Скрипт"
+          />
         </div>
       </div>
 
@@ -270,9 +278,11 @@ const code7 = `<div id="sltop__form_placeholder_51325"></div>
 
         <div class="thread-single-delivery__section-content">
           AppStepper.vue
-          <AppCode title="HTML · Contact Form 7">
-            {{ code5 }}
-          </AppCode>
+          <AppCode
+            :code="code5"
+            lang="markup"
+            title="HTML · Contact Form 7"
+          />
         </div>
       </div>
 
@@ -301,9 +311,11 @@ const code7 = `<div id="sltop__form_placeholder_51325"></div>
           <AppAlert>
             Для одного города или автоопределения по IP — это поле не нужно.
           </AppAlert>
-          <AppCode title="HTML · Contact Form 7">
-            {{ code6 }}
-          </AppCode>
+          <AppCode
+            :code="code6"
+            lang="markup"
+            title="HTML · Contact Form 7"
+          />
         </div>
       </div>
 
@@ -328,9 +340,11 @@ const code7 = `<div id="sltop__form_placeholder_51325"></div>
             Размещаете несколько форм на одном сайте?<br>
             В каждой копии меняйте id в трёх местах: вторая форма — sltop__form_placeholder_51325-2, третья — sltop__form_placeholder_51325-3 и так далее.
           </AppAlert>
-          <AppCode title="HTML">
-            {{ code7 }}
-          </AppCode>
+          <AppCode
+            :code="code7"
+            lang="markup"
+            title="HTML"
+          />
         </div>
       </div>
     </template>
