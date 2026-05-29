@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { h } from 'vue'
-import type { TableColumn } from '~/components/app/Table.vue'
+import type { TableColumn, TableRowSelectionModel } from '~/components/app/Table.vue'
 
 const AppButton = resolveComponent('AppButton')
 const AppDropdown = resolveComponent('AppDropdown')
@@ -9,6 +9,7 @@ const AppTooltip = resolveComponent('AppTooltip')
 
 type StatisticsFullRow = {
   date: string
+  id: number
   title: string
   type: string
   project: string
@@ -173,6 +174,7 @@ const columns = ref<TableColumn<StatisticsFullRow>[]>([
 const data = ref<StatisticsFullRow[]>([
   {
     date: '03.03.2026',
+    id: 1834,
     title: 'Компьютерная помощь на дому',
     type: 'Компания',
     project: 'Мастер на час',
@@ -183,6 +185,7 @@ const data = ref<StatisticsFullRow[]>([
   },
   {
     date: '03.03.2026',
+    id: 1897,
     title: 'Компьютерная помощь, настройка ПК',
     type: 'Частный мастер',
     project: 'Мастер на час',
@@ -193,6 +196,7 @@ const data = ref<StatisticsFullRow[]>([
   },
   {
     date: '03.03.2026',
+    id: 1942,
     title: '51344 - 52. Ремонт техники',
     type: 'Частный мастер',
     project: 'Бытовой ремонт',
@@ -203,6 +207,7 @@ const data = ref<StatisticsFullRow[]>([
   },
   {
     date: '03.03.2026',
+    id: 2018,
     title: '51401 - ЗИП Николай',
     type: 'Частный мастер',
     project: 'Универсальный',
@@ -213,6 +218,7 @@ const data = ref<StatisticsFullRow[]>([
   },
   {
     date: '03.03.2026',
+    id: 2076,
     title: '51478 - 4 ИП Георгий',
     type: 'Частный мастер',
     project: 'Бытовой ремонт',
@@ -223,6 +229,7 @@ const data = ref<StatisticsFullRow[]>([
   },
   {
     date: '03.03.2026',
+    id: 2139,
     title: '51480 - 5 ИП Алексеев',
     type: 'Компания',
     project: 'Мастер на час',
@@ -233,6 +240,7 @@ const data = ref<StatisticsFullRow[]>([
   },
   {
     date: '03.03.2026',
+    id: 2214,
     title: '51481 - 9 Компания Домовой',
     type: 'Частный мастер',
     project: 'Бытовой ремонт',
@@ -243,6 +251,7 @@ const data = ref<StatisticsFullRow[]>([
   },
   {
     date: '03.03.2026',
+    id: 2291,
     title: '51482 - 2 ООО АйТи-Сервис',
     type: 'Частный мастер',
     project: 'Мастер на час',
@@ -253,6 +262,7 @@ const data = ref<StatisticsFullRow[]>([
   },
   {
     date: '03.03.2026',
+    id: 2378,
     title: '51483 - 6 ИП Марина',
     type: 'Компания',
     project: 'Бытовой ремонт',
@@ -263,6 +273,7 @@ const data = ref<StatisticsFullRow[]>([
   },
   {
     date: '03.03.2026',
+    id: 2450,
     title: '51484 - 1 Центр Ремонта',
     type: 'Компания',
     project: 'Универсальный',
@@ -272,6 +283,8 @@ const data = ref<StatisticsFullRow[]>([
     link: 'http://localhost:3000/threads/1',
   },
 ])
+
+const rowSelection = ref<TableRowSelectionModel>({})
 </script>
 
 <template>
@@ -292,11 +305,12 @@ const data = ref<StatisticsFullRow[]>([
         </template>
         <template #content>
           <AppTable
-            cell-border="row"
+            v-model:row-selection="rowSelection"
             class="threads__table"
             :columns
             :data
             enable-row-selection
+            :get-row-id="row => String(row.id)"
           />
         </template>
         <template #footer>
