@@ -1,0 +1,45 @@
+.token {
+  &.tag {
+    color: var(--ui-color-error);
+  }
+
+  &.attr-name {
+    color: var(--ui-color-success);
+  }
+
+  &.attr-value {
+    color: var(--ui-color-info);
+  }
+
+  &.punctuation {
+    color: var(--ui-color-neutral);
+  }
+
+  &.comment {
+    color: var(--ui-color-neutral-400);
+  }
+
+  &.keyword {
+    color: var(--ui-color-info);
+  }
+
+  &.function {
+    color: var(--ui-color-error);
+  }
+
+  &.operator {
+    color: var(--ui-color-neutral);
+  }
+
+  &.class-name {
+    color: var(--ui-color-warning);
+  }
+
+  &.number {
+    color: var(--ui-color-primary);
+  }
+
+  &.parametr {
+    color: var(--ui-color-primary);
+  }
+}

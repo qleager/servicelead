@@ -74,6 +74,12 @@ transition: $duration-blur-sm;
   display: none;
 }
 ```
+#### `theme` – get the theme @include
+```scss
+@include theme('dark' | 'light') {
+  background: var(--ui-bg-muted);
+}
+```
 
 ## Use Conventional Commits
 
