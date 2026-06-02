@@ -8,6 +8,7 @@ const config: StorybookConfig = {
   stories: [
     '../storybook/stories/**/*.stories.ts',
   ],
+  staticDirs: ['../public'],
   framework: {
     name: '@storybook-vue/nuxt',
     options: {},
