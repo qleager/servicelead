@@ -39,7 +39,9 @@ export type { Props as AlertProps }
       :name="iconName"
       :size="16"
     />
-    <slot />
+    <div class="alert__content">
+      <slot />
+    </div>
   </div>
 </template>
 
@@ -55,15 +57,18 @@ export type { Props as AlertProps }
   padding: $space-2 $space-4;
   border-radius: $space-6;
 
-  @include text(regular, sm);
-
   @include is($type-info) {
     color: $color-neutral-950;
     background-color: $color-blue-50;
   }
 
   &__icon {
+    flex-shrink: 0;
     margin-top: $space-05;
+  }
+
+  &__content {
+    @include text(regular, sm);
   }
 }
 </style>
