@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@nuxtjs/storybook'
 import AppInput from '@components/app/Input.vue'
-import AppLabel from '@components/app/Label.vue'
+import AppLabel from '@components/app/FormField.vue'
 
 export default {
-  title: 'App/Label',
+  title: 'App/FormField',
   component: AppLabel,
   parameters: {
     layout: 'centered',
@@ -21,6 +21,10 @@ export default {
     required: {
       control: 'boolean',
     },
+    name: {
+      control: 'text',
+      table: { category: 'behavioral props' },
+    },
     default: {
       control: 'boolean',
       table: { category: 'slots' },
@@ -30,6 +34,7 @@ export default {
     title: 'Label',
     caption: 'Caption text',
     error: '',
+    name: 'form-field',
     default: true,
     required: false,
   },
