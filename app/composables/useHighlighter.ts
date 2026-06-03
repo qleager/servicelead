@@ -7,7 +7,7 @@ export const useHighlighter = () => {
   const highlight = (code: string, options: { lang: Lang }) => {
     const grammar = Prism.languages[options.lang] as Grammar
 
-    return computed(() => Prism.highlight(code, grammar, options.lang))
+    return computed(() => `<span class="highlighter">${Prism.highlight(code, grammar, options.lang)}</span>`)
   }
 
   return {

@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-// IDEA: автоматическое определение языка? или просто пропс lang? или оставляем его в title, типа "HTML · Contact Form"?
 interface Props {
   code: string
   lang: UseHighlighterLang
@@ -10,15 +9,10 @@ const props = defineProps<Props>()
 
 const { highlight } = useHighlighter()
 
-const codeRef = ref<HTMLElement | null>(null)
 const highlightedCode = highlight(props.code, { lang: props.lang })
 
-const copyCode = (): void => {
-  const text = codeRef.value?.textContent
-
-  if (text) {
-    copyToClipboard(text)
-  }
+const copyCode = () => {
+  copyToClipboard(props.code)
 }
 
 export type { Props as CodeProps }
@@ -50,7 +44,6 @@ export type { Props as CodeProps }
     </div>
 
     <pre class="code__pre"><code
-      ref="codeRef"
       v-safe-html="highlightedCode"
       class="code__content"
     /></pre>
@@ -96,12 +89,6 @@ export type { Props as CodeProps }
     padding: $space-4;
 
     @include text(regular, sm);
-
-    .token {
-      display: inline;
-      font-family: monospace;
-      white-space: nowrap;
-    }
   }
 }
 </style>

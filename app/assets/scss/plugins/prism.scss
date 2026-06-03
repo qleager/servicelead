@@ -1,45 +1,51 @@
-.token {
-  &.tag {
-    color: var(--ui-color-error);
-  }
+.highlighter {
+  .token {
+    display: inline;
+    font-family: monospace;
+    white-space: nowrap;
 
-  &.attr-name {
-    color: var(--ui-color-success);
-  }
+    &.tag {
+      color: var(--ui-color-error);
+    }
 
-  &.attr-value {
-    color: var(--ui-color-info);
-  }
+    &.attr-name {
+      color: var(--ui-color-success);
+    }
 
-  &.punctuation {
-    color: var(--ui-color-neutral);
-  }
+    &.attr-value {
+      color: var(--ui-color-info);
+    }
 
-  &.comment {
-    color: var(--ui-color-neutral-400);
-  }
+    &.punctuation {
+      color: var(--ui-color-neutral);
+    }
 
-  &.keyword {
-    color: var(--ui-color-info);
-  }
+    &.comment {
+      color: var(--ui-color-neutral-400);
+    }
 
-  &.function {
-    color: var(--ui-color-error);
-  }
+    &.keyword {
+      color: var(--ui-color-info);
+    }
 
-  &.operator {
-    color: var(--ui-color-neutral);
-  }
+    &.function {
+      color: var(--ui-color-error);
+    }
 
-  &.class-name {
-    color: var(--ui-color-warning);
-  }
+    &.operator {
+      color: var(--ui-color-neutral);
+    }
 
-  &.number {
-    color: var(--ui-color-primary);
-  }
+    &.class-name {
+      color: var(--ui-color-warning);
+    }
 
-  &.parametr {
-    color: var(--ui-color-primary);
+    &.number {
+      color: var(--ui-color-primary);
+    }
+
+    &.parametr {
+      color: var(--ui-color-primary);
+    }
   }
 }
