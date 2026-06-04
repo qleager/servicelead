@@ -13,6 +13,6 @@
 
 ## Storybook
 - Создаем только playground stories.
-- Для отображения слота используем `AppTag:size-sm:color-gray`, а control задаем как boolean.
+- Для отображения слота используем `AppTag:size-sm:color-gray:variant-default`, а control задаем как boolean.
 - Если слот повторяет проп, делаем слот с `control: text`.
 - Для пропсов, которые визуально не меняют компонент, используем `{ category: 'behavioral props' }`.
