@@ -1,17 +1,50 @@
 import type { Preview } from '@storybook-vue/nuxt'
 
-// TODO: Упростить интерфейс для production, чтобы дизайнерам не было страшно
-// 1. Убрать actions и interactions
-// const mode = process.env.NODE_ENV
+type ThemeColorMode = 'light' | 'dark'
+
+const themeColorModes: ThemeColorMode[] = ['light', 'dark']
+
+const applyTheme = (theme: ThemeColorMode) => {
+  document.documentElement.dataset.theme = theme
+  localStorage.setItem('theme-color-mode', theme)
+}
+
+const getInitialTheme = (): ThemeColorMode => {
+  const theme = localStorage.getItem('theme-color-mode')
+
+  return themeColorModes.includes(theme as ThemeColorMode) ? theme as ThemeColorMode : 'light'
+}
 
 const preview: Preview = {
+  globalTypes: {
+    theme: {
+      description: 'Theme color mode',
+      toolbar: {
+        icon: 'circlehollow',
+        items: [
+          { title: 'Light', value: 'light' },
+          { title: 'Dark', value: 'dark' },
+        ],
+        title: 'Theme',
+      },
+    },
+  },
+  initialGlobals: {
+    theme: getInitialTheme(),
+  },
   decorators: [
-    () => ({
-      template: `
-        <div id="teleports"></div>
-        <story />
-      `,
-    }),
+    (_, context) => {
+      const theme = context.globals.theme
+
+      applyTheme(themeColorModes.includes(theme) ? theme : 'light')
+
+      return {
+        template: `
+          <div id="teleports"></div>
+          <story />
+        `,
+      }
+    },
   ],
   parameters: {
     layout: 'centered',
