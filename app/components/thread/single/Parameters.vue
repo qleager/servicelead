@@ -37,20 +37,11 @@ const openedSections = reactive({
               ID
             </div>
             <div class="thread-single-parameters__param-value">
-              51323
-              <AppTooltip>
-                <AppButton
-                  class="thread-single-parameters__copy-btn"
-                  color="neutral"
-                  icon="Copy"
-                  size="xs"
-                  variant="link"
-                  @click="copyToClipboard('51323')"
-                />
-                <template #content>
-                  Скопировать
-                </template>
-              </AppTooltip>
+              <AppCopyToClipboard
+                source="51323"
+              >
+                51323
+              </AppCopyToClipboard>
             </div>
           </div>
           <div class="thread-single-parameters__param">
@@ -405,10 +396,6 @@ const openedSections = reactive({
 
       @include text(regular, md);
     }
-  }
-
-  &__copy-btn {
-    margin: -$space-1;
   }
 
   &__extra-tooltip {

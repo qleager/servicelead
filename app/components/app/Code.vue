@@ -11,10 +11,6 @@ const { highlight } = useHighlighter()
 
 const highlightedCode = highlight(props.code, { lang: props.lang })
 
-const copyCode = () => {
-  copyToClipboard(props.code)
-}
-
 export type { Props as CodeProps }
 </script>
 
@@ -30,17 +26,7 @@ export type { Props as CodeProps }
         {{ title }}
       </div>
 
-      <AppTooltip>
-        <AppButton
-          color="neutral"
-          icon="Copy"
-          variant="link"
-          @click="copyCode"
-        />
-        <template #content>
-          Скопировать код
-        </template>
-      </AppTooltip>
+      <AppCopyToClipboard :source="code" />
     </div>
 
     <pre class="code__pre"><code
@@ -57,7 +43,7 @@ export type { Props as CodeProps }
     align-items: center;
     justify-content: space-between;
 
-    padding: $space-2 $space-2 $space-2 $space-6;
+    padding: $space-4 $space-4 $space-4 $space-6;
     border: 1px solid $color-neutral-150;
     border-top-left-radius: $space-6;
     border-top-right-radius: $space-6;

@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { copyToClipboard } from '~/utils/copyToClipboard'
-
 const code1 = `<script src="https://lk.newapi.ru/stat/51326/js"></scr` + `ipt>`
 
 const code2 = `<form class="sltop__form"
@@ -135,18 +133,9 @@ const code7 = `<div id="sltop__form_placeholder_51325"></div>
               computerovichkoff.ru
             </a>
 
-            <AppTooltip>
-              <AppButton
-                class="thread-single-delivery__landing-copy-btn"
-                color="neutral"
-                icon="Copy"
-                variant="link"
-                @click="copyToClipboard('computerovichkoff.ru')"
-              />
-              <template #content>
-                Скопировать
-              </template>
-            </AppTooltip>
+            <AppCopyToClipboard
+              source="computerovichkoff.ru"
+            />
           </div>
         </div>
       </div>
