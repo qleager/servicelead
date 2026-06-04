@@ -6,6 +6,7 @@
 - В проекте используется VueUse.
 - В проекте используется Lodash через префикс use.
 - Компонент-ориентир для style guide: `./app/components/ExampleComponent.vue`.
+- `rg` не установлен
 
 ## Components
 - Порядок блоков в Vue SFC: `<script setup lang="ts">`, затем `<template>`, затем `<style lang="scss">`.
