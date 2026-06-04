@@ -1,25 +1,3 @@
-<!-- TODO: Documentation
-  комплнент сложный, требуется документации
-
-  Обозначить что на tantask сделан
-
-  Именования:
-  head - ячека в header
-  cell - ячека в body
-  foot - ячейка в footer
-
-  Показать примеры, очень короткие, читсо то, чтобы донести принцип
-  1. Об общем слоте header и cell
-  2. Об именованох слотах &{name}-header и &{name}-сell и &{name}-foot
-  3. О рендер функции в columns и data (Это некая замена слотам отметить)
-  4. О size колонок
-  5. О sticky header и footer
-  6. О том как запинить колонку с нужной стороны
-  7. О cellBorder
-  8. О сортировке через enableSorting и sortingFn. А model:sorting отвечает за состояние
-  9. О meta: { align } и других
-  10. О выборе строк в таблице (enableRowSelection prop, modelRowSelection)
--->
 <script lang="ts" setup generic="TData extends RowData">
 import type { Cell, Column, Header, Row, RowData, Table } from '@tanstack/vue-table'
 import { FlexRender } from '@tanstack/vue-table'

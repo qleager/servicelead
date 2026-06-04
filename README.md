@@ -197,6 +197,7 @@ docs(AppButton): add jsondoc to props
 - [useDocumentScrollLock](docs/composables/use-document-scroll-lock.md) — document scroll lock helper
 - [useHighlighter](docs/composables/use-highlighter.md) — PrismJS syntax highlighting helper
 - [useOverlay](docs/composables/use-overlay.md) — shared overlay manager
+- [useTable](docs/composables/use-table.md) — TanStack-powered AppTable helper
 - [useValidation](docs/composables/use-validation.md) — Yup validation with and without `AppForm`
 
 ## Use Utils
