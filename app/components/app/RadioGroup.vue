@@ -1,34 +1,34 @@
 <!-- IDEA: Все таки просится разделить AppRadioGroup и AppRadio как Item
            раздельно реализован AppTabs, если сейчас осень'26 и более, реализация AppTabs обкатана, и показала себя хорошо – тут можно(нужно) сделать так же
 -->
-<script lang="ts" setup>
+<script lang="ts">
 import type { Size, Subset } from '~/types/ds'
 import type { IconProps } from './Icon.vue'
 import type { VNodeChild } from 'vue'
 
-interface Props {
+export interface RadioGroupProps {
   disabled?: boolean
   error?: boolean
   indicator?: 'start' | 'end' | 'hidden'
-  items: Item[] | string[]
+  items: RadioGroupItem[] | string[]
   name?: string
   size?: Subset<Size, 'sm' | 'md'>
   variant?: 'card' | 'pill' | 'list'
 }
 
-interface Emits {
+export interface RadioGroupEmits {
   change: [event: Event]
 }
 
-type Model = Item['value']
+export type RadioGroupModel = RadioGroupItem['value']
 
-interface Slots {
-  description?: (props: { item: Item }) => VNodeChild
-  icon?: (props: { item: Item }) => VNodeChild
-  label?: (props: { item: Item }) => VNodeChild
+export interface RadioGroupSlots {
+  description?: (props: { item: RadioGroupItem }) => VNodeChild
+  icon?: (props: { item: RadioGroupItem }) => VNodeChild
+  label?: (props: { item: RadioGroupItem }) => VNodeChild
 }
 
-interface Item {
+export interface RadioGroupItem {
   [key: string]: unknown
   description?: string
   disabled?: boolean
@@ -36,18 +36,20 @@ interface Item {
   label?: string
   value?: string
 }
+</script>
 
-const props = withDefaults(defineProps<Props>(), {
+<script lang="ts" setup generic="N extends Record<string, unknown>">
+const props = withDefaults(defineProps<RadioGroupProps>(), {
   indicator: 'start',
   size: 'md',
   variant: 'card',
 })
 
-const emit = defineEmits<Emits>()
+const emit = defineEmits<RadioGroupEmits>()
 
-const model = defineModel<Model>()
+const model = defineModel<RadioGroupModel>()
 
-defineSlots<Slots>()
+defineSlots<RadioGroupSlots>()
 
 const { error, name, emitFormChange } = useFormField(props)
 
@@ -82,8 +84,6 @@ const onClick = (event: MouseEvent) => {
 
   model.value = button.value
 }
-
-export type { Props as RadioGroupProps, Emits as RadioGroupEmits, Model as RadioGroupModel, Slots as RadioGroupSlots, Item as RadioGroupItem }
 </script>
 
 <template>
