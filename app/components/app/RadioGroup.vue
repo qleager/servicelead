@@ -25,6 +25,7 @@ export type RadioGroupModel = RadioGroupItem['value']
 export interface RadioGroupSlots<TItem> {
   description?: (props: { item: TItem }) => VNodeChild
   icon?: (props: { item: TItem }) => VNodeChild
+  item?: (props: { item: TItem }) => VNodeChild
   label?: (props: { item: TItem }) => VNodeChild
 }
 
@@ -93,45 +94,50 @@ const onClick = (event: MouseEvent) => {
       :value="item.value"
       @click.capture="onClick"
     >
-      <div class="radio-group__item-indicator" />
-      <div class="radio-group__item-info">
-        <slot
-          :item
-          name="icon"
-        >
-          <AppIcon
-            v-if="item.icon"
-            class="radio-group__item-icon"
-            :name="item.icon"
-          />
-        </slot>
-        <div
-          class="radio-group__item-main"
-        >
-          <div
-            v-if="$slots.label || item.label"
-            class="radio-group__item-label"
+      <slot
+        :item
+        name="item"
+      >
+        <div class="radio-group__item-indicator" />
+        <div class="radio-group__item-info">
+          <slot
+            :item
+            name="icon"
           >
-            <slot
-              :item
-              name="label"
-            >
-              {{ item.label }}
-            </slot>
-          </div>
+            <AppIcon
+              v-if="item.icon"
+              class="radio-group__item-icon"
+              :name="item.icon"
+            />
+          </slot>
           <div
-            v-if="$slots.description || item.description"
-            class="radio-group__item-description"
+            class="radio-group__item-main"
           >
-            <slot
-              :item
-              name="description"
+            <div
+              v-if="$slots.label || item.label"
+              class="radio-group__item-label"
             >
-              {{ item.description }}
-            </slot>
+              <slot
+                :item
+                name="label"
+              >
+                {{ item.label }}
+              </slot>
+            </div>
+            <div
+              v-if="$slots.description || item.description"
+              class="radio-group__item-description"
+            >
+              <slot
+                :item
+                name="description"
+              >
+                {{ item.description }}
+              </slot>
+            </div>
           </div>
         </div>
-      </div>
+      </slot>
     </button>
 
     <input
@@ -203,11 +209,11 @@ const onClick = (event: MouseEvent) => {
 
       &#{$item-active} {
         border: 1px solid $color-primary;
-        background-color: $color-neutral-50;
+        background-color: $color-primary-50;
       }
 
       &#{$item-hover} {
-        background-color: $color-neutral-50;
+        background-color: $color-primary-50;
         transition: $hover-duration-sm;
       }
 
