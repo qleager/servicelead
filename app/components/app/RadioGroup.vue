@@ -6,7 +6,7 @@ import type { Size, Subset } from '~/types/ds'
 import type { IconProps } from './Icon.vue'
 import type { VNodeChild } from 'vue'
 
-export interface RadioGroupProps<TItem> {
+export interface RadioGroupProps<TItem extends RadioGroupItem = RadioGroupItem> {
   disabled?: boolean
   error?: boolean
   indicator?: 'start' | 'end' | 'hidden'
@@ -22,7 +22,7 @@ export interface RadioGroupEmits {
 
 export type RadioGroupModel = RadioGroupItem['value']
 
-export interface RadioGroupSlots<TItem> {
+export interface RadioGroupSlots<TItem extends RadioGroupItem = RadioGroupItem> {
   description?: (props: { item: TItem }) => VNodeChild
   icon?: (props: { item: TItem }) => VNodeChild
   item?: (props: { item: TItem }) => VNodeChild
