@@ -6,11 +6,11 @@ import type { Size, Subset } from '~/types/ds'
 import type { IconProps } from './Icon.vue'
 import type { VNodeChild } from 'vue'
 
-export interface RadioGroupProps {
+export interface RadioGroupProps<TItem> {
   disabled?: boolean
   error?: boolean
   indicator?: 'start' | 'end' | 'hidden'
-  items: RadioGroupItem[] | string[]
+  items: TItem[]
   name?: string
   size?: Subset<Size, 'sm' | 'md'>
   variant?: 'card' | 'pill' | 'list'
@@ -22,24 +22,27 @@ export interface RadioGroupEmits {
 
 export type RadioGroupModel = RadioGroupItem['value']
 
-export interface RadioGroupSlots {
-  description?: (props: { item: RadioGroupItem }) => VNodeChild
-  icon?: (props: { item: RadioGroupItem }) => VNodeChild
-  label?: (props: { item: RadioGroupItem }) => VNodeChild
+export interface RadioGroupSlots<TItem> {
+  description?: (props: { item: TItem }) => VNodeChild
+  icon?: (props: { item: TItem }) => VNodeChild
+  label?: (props: { item: TItem }) => VNodeChild
 }
 
-export interface RadioGroupItem {
-  [key: string]: unknown
+export interface RadioGroupBaseItem {
   description?: string
   disabled?: boolean
   icon?: IconProps['name']
   label?: string
   value?: string
 }
+
+export type RadioGroupItem<
+  TExtra extends object = object,
+> = RadioGroupBaseItem & TExtra
 </script>
 
-<script lang="ts" setup generic="N extends Record<string, unknown>">
-const props = withDefaults(defineProps<RadioGroupProps>(), {
+<script lang="ts" setup generic="TItem extends RadioGroupItem = RadioGroupItem">
+const props = withDefaults(defineProps<RadioGroupProps<TItem>>(), {
   indicator: 'start',
   size: 'md',
   variant: 'card',
@@ -49,7 +52,7 @@ const emit = defineEmits<RadioGroupEmits>()
 
 const model = defineModel<RadioGroupModel>()
 
-defineSlots<RadioGroupSlots>()
+defineSlots<RadioGroupSlots<TItem>>()
 
 const { error, name, emitFormChange } = useFormField(props)
 
@@ -63,16 +66,6 @@ const classname = computed(() => [
     'radio-group-error': error.value,
   },
 ])
-
-const items = computed(() => {
-  return props.items.map((item) => {
-    if (typeof item === 'string') {
-      return { label: item, value: item }
-    }
-
-    return item
-  })
-})
 
 const onChange = (event: Event) => {
   emitFormChange()
