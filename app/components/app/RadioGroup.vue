@@ -1,35 +1,35 @@
 <!-- IDEA: Все таки просится разделить AppRadioGroup и AppRadio как Item
            раздельно реализован AppTabs, если сейчас осень'26 и более, реализация AppTabs обкатана, и показала себя хорошо – тут можно(нужно) сделать так же
 -->
-<script lang="ts" setup>
+<script lang="ts">
 import type { Size, Subset } from '~/types/ds'
 import type { IconProps } from './Icon.vue'
 import type { VNodeChild } from 'vue'
 
-interface Props {
+export interface RadioGroupProps<TItem extends RadioGroupItem = RadioGroupItem> {
   disabled?: boolean
   error?: boolean
   indicator?: 'start' | 'end' | 'hidden'
-  items: Item[] | string[]
+  items: TItem[]
   name?: string
   size?: Subset<Size, 'sm' | 'md'>
   variant?: 'card' | 'pill' | 'list'
 }
 
-interface Emits {
+export interface RadioGroupEmits {
   change: [event: Event]
 }
 
-type Model = Item['value']
+export type RadioGroupModel = RadioGroupItem['value']
 
-interface Slots {
-  description?: (props: { item: Item }) => VNodeChild
-  icon?: (props: { item: Item }) => VNodeChild
-  label?: (props: { item: Item }) => VNodeChild
+export interface RadioGroupSlots<TItem extends RadioGroupItem = RadioGroupItem> {
+  description?: (props: { item: TItem }) => VNodeChild
+  icon?: (props: { item: TItem }) => VNodeChild
+  item?: (props: { item: TItem }) => VNodeChild
+  label?: (props: { item: TItem }) => VNodeChild
 }
 
-interface Item {
-  [key: string]: unknown
+export interface RadioGroupBaseItem {
   description?: string
   disabled?: boolean
   icon?: IconProps['name']
@@ -37,17 +37,23 @@ interface Item {
   value?: string
 }
 
-const props = withDefaults(defineProps<Props>(), {
+export type RadioGroupItem<
+  TExtra extends object = object,
+> = RadioGroupBaseItem & TExtra
+</script>
+
+<script lang="ts" setup generic="TItem extends RadioGroupItem = RadioGroupItem">
+const props = withDefaults(defineProps<RadioGroupProps<TItem>>(), {
   indicator: 'start',
   size: 'md',
   variant: 'card',
 })
 
-const emit = defineEmits<Emits>()
+const emit = defineEmits<RadioGroupEmits>()
 
-const model = defineModel<Model>()
+const model = defineModel<RadioGroupModel>()
 
-defineSlots<Slots>()
+defineSlots<RadioGroupSlots<TItem>>()
 
 const { error, name, emitFormChange } = useFormField(props)
 
@@ -62,16 +68,6 @@ const classname = computed(() => [
   },
 ])
 
-const items = computed(() => {
-  return props.items.map((item) => {
-    if (typeof item === 'string') {
-      return { label: item, value: item }
-    }
-
-    return item
-  })
-})
-
 const onChange = (event: Event) => {
   emitFormChange()
   emit('change', event)
@@ -82,8 +78,6 @@ const onClick = (event: MouseEvent) => {
 
   model.value = button.value
 }
-
-export type { Props as RadioGroupProps, Emits as RadioGroupEmits, Model as RadioGroupModel, Slots as RadioGroupSlots, Item as RadioGroupItem }
 </script>
 
 <template>
@@ -100,45 +94,50 @@ export type { Props as RadioGroupProps, Emits as RadioGroupEmits, Model as Radio
       :value="item.value"
       @click.capture="onClick"
     >
-      <div class="radio-group__item-indicator" />
-      <div class="radio-group__item-info">
-        <slot
-          :item
-          name="icon"
-        >
-          <AppIcon
-            v-if="item.icon"
-            class="radio-group__item-icon"
-            :name="item.icon"
-          />
-        </slot>
-        <div
-          class="radio-group__item-main"
-        >
-          <div
-            v-if="$slots.label || item.label"
-            class="radio-group__item-label"
+      <slot
+        :item
+        name="item"
+      >
+        <div class="radio-group__item-indicator" />
+        <div class="radio-group__item-info">
+          <slot
+            :item
+            name="icon"
           >
-            <slot
-              :item
-              name="label"
-            >
-              {{ item.label }}
-            </slot>
-          </div>
+            <AppIcon
+              v-if="item.icon"
+              class="radio-group__item-icon"
+              :name="item.icon"
+            />
+          </slot>
           <div
-            v-if="$slots.description || item.description"
-            class="radio-group__item-description"
+            class="radio-group__item-main"
           >
-            <slot
-              :item
-              name="description"
+            <div
+              v-if="$slots.label || item.label"
+              class="radio-group__item-label"
             >
-              {{ item.description }}
-            </slot>
+              <slot
+                :item
+                name="label"
+              >
+                {{ item.label }}
+              </slot>
+            </div>
+            <div
+              v-if="$slots.description || item.description"
+              class="radio-group__item-description"
+            >
+              <slot
+                :item
+                name="description"
+              >
+                {{ item.description }}
+              </slot>
+            </div>
           </div>
         </div>
-      </div>
+      </slot>
     </button>
 
     <input
@@ -210,11 +209,11 @@ export type { Props as RadioGroupProps, Emits as RadioGroupEmits, Model as Radio
 
       &#{$item-active} {
         border: 1px solid $color-primary;
-        background-color: $color-neutral-50;
+        background-color: $color-primary-50;
       }
 
       &#{$item-hover} {
-        background-color: $color-neutral-50;
+        background-color: $color-primary-50;
         transition: $hover-duration-sm;
       }
 
