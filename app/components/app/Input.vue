@@ -12,9 +12,11 @@ interface Props {
   rounded?: boolean
   size?: Subset<Size, 'md' | 'sm'>
   trailingIcon?: IconProps['name']
-  type?: 'text' | 'number' | 'password' | 'search' | 'hidden' | 'email' | 'tel' | 'url' | string
+  type?: 'text' | 'password' | 'search' | 'email' | 'tel' | 'url'
   variant?: 'ghost' | 'soft' | 'outline'
 }
+
+type Model = undefined | null | string
 
 interface Slots {
   default: () => VNodeChild
@@ -31,6 +33,7 @@ const props = withDefaults(defineProps<Props>(), {
   size: 'md',
 })
 
+const model = defineModel<Model>()
 const slots = defineSlots<Slots>()
 
 const { width: leadingSlotWidth } = useElementSize(leadingSlot, { width: 0, height: 0 }, { box: 'border-box' })
@@ -78,6 +81,7 @@ const style = computed(() => isMounted.value
 
     <input
       ref="input"
+      v-model="model"
       class="input__field"
       :disabled
       :placeholder
