@@ -8,12 +8,20 @@ interface Props {
   disabled?: boolean
   error?: boolean
   icon?: IconProps['name']
+  name: string
   placeholder?: string
   rounded?: boolean
   size?: Subset<Size, 'md' | 'sm'>
   trailingIcon?: IconProps['name']
   type?: 'text' | 'password' | 'search' | 'email' | 'tel' | 'url'
   variant?: 'ghost' | 'soft' | 'outline'
+}
+
+interface Emits {
+  blur: [event: Event]
+  change: [event: Event]
+  focus: [event: Event]
+  input: [event: Event]
 }
 
 type Model = undefined | null | string
@@ -33,18 +41,20 @@ const props = withDefaults(defineProps<Props>(), {
   size: 'md',
 })
 
+const emit = defineEmits<Emits>()
 const model = defineModel<Model>()
 const slots = defineSlots<Slots>()
 
 const { width: leadingSlotWidth } = useElementSize(leadingSlot, { width: 0, height: 0 }, { box: 'border-box' })
 const { width: trailingSlotWidth } = useElementSize(trailingSlot, { width: 0, height: 0 }, { box: 'border-box' })
+const { error, name, emitFormBlur, emitFormChange, emitFormInput, emitFormFocus } = useFormField(props)
 
 const classname = computed(() => ([
   'input',
   `input-size-${props.size}`,
   `input-variant-${props.variant}`,
   {
-    'input-error': props.error,
+    'input-error': error.value,
     'input-rounded': props.rounded,
   },
 ]))
@@ -58,6 +68,26 @@ const style = computed(() => isMounted.value
       '--input-trailing-slot-width': hasTrailing.value ? `${trailingSlotWidth.value}px` : undefined,
     }
   : undefined)
+
+const onBlur = (event: Event) => {
+  emitFormBlur()
+  emit('blur', event)
+}
+
+const onChange = (event: Event) => {
+  emitFormChange()
+  emit('change', event)
+}
+
+const onFocus = (event: Event) => {
+  emitFormFocus()
+  emit('focus', event)
+}
+
+const onInput = (event: Event) => {
+  emitFormInput()
+  emit('input', event)
+}
 </script>
 
 <template>
@@ -84,8 +114,13 @@ const style = computed(() => isMounted.value
       v-model="model"
       class="input__field"
       :disabled
+      :name
       :placeholder
       :type
+      @blur="onBlur"
+      @change="onChange"
+      @focus="onFocus"
+      @input="onInput"
     >
 
     <div
