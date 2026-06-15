@@ -1,4 +1,5 @@
-<script lang="ts" setup>
+<script setup lang="ts">
+import { useToggle } from '@vueuse/core'
 import { boolean, object, string, type InferType } from 'yup'
 import type { FormSubmitEvent } from '~/components/app/Form.vue'
 
@@ -22,6 +23,11 @@ const state = reactive({
   email: '',
   password: '',
   rememberMe: true,
+})
+
+const [passwordType, togglePasswordType] = useToggle<'password', 'text'>('password', {
+  truthyValue: 'password',
+  falsyValue: 'text',
 })
 
 const onSubmit = async (event: FormSubmitEvent<Schema>) => {
@@ -82,11 +88,19 @@ const onSubmit = async (event: FormSubmitEvent<Schema>) => {
             v-model="state.password"
             autocomplete="current-password"
             class="auth-login__input"
-            icon="eye"
             placeholder="Введите пароль"
-            trailing-icon
-            type="password"
-          />
+            :type="passwordType"
+          >
+            <template #trailing>
+              <AppButton
+                class="auth-login__input-trailing-button"
+                color="neutral"
+                icon="eye"
+                variant="link"
+                @click="togglePasswordType()"
+              />
+            </template>
+          </AppInput>
         </AppFormField>
 
         <div class="auth-login__actions">
@@ -175,6 +189,10 @@ const onSubmit = async (event: FormSubmitEvent<Schema>) => {
 
   &__input {
     width: 100%;
+
+    &-trailing-button {
+      margin-right: -$space-3;
+    }
   }
 
   &__link {

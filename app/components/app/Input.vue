@@ -161,8 +161,10 @@ const onInput = (event: Event) => {
   align-items: center;
 
   &__field {
+    width: 100%;
     border: none;
     border-radius: $radius-2;
+
     background: none;
     box-shadow: none;
 
