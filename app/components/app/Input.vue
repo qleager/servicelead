@@ -8,7 +8,7 @@ interface Props {
   disabled?: boolean
   error?: boolean
   icon?: IconProps['name']
-  name: string
+  name?: string
   placeholder?: string
   rounded?: boolean
   size?: Subset<Size, 'md' | 'sm'>
