@@ -1,7 +1,8 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import type { Size, Subset } from '~/types/ds'
 import type { IconProps } from './Icon.vue'
 import type { VNodeChild } from 'vue'
+import { useElementSize, useMounted } from '@vueuse/core'
 
 interface Props {
   disabled?: boolean
@@ -21,12 +22,19 @@ interface Slots {
   trailing: () => VNodeChild
 }
 
+const isMounted = useMounted()
+const leadingSlot = useTemplateRef<HTMLElement>('leadingSlot')
+const trailingSlot = useTemplateRef<HTMLElement>('trailingSlot')
+
 const props = withDefaults(defineProps<Props>(), {
   variant: 'outline',
   size: 'md',
 })
 
-defineSlots<Slots>()
+const slots = defineSlots<Slots>()
+
+const { width: leadingSlotWidth } = useElementSize(leadingSlot, { width: 0, height: 0 }, { box: 'border-box' })
+const { width: trailingSlotWidth } = useElementSize(trailingSlot, { width: 0, height: 0 }, { box: 'border-box' })
 
 const classname = computed(() => ([
   'input',
@@ -37,26 +45,58 @@ const classname = computed(() => ([
     'input-rounded': props.rounded,
   },
 ]))
+
+const hasLeading = computed(() => Boolean(props.icon || slots.leading))
+const hasTrailing = computed(() => Boolean(props.trailingIcon || slots.trailing))
+
+const style = computed(() => isMounted.value
+  ? {
+      '--input-leading-slot-width': hasLeading.value ? `${leadingSlotWidth.value + 8}px` : undefined,
+      '--input-trailing-slot-width': hasTrailing.value ? `${trailingSlotWidth.value}px` : undefined,
+    }
+  : undefined)
 </script>
 
 <template>
-  <div :class="classname">
-    <AppIcon
-      v-if="icon"
-      class="input__icon"
-      :name="icon"
-    />
+  <div
+    :class="classname"
+    :style
+  >
+    <div
+      v-if="hasLeading"
+      ref="leadingSlot"
+      class="input__leading-slot"
+    >
+      <slot name="leading">
+        <AppIcon
+          v-if="icon"
+          class="input__icon"
+          :name="icon"
+        />
+      </slot>
+    </div>
+
     <input
+      ref="input"
       class="input__field"
       :disabled
       :placeholder
       :type
     >
-    <AppIcon
-      v-if="trailingIcon"
-      class="input__trailing-icon"
-      :name="trailingIcon"
-    />
+
+    <div
+      v-if="hasTrailing"
+      ref="trailingSlot"
+      class="input__trailing-slot"
+    >
+      <slot name="trailing">
+        <AppIcon
+          v-if="trailingIcon"
+          class="input__trailing-icon"
+          :name="trailingIcon"
+        />
+      </slot>
+    </div>
   </div>
 </template>
 
@@ -78,6 +118,8 @@ const classname = computed(() => ([
   $rounded: $this + '-rounded';
 
   position: relative;
+  display: inline-flex;
+  align-items: center;
 
   &__field {
     border: none;
@@ -129,14 +171,16 @@ const classname = computed(() => ([
 
     @include is($size-sm) {
       height: 40px;
-      padding: $space-3 $space-4;
+      padding-block: $space-3;
+      padding-inline: var(--input-leading-slot-width, #{$space-4}) var(--input-trailing-slot-width, #{$space-4});
 
       @include text(regular, sm);
     }
 
     @include is($size-md) {
       height: 48px;
-      padding: $space-3 $space-4;
+      padding-block: $space-3;
+      padding-inline: var(--input-leading-slot-width, #{$space-4}) var(--input-trailing-slot-width, #{$space-4});
 
       @include text(regular, md);
     }
@@ -170,6 +214,40 @@ const classname = computed(() => ([
 
     @include is($rounded) {
       border-radius: 50px;
+    }
+  }
+
+  &__leading-slot {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+
+    display: flex;
+    align-items: center;
+
+    @include is($size-sm) {
+      padding-left: $space-3;
+    }
+
+    @include is($size-md) {
+      padding-left: $space-3;
+    }
+  }
+
+  &__trailing-slot {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-end: 0;
+
+    display: flex;
+    align-items: center;
+
+    @include is($size-sm) {
+      padding-right: $space-3;
+    }
+
+    @include is($size-md) {
+      padding-right: $space-3;
     }
   }
 }
