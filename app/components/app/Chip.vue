@@ -42,10 +42,7 @@ export type { Props as ChipProps }
         </slot>
       </div>
     </span>
-
-    <div class="chip__slot chip__slot-default">
-      <slot />
-    </div>
+    <slot />
   </div>
 </template>
 

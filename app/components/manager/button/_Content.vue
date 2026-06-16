@@ -4,9 +4,10 @@
 <template>
   <div class="manager-button__content">
     <div class="manager-button__content-profile">
-      <NuxtImg
+      <AppAvatar
+        alt="Иванов Иван"
         class="manager-button__content-profile-avatar"
-        :src="'/images/default-avatar.png'"
+        size="3xl"
       />
       <div class="manager-button__content-profile-text">
         <div class="manager-button__content-profile-role">
@@ -70,8 +71,8 @@
     align-items: center;
 
     &-avatar {
-      width: 80px;
-      height: 80px;
+      width: 80px !important;
+      height: 80px !important;
     }
 
     &-text {

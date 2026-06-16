@@ -38,9 +38,10 @@ export type { Props as ManagerButtonProps }
     class="manager-button"
   >
     <div class="manager-button__trigger">
-      <NuxtImg
+      <AppAvatar
+        alt="Иванов Иван"
         class="manager-button__avatar"
-        :src="'/images/default-avatar.png'"
+        size="3xl"
       />
       <span class="manager-button__info">
         <span class="manager-button__name">Иванов Иван</span>
@@ -79,22 +80,6 @@ export type { Props as ManagerButtonProps }
     &:disabled {
       pointer-events: none;
       cursor: default;
-    }
-  }
-
-  &__avatar {
-    overflow: hidden;
-
-    width: 48px;
-    height: 48px;
-    border-radius: $space-18;
-
-    object-fit: cover;
-
-    &-image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
     }
   }
 
