@@ -32,6 +32,7 @@ jobs:
           SERVER_HOST: ${{ secrets.HOST }}
           SERVER_USER: ${{ secrets.USER }}
           SERVER_APP_PATH: ${{ github.ref_name == 'main' && secrets.PRODUCTION_APP_PATH || secrets.STAGING_APP_PATH }}
+          SSH_PASSPHRASE: ${{ secrets.SSH_PASSPHRASE }}
         run: |
           set -euo pipefail
 
@@ -48,6 +49,7 @@ jobs:
           [[ -n "${SERVER_HOST}" ]] || { echo "::error::GitHub Secret HOST is empty"; exit 1; }
           [[ -n "${SERVER_USER}" ]] || { echo "::error::GitHub Secret USER is empty"; exit 1; }
           [[ -n "${SERVER_APP_PATH}" ]] || { echo "::error::GitHub Secret for the deploy path is empty"; exit 1; }
+          [[ -n "${SSH_PASSPHRASE}" ]] || { echo "::error::GitHub Secret SSH_PASSPHRASE is empty, but SSH_KEY is passphrase protected"; exit 1; }
 
           {
             echo "IMAGE_NAME=${IMAGE_NAME}"
@@ -57,14 +59,14 @@ jobs:
           } >> "${GITHUB_ENV}"
 
       - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
 
       - name: Build and push Nuxt image
         id: build
