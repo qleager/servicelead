@@ -1,0 +1,28 @@
+name: servicelead-proxy
+
+services:
+  caddy:
+    image: caddy:2.10.2-alpine
+    container_name: caddy
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    restart: unless-stopped
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    name: servicelead-proxy
+    external: true
+
+volumes:
+  caddy_data:
+    name: servicelead-caddy-data
+  caddy_config:
+    name: servicelead-caddy-config

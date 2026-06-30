@@ -1,10 +1,14 @@
 v7.servicelead.top {
-  reverse_proxy web:3000
+  reverse_proxy servicelead-production:3000
+}
+
+staging.servicelead.top {
+  reverse_proxy servicelead-staging:3000
 }
 
 storybook.servicelead.top {
   basicauth {
     manager $2a$14$p2VX3ITtvZoE44Wd5I8PAeM/7XpS3pS38I3XVi/dYEKEOJRyMRh1O
   }
-  reverse_proxy storybook:6006
+  reverse_proxy servicelead-staging-storybook:6006
 }

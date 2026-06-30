@@ -1,0 +1,24 @@
+name: servicelead-${DEPLOY_ENV:?DEPLOY_ENV is required}
+
+services:
+  web:
+    image: ${IMAGE_REF:?IMAGE_REF is required}
+    container_name: servicelead-${DEPLOY_ENV}
+    expose:
+      - "3000"
+    restart: unless-stopped
+    networks:
+      proxy:
+        aliases:
+          - servicelead-${DEPLOY_ENV}
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3000').then(response => process.exit(response.ok ? 0 : 1)).catch(() => process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+networks:
+  proxy:
+    name: servicelead-proxy
+    external: true

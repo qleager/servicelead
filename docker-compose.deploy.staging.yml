@@ -1,0 +1,17 @@
+services:
+  storybook:
+    image: ${STORYBOOK_IMAGE_REF:?STORYBOOK_IMAGE_REF is required}
+    container_name: servicelead-staging-storybook
+    expose:
+      - "6006"
+    restart: unless-stopped
+    networks:
+      proxy:
+        aliases:
+          - servicelead-staging-storybook
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--spider", "http://localhost:6006"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s

@@ -7,7 +7,8 @@ on:
       - staging
 
 concurrency:
-  group: deploy-${{ github.ref_name }}
+  # Both environments share one Caddy instance and its configuration.
+  group: servicelead-server-deploy
   cancel-in-progress: false
 
 env:
@@ -32,6 +33,7 @@ jobs:
           SERVER_HOST: ${{ secrets.HOST }}
           SERVER_USER: ${{ secrets.USER }}
           SERVER_APP_PATH: ${{ github.ref_name == 'main' && secrets.PRODUCTION_APP_PATH || secrets.STAGING_APP_PATH }}
+          CADDY_APP_PATH: ${{ secrets.PRODUCTION_APP_PATH }}
           SSH_PASSPHRASE: ${{ secrets.SSH_PASSPHRASE }}
         run: |
           set -euo pipefail
@@ -40,22 +42,21 @@ jobs:
 
           if [[ "${GITHUB_REF_NAME}" == "main" ]]; then
             DEPLOY_ENV="production"
-            APP_PORT="3000"
           else
             DEPLOY_ENV="staging"
-            APP_PORT="3001"
           fi
 
           [[ -n "${SERVER_HOST}" ]] || { echo "::error::GitHub Secret HOST is empty"; exit 1; }
           [[ -n "${SERVER_USER}" ]] || { echo "::error::GitHub Secret USER is empty"; exit 1; }
           [[ -n "${SERVER_APP_PATH}" ]] || { echo "::error::GitHub Secret for the deploy path is empty"; exit 1; }
+          [[ -n "${CADDY_APP_PATH}" ]] || { echo "::error::GitHub Secret PRODUCTION_APP_PATH is empty"; exit 1; }
           [[ -n "${SSH_PASSPHRASE}" ]] || { echo "::error::GitHub Secret SSH_PASSPHRASE is empty, but SSH_KEY is passphrase protected"; exit 1; }
 
           {
             echo "IMAGE_NAME=${IMAGE_NAME}"
             echo "DEPLOY_ENV=${DEPLOY_ENV}"
-            echo "APP_PORT=${APP_PORT}"
             echo "SERVER_APP_PATH=${SERVER_APP_PATH}"
+            echo "CADDY_APP_PATH=${CADDY_APP_PATH}"
           } >> "${GITHUB_ENV}"
 
       - name: Log in to GitHub Container Registry
@@ -69,7 +70,7 @@ jobs:
         uses: docker/setup-buildx-action@v4
 
       - name: Build and push Nuxt image
-        id: build
+        id: app_build
         uses: docker/build-push-action@v7
         with:
           context: .
@@ -81,21 +82,69 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Deploy image to server
+      - name: Build and push Storybook image
+        if: github.ref_name == 'staging'
+        id: storybook_build
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          target: storybook
+          push: true
+          tags: |
+            ${{ env.IMAGE_NAME }}:staging-storybook
+            ${{ env.IMAGE_NAME }}:${{ github.sha }}-storybook
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Prepare deployment directory and network
         uses: appleboy/ssh-action@v1
         env:
-          APP_PORT: ${{ env.APP_PORT }}
-          DEPLOY_ENV: ${{ env.DEPLOY_ENV }}
-          GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GHCR_USER: ${{ github.actor }}
-          IMAGE_REF: ${{ env.IMAGE_NAME }}@${{ steps.build.outputs.digest }}
+          CADDY_APP_PATH: ${{ env.CADDY_APP_PATH }}
           SERVER_APP_PATH: ${{ env.SERVER_APP_PATH }}
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
-          envs: APP_PORT,DEPLOY_ENV,GHCR_TOKEN,GHCR_USER,IMAGE_REF,SERVER_APP_PATH
+          envs: CADDY_APP_PATH,SERVER_APP_PATH
+          script: |
+            set -eu
+
+            mkdir -p "${SERVER_APP_PATH}"
+            mkdir -p "${CADDY_APP_PATH}"
+            docker network inspect servicelead-proxy >/dev/null 2>&1 \
+              || docker network create servicelead-proxy
+
+            if docker container inspect caddy >/dev/null 2>&1; then
+              docker network connect servicelead-proxy caddy >/dev/null 2>&1 || true
+            fi
+
+      - name: Copy deployment configuration
+        uses: appleboy/scp-action@v1
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
+          source: docker-compose.deploy.yml,docker-compose.deploy.staging.yml
+          target: ${{ env.SERVER_APP_PATH }}
+          overwrite: true
+
+      - name: Deploy image to server
+        uses: appleboy/ssh-action@v1
+        env:
+          DEPLOY_ENV: ${{ env.DEPLOY_ENV }}
+          GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GHCR_USER: ${{ github.actor }}
+          IMAGE_REF: ${{ env.IMAGE_NAME }}@${{ steps.app_build.outputs.digest }}
+          SERVER_APP_PATH: ${{ env.SERVER_APP_PATH }}
+          STORYBOOK_IMAGE_REF: ${{ env.IMAGE_NAME }}@${{ steps.storybook_build.outputs.digest }}
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
+          envs: DEPLOY_ENV,GHCR_TOKEN,GHCR_USER,IMAGE_REF,SERVER_APP_PATH,STORYBOOK_IMAGE_REF
           command_timeout: 10m
           script: |
             set -eu
@@ -106,24 +155,48 @@ jobs:
             printf '%s' "${GHCR_TOKEN}" | docker login ghcr.io -u "${GHCR_USER}" --password-stdin
             trap 'docker logout ghcr.io >/dev/null 2>&1 || true' EXIT
 
-            cat > .github-deploy.compose.yml <<EOF
-            name: servicelead-${DEPLOY_ENV}
+            if [ "${DEPLOY_ENV}" = "staging" ]; then
+              set -- \
+                -f docker-compose.deploy.yml \
+                -f docker-compose.deploy.staging.yml
+            else
+              set -- -f docker-compose.deploy.yml
+            fi
 
-            services:
-              web:
-                image: ${IMAGE_REF}
-                container_name: servicelead-${DEPLOY_ENV}
-                ports:
-                  - "${APP_PORT}:3000"
-                restart: unless-stopped
-                healthcheck:
-                  test: ["CMD", "node", "-e", "fetch('http://localhost:3000').then(response => process.exit(response.ok ? 0 : 1)).catch(() => process.exit(1))"]
-                  interval: 10s
-                  timeout: 5s
-                  retries: 5
-                  start_period: 20s
-            EOF
-
-            docker compose -f .github-deploy.compose.yml pull
-            docker compose -f .github-deploy.compose.yml up -d --wait --wait-timeout 90
+            docker compose "$@" pull
+            docker compose "$@" up -d --remove-orphans --wait --wait-timeout 90
             docker image prune -f
+
+      - name: Copy Caddy configuration
+        uses: appleboy/scp-action@v1
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
+          source: Caddyfile,docker-compose.proxy.yml
+          target: ${{ env.CADDY_APP_PATH }}
+          overwrite: true
+
+      - name: Start or reload Caddy
+        uses: appleboy/ssh-action@v1
+        env:
+          CADDY_APP_PATH: ${{ env.CADDY_APP_PATH }}
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
+          envs: CADDY_APP_PATH
+          script: |
+            set -eu
+
+            cd "${CADDY_APP_PATH}"
+
+            if docker container inspect caddy >/dev/null 2>&1; then
+              docker network connect servicelead-proxy caddy >/dev/null 2>&1 || true
+              docker exec caddy caddy validate --config /etc/caddy/Caddyfile
+              docker exec caddy caddy reload --config /etc/caddy/Caddyfile
+            else
+              docker compose -f docker-compose.proxy.yml up -d
+            fi

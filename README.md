@@ -288,31 +288,67 @@ npx nuxi module add <module-name>
 
 ## How to run on a VPS
 
-1. Install Docker and Docker Compose
+Deployment is handled by GitHub Actions and GitHub Container Registry:
+
+- a push to `main` updates production at `https://v7.servicelead.top`;
+- a push to `staging` updates staging at `https://staging.servicelead.top` and Storybook at `https://storybook.servicelead.top`;
+- the applications do not publish ports on the server—the shared Caddy instance proxies requests through the `servicelead-proxy` Docker network.
+
+### Server setup
+
+0. Update the server and create a user, for example, `deploy`.
+
+1. Install Docker Engine with the Docker Compose plugin and verify the installation:
+
+```bash
+docker --version
+docker compose version
+docker ps
+```
+
+2. Create the deployment directories:
+
+```bash
+sudo mkdir -p /var/www/servicelead-production /var/www/servicelead-staging
+sudo chown -R deploy:deploy /var/www/servicelead-production /var/www/servicelead-staging
+```
+
+The DNS records for `v7.servicelead.top`, `staging.servicelead.top`, and `storybook.servicelead.top` must point to the server IP address. Incoming ports `80/tcp`, `443/tcp`, and `443/udp` must be open.
+
+The workflow starts Caddy from `docker-compose.proxy.yml` if the `caddy` container does not exist yet. If Caddy is already running from the previous Compose project, the workflow connects it to the shared network and reloads its configuration. The existing container must mount `/var/www/servicelead-production/Caddyfile` as `/etc/caddy/Caddyfile`.
+
+3. Create a dedicated SSH key for GitHub Actions and add its public key to the deployment user:
+
 > [!important]
-> Don’t forget to enable Docker service auto-start and add your user to the `docker` group (so you can run Docker without sudo)
+> Do not use your personal SSH key for automated deployment.
 
-2. Clone the repository:
 ```bash
-git clone git@github.com:qleager/servicelead.git
+ssh-keygen -t ed25519 -C "github-actions-deploy" -f ~/.ssh/github_actions_deploy
+ssh-copy-id -i ~/.ssh/github_actions_deploy.pub deploy@server
 ```
 
-3. Go to the cloned repository directory:
+The `deploy` user must be able to run Docker without `sudo`.
+
+### GitHub Secrets
+
+Add the following secrets under `Settings → Secrets and variables → Actions`:
+
+| Secret | Value |
+| --- | --- |
+| `HOST` | Server IP address or hostname |
+| `USER` | SSH user, for example, `deploy` |
+| `SSH_KEY` | Full contents of the private deployment key |
+| `SSH_PASSPHRASE` | Deployment key passphrase |
+| `PRODUCTION_APP_PATH` | `/var/www/servicelead-production` |
+| `STAGING_APP_PATH` | `/var/www/servicelead-staging` |
+
+Print the private key with:
+
 ```bash
-cd servicelead
+cat ~/.ssh/github_actions_deploy
 ```
 
-4. Start:
-```bash
-docker compose -f docker-compose.yml -f docker-compose.production.yml up -d --build
-```
-
-## How to update
-```bash
-cd /to/project/directory/
-git pull
-docker compose -f docker-compose.yml -f docker-compose.production.yml up -d --build
-```
+After setup, a push to `main` or `staging` automatically starts the corresponding deployment. The workflow creates the shared Docker network, connects Caddy, starts the required containers, checks their health, and only then reloads the Caddy configuration.
 
 
 ## 📥 Как именовать коммиты:
