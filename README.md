@@ -306,6 +306,9 @@ docker compose version
 docker ps
 ```
 
+> [!important]
+> The `deploy` user must be able to run Docker without `sudo`.
+
 2. Create the deployment directories:
 
 ```bash
@@ -326,8 +329,6 @@ The workflow starts Caddy from `docker-compose.proxy.yml` if the `caddy` contain
 ssh-keygen -t ed25519 -C "github-actions-deploy" -f ~/.ssh/github_actions_deploy
 ssh-copy-id -i ~/.ssh/github_actions_deploy.pub deploy@server
 ```
-
-The `deploy` user must be able to run Docker without `sudo`.
 
 ### GitHub Secrets
 
