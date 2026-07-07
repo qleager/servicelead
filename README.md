@@ -298,7 +298,13 @@ Deployment is handled by GitHub Actions and GitHub Container Registry:
 
 0. Update the server and create a user, for example, `deploy`.
 
-1. Install Docker Engine with the Docker Compose plugin and verify the installation:
+```zsh
+sudo adduser deploy
+```
+> [!important]
+> After creation, exit and perform all actions as the `deploy` user
+
+2. [Install Docker Engine]([docs/utils/search.md](https://docs.docker.com/engine/install/)) with the Docker Compose plugin and verify the installation:
 
 ```bash
 docker --version
@@ -308,8 +314,11 @@ docker ps
 
 > [!important]
 > The `deploy` user must be able to run Docker without `sudo`.
+> ```bash
+> sudo usermod -aG docker deploy
+> ```
 
-2. Create the deployment directories:
+2. Create the deployment directories as `deploy` user:
 
 ```bash
 sudo mkdir -p /var/www/servicelead-production /var/www/servicelead-staging
@@ -322,7 +331,7 @@ The workflow starts Caddy from `docker-compose.proxy.yml` if the `caddy` contain
 
 3. Create a dedicated SSH key for GitHub Actions and add its public key to the deployment user:
 
-> [!important]
+> [!warning]
 > Do not use your personal SSH key for automated deployment.
 
 ```bash
@@ -343,11 +352,12 @@ Add the following secrets under `Settings → Secrets and variables → Actions`
 | `PRODUCTION_APP_PATH` | `/var/www/servicelead-production` |
 | `STAGING_APP_PATH` | `/var/www/servicelead-staging` |
 
-Print the private key with:
 
-```bash
-cat ~/.ssh/github_actions_deploy
-```
+> [!tip]
+> Print the private key with:
+> ```bash
+> cat ~/.ssh/github_actions_deploy
+> ```
 
 After setup, a push to `main` or `staging` automatically starts the corresponding deployment. The workflow creates the shared Docker network, connects Caddy, starts the required containers, checks their health, and only then reloads the Caddy configuration.
 
