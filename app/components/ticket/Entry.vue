@@ -71,9 +71,9 @@ const classname = computed(() => [
     min-height: auto;
     padding: $space-2 $space-3;
 
-      &:hover {
-        background-color: $color-neutral-50;
-      }
+    &:hover {
+      background-color: $color-neutral-50;
+    }
   }
 
   &__header {

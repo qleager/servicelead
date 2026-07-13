@@ -47,7 +47,7 @@ export type { Props as SelectOptionProps }
 <style lang="scss">
 .select-option {
   $this: &;
-  $size-xs: $this + '-size-xs' ;
+  $size-xs: $this + '-size-xs';
   $size-sm: $this + '-size-sm';
   $size-md: $this + '-size-md';
   $size-lg: $this + '-size-lg';
@@ -80,7 +80,7 @@ export type { Props as SelectOptionProps }
     @include text(regular, sm);
   }
 
-   @include is($size-md) {
+  @include is($size-md) {
     gap: $space-4;
     height: 40px;
 

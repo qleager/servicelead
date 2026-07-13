@@ -77,7 +77,7 @@ export type { Props as FormFieldProps }
   }
 
   &__required {
-    color: $color-red;;
+    color: $color-red;
   }
 
   &__caption {

@@ -231,7 +231,7 @@ const onInput = (event: Event) => {
       color: var(--ui-color-error);
 
       &::placeholder {
-        color: var(--ui-color-error)
+        color: var(--ui-color-error);
       }
     }
 
@@ -241,7 +241,7 @@ const onInput = (event: Event) => {
       background-color: $color-red-50;
 
       &::placeholder {
-        color: var(--ui-color-error)
+        color: var(--ui-color-error);
       }
     }
 
@@ -249,7 +249,7 @@ const onInput = (event: Event) => {
       color: var(--ui-color-error);
 
       &::placeholder {
-        color: var(--ui-color-error)
+        color: var(--ui-color-error);
       }
     }
 

@@ -127,7 +127,7 @@ const classname = computed(() => ([
     --variant-nofilled-text-color: inherit;
 
     border: none !important;
-    color: var(--variant-nofilled-text-color) ;
+    color: var(--variant-nofilled-text-color);
     background-color: transparent !important;
   }
 
@@ -143,7 +143,7 @@ const classname = computed(() => ([
     --variant-solid-text-color: #{$color-neutral-950};
     --variant-nofilled-text-color: white;
     --variant-soft-text-color: #{$color-neutral-700};
-    --variant-soft-background-color: #{rgb(white, .05)};
+    --variant-soft-background-color: #{rgb(white, 0.05)};
 
     border-color: white;
     background-color: white;
@@ -519,12 +519,12 @@ const classname = computed(() => ([
     }
 
     &:hover {
-      filter: opacity(.8);
+      filter: opacity(0.8);
       transition: $hover-duration-sm;
     }
 
     &:active {
-      transform: scale(.9);
+      transform: scale(0.9);
       transition: $active-duration-sm;
     }
   }

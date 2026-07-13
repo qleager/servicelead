@@ -83,7 +83,7 @@ const menuItems: MenuItem[] = [
     &-label {
       @include text(regular, sm);
 
-      letter-spacing: -.03em;
+      letter-spacing: -0.03em;
 
       &:empty {
         display: none;

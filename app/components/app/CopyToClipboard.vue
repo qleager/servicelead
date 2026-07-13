@@ -70,7 +70,7 @@ const { copy, copied } = useClipboard({ source: props.source })
     font: inherit;
 
     &:hover {
-      color: var(--ui-color-text-muted)
+      color: var(--ui-color-text-muted);
     }
 
     @include is($trailing-icon) {

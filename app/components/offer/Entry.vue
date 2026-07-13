@@ -155,7 +155,7 @@
 </template>
 
 <style lang="scss">
-.offer-entry{
+.offer-entry {
   $this: &;
 
   flex: 1 1 0;
@@ -175,7 +175,7 @@
     position: absolute;
     inset: $space-2 $space-2 $space-1 $space-2;
     border-radius: $space-6;
-    background: url("/images/offer-head-img.png") no-repeat center/cover;
+    background: url('/images/offer-head-img.png') no-repeat center/cover;
   }
 
   &__overlay {
@@ -226,7 +226,7 @@
     }
 
     &-text {
-      letter-spacing: -.03em;
+      letter-spacing: -0.03em;
     }
   }
 

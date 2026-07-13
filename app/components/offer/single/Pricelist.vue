@@ -149,7 +149,7 @@ const columns = ref<TableColumn<OfferSinglePricelistRow>[]>([
     align-items: center;
     justify-content: space-between;
 
-    &-title{
+    &-title {
       display: flex;
       gap: $space-6;
       align-items: center;

@@ -36,7 +36,7 @@
   gap: $space-8;
 
   &__icon {
-    color: $color-neutral-300
+    color: $color-neutral-300;
   }
 
   &__content {

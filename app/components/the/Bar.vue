@@ -80,7 +80,7 @@
 </template>
 
 <style lang="scss">
-@keyframes aggregate-shrink {
+@keyframes aggregateShrink {
   from {
     width: 700px;
   }
@@ -105,7 +105,7 @@
   filter: drop-shadow(0 0 35px #1c265a1a); // TODO: add to design system
 
   &::before {
-    content: "";
+    content: '';
 
     position: absolute;
     right: 0;
@@ -119,10 +119,10 @@
 
   &__aggregate {
     position: relative;
-    animation: aggregate-shrink 1s 0s forwards;
+    animation: aggregateShrink 1s 0s forwards;
 
     &::before {
-      content: "";
+      content: '';
 
       position: absolute;
       right: $space-2;
@@ -134,7 +134,8 @@
       background: #fff;
     }
 
-    &:first-child, &:last-child {
+    &:first-child,
+    &:last-child {
       flex-grow: 1;
       width: auto;
       animation: none;

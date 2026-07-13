@@ -90,7 +90,7 @@ export type { Props as LabeledValueProps }
     @include text(regular, xs);
 
     color: $color-neutral-400;
-    letter-spacing: -.03em;
+    letter-spacing: -0.03em;
   }
 
   &__content {
@@ -113,7 +113,7 @@ export type { Props as LabeledValueProps }
     @include is($size-sm) {
       @include text(medium, lg);
 
-      letter-spacing: -.03em;
+      letter-spacing: -0.03em;
     }
 
     @include is($size-lg) {
@@ -128,7 +128,7 @@ export type { Props as LabeledValueProps }
     @include is($size-sm) {
       @include text(medium, lg);
 
-      letter-spacing: -.03em;
+      letter-spacing: -0.03em;
     }
 
     @include is($size-lg) {

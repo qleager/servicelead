@@ -50,8 +50,7 @@ const tabs: TabsItem[] = [
     'statistics statistics statistics statistics'
     'controls   controls   controls   controls'
     'offers     offers     offers     offers'
-    'informer   informer   informer   informer'
-  ;
+    'informer   informer   informer   informer';
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: 242px repeat(4, auto);
   gap: $space-9;

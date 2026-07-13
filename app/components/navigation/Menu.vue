@@ -119,10 +119,10 @@ export type { Item as NavigationMenuItem }
 
       transition: $blur-duration-sm;
 
-      a[href=""],
+      a[href=''],
       &:not([href]) {
         pointer-events: none;
-        opacity: .5;
+        opacity: 0.5;
       }
 
       &#{$active} {

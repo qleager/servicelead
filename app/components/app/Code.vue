@@ -56,7 +56,7 @@ export type { Props as CodeProps }
 
     color: $color-neutral-600;
     text-transform: uppercase;
-    letter-spacing: .08em;
+    letter-spacing: 0.08em;
   }
 
   &__pre {

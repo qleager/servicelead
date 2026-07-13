@@ -156,7 +156,7 @@ const data = ref<PieData>([
         line-height: 1.33;
         color: $color-neutral-950;
 
-        opacity: .33;
+        opacity: 0.33;
 
         @include text(medium, xs);
 

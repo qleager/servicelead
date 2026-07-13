@@ -23,8 +23,7 @@
     display: grid;
     grid-template:
       'threads threads threads telephony'
-      'threads threads threads domains'
-    ;
+      'threads threads threads domains';
     gap: $space-4;
   }
 

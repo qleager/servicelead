@@ -53,7 +53,7 @@
 
       max-width: 707px;
       height: 100%;
-      margin-left: auto
+      margin-left: auto;
     }
   }
 

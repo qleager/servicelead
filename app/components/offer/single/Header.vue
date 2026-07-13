@@ -164,7 +164,7 @@
 
       line-height: 1.4;
       color: white;
-      text-transform: uppercase
+      text-transform: uppercase;
     }
 
     &-value {

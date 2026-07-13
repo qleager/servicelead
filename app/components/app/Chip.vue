@@ -101,7 +101,7 @@ export type { Props as ChipProps }
 
     @include is($variant-soft) {
       &::before {
-        content: "";
+        content: '';
 
         position: absolute;
 
@@ -110,7 +110,7 @@ export type { Props as ChipProps }
         padding: $space-2;
         border-radius: $radius-2;
 
-        opacity: .1;
+        opacity: 0.1;
         background-color: inherit;
       }
     }
@@ -172,7 +172,7 @@ export type { Props as ChipProps }
       line-height: 14px;
     }
 
-   @include is($primary-color) {
+    @include is($primary-color) {
       color: $color-neutral-50;
       background-color: $color-primary;
     }

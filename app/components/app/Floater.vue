@@ -216,11 +216,11 @@ export type { Props as FloaterProps, Slots as FloaterSlots, Model as FloaterMode
       @each $placement, $anims in $placements {
         &--#{$placement} {
           &-enter-active {
-            animation: map.get($anims, enter) $show-duration-sm ease-out forwards
+            animation: map.get($anims, enter) $show-duration-sm ease-out forwards;
           }
 
           &-leave-active {
-            animation: map.get($anims, leave) $hide-duration-sm ease-out forwards
+            animation: map.get($anims, leave) $hide-duration-sm ease-out forwards;
           }
         }
       }

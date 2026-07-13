@@ -11,6 +11,3 @@
     rounded
   />
 </template>
-
-<style lang="scss">
-</style>

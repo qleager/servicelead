@@ -3,19 +3,20 @@ import stylelintFormatter from 'stylelint-formatter-pretty'
 export default {
   extends: [
     'stylelint-config-standard-scss',
+    '@stylistic/stylelint-config',
     'stylelint-config-clean-order',
   ],
   formatter: stylelintFormatter,
-  /* TODO: отлично рабоает в .scss файлах
-   *       не работает в .vue файлах
-   *
-   * Предположительно, проблема в плагине, так как clean-order
-   * во .vue файлах отрабатывает
-   */
-  plugins: ['stylelint-prettier'],
   rules: {
     'order/order': null,
-    'prettier/prettier': [true, { singleQuote: true, tabWidth: 2 }],
+    'at-rule-empty-line-before': ['always', {
+      ignore: ['first-nested', 'blockless-after-same-name-blockless', 'after-comment'],
+      ignoreAtRules: ['else'],
+      severity: 'warning',
+    }],
+    '@stylistic/block-closing-brace-newline-after': null,
+    '@stylistic/indentation': 2,
+    '@stylistic/string-quotes': 'single',
     'selector-class-pattern': '^[a-z](?:[a-z0-9]*)(?:-[a-z0-9]+)*(?:__[a-z0-9]+(?:-[a-z0-9]+)*)?(?:--[a-z0-9]+(?:-[a-z0-9]+)*)?$',
     'keyframes-name-pattern': '^[a-z][a-zA-Z0-9]+$',
   },
@@ -23,9 +24,6 @@ export default {
     {
       files: ['**/*.vue'],
       customSyntax: 'postcss-html',
-      rules: {
-        'prettier/prettier': [true, { singleQuote: true, tabWidth: 2 }],
-      },
     },
   ],
 }

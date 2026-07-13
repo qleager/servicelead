@@ -93,7 +93,7 @@
     flex-direction: column;
     gap: $space-6;
 
-    &-row{
+    &-row {
       display: flex;
       gap: $space-4;
       justify-content: space-between;

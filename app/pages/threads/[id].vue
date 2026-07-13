@@ -117,7 +117,7 @@ const onArchive = async () => {
 
     color: $color-neutral;
     text-transform: uppercase;
-    letter-spacing: .08em;
+    letter-spacing: 0.08em;
   }
 
   &__actions {

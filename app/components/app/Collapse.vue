@@ -51,9 +51,9 @@ export type { Props as CollapseProps }
         class="collapse__slot collapse__slot-content"
       >
         <slot
-          name="content"
           :is-collapsed="!model"
           :is-expanded="model"
+          name="content"
         />
       </div>
     </div>

@@ -223,7 +223,7 @@ const addRow = () => {
     gap: $space-2;
     align-self: flex-end;
 
-    width: 100%;;
+    width: 100%;
     padding: $space-8;
     border-radius: 20px;
 

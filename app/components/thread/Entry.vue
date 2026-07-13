@@ -82,7 +82,7 @@
   transition: $blur-duration-sm;
 
   &:hover {
-    transition: $hover-duration-sm;;
+    transition: $hover-duration-sm;
   }
 
   &__corner {

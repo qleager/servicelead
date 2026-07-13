@@ -361,11 +361,11 @@ $ui-colors-light: (
   ),
   // ℹ️ Переопредлить цвет из палитры
   neutral: map.merge(
-      map.get($palette-colors, 'gray'),
-      (
-        default: map.get($palette-colors, 'gray', default),
-      )
-    ),
+    map.get($palette-colors, 'gray'),
+    (
+      default: map.get($palette-colors, 'gray', default),
+    )
+  ),
   primary: map.get($palette-colors, 'blue'),
   error: map.get($palette-colors, 'red'),
   warning: map.get($palette-colors, 'yellow'),

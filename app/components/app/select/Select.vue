@@ -351,7 +351,7 @@ export type {
 
   &__reset-button {
     margin-left: auto;
-    padding-inline: $space-2
+    padding-inline: $space-2;
   }
 
   &__nodata-text {
@@ -361,6 +361,5 @@ export type {
     color: $color-neutral-500;
     text-align: center;
   }
-
 }
 </style>

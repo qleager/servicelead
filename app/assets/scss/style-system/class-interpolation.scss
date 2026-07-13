@@ -1,6 +1,7 @@
 @use 'sass:string';
 
 // ⚠️ Only for BEM
+
 @mixin is($var) {
   $parent-selector: &;
 
@@ -8,9 +9,7 @@
     #{$var} & {
       @content;
     }
-  }
-  
-  @else {
+  } @else {
     &#{$var} {
       @content;
     }

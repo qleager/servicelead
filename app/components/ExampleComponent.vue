@@ -278,7 +278,8 @@ const onRejectClick = () => {
     width: 100%;
 
     // Если есть миксин, который добавляют правила - в порядке правил миксин должны быть там же где и его правила
-    // тут text добавляет font-правила(типография), согласно stylelint-order-config они должны после box-model-правил и до apperance-правил
+    // тут text добавляет font-правила(типография),
+    // согласно stylelint-order-config они должны после box-model-правил и до apperance-правил
     // config: node_modules/stylelint-config-clean-order/src/config.js
     @include text(light, 2xs);
 

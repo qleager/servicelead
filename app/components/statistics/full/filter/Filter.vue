@@ -112,10 +112,10 @@
 
       color: $color-neutral;
       text-transform: uppercase;
-      letter-spacing: .08em;
+      letter-spacing: 0.08em;
 
       &::after {
-        content: "";
+        content: '';
 
         width: 4px;
         height: 4px;
