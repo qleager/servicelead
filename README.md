@@ -257,7 +257,7 @@ pnpm run build
 2. Run preview
 ```zsh
 pnpm run preview:production # with production api
-pnpm run preview:local # with test api
+pnpm run preview:staging # with test api
 ```
 > [!note]
 > Preview uses the production or local environment file: `.env.production`/`.env.local`
