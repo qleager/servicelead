@@ -18,7 +18,7 @@
     "storybook:build": "storybook build -o storybook-static"
   },
   "dependencies": {
-    "@floating-ui/vue": "^2.0.0",
+    "@floating-ui/vue": "^2.0.1",
     "@nuxt/image": "2.0.0",
     "@tanstack/vue-table": "^8.21.3",
     "@types/prismjs": "^1.26.6",
@@ -26,13 +26,13 @@
     "animate.css": "^4.1.1",
     "echarts": "^6.1.0",
     "fuse.js": "^7.4.2",
-    "isomorphic-dompurify": "^3.17.0",
+    "isomorphic-dompurify": "^3.18.0",
     "nuxt": "^4.4.8",
     "nuxt-echarts": "1.0.1",
     "nuxt-typed-router": "4.0.9",
     "prismjs": "^1.30.0",
     "storybook": "~10.4.6",
-    "vue": "^3.5.38",
+    "vue": "^3.5.39",
     "vue-echarts": "^8.0.1",
     "vue-router": "^5.1.0",
     "yup": "^1.7.1"
@@ -50,15 +50,15 @@
     "@nuxt/eslint": "1.16.0",
     "@nuxtjs/storybook": "^9.0.1",
     "@spiriit/vite-plugin-svg-spritemap": "^7.0.0",
-    "eslint": "^10.5.0",
-    "eslint-plugin-perfectionist": "^5.9.1",
+    "eslint": "^10.7.0",
+    "eslint-plugin-perfectionist": "^5.10.0",
     "postcss-html": "^1.8.1",
-    "stylelint": "^17.13.0",
+    "stylelint": "^17.14.0",
     "stylelint-config-clean-order": "^10.0.0",
     "stylelint-config-standard-scss": "^17.0.0",
     "stylelint-formatter-pretty": "^4.0.1",
     "stylelint-prettier": "^5.0.3",
     "typescript": "^6.0.3",
-    "vue-component-type-helpers": "^3.3.5"
+    "vue-component-type-helpers": "^3.3.7"
   }
 }
