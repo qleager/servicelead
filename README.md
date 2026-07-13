@@ -219,120 +219,112 @@ definePageMeta({
   ],
 })
 ```
-## 📦 Требования
 
-Перед началом убедитесь, что установлено:
-
-- ✅ **Docker Desktop / Docker Engine**
-- ✅ **VS Code**
-- ✅ **Расширение Dev Containers** (`ms-vscode-remote.remote-containers`)
-
----
-
-## ⚙️ Запуск проекта
-
-### 1. Откройте проект в VS Code
-
-При первом открытии VS Code предложит установить Dev Containers:
-
-![Скрин предложения VS Code](https://i.postimg.cc/mrxV2Z1L/image.png)
-
-Если не предложил — установите расширение вручную:  
-https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers
-
----
-
-### 2. Откройте проект в контейнере
-
-После установки расширения VS Code обнаружит конфиг `.devcontainer/devcontainer.json` и предложит собрать образ и открыть контейнер:
-
-![Скрин предложения VS Code 2](https://i.postimg.cc/kgyF9NCH/image.png)
-
-Также можно открыть контейнер вручную (или пересобрать образ и открыть):
-
-> **Ctrl + Shift + P → Dev Containers: Reopen in Container**
-
-![Открытие командой](https://i.postimg.cc/JnTHdKbT/image.png)
-
-После сборки вы автоматически окажетесь в среде контейнера (`Dev Container`).
-
-Контейнер будет виден в Docker Desktop.
-  
----
-
-### 3. Запуск nuxt в dev режиме в терминале VS Code в конейнере
-
-```bash
-pnpm dev:container
+## Run locally
+1. Install Docker or Docker Desktop.
+2. Open the project using the VS Code Dev Containers extension.
+> [!tip]
+> `CMD` + `P`
+> > Dev Containers: Reopen in Container
+> or
+> Click the `Reopen in Container` button in the notification.
+3. Install the required extensions in the Dev Container.
+> [!tip]
+> You will see a notification.
+4. Add the secrets to `.env.local`.
+> [!tip]
+> Request the encrypted secrets from your team.
+5. Let's roll! 🔥
+```zsh
+pnpm run dev:container
 ```
+> [!important]
+> Install all dependencies inside the container only
 
----
+## How to deploy
+Deployment is handled by GitHub Actions and GitHub Container Registry:
+- a push to `main` updates production at `https://v7.servicelead.top`;
+- a push to `staging` updates staging at `https://staging.servicelead.top`;
 
-## 📥 Установка пакетов
+### Before pushing to staging
 
-Все зависимости ставятся **только внутри контейнера**, в терминале VS Code.
+Check the production build locally:
 
-```bash
-pnpm i <package-name>
+1. Build the app
+```zsh
+pnpm run build
 ```
-
-Установка Nuxt-модулей
-
-```bash
-npx nuxi module add <module-name>
+2. Run preview
+```zsh
+pnpm run preview:production # with production api
+pnpm run preview:local # with test api
 ```
-
-Пример установки пакета из терминала внутри контейнера:
-
-![Терминал внутри контейнера](https://i.postimg.cc/qMNvppTk/image.png)
+> [!note]
+> Preview uses the production or local environment file: `.env.production`/`.env.local`
+3. Check the app
+4. You are awesome 🌸
 
 ## How to run on a VPS
 
-Deployment is handled by GitHub Actions and GitHub Container Registry:
-
-- a push to `main` updates production at `https://v7.servicelead.top`;
-- a push to `staging` updates staging at `https://staging.servicelead.top` and Storybook at `https://storybook.servicelead.top`;
-- the applications do not publish ports on the server—the shared Caddy instance proxies requests through the `servicelead-proxy` Docker network.
-
 ### Server setup
 
-0. Update the server and create a user, for example, `deploy`.
-
+#### 0. Update the server and create a user, for example, `deploy`
+Update:
+```zsh
+apt update
+apt upgrade # select -> keep the local version currently installed
+```
+Create a user:
 ```zsh
 sudo adduser deploy
 ```
-> [!important]
-> After creation, exit and perform all actions as the `deploy` user
+> [!tip]
+> Add a SSH key for `root` that is different from the `deploy` key, then disable password-based SSH login
+> ```zsh
+> ssh-copy-id -i ~/.ssh/***.pub root@server_ip_address
+> 
+> sudo nano /etc/ssh/sshd_config
+> # PasswordAuthentication no
+> # PubkeyAuthentication yes
+>
+> sudo systemctl restart ssh
+> ```
 
-2. [Install Docker Engine]([docs/utils/search.md](https://docs.docker.com/engine/install/)) with the Docker Compose plugin and verify the installation:
-
+#### 1. [Install Docker Engine]([https://docs.docker.com/engine/install/]) with the Docker Compose plugin and verify the installation
+Verify the installation:
 ```bash
 docker --version
 docker compose version
 docker ps
 ```
-
-> [!important]
-> The `deploy` user must be able to run Docker without `sudo`.
-> ```bash
-> sudo usermod -aG docker deploy
-> ```
-
-2. Create the deployment directories as `deploy` user:
-
+The `deploy` user must be able to run Docker without `sudo`:
 ```bash
-sudo mkdir -p /var/www/servicelead-production /var/www/servicelead-staging
-sudo chown -R deploy:deploy /var/www/servicelead-production /var/www/servicelead-staging
+usermod -aG docker deploy
+```
+Now, exit and login to `deploy` user
+```bash
+exit
 ```
 
-The DNS records for `v7.servicelead.top`, `staging.servicelead.top`, and `storybook.servicelead.top` must point to the server IP address. Incoming ports `80/tcp`, `443/tcp`, and `443/udp` must be open.
-
-The workflow starts Caddy from `docker-compose.proxy.yml` if the `caddy` container does not exist yet. If Caddy is already running from the previous Compose project, the workflow connects it to the shared network and reloads its configuration. The existing container must mount `/var/www/servicelead-production/Caddyfile` as `/etc/caddy/Caddyfile`.
-
-3. Create a dedicated SSH key for GitHub Actions and add its public key to the deployment user:
-
+#### 2. Create the deployment directories as `deploy` user:
+```bash
+mkdir -p /home/deploy/servicelead-production /home/deploy/servicelead-staging
+```
 > [!warning]
-> Do not use your personal SSH key for automated deployment.
+> The application uses environment variables. Upload the .env.production file to the servicelead-production directory and .env.local file to the servicelead-staging directory on the server before deploying:
+> ```bash
+> nano /home/deploy/servicelead-***/.env
+> chmod 600 /home/deploy/servicelead-***/.env
+> ```
+> The deployment compose file reads this file from the project directory; GitHub Actions does not copy local `.env` files to the server.
+
+The DNS records for `v7.servicelead.top`, `staging.servicelead.top` must point to the server IP address. Incoming ports `80/tcp`, `443/tcp`, and `443/udp` must be open.
+
+The workflows use the shared `caddy` container and `servicelead-proxy` Docker network. If Caddy is not running, the workflow starts it from `docker-compose.proxy.yml`; otherwise, it updates the combined configuration for both projects and reloads the running container.
+
+#### 3. Create a dedicated SSH key for GitHub Actions and add its public key to the deployment user:
+> [!warning]
+> Do not use your personal SSH key or `root` user key for automated deployment
 
 ```bash
 ssh-keygen -t ed25519 -C "github-actions-deploy" -f ~/.ssh/github_actions_deploy
@@ -340,7 +332,6 @@ ssh-copy-id -i ~/.ssh/github_actions_deploy.pub deploy@server
 ```
 
 ### GitHub Secrets
-
 Add the following secrets under `Settings → Secrets and variables → Actions`:
 
 | Secret | Value |
@@ -349,9 +340,8 @@ Add the following secrets under `Settings → Secrets and variables → Actions`
 | `USER` | SSH user, for example, `deploy` |
 | `SSH_KEY` | Full contents of the private deployment key |
 | `SSH_PASSPHRASE` | Deployment key passphrase |
-| `PRODUCTION_APP_PATH` | `/var/www/servicelead-production` |
-| `STAGING_APP_PATH` | `/var/www/servicelead-staging` |
-
+| `PRODUCTION_APP_PATH` | `/home/deploy/servicelead-production` |
+| `STAGING_APP_PATH` | `/home/deploy/servicelead-staging` |
 
 > [!tip]
 > Print the private key with:
@@ -360,7 +350,3 @@ Add the following secrets under `Settings → Secrets and variables → Actions`
 > ```
 
 After setup, a push to `main` or `staging` automatically starts the corresponding deployment. The workflow creates the shared Docker network, connects Caddy, starts the required containers, checks their health, and only then reloads the Caddy configuration.
-
-
-## 📥 Как именовать коммиты:
-https://habr.com/ru/companies/yandex/articles/431432/
