@@ -7,7 +7,7 @@ RUN corepack enable && corepack prepare pnpm@11.10.0 --activate
 
 COPY package.json pnpm-lock.yaml* pnpm-workspace.yaml ./
 
-RUN pnpm install
+RUN pnpm install --frozen-lockfile
 
 # Nuxt Dev
 FROM base AS local
