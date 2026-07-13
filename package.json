@@ -38,14 +38,6 @@
     "vue-router": "^5.1.0",
     "yup": "^1.7.1"
   },
-  "packageManager": "pnpm@10.28.0+sha512.77a884a165cbba2d8d1c19e3b4880eee6d2fcabd0d879121e282196b80042351d5eb3ca0935fa599da1dc51265cc68816ad2bddd2a2de5ea9fdf92adbec7cd34",
-  "pnpm": {
-    "overrides": {
-      "defu": "6.1.7",
-      "esbuild": "0.28.1",
-      "lodash-es": "4.18.1"
-    }
-  },
   "devDependencies": {
     "@chettapong/nuxt-lodash": "^2.5.4",
     "@nuxt/eslint": "1.16.0",
@@ -61,5 +53,6 @@
     "stylelint-prettier": "^5.0.3",
     "typescript": "^6.0.3",
     "vue-component-type-helpers": "^3.3.7"
-  }
+  },
+  "packageManager": "pnpm@11.10.0"
 }
