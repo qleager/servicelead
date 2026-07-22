@@ -6,6 +6,7 @@
 # как volume (том) и не теряется при пересоздании контейнера
 # и не требует прав суперпользователя.
 storeDir: /pnpm-store
+verifyDepsBeforeRun: false
 
 allowBuilds:
   "@parcel/watcher": true

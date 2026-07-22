@@ -221,25 +221,62 @@ definePageMeta({
 ```
 
 ## Run locally
-1. Install Docker or Docker Desktop.
-2. Open the project using the VS Code Dev Containers extension.
-> [!tip]
-> `CMD` + `P`
-> > Dev Containers: Reopen in Container
-> or
-> Click the `Reopen in Container` button in the notification.
-3. Install the required extensions in the Dev Container.
-> [!tip]
-> You will see a notification.
-4. Add the secrets to `.env.local`.
-> [!tip]
-> Request the encrypted secrets from your team.
-5. Let's roll! 🔥
+1. Install Docker
+2. Install Node 24+ and enable corepack
 ```zsh
-pnpm run dev:container
+corepack enable
 ```
+3. Install the required extensions
+4. Add the secrets to `.env.local`
+> [!tip]
+> Request the encrypted secrets from your team
+5. Build container
+```zsh
+pnpm run docker:build
+```
+6. Let's roll! 🔥
+```zsh
+pnpm run docker:up
+pnpm run dev:docker
+```
+
 > [!important]
 > Install all dependencies inside the container only
+> ```zsh
+> pnpm run docker:exec pnpm add package-name
+> ```
+
+#### Docker commands
+```zsh
+pnpm run docker:build # Build
+```
+```zsh
+pnpm run docker:rebuild # Rebuild
+```
+```zsh
+pnpm run docker:up # Create and Start
+```
+```zsh
+pnpm run docker:start # Start
+```
+```zsh
+pnpm run docker:stop # Stop
+```
+```zsh
+pnpm run docker:restart # Restart
+```
+```zsh
+pnpm run docker:recreate # Recreate
+```
+```zsh
+pnpm run docker:down # Delete
+```
+```zsh
+pnpm run docker:exec # Exec
+```
+```zsh
+pnpm run docker:shell # Shell
+```
 
 ## How to deploy
 Deployment is handled by GitHub Actions and GitHub Container Registry:

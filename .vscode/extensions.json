@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "Vue.volar",
+    "dbaeumer.vscode-eslint",
+    "nuxtr.nuxtr-vscode",
+    "stylelint.vscode-stylelint",
+    "bradlc.vscode-tailwindcss",
+    "openai.chatgpt",
+    "ms-azuretools.vscode-containers"
+  ]
+}
