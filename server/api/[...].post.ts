@@ -1,14 +1,8 @@
-export default defineEventHandler(async (event) => {
+export default defineEventHandler((event) => {
   const url = useRuntimeConfig(event).apiUrl
-  const path = event.path
+  // TODO: как то мне не нра такая генерациия ссылке, переделать на что то изящное и бп'шное
+  const path = event.path.replace(/^\/api/, '/leadsale/v1')
   const target = url + path
 
-  const cookies = parseCookies(event)
-
-  return proxyRequest(event, target, {
-    headers: {
-      Authorization: `Bearer ${cookies.accessToken}`,
-      deviceId: cookies.fingerprint,
-    },
-  })
+  return proxyAuthorizedRequest(event, target)
 })

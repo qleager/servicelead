@@ -45,6 +45,12 @@ const onSubmit = async (event: FormSubmitEvent<Schema>) => {
     alert(error)
   }
 }
+
+const fetch = async () => {
+  const data = await $fetch('/api/Customer/getCustomer', {
+    method: 'POST'
+  })
+}
 </script>
 
 <template>
@@ -137,7 +143,8 @@ const onSubmit = async (event: FormSubmitEvent<Schema>) => {
         Зарегистрироваться
       </NuxtLink>
     </div>
-    <AppButton @click="$api.auth.refresToken()"></AppButton>
+    <AppButton @click="$api.auth.refresToken()">refresh</AppButton>
+    <AppButton variant="outline" @click="fetch">getCustomer</AppButton>
   </div>
 </template>
 

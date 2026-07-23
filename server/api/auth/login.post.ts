@@ -6,50 +6,29 @@ export default defineEventHandler(async (event) => {
   const serviceName = useRuntimeConfig(event).apiServiceName
   const body = await readBody<LoginPayload>(event)
 
-  if (!cookies.fingerprint) {
-    throw createError({
-      statusCode: 400,
-      statusMessage: 'Missing fingerprint',
-      data: {
-        message: 'Missing a fingerprint cookie',
+  assertFingerprint(cookies.fingerprint)
+
+  try {
+    const { data } = await api.auth.authorize('Email', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'deviceId': cookies.fingerprint,
+      },
+      body: {
+        serviceName,
+        authValue: body.email,
+        authCode: body.password,
       },
     })
-  }
 
-  const result = await api.auth.authorize('Email', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'deviceId': cookies.fingerprint,
-    },
-    body: {
-      serviceName,
-      authValue: body.email,
-      authCode: body.password,
-    },
-  })
-
-  if (result) {
-    const { data } = result
-
-    setCookie(event, 'accessToken', data.accessToken, {
-      httpOnly: true,
-      sameSite: 'strict',
-      // 7 days
-      maxAge: body.rememberMe ? 60 * 60 * 24 * 7 : undefined,
-    })
-
-    setCookie(event, 'refreshToken', data.refreshToken, {
-      httpOnly: true,
-      sameSite: 'strict',
-      // 29 days
-      maxAge: body.rememberMe ? 60 * 60 * 24 * 29 : undefined,
-    })
+    setAccessToken(event, data.accessToken)
+    setRefreshToken(event, data.refreshToken)
 
     setResponseStatus(event, 204)
-
-    return
   }
 
-  return result
+  catch (error) {
+    throwError(error)
+  }
 })
