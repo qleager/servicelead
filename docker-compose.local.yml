@@ -8,14 +8,17 @@ services:
       - "24678:24678"
       - "6006:6006"
     volumes:
-      - .:/app
-      - node_modules:/app/node_modules
-      - pnpm_store:/pnpm-store
-      - nuxt_build:/app/.nuxt
+    - type: bind
+      source: .
+      target: /app
+    - type: volume
+      source: node_modules
+      target: /app/node_modules
+    - type: volume
+      source: pnpm_store
     init: true
     command: ["sleep", "infinity"]
 
 volumes:
   node_modules:
-  nuxt_build:
   pnpm_store:
