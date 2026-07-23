@@ -5,6 +5,7 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
+    "build:docker": "pnpm run docker:exec pnpm run build",
     "dev:docker": "pnpm run docker:exec pnpm nuxt dev --dotenv .env.local --host 0.0.0.0 --port 3000",
     "generate": "nuxt generate",
     "preview:production": "nuxt preview --dotenv .env.production",
