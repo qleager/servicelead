@@ -32,7 +32,7 @@ export default defineNuxtConfig({
     },
   },
 
-  css: ['./app/assets/scss/globals.scss'],
+  css: ['@app/assets/scss/globals.scss'],
 
   runtimeConfig: {
     apiUrl: '',

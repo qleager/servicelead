@@ -234,17 +234,20 @@ corepack enable
 ```zsh
 pnpm run docker:build
 ```
-6. Let's roll! 🔥
+6. Install dependecies
 ```zsh
-pnpm run docker:up
-pnpm run dev:docker
+pnpm run docker:exec pnpm install
 ```
-
 > [!important]
 > Install all dependencies inside the container only
 > ```zsh
 > pnpm run docker:exec pnpm add package-name
 > ```
+7. Let's roll! 🔥
+```zsh
+pnpm run docker:up
+pnpm run dev:docker
+```
 
 #### Docker commands
 ```zsh
