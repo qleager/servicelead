@@ -4,7 +4,7 @@ import type { FetchOptions } from '@shared/types/repositories'
 import type { AuthCodeDto, AuthType, AuthValueBase, AuthValueDto, RegisteredUser, TokenAuthValueDto, TokenDto, TokenPair, TokenPasswordDto, TokenServiceDto, UserIdTokenDto } from '~~/server/types/api/auth'
 
 class AuthModule extends FetchFactory {
-  private RESOURCE = '/auth/v2'
+  private RESOURCE = '/v2'
 
   async authorize(type: AuthType, fetchOptions?: FetchOptions<AuthCodeDto>) {
     return this.call<Response<TokenPair>>(
@@ -96,9 +96,9 @@ class AuthModule extends FetchFactory {
     )
   }
 
-  async verifyToken(type: AuthType, fetchOptions?: FetchOptions<TokenServiceDto>) {
+  async verifyToken(fetchOptions?: FetchOptions<TokenServiceDto>) {
     return this.call<Response<number>>(
-      `${this.RESOURCE}/verifyToken/${type}`,
+      `${this.RESOURCE}/verifyToken`,
       {
         method: 'POST',
         ...fetchOptions,
@@ -106,9 +106,9 @@ class AuthModule extends FetchFactory {
     )
   }
 
-  async refreshToken(type: AuthType, fetchOptions?: FetchOptions<TokenDto>) {
+  async refreshToken(fetchOptions?: FetchOptions<TokenDto>) {
     return this.call<Response<TokenPair>>(
-      `${this.RESOURCE}/verifyToken/${type}`,
+      `${this.RESOURCE}/refreshToken`,
       {
         method: 'POST',
         ...fetchOptions,
@@ -116,9 +116,9 @@ class AuthModule extends FetchFactory {
     )
   }
 
-  async getUserLogin(type: AuthType, fetchOptions?: FetchOptions<TokenDto>) {
+  async getUserLogin(fetchOptions?: FetchOptions<TokenDto>) {
     return this.call<Response<string>>(
-      `${this.RESOURCE}/getUserLogin/${type}`,
+      `${this.RESOURCE}/getUserLogin`,
       {
         method: 'POST',
         ...fetchOptions,
@@ -126,9 +126,9 @@ class AuthModule extends FetchFactory {
     )
   }
 
-  async getUserLogins(type: AuthType, fetchOptions?: FetchOptions<TokenDto>) {
+  async getUserLogins(fetchOptions?: FetchOptions<TokenDto>) {
     return this.call<Response<AuthValueBase>>(
-      `${this.RESOURCE}/getUserLogins/${type}`,
+      `${this.RESOURCE}/getUserLogins`,
       {
         method: 'POST',
         ...fetchOptions,
@@ -136,9 +136,9 @@ class AuthModule extends FetchFactory {
     )
   }
 
-  async closeSession(type: AuthType, fetchOptions?: FetchOptions<UserIdTokenDto>) {
+  async closeSession(fetchOptions?: FetchOptions<UserIdTokenDto>) {
     return this.call<Response<void>>(
-      `${this.RESOURCE}/closeSession/${type}`,
+      `${this.RESOURCE}/closeSession`,
       {
         method: 'POST',
         ...fetchOptions,

@@ -11,6 +11,7 @@ interface Props {
   name?: string
   placeholder?: string
   rounded?: boolean
+  autocomplete?: HTMLInputElement['autocomplete']
   size?: Subset<Size, 'md' | 'sm'>
   trailingIcon?: IconProps['name']
   type?: 'text' | 'password' | 'search' | 'email' | 'tel' | 'url'
@@ -117,6 +118,7 @@ const onInput = (event: Event) => {
       :name
       :placeholder
       :type
+      :autocomplete
       @blur="onBlur"
       @change="onChange"
       @focus="onFocus"

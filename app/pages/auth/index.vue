@@ -137,6 +137,7 @@ const onSubmit = async (event: FormSubmitEvent<Schema>) => {
         Зарегистрироваться
       </NuxtLink>
     </div>
+    <AppButton @click="$api.auth.refresToken()"></AppButton>
   </div>
 </template>
 

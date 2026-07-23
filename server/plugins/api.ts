@@ -12,10 +12,10 @@ declare module 'h3' {
 
 export default defineNitroPlugin((nitroApp) => {
   nitroApp.hooks.hook('request', (event) => {
-    const { apiUrl } = useRuntimeConfig(event)
+    const { apiAuthUrl } = useRuntimeConfig(event)
 
     const apiFetcher = $fetch.create({
-      baseURL: apiUrl,
+      baseURL: apiAuthUrl,
     })
 
     event.context.api = {

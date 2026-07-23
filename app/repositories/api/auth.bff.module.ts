@@ -14,6 +14,16 @@ class AuthBffModule extends FetchFactory {
       },
     )
   }
+
+  async refresToken(fetchOptions: FetchOptions) {
+    return this.call(
+      `${this.RESOURCE}/refresh-token`,
+      {
+        method: 'POST',
+        ...fetchOptions,
+      },
+    )
+  }
 }
 
 export default AuthBffModule
