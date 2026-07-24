@@ -1,5 +1,5 @@
 # Общее хранилище для macOS и bind-mounted Docker-контейнера.
-storeDir: .pnpm-store
+storeDir: node_modules/.pnpm-store
 verifyDepsBeforeRun: false
 
 supportedArchitectures:
